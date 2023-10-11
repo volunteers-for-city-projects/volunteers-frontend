@@ -4,7 +4,7 @@ function OurValues() {
 	return (
 		<section className="our-values">
 			<div className="our-values__container">
-				<h2 className="our-values__title">ЛучшеВместе - это:</h2>
+				<h2 className="our-values__title">Лучше Вместе - это:</h2>
 				<ul className="our-values__cards">
 					<li className="our-values__item">
 						<h3 className="our-values__item-title">
