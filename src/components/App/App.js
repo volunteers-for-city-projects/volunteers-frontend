@@ -1,8 +1,13 @@
+import Header from '../Header/Header';
+
 function App() {
 	return (
-		<div>
-			<p>App component</p>
-		</div>
+		<>
+			<Header />
+			<div>
+				<p>App component</p>
+			</div>
+		</>
 	);
 }
 
