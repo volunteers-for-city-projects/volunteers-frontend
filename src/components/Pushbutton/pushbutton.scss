@@ -9,7 +9,6 @@
 	text-align: center;
 
 	&__type {
-
 		&_primary {
 			background-color: transparent;
 		}
@@ -20,7 +19,6 @@
 	}
 
 	&__size {
-		
 		&_small {
 			font-size: 17px;
 			line-height: 20px;
@@ -39,17 +37,17 @@
 			line-height: 130%;
 		}
 	}
-}
 
-.pushbutton:hover {
-	opacity: 0.8;
-	transition: opacity 100ms ease-in;
-	cursor: pointer;
-}
+	&:hover {
+		opacity: 0.8;
+		transition: opacity 100ms ease-in;
+		cursor: pointer;
+	}
 
-.pushbutton:disabled {
-	color: #606060;
-	cursor: default;
-	background: #cbcbcb;
-	opacity: 0.5;
+	&:disabled {
+		color: #606060;
+		cursor: default;
+		background: #cbcbcb;
+		opacity: 0.5;
+	}
 }
