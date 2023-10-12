@@ -1,17 +1,17 @@
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import './HeaderLink.scss';
+import './NavigationLink.scss';
 
-function HeaderLink({ label, path }) {
+function NavigationLink({ label, path }) {
 	return (
 		<NavLink
 			to={path}
 			className={({ isActive }) => {
 				if (isActive) {
-					return 'header__link header__link_active';
+					return 'nav__link nav__link_active';
 				}
 
-				return 'header__link';
+				return 'nav__link';
 			}}
 		>
 			{label}
@@ -19,9 +19,9 @@ function HeaderLink({ label, path }) {
 	);
 }
 
-HeaderLink.propTypes = {
+NavigationLink.propTypes = {
 	label: PropTypes.string.isRequired,
 	path: PropTypes.string.isRequired,
 };
 
-export default HeaderLink;
+export default NavigationLink;

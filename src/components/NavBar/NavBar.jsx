@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import './NavBar.scss';
-import HeaderLink from '../Header/components/HeaderLink/HeaderLink';
+import NavigationLink from '../NavigationLink/NavigationLink';
 
 function NavBar({ dataNavArray }) {
 	return (
@@ -8,7 +8,7 @@ function NavBar({ dataNavArray }) {
 			<ul className="nav">
 				{dataNavArray.map((link) => (
 					<li>
-						<HeaderLink label={link.label} path={link.path} />
+						<NavigationLink label={link.label} path={link.path} />
 					</li>
 				))}
 			</ul>
