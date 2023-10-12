@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import InputSearch from './components/InputSearch/InputSearch';
-import NavBar from './components/NavBar/NavBar';
+import NavBar from '../NavBar/NavBar';
 import Button from './components/Button/Button';
 
 const dataNavArray = [
