@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './pushbutton.css';
+import './pushbutton.scss';
 
 export const Pushbutton = ({
 	primary,
