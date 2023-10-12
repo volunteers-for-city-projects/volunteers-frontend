@@ -1,10 +1,14 @@
-import './News.css';
+import './News.scss';
 
 function News() {
 	return (
 		<section className="news">
 			<div className="news__container">
-				<h2 className="news__title">Новости</h2>
+				<div className="news__wrapper">
+					<h2 className="news__wrapper-title">Новости</h2>
+					<button className="news__wrapper-button">Смотреть все новости</button>
+				</div>
+
 				<ul className="news__cards">
 					<li className="news__cards-item">
 						<div className="news__card-image">
@@ -35,6 +39,17 @@ function News() {
 						<h3 className="news__card-description">
 							Более 500 уникальных проектов из 95 стран представлены на
 							Международной Премии
+						</h3>
+						<p className="news__card-date">23.04.23</p>
+					</li>
+
+					<li className="news__cards-item">
+						<div className="news__card-image">
+							<button className="news__card-button">#ЛучшеВмecте</button>
+						</div>
+						<h3 className="news__card-description">
+							Молодёжь Южного Урала помогает семьям военнослужащих в сёлах и
+							деревнях
 						</h3>
 						<p className="news__card-date">23.04.23</p>
 					</li>

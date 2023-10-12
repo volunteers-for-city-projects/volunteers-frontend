@@ -1,4 +1,4 @@
-import './Promo.css';
+import './Promo.scss';
 
 function Promo() {
 	return (

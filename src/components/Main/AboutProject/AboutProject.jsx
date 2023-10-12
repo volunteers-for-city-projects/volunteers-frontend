@@ -1,9 +1,16 @@
-import './OurValues.css';
+import './AboutProject.scss';
 
-function OurValues() {
+function AboutProject() {
 	return (
-		<section className="our-values">
-			<div className="our-values__container">
+		<section className="about-project">
+			<h2 className="about-project__title">О нас</h2>
+			<p className="about-project__description">
+				Платформа создана, чтобы объединить усилия волонтёров, городских
+				администраций <br /> и организаторов мероприятий и внести совместный
+				вклад в развитие городской среды.
+			</p>
+
+			<div className="about-project__container">
 				<h2 className="our-values__title">Лучше Вместе - это:</h2>
 				<ul className="our-values__cards">
 					<li className="our-values__item">
@@ -58,4 +65,4 @@ function OurValues() {
 	);
 }
 
-export default OurValues;
+export default AboutProject;

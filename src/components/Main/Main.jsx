@@ -1,7 +1,6 @@
-import './Main.css';
+import './Main.scss';
 import Promo from './Promo/Promo';
 import AboutProject from './AboutProject/AboutProject';
-import OurValues from './OurValues/OurValues';
 import News from './News/News';
 import JoinButtons from './JoinButtons/JoinButtons';
 
@@ -10,7 +9,6 @@ function Main() {
 		<main className="content">
 			<Promo />
 			<AboutProject />
-			<OurValues />
 			<News />
 			<JoinButtons />
 		</main>
