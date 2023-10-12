@@ -1,7 +1,7 @@
 import NavBar from './NavBar';
 
 export default {
-	title: 'UI/Header/NavBar',
+	title: 'UI/NavBar',
 	component: NavBar,
 	tags: ['autodocs'],
 	argTypes: {},

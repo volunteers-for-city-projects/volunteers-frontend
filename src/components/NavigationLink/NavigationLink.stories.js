@@ -1,7 +1,7 @@
 import NavigationLink from './NavigationLink';
 
 export default {
-	title: 'UI/Header/NavigationLink',
+	title: 'UI/NavigationLink',
 	component: NavigationLink,
 	tags: ['autodocs'],
 	argTypes: {},
