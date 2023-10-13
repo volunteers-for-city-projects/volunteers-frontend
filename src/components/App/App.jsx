@@ -1,4 +1,6 @@
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Request from '../Request/Request';
 
 function App() {
 	return (
@@ -7,6 +9,8 @@ function App() {
 			<div>
 				<p>App component</p>
 			</div>
+			<Request />
+			<Footer />
 		</>
 	);
 }
