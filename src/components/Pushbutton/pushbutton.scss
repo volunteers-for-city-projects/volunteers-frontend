@@ -1,0 +1,53 @@
+.pushbutton {
+	margin: 0;
+	font-family: 'Fira Sans', 'Arial', sans-serif;
+	border-radius: 10px;
+	border: 1px solid #333;
+	font-style: normal;
+	font-weight: 400;
+	display: inline-block;
+	text-align: center;
+
+	&__type {
+		&_primary {
+			background-color: transparent;
+		}
+
+		&_secondary {
+			background-color: #333;
+		}
+	}
+
+	&__size {
+		&_small {
+			font-size: 17px;
+			line-height: 20px;
+			padding: 12px;
+		}
+
+		&_medium {
+			font-size: 17px;
+			line-height: 20px;
+			padding: 12px 16px;
+		}
+
+		&_large {
+			padding: 20px;
+			font-size: 24px;
+			line-height: 130%;
+		}
+	}
+
+	&:hover {
+		opacity: 0.8;
+		transition: opacity 100ms ease-in;
+		cursor: pointer;
+	}
+
+	&:disabled {
+		color: #606060;
+		cursor: default;
+		background: #cbcbcb;
+		opacity: 0.5;
+	}
+}
