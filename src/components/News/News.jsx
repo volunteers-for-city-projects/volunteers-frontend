@@ -1,5 +1,6 @@
 import './News.scss';
-import Slider from '../slider';
+
+import Slider from '../Slider/Slider';
 
 function News() {
 	return (
@@ -9,9 +10,9 @@ function News() {
 					<h2 className="news__wrapper-title">Новости</h2>
 					<button className="news__wrapper-button">Смотреть все новости</button>
 				</div>
-				<ul className="news__cards">
+				<div className="news__cards">
 					<Slider />
-				</ul>
+				</div>
 			</div>
 		</section>
 	);
