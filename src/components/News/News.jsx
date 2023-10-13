@@ -1,8 +1,8 @@
+// import PropTypes from 'prop-types';
 import './News.scss';
-
 import Slider from '../Slider/Slider';
 
-function News() {
+function News(card) {
 	return (
 		<section className="news">
 			<div className="news__container">
@@ -11,7 +11,7 @@ function News() {
 					<button className="news__wrapper-button">Смотреть все новости</button>
 				</div>
 				<div className="news__cards">
-					<Slider />
+					<Slider card={card} />
 				</div>
 			</div>
 		</section>
