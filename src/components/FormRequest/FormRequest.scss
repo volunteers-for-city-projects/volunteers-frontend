@@ -1,0 +1,23 @@
+.form-request {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 540px;
+
+	&__button {
+		border: none;
+		background-color: #333;
+		color: #fff;
+		font-size: 24px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1;
+		padding: 20px;
+		border-radius: 10px;
+		margin-top: 41px;
+	}
+
+	&__button:hover {
+		cursor: pointer;
+	}
+}
