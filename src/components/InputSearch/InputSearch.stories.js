@@ -1,7 +1,7 @@
 import InputSearch from './InputSearch';
 
 export default {
-	title: 'UI/Header/InputSearch',
+	title: 'UI/InputSearch',
 	component: InputSearch,
 	tags: ['autodocs'],
 	argTypes: {},

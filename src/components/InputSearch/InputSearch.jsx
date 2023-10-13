@@ -7,14 +7,14 @@ function InputSearch({ label, placeholder }) {
 	}
 
 	return (
-		<form className="header__form-search" onSubmit={handleSubmit}>
+		<form className="form-search" onSubmit={handleSubmit}>
 			<input
-				className="header__input-search"
+				className="form-search__input-search"
 				type="text"
 				id="searchInput"
 				placeholder={placeholder}
 			/>
-			<button className="header__button-search" type="submit">
+			<button className="form-search__button-search" type="submit">
 				{label}
 			</button>
 		</form>
