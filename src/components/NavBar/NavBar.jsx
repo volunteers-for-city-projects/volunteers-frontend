@@ -7,8 +7,12 @@ function NavBar({ dataNavArray }) {
 		<nav>
 			<ul className="nav">
 				{dataNavArray.map((link) => (
-					<li>
-						<NavigationLink label={link.label} path={link.path} />
+					<li key={link.id}>
+						<NavigationLink
+							label={link.label}
+							path={link.path}
+							isAnchor={link.isAnchor}
+						/>
 					</li>
 				))}
 			</ul>
@@ -17,7 +21,14 @@ function NavBar({ dataNavArray }) {
 }
 
 NavBar.propTypes = {
-	dataNavArray: PropTypes.isRequired,
+	dataNavArray: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			label: PropTypes.string.isRequired,
+			path: PropTypes.string.isRequired,
+			isAnchor: PropTypes.bool.isRequired,
+		})
+	).isRequired,
 };
 
 export default NavBar;
