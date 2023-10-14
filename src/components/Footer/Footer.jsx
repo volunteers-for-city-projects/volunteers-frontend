@@ -13,8 +13,8 @@ const dataNavArray = [
 	{
 		id: 1,
 		label: 'новости',
-		path: '/news',
-		isAnchor: false,
+		path: 'news',
+		isAnchor: true,
 	},
 	{
 		id: 2,
