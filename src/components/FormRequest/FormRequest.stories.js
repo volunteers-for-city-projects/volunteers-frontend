@@ -1,7 +1,7 @@
 import FormRequest from './FormRequest';
 
 export default {
-	title: 'UI/FormRequest',
+	title: 'Blocks/FormRequest',
 	component: FormRequest,
 	tags: ['autodocs'],
 	argTypes: {},
