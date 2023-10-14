@@ -13,6 +13,7 @@ function InputSearch({ label, placeholder }) {
 				type="text"
 				id="searchInput"
 				placeholder={placeholder}
+				maxLength="100"
 			/>
 			<button className="form-search__button-search" type="submit">
 				{label}
