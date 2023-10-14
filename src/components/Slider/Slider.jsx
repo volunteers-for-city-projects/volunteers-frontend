@@ -8,7 +8,7 @@ import CardNews from '../CardNews/CardNews';
 function Slider() {
 	return (
 		<Swiper
-			spaceBetween={50}
+			spaceBetween={20}
 			slidesPerView={3}
 			onSlideChange={() => console.log('slide change')}
 			onSwiper={(swiper) => console.log(swiper)}

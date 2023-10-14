@@ -14,6 +14,18 @@ function CardNews({ card }) {
 }
 
 CardNews.propTypes = {
-	card: PropTypes.isRequired,
+	card: PropTypes.shape({
+		tag: PropTypes.string,
+		title: PropTypes.string,
+		date: PropTypes.string,
+	}),
+};
+
+CardNews.defaultProps = {
+	card: PropTypes.shape({
+		tag: PropTypes.string,
+		title: PropTypes.string,
+		date: PropTypes.string,
+	}),
 };
 export default CardNews;

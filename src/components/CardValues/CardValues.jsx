@@ -12,7 +12,17 @@ function CardValues({ cardValues }) {
 }
 
 CardValues.propTypes = {
-	cardValues: PropTypes.string.isRequired,
+	cardValues: PropTypes.shape({
+		title: PropTypes.string,
+		description: PropTypes.string,
+	}),
+};
+
+CardValues.defaultProps = {
+	cardValues: PropTypes.shape({
+		title: PropTypes.string,
+		description: PropTypes.string,
+	}),
 };
 
 export default CardValues;
