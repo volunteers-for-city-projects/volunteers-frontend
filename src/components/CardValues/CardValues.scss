@@ -1,21 +1,20 @@
 .our-values__item {
-    width: 818px;
-    background-color: #949494;
-    border-radius: 10px;
-    padding: 40px 28px;
-    box-sizing: border-box;
-}
+	width: 818px;
+	background-color: #949494;
+	border-radius: 10px;
+	padding: 40px 28px;
+	box-sizing: border-box;
+	&-title {
+		font-size: 28px;
+		font-weight: 500;
+		line-height: 28px;
+		margin: 0 0 50px;
+	}
 
-.our-values__item-title {
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 28px;
-    margin: 0 0 50px;
-}
-
-.our-values__item-subtitle {
-    font-size: 20px;
-    font-family: 400;
-    line-height: 32px;
-    margin: 0;
+	&-subtitle {
+		font-size: 20px;
+		font-family: 400;
+		line-height: 32px;
+		margin: 0;
+	}
 }
