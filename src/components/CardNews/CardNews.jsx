@@ -14,6 +14,6 @@ function CardNews({ card }) {
 }
 
 CardNews.propTypes = {
-	card: PropTypes.string.isRequired,
+	card: PropTypes.isRequired,
 };
 export default CardNews;

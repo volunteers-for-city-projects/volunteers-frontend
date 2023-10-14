@@ -2,7 +2,7 @@
 import './News.scss';
 import Slider from '../Slider/Slider';
 
-function News(card) {
+function News() {
 	return (
 		<section className="news">
 			<div className="news__container">
@@ -11,7 +11,7 @@ function News(card) {
 					<button className="news__wrapper-button">Смотреть все новости</button>
 				</div>
 				<div className="news__cards">
-					<Slider card={card} />
+					<Slider />
 				</div>
 			</div>
 		</section>
