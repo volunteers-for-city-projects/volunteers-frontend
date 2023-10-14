@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './Header.scss';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import InputSearch from '../InputSearch/InputSearch';
 import NavBar from '../NavBar/NavBar';
@@ -16,8 +16,8 @@ const dataNavArray = [
 	{
 		id: 1,
 		label: 'новости',
-		path: '/news',
-		isAnchor: false,
+		path: 'news',
+		isAnchor: true,
 	},
 	{
 		id: 2,
@@ -27,29 +27,7 @@ const dataNavArray = [
 	},
 ];
 
-function Header() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const navigate = useNavigate();
-
-	const handleRegistration = () => {
-		navigate('/reg');
-	};
-
-	const handleLogin = () => {
-		navigate('/login');
-		setIsLoggedIn(true);
-	};
-
-	const handleLogout = () => {
-		// TODO: всплывающее окно подтверждения выхода
-		navigate('/');
-		setIsLoggedIn(false);
-	};
-
-	const handleProfile = () => {
-		navigate('/profile');
-	};
-
+function Header({ isLoggedIn, handleConfirmLogout }) {
 	return (
 		<header className="header">
 			<div className="header__container">
@@ -59,17 +37,32 @@ function Header() {
 				<div className="header__buttons">
 					{!isLoggedIn ? (
 						<>
-							<Button
-								label="Регистрация"
-								type="registration"
-								onClick={handleRegistration}
-							/>
-							<Button label="Войти" type="login" onClick={handleLogin} />
+							<Link
+								to="/registration"
+								className="header__link header__link_type_registration"
+							>
+								Регистрация
+							</Link>
+							<Link
+								to="/login"
+								className="header__link header__link_type_login"
+							>
+								Войти
+							</Link>
 						</>
 					) : (
 						<>
-							<Button label="ЛК" type="profile" onClick={handleProfile} />
-							<Button label="Выход" type="logout" onClick={handleLogout} />
+							<Link
+								to="/profile"
+								className="header__link header__link_type_profile"
+							>
+								ЛК
+							</Link>
+							<Button
+								label="Выход"
+								type="logout"
+								onClick={handleConfirmLogout}
+							/>
 						</>
 					)}
 				</div>
@@ -77,5 +70,10 @@ function Header() {
 		</header>
 	);
 }
+
+Header.propTypes = {
+	isLoggedIn: PropTypes.bool.isRequired,
+	handleConfirmLogout: PropTypes.func.isRequired,
+};
 
 export default Header;

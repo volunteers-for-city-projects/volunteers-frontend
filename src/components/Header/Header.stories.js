@@ -1,3 +1,4 @@
+import { withRouter } from 'storybook-addon-react-router-v6';
 import Header from './Header';
 
 export default {
@@ -5,7 +6,11 @@ export default {
 	component: Header,
 	tags: ['autodocs'],
 	argTypes: {},
-	args: {},
+	args: {
+		isLoggedIn: true,
+		handleConfirmLogout: () => console.log('Модальное окно выхода из аккаунта'),
+	},
+	decorators: [withRouter],
 };
 
-export const Default = () => <Header />;
+export const Default = (args) => <Header {...args} />;
