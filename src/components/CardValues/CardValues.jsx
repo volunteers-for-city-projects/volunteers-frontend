@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import './CardValues.scss';
 
 function CardValues({ cardValues }) {
@@ -20,8 +21,8 @@ CardValues.propTypes = {
 
 CardValues.defaultProps = {
 	cardValues: PropTypes.shape({
-		title: PropTypes.string,
-		description: PropTypes.string,
+		title: '',
+		description: '',
 	}),
 };
 
