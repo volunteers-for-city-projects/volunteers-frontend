@@ -1,3 +1,4 @@
+import { withRouter } from 'storybook-addon-react-router-v6';
 import NavigationLink from './NavigationLink';
 
 export default {
@@ -8,7 +9,9 @@ export default {
 	args: {
 		label: 'Link',
 		path: '#',
+		isAnchor: false,
 	},
+	decorators: [withRouter],
 };
 
 export const Default = (args) => <NavigationLink {...args} />;

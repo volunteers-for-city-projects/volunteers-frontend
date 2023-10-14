@@ -1,3 +1,4 @@
+import { withRouter } from 'storybook-addon-react-router-v6';
 import NavBar from './NavBar';
 
 export default {
@@ -8,11 +9,14 @@ export default {
 	args: {
 		dataNavArray: [
 			{
+				id: 1,
 				label: 'Link',
-				path: '#',
+				path: '/#',
+				isAnchor: false,
 			},
 		],
 	},
+	decorators: [withRouter],
 };
 
 export const Default = (args) => <NavBar {...args} />;

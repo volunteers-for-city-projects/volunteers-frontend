@@ -1,3 +1,4 @@
+import { withRouter } from 'storybook-addon-react-router-v6';
 import Logo from './Logo';
 
 export default {
@@ -8,6 +9,7 @@ export default {
 	args: {
 		label: 'ЛучшеВместе',
 	},
+	decorators: [withRouter],
 };
 
 export const Default = (args) => <Logo {...args} />;

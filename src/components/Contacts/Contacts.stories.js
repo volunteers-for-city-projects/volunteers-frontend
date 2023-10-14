@@ -1,3 +1,4 @@
+import { withRouter } from 'storybook-addon-react-router-v6';
 import Contacts from './Contacts';
 
 export default {
@@ -8,6 +9,7 @@ export default {
 	args: {
 		type: 'contacts',
 	},
+	decorators: [withRouter],
 };
 
 export const Default = (args) => <Contacts {...args} />;

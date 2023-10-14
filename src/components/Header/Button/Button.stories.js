@@ -9,8 +9,9 @@ export default {
 	},
 	args: {
 		label: 'Button',
-		type: 'button',
+		type: 'logout',
+		onClick: () => console.log('Клик'),
 	},
 };
 
-export const Default = () => <Button />;
+export const Default = (args) => <Button {...args} />;
