@@ -1,0 +1,51 @@
+$error-color: #bf0000;
+$text-color: #000;
+$label-color: #949494;
+
+.input {
+	&__select-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__select-label {
+		font: {
+			family: 'Fira Sans', sans-serif;
+			style: normal;
+			weight: 400;
+			size: 12px;
+		}
+		color: $label-color;
+	}
+
+	&__select-options {
+		margin: 4px 0 0;
+		width: 280px;
+		height: 36px;
+		border-radius: 10px;
+		border: 1.6px solid #000;
+		font: {
+			family: 'Fira Sans', sans-serif;
+			style: normal;
+			weight: 400;
+			size: 17px;
+		}
+		color: $text-color;
+		line-height: 20px;
+	}
+
+	&__select-error {
+		color: $error-color;
+		display: none;
+		font: {
+			family: 'Fira Sans', sans-serif;
+			style: normal;
+			weight: 400;
+			size: 10px;
+		}
+	}
+
+	&__select-error-message {
+		display: block;
+	}
+}
