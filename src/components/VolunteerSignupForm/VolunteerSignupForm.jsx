@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './VolunteerSignupForm.scss';
 
+import { Pushbutton } from '../Pushbutton/Pushbutton';
+
 export default function VolunteerSignupForm({
 	onSubmit,
 	children,
@@ -19,11 +21,16 @@ export default function VolunteerSignupForm({
 		>
 			{children}
 			<div className=" volunteer-signup-form__text-content">
+				<Pushbutton
+					label="Зарегистрироваться"
+					color="white"
+					size="medium"
+					width="340px"
+				/>
 				<p className="volunteer-signup-form__text">
 					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
 					18 лет, и соглашаюсь с Политикой конфиденциальности
 				</p>
-
 				<label
 					htmlFor="volunteer-signup-form"
 					className="volunteer-signup-form__text"
