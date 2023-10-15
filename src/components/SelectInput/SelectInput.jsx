@@ -8,8 +8,11 @@ function SelectInput({ text, isValid, options }) {
 			<label className="input__select-label" htmlFor="input__select-options">
 				{text}
 			</label>
-
-			<select className="input__select-options">
+			<select
+				className={clsx('input__select-options', {
+					'input__select-options-error': !isValid,
+				})}
+			>
 				{options.map((option, index) => {
 					if (index === 0) {
 						return (

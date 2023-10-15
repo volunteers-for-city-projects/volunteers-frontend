@@ -34,6 +34,10 @@ $label-color: #949494;
 		line-height: 20px;
 	}
 
+	&__select-options-error {
+		border-color: $error-color;
+	}
+
 	&__select-error {
 		color: $error-color;
 		display: none;
