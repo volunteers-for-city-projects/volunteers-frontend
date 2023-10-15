@@ -16,7 +16,12 @@ function FormRequest() {
 			.max(40, 'Длина поля от 2 до 40 символов')
 			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите имя кириллицей')
 			.required('Поле обязательно для заполнения'),
-		phone: Yup.string().required('Поле обязательно для заполнения'),
+		phone: Yup.string()
+			.matches(
+				/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+				'Введите корректный телефон'
+			)
+			.required('Поле обязательно для заполнения'),
 		email: Yup.string()
 			.min(5, 'Длина поля от 5 до 256 символов')
 			.max(256, 'Длина поля от 5 до 256 символов')
@@ -49,7 +54,8 @@ function FormRequest() {
 						<div>
 							<textarea
 								className={`form-request__textarea ${
-									(!isFocus && errors.message) || submitCount === 1
+									(!isFocus && errors.message) ||
+									(submitCount === 1 && errors.message)
 										? 'form-request__textarea_error'
 										: ''
 								}`}
