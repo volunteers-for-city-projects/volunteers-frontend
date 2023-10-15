@@ -11,7 +11,7 @@ function NavBar({ dataNavArray }) {
 						<NavigationLink
 							label={link.label}
 							path={link.path}
-							isAnchor={link.isAnchor}
+							anchor={link.anchor}
 						/>
 					</li>
 				))}
@@ -26,7 +26,7 @@ NavBar.propTypes = {
 			id: PropTypes.number.isRequired,
 			label: PropTypes.string.isRequired,
 			path: PropTypes.string.isRequired,
-			isAnchor: PropTypes.bool.isRequired,
+			anchor: PropTypes.string.isRequired,
 		})
 	).isRequired,
 };

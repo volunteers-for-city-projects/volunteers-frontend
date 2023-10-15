@@ -11,19 +11,19 @@ const dataNavArray = [
 		id: 0,
 		label: 'проекты',
 		path: '/projects',
-		isAnchor: false,
+		anchor: '',
 	},
 	{
 		id: 1,
 		label: 'новости',
-		path: 'news',
-		isAnchor: true,
+		path: '/',
+		anchor: 'news',
 	},
 	{
 		id: 2,
 		label: 'связаться с нами',
-		path: 'request',
-		isAnchor: true,
+		path: '/',
+		anchor: 'request',
 	},
 ];
 

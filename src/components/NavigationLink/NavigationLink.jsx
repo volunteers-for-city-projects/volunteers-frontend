@@ -1,14 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link } from 'react-scroll';
+import { scroller } from 'react-scroll';
 import './NavigationLink.scss';
 
-function NavigationLink({ label, path, isAnchor }) {
-	return !isAnchor ? (
+function NavigationLink({ label, path, anchor }) {
+	const scrollToAnchor = () => {
+		scroller.scrollTo(anchor, {
+			smooth: true,
+		});
+	};
+
+	return (
 		<NavLink
 			to={path}
+			onClick={anchor && scrollToAnchor}
 			className={({ isActive }) => {
-				if (isActive) {
+				if (isActive && !anchor) {
 					return 'nav__link nav__link_active';
 				}
 
@@ -17,17 +24,13 @@ function NavigationLink({ label, path, isAnchor }) {
 		>
 			{label}
 		</NavLink>
-	) : (
-		<Link className="nav__link" to={path} smooth>
-			{label}
-		</Link>
 	);
 }
 
 NavigationLink.propTypes = {
 	label: PropTypes.string.isRequired,
 	path: PropTypes.string.isRequired,
-	isAnchor: PropTypes.bool.isRequired,
+	anchor: PropTypes.string.isRequired,
 };
 
 export default NavigationLink;
