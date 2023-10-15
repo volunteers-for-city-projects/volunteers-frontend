@@ -23,7 +23,7 @@ function InputRequest({
 			{isMask ? (
 				<PatternFormat
 					className={`input-request__input ${
-						(!isFocus && error) || submitCount === 1
+						(!isFocus && error) || (submitCount === 1 && error)
 							? 'input-request__input_error'
 							: ''
 					}`}
@@ -40,7 +40,7 @@ function InputRequest({
 			) : (
 				<input
 					className={`input-request__input ${
-						(!isFocus && error) || submitCount === 1
+						(!isFocus && error) || (submitCount === 1 && error)
 							? 'input-request__input_error'
 							: ''
 					}`}
@@ -56,7 +56,7 @@ function InputRequest({
 				/>
 			)}
 			<span className="input-request__error">
-				{(!isFocus && error) || (submitCount === 1 && error)}
+				{(!isFocus && error) || (submitCount === 1 && error && error)}
 			</span>
 		</label>
 	);
