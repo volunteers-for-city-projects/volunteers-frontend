@@ -34,6 +34,10 @@ export default function Input({
 		inputClass = 'large';
 		labelClass = 'large';
 		errorClass = 'large';
+	} else if (inputSize === 'photo') {
+		inputClass = 'photo';
+		labelClass = 'photo';
+		errorClass = 'photo';
 	}
 
 	const isError = false;

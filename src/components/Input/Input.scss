@@ -30,6 +30,14 @@
 		font-weight: 700;
 		line-height: 20px; /* 142.857% */
 	}
+
+	&_type-photo {
+		width: 24px;
+		height: 24px;
+		border: none;
+
+		display: none;
+	}
 }
 
 .input {
@@ -71,6 +79,34 @@
 		height: 48px;
 
 		padding: 0 10px;
+	}
+
+	&_type-photo {
+		width: 24px;
+		height: 24px;
+
+		position: relative;
+
+		border: none;
+		border-radius: 0;
+
+		visibility: hidden;
+	}
+
+	&_type-photo::after {
+		content: url('../../images/icon__signup-photo-download.svg');
+
+		width: 24px;
+		height: 24px;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		background-repeat: no-repeat;
+		visibility: visible;
+
+		cursor: pointer;
 	}
 
 	&_error {
