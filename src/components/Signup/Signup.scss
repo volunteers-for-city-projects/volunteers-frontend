@@ -1,0 +1,29 @@
+.signup {
+	margin: 0 auto 119px;
+	padding: 0 130px 0;
+
+	display: flex;
+	flex-direction: column;
+
+	&__wrap {
+		display: flex;
+		gap: 20px;
+	}
+
+	&__image {
+		width: 680px;
+		height: 967px;
+		background-image: url('');
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-color: grey;
+	}
+	&__content-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
+	&__title {
+		margin: 0 0 18px 0;
+	}
+}
