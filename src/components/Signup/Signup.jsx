@@ -106,7 +106,7 @@ export default function Signup({ title, setIsPageTitle }) {
 									name="password"
 									label="Пароль"
 									type="password"
-									placeholder="+7 977 000-00-00"
+									placeholder=""
 									inputSize="small"
 									required
 								/>
@@ -114,7 +114,7 @@ export default function Signup({ title, setIsPageTitle }) {
 									name="confirm-password"
 									label="Повтор пароля"
 									type="password"
-									placeholder="example@email.ru"
+									placeholder=""
 									inputSize="small"
 									required
 								/>
@@ -163,6 +163,7 @@ export default function Signup({ title, setIsPageTitle }) {
 								/>
 							</InputGroup>
 							<InputTextArea
+								label="Об организации"
 								name="about-organization"
 								placeholder="Расскажите коротко об организации"
 							/>
@@ -223,7 +224,7 @@ export default function Signup({ title, setIsPageTitle }) {
 									name="organize-password"
 									label="Пароль"
 									type="password"
-									placeholder="+7 977 000-00-00"
+									placeholder=""
 									inputSize="small"
 									required
 								/>
@@ -231,7 +232,7 @@ export default function Signup({ title, setIsPageTitle }) {
 									name="organize-confirm-password"
 									label="Повтор пароля"
 									type="password"
-									placeholder="example@email.ru"
+									placeholder=""
 									inputSize="small"
 									required
 								/>

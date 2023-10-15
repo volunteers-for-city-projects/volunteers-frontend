@@ -1,7 +1,7 @@
 .form-fieldset {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: 15px 20px;
 
 	padding: 0;
 	margin: 0;
@@ -9,7 +9,9 @@
 	border: none;
 }
 .form-legend {
-	margin: 0 0 20px 0;
+	// margin: 0 0 11px 0;
+
+	margin: 0 0 14px 0;
 	padding: 0;
 
 	color: #000;

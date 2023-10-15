@@ -1,4 +1,6 @@
 .text-area {
+	margin-top: 4px;
+
 	min-width: 580px;
 	max-width: 580px;
 	height: 175px;
@@ -12,6 +14,12 @@
 	border-radius: 10px;
 	border: 1px solid #000;
 
+	font-family: Fira Sans;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 17.746px; /* 147.883% */
+
 	&::placeholder {
 		color: #949494;
 		font-family: Fira Sans;
@@ -20,4 +28,26 @@
 		font-weight: 400;
 		line-height: 17.746px; /* 147.883% */
 	}
+}
+.textarea-label {
+	display: block;
+
+	width: 280px;
+	height: 18px;
+
+	margin-top: 5px;
+
+	color: #949494;
+
+	font-family: Fira Sans;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 17.746px; /* 147.883% */
+
+	word-wrap: break-word;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }

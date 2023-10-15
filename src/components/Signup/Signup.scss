@@ -11,6 +11,10 @@
 	}
 
 	&__image {
+		margin: 6px 0 0;
+
+		border-radius: 10px;
+
 		width: 680px;
 		height: 967px;
 		background-image: url('');
@@ -21,9 +25,15 @@
 	&__content-wrap {
 		display: flex;
 		flex-direction: column;
-		gap: 32px;
+		gap: 27px;
 	}
 	&__title {
-		margin: 0 0 18px 0;
+		margin: 0 0 10px 0;
+
+		font-family: Fira Sans;
+		font-size: 56px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 100%; /* 56px */
 	}
 }

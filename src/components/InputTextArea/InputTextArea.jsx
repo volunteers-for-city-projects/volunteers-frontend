@@ -5,6 +5,7 @@ import './InputTextArea.scss';
 
 export default function InputTextArea({
 	name,
+	label,
 	placeholder,
 	disabled,
 	required,
@@ -17,22 +18,28 @@ export default function InputTextArea({
 	};
 
 	return (
-		<textarea
-			className="text-area"
-			id={name}
-			name={name}
-			placeholder={placeholder}
-			disabled={disabled}
-			required={required}
-			value={inputTextAreaValue}
-			onChange={handleInputChange}
-			{...restProps}
-		/>
+		<div>
+			<label htmlFor={name} className="textarea-label">
+				{required ? `${label}*` : label}
+			</label>
+			<textarea
+				className="text-area"
+				id={name}
+				name={name}
+				placeholder={placeholder}
+				disabled={disabled}
+				required={required}
+				value={inputTextAreaValue}
+				onChange={handleInputChange}
+				{...restProps}
+			/>
+		</div>
 	);
 }
 
 InputTextArea.propTypes = {
 	name: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
