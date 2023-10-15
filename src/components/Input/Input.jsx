@@ -74,7 +74,7 @@ Input.propTypes = {
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
-	inputSize: PropTypes.oneOf(['small', 'medium', 'large']),
+	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,

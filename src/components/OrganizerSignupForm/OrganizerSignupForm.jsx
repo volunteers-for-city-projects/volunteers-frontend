@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './VolunteerSignupForm.scss';
+import './OrganizerSignupForm.scss';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
-export default function VolunteerSignupForm({
+export default function OrganizerSignupForm({
 	onSubmit,
 	children,
 	...restProps
@@ -13,28 +13,28 @@ export default function VolunteerSignupForm({
 		<form
 			action="#"
 			method="post"
-			className="volunteer-signup-form"
-			name="volunteer-auth-form"
+			className="organizer-signup-form"
+			name="organizer-auth-form"
 			noValidate
 			onSubmit={onSubmit}
 			{...restProps}
 		>
 			{children}
-			<div className=" volunteer-signup-form__text-content">
+			<div className=" organizer-signup-form__text-content">
 				<Pushbutton label="Зарегистрироваться" color="white" size="medium" />
-				<p className="volunteer-signup-form__text">
+				<p className="organizer-signup-form__text">
 					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
 					18 лет, и соглашаюсь с Политикой конфиденциальности
 				</p>
 				<label
-					htmlFor="volunteer-signup-form"
-					className="volunteer-signup-form__text"
+					htmlFor="organizer-signup-form"
+					className="organizer-signup-form__text"
 				>
 					<input
-						id="volunteer-signup-form"
-						name="volunteer-signup-form"
+						id="organizer-signup-form"
+						name="organizer-signup-form"
 						type="checkbox"
-						className="volunteer-signup-form__input"
+						className="organizer-signup-form__input"
 					/>
 					Даю согласие на обработку моих персональных данных
 				</label>
@@ -43,11 +43,11 @@ export default function VolunteerSignupForm({
 	);
 }
 
-VolunteerSignupForm.propTypes = {
+OrganizerSignupForm.propTypes = {
 	children: PropTypes.node.isRequired,
 	onSubmit: PropTypes.func,
 };
 
-VolunteerSignupForm.defaultProps = {
+OrganizerSignupForm.defaultProps = {
 	onSubmit: () => {},
 };

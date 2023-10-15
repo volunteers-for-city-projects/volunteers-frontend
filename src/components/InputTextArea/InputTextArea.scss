@@ -1,0 +1,23 @@
+.text-area {
+	min-width: 580px;
+	max-width: 580px;
+	height: 175px;
+
+	box-sizing: border-box;
+
+	padding: 16px;
+
+	background-color: transparent;
+
+	border-radius: 10px;
+	border: 1px solid #000;
+
+	&::placeholder {
+		color: #949494;
+		font-family: Fira Sans;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 17.746px; /* 147.883% */
+	}
+}
