@@ -18,6 +18,25 @@ export default function VolunteerSignupForm({
 			{...restProps}
 		>
 			{children}
+			<div className=" volunteer-signup-form__text-content">
+				<p className="volunteer-signup-form__text">
+					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
+					18 лет, и соглашаюсь с Политикой конфиденциальности
+				</p>
+
+				<label
+					htmlFor="volunteer-signup-form"
+					className="volunteer-signup-form__text"
+				>
+					<input
+						id="volunteer-signup-form"
+						name="volunteer-signup-form"
+						type="checkbox"
+						className="volunteer-signup-form__input"
+					/>
+					Даю согласие на обработку моих персональных данных
+				</label>
+			</div>
 		</form>
 	);
 }
