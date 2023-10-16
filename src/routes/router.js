@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Main from '../components/Main/Main';
 import App from '../components/App/App';
 
 const router = createBrowserRouter([
@@ -8,7 +9,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				// element: <MainPage />,
+				element: <Main />,
 			},
 			{
 				path: 'registration',

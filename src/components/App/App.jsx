@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import FormRequest from '../FormRequest/FormRequest';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
 
 function App() {
@@ -32,11 +30,6 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<div>
-				<p>App component</p>
-			</div>
-			<Main />
-			<FormRequest />
 			<Outlet />
 			<Footer />
 			<ModalConfirm
