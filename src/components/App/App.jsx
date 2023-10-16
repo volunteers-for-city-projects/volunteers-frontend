@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
+import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import FormRequest from '../FormRequest/FormRequest';
@@ -34,6 +35,7 @@ function App() {
 			<div>
 				<p>App component</p>
 			</div>
+			<Main />
 			<FormRequest />
 			<Outlet />
 			<Footer />
