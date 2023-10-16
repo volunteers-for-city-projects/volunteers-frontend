@@ -1,7 +1,9 @@
+import Main from '../Main/Main';
+
 function App() {
 	return (
 		<div>
-			<p>App component</p>
+			<Main />
 		</div>
 	);
 }
