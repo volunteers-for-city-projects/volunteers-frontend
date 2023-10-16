@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .join {
 	&__container {
 		margin: 100px 130px 0;
@@ -29,7 +31,7 @@
 	}
 
 	&__subtitle {
-		color: white;
+		color: $--White;
 		font-size: 28px;
 		font-weight: 500;
 		line-height: 28px;
@@ -44,7 +46,7 @@
 		border-radius: 10px;
 		background: #333;
 		border: none;
-		color: white;
+		color: $--White;
 		align-items: end;
 		position: absolute;
 		right: 40px;

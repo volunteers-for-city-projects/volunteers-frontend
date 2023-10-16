@@ -1,3 +1,5 @@
+@import '../../../style/variables.scss';
+
 .header {
 	&__button {
 		border: none;
@@ -16,16 +18,16 @@
 
 	&__button_type_registration,
 	&__button_type_profile {
-		background-color: #fff;
-		color: #000;
+		background-color: $--White;
+		color: $--Black;
 		padding-left: 12px;
 		padding-right: 12px;
 	}
 
 	&__button_type_login,
 	&__button_type_logout {
-		background-color: #000;
-		color: #fff;
+		background-color: $--Primary;
+		color: $--White;
 		padding-left: 16px;
 		padding-right: 16px;
 	}

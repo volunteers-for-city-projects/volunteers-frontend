@@ -1,8 +1,10 @@
+@import '../../style/variables.scss';
+
 .pushbutton {
 	margin: 0;
 	font-family: 'Fira Sans', 'Arial', sans-serif;
 	border-radius: 10px;
-	border: 1px solid #333;
+	border: 1px solid $--Primary;
 	font-style: normal;
 	font-weight: 400;
 	display: inline-block;
@@ -14,7 +16,7 @@
 		}
 
 		&_secondary {
-			background-color: #333;
+			background-color: $--Primary;
 		}
 	}
 

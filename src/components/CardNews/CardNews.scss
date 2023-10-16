@@ -1,16 +1,18 @@
+@import '../../style/variables.scss';
+
 .news {
 	&__cards-item {
 		max-width: 540px;
 	}
 	&__card-image {
-		background-color: #d7d7d7;
+		background-color: $--Light-grey;
 		height: 260px;
 		border-radius: 10px;
 	}
 	&__card-button {
 		border: none;
 		border-radius: 30px;
-		background-color: #bdbdbd;
+		background-color: $--Dark-grey;
 		text-align: center;
 		padding: 10px;
 		height: 32px;

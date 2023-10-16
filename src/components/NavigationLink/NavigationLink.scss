@@ -1,8 +1,10 @@
+@import '../../style/variables.scss';
+
 .nav {
 	&__link {
 		margin: 0;
 		text-decoration: none;
-		color: #000;
+		color: $--Black;
 		font-size: 23px;
 		font-style: normal;
 		font-weight: 400;

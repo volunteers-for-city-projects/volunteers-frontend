@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .news {
 	&__cards {
 		display: flex;
@@ -27,15 +29,15 @@
 		line-height: 17px;
 		cursor: pointer;
 		border-radius: 10px;
-		border: 1.61px solid #000;
-		background-color: white;
+		border: 1.61px solid $--Black;
+		background-color: $--White;
 	}
 	&__wrapper-button:hover {
 		opacity: 0.7;
 	}
 
 	&__card-image {
-		background-color: #d7d7d7;
+		background-color: $--Light-grey;
 		height: 260px;
 		border-radius: 10px;
 	}
