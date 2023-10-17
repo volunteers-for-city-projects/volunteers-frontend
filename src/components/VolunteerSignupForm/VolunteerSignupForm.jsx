@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Formik, Form } from 'formik';
+import { useFormik } from 'formik';
 import moment from 'moment';
 import * as Yup from 'yup';
 
@@ -11,7 +11,9 @@ import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
-	const VolunteerSignupFormSchema = Yup.object().shape({
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+	const VolunteerSignupFormSchema = Yup.object({
 		firstname: Yup.string()
 			.min(2, 'Длина поля от 2 до 40 символов')
 			.max(40, 'Длина поля от 2 до 40 символов')
@@ -78,206 +80,226 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			.oneOf([Yup.ref('password'), null], 'Пароли не совпадают'),
 	});
 
+	const formik = useFormik({
+		validateOnMount: true,
+		validateOnChange: true,
+		initialValues: {
+			firstname: '',
+			secondname: '',
+			thirdname: '',
+			birthday: '',
+			phone: '',
+			email: '',
+			telegram: '',
+			password: '',
+			confirm_password: '',
+		},
+		validationSchema: VolunteerSignupFormSchema,
+		onSubmit: (values) => {
+			// onSignUp({
+			// 	password: values.userPassword,
+			// 	email: values.userEmail,
+			// });
+			console.log(values);
+		},
+	});
+	console.log('Is form valid?', formik.isValid);
+
 	const handleSubmit = (values) => {
 		console.log('Данные формы:', values);
 	};
 
+	const handleCheckboxClick = () => {
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
 	return (
-		<Formik
-			initialValues={{
-				firstname: '',
-				secondname: '',
-				thirdname: '',
-				birthday: '',
-				phone: '',
-				email: '',
-				telegram: '',
-				password: '',
-				confirm_password: '',
-			}}
-			validationSchema={VolunteerSignupFormSchema}
+		<form
+			action="#"
+			method="post"
+			className="volunteer-signup-form"
+			name="volunteer-auth-form"
 			onSubmit={handleSubmit}
+			{...restProps}
 		>
-			{({ handleChange, values, errors, touched, submitCount }) => (
-				<Form
-					action="#"
-					method="post"
-					className="volunteer-signup-form"
-					name="volunteer-auth-form"
-					noValidate
-					errors={errors}
-					onSubmit={handleSubmit}
-					{...restProps}
+			<InputGroup title="Общая информация">
+				<Input
+					name="firstname"
+					label="Имя"
+					type="text"
+					placeholder="Пётр"
+					inputSize="small"
+					error={formik.errors.firstname}
+					touched={formik.touched.firstname}
+					value={formik.values.firstname}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+				<Input
+					name="secondname"
+					label="Фамилия"
+					type="text"
+					placeholder="Иванов"
+					inputSize="small"
+					error={formik.errors.secondname}
+					touched={formik.touched.secondname}
+					value={formik.values.secondname}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					required
+				/>
+				<Input
+					name="thirdname"
+					type="text"
+					label="Отчество"
+					placeholder="Сергеевич"
+					inputSize="small"
+					error={formik.errors.thirdname}
+					touched={formik.touched.thirdname}
+					value={formik.values.thirdname}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+				<Input
+					name="birthday"
+					label="Дата рождения"
+					type="text-date"
+					placeholder="01.02.2010"
+					data-default="2019-12-31"
+					inputSize="small"
+					error={formik.errors.birthday}
+					touched={formik.touched.birthday}
+					value={formik.values.birthday}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+			</InputGroup>
+			<InputGroup title="Контактные данные">
+				<Input
+					name="phone"
+					label="Телефон"
+					type="phone"
+					placeholder="+7 977 000-00-00"
+					inputSize="small"
+					error={formik.errors.phone}
+					touched={formik.touched.phone}
+					value={formik.values.phone}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+				/>
+				<Input
+					name="email"
+					label="E-mail"
+					type="email"
+					placeholder="example@email.ru"
+					inputSize="small"
+					error={formik.errors.email}
+					touched={formik.touched.email}
+					value={formik.values.email}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+				<Input
+					name="telegram"
+					label="Telegram"
+					type="text"
+					placeholder="@name"
+					inputSize="small"
+					error={formik.errors.telegram}
+					touched={formik.touched.telegram}
+					value={formik.values.telegram}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+				/>
+			</InputGroup>
+			<InputGroup title="Пароль">
+				<Input
+					name="password"
+					label="Пароль"
+					type="password"
+					placeholder=""
+					inputSize="small"
+					error={formik.errors.password}
+					touched={formik.touched.password}
+					value={formik.values.password}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+				<Input
+					name="confirm_password"
+					label="Повтор пароля"
+					type="password"
+					placeholder=""
+					inputSize="small"
+					error={formik.errors.confirm_password}
+					touched={formik.touched.confirm_password}
+					value={formik.values.confirm_password}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					autoсomplete="off"
+					required
+				/>
+			</InputGroup>
+			<InputGroup title="Фото">
+				<Input name="photo" label="" type="file" inputSize="photo" />
+			</InputGroup>
+			<InputGroup title="Дополнительная информация">
+				<Input
+					name="skills"
+					label="Навыки"
+					type="text"
+					placeholder="Выберите навыки"
+					inputSize="small"
+					// required
+				/>
+				<Input
+					name="city"
+					label="Город"
+					type="text"
+					placeholder="Выберите город"
+					inputSize="small"
+					// required
+				/>
+			</InputGroup>
+			<div className=" volunteer-signup-form__text-content">
+				<Pushbutton
+					label="Зарегистрироваться"
+					color="white"
+					size="medium"
+					disabled={!formik.isValid || !isCheckboxChecked}
+					type="submit"
+				/>
+				<p className="volunteer-signup-form__text">
+					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
+					18 лет, и соглашаюсь с Политикой конфиденциальности
+				</p>
+				<label
+					htmlFor="volunteer-signup-form-checkbox"
+					className="volunteer-signup-form__text"
 				>
-					<InputGroup title="Общая информация">
-						<Input
-							name="firstname"
-							label="Имя"
-							type="text"
-							placeholder="Пётр"
-							inputSize="small"
-							error={errors.firstname}
-							touched={touched.firstname}
-							value={values.firstname}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
-							name="secondname"
-							label="Фамилия"
-							type="text"
-							placeholder="Иванов"
-							inputSize="small"
-							error={errors.secondname}
-							touched={touched.secondname}
-							value={values.secondname}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
-							name="thirdname"
-							type="text"
-							label="Отчество"
-							placeholder="Сергеевич"
-							inputSize="small"
-							error={errors.thirdname}
-							touched={touched.thirdname}
-							value={values.thirdname}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
-							name="birthday"
-							label="Дата рождения"
-							type="text-date"
-							placeholder="01.02.2010"
-							data-default="2019-12-31"
-							inputSize="small"
-							error={errors.birthday}
-							touched={touched.birthday}
-							value={values.birthday}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-					</InputGroup>
-					<InputGroup title="Контактные данные">
-						<Input
-							name="phone"
-							label="Телефон"
-							type="phone"
-							placeholder="+7 977 000-00-00"
-							inputSize="small"
-							error={errors.phone}
-							touched={touched.phone}
-							value={values.phone}
-							handleChange={handleChange}
-							submitCount={submitCount}
-						/>
-						<Input
-							name="email"
-							label="E-mail"
-							type="email"
-							placeholder="example@email.ru"
-							inputSize="small"
-							error={errors.email}
-							touched={touched.email}
-							value={values.email}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
-							name="telegram"
-							label="Telegram"
-							type="text"
-							placeholder="@name"
-							inputSize="small"
-							error={errors.telegram}
-							touched={touched.telegram}
-							value={values.telegram}
-							handleChange={handleChange}
-							submitCount={submitCount}
-						/>
-					</InputGroup>
-					<InputGroup title="Пароль">
-						<Input
-							name="password"
-							label="Пароль"
-							type="password"
-							placeholder=""
-							inputSize="small"
-							error={errors.password}
-							touched={touched.password}
-							value={values.password}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
-							name="confirm_password"
-							label="Повтор пароля"
-							type="password"
-							placeholder=""
-							inputSize="small"
-							error={errors.confirm_password}
-							touched={touched.confirm_password}
-							value={values.confirm_password}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-					</InputGroup>
-					<InputGroup title="Фото">
-						<Input name="photo" label="" type="file" inputSize="photo" />
-					</InputGroup>
-					<InputGroup title="Дополнительная информация">
-						<Input
-							name="skills"
-							label="Навыки"
-							type="text"
-							placeholder="Выберите навыки"
-							inputSize="small"
-							required
-						/>
-						<Input
-							name="city"
-							label="Город"
-							type="text"
-							placeholder="Выберите город"
-							inputSize="small"
-							required
-						/>
-					</InputGroup>
-					<div className=" volunteer-signup-form__text-content">
-						<Pushbutton
-							label="Зарегистрироваться"
-							color="white"
-							size="medium"
-						/>
-						<p className="volunteer-signup-form__text">
-							Нажимая кнопку «Отправить данные», я подтверждаю, что мне
-							исполнилось 18 лет, и соглашаюсь с Политикой конфиденциальности
-						</p>
-						<label
-							htmlFor="volunteer-signup-form"
-							className="volunteer-signup-form__text"
-						>
-							<input
-								id="volunteer-signup-form"
-								name="volunteer-signup-form"
-								type="checkbox"
-								className="volunteer-signup-form__checkbox"
-							/>
-							Даю согласие на обработку моих персональных данных
-						</label>
-					</div>
-				</Form>
-			)}
-		</Formik>
+					<input
+						id="volunteer-signup-form-checkbox"
+						name="volunteer-signup-form"
+						type="checkbox"
+						className="volunteer-signup-form__checkbox"
+						onClick={handleCheckboxClick}
+					/>
+					Даю согласие на обработку моих персональных данных
+				</label>
+			</div>
+		</form>
 	);
 }
 
