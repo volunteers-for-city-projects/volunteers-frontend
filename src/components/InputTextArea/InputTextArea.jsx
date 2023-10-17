@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './InputTextArea.scss';
@@ -9,13 +9,13 @@ export default function InputTextArea({
 	placeholder,
 	disabled,
 	required,
+	value,
+	handleChange,
+	submitCount,
+	error,
 	...restProps
 }) {
-	const [inputTextAreaValue, setInputTextAreaValue] = useState('');
-
-	const handleInputChange = (e) => {
-		setInputTextAreaValue(e.target.value);
-	};
+	const [isFocus, setIsFocus] = React.useState(true);
 
 	return (
 		<div>
@@ -23,16 +23,30 @@ export default function InputTextArea({
 				{required ? `${label}*` : label}
 			</label>
 			<textarea
-				className="text-area"
 				id={name}
 				name={name}
 				placeholder={placeholder}
 				disabled={disabled}
 				required={required}
-				value={inputTextAreaValue}
-				onChange={handleInputChange}
+				value={value}
+				className={`text-area ${
+					(!isFocus && error) || (submitCount === 1 && error)
+						? 'text-area_error'
+						: ''
+				}`}
+				onChange={(e) => {
+					setIsFocus(true);
+					handleChange(e);
+				}}
+				onBlur={() => {
+					setIsFocus(false);
+				}}
+				{...restProps}
 				{...restProps}
 			/>
+			<span className="error-message">
+				{(!isFocus && error) || (submitCount === 1 && error && error)}
+			</span>
 		</div>
 	);
 }
@@ -43,10 +57,18 @@ InputTextArea.propTypes = {
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
+	value: PropTypes.string,
+	handleChange: PropTypes.func,
+	submitCount: PropTypes.number,
+	error: PropTypes.string,
 };
 
 InputTextArea.defaultProps = {
 	placeholder: null,
 	disabled: false,
 	required: false,
+	submitCount: 0,
+	handleChange: () => {},
+	value: '',
+	error: '',
 };

@@ -28,7 +28,12 @@
 		font-weight: 400;
 		line-height: 17.746px; /* 147.883% */
 	}
+
+	&_error {
+		border: 1.613px solid #bf0000;
+	}
 }
+
 .textarea-label {
 	display: block;
 
@@ -49,5 +54,23 @@
 
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	overflow: hidden;
+}
+.error-message {
+	display: block;
+
+	margin-top: 4px;
+
+	color: #bf0000;
+	font-family: Fira Sans;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 10px; /* 100% */
+
+	word-wrap: break-word;
+
+	text-overflow: ellipsis;
+	white-space: wrap;
 	overflow: hidden;
 }

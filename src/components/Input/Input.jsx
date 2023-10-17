@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { useMask } from '@react-input/mask';
 import './Input.scss';
 
 export default function Input({
@@ -7,17 +8,18 @@ export default function Input({
 	label,
 	type,
 	placeholder,
+	value,
+	handleChange,
 	inputSize,
 	disabled,
 	required,
+	error,
+	submitCount,
 	...restProps
 }) {
-	const [inputValue, setInputValue] = useState('');
+	const [isFocus, setIsFocus] = React.useState(true);
 
-	const handleInputChange = (e) => {
-		setInputValue(e.target.value);
-	};
-
+	// классы
 	let inputClass = '';
 	let labelClass = '';
 	let errorClass = '';
@@ -40,44 +42,68 @@ export default function Input({
 		errorClass = 'photo';
 	}
 
-	const isError = false;
+	// маски
+	let inputRef;
+	let mask;
+	if (type === 'text-date') {
+		mask = '__.__.____';
+	} else if (type === 'phone') {
+		mask = '+_ (___) ___-__-__';
+	}
+
+	// eslint-disable-next-line prefer-const
+	inputRef = useMask({
+		mask,
+		replacement: { _: /\d/ },
+	});
 
 	return (
 		<div>
 			<label htmlFor={name} className={`label label_type-${labelClass}`}>
 				{required ? `${label}*` : label}
 			</label>
+
 			<input
-				id={name}
+				ref={type !== 'text' ? inputRef : null}
 				name={name}
 				type={type}
-				value={inputValue}
+				value={value}
 				placeholder={placeholder}
-				className={`input input_type-${inputClass} ${isError && 'input_error'}`}
-				disabled={disabled}
+				className={`input input_type-${inputClass} ${
+					(!isFocus && error) || (submitCount === 1 && error)
+						? 'input_error'
+						: ''
+				}`}
 				required={required}
-				onChange={handleInputChange}
+				onChange={(e) => {
+					setIsFocus(true);
+					handleChange(e);
+				}}
+				onBlur={() => {
+					setIsFocus(false);
+				}}
 				{...restProps}
 			/>
-			{isError && (
-				<span className={`error-message  error-message_type-${errorClass}`}>
-					Tекст ошибки, который должен вылазить за экран и его не должно быть
-					видно, но если видно то это надо поработать со стилями и проверить все
-					еще разочек
-				</span>
-			)}
+
+			<span className={`error-message error-message_type-${errorClass}`}>
+				{(!isFocus && error) || (submitCount === 1 && error && error)}
+			</span>
 		</div>
 	);
 }
 
 Input.propTypes = {
 	name: PropTypes.string.isRequired,
+	value: PropTypes.string,
+	handleChange: PropTypes.func,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
+	error: PropTypes.string,
+	submitCount: PropTypes.number,
 };
 
 Input.defaultProps = {
@@ -85,4 +111,8 @@ Input.defaultProps = {
 	inputSize: 'medium',
 	disabled: false,
 	required: false,
+	error: '',
+	submitCount: 0,
+	handleChange: () => {},
+	value: '',
 };
