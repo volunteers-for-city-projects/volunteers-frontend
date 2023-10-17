@@ -3,6 +3,7 @@ import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import News from '../News/News';
 import JoinButtons from '../JoinButtons/JoinButtons';
+import FormRequest from '../FormRequest/FormRequest';
 
 function Main() {
 	return (
@@ -11,6 +12,7 @@ function Main() {
 			<AboutProject />
 			<News />
 			<JoinButtons />
+			<FormRequest />
 		</main>
 	);
 }
