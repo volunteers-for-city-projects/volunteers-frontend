@@ -44,7 +44,7 @@ export default function InputTextArea({
 				{...restProps}
 				{...restProps}
 			/>
-			<span className="error-message">
+			<span className="text-area_error-message">
 				{(!isFocus && error) || (submitCount === 1 && error && error)}
 			</span>
 		</div>

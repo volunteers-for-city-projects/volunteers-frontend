@@ -270,7 +270,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 								id="volunteer-signup-form"
 								name="volunteer-signup-form"
 								type="checkbox"
-								className="volunteer-signup-form__input"
+								className="volunteer-signup-form__checkbox"
 							/>
 							Даю согласие на обработку моих персональных данных
 						</label>

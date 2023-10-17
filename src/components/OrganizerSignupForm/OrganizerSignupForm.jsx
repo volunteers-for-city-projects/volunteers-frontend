@@ -166,19 +166,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					/>
 					<InputGroup title="Контактные данные представителя компании">
 						<Input
-							name="organize_firstname"
-							label="Имя"
-							type="text"
-							placeholder="Пётр"
-							inputSize="small"
-							error={errors.organize_firstname}
-							touched={touched.organize_firstname}
-							value={values.organize_firstname}
-							handleChange={handleChange}
-							submitCount={submitCount}
-							required
-						/>
-						<Input
 							name="organize_secondname"
 							label="Фамилия"
 							type="text"
@@ -187,6 +174,19 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 							error={errors.organize_secondname}
 							touched={touched.organize_secondname}
 							value={values.organize_secondname}
+							handleChange={handleChange}
+							submitCount={submitCount}
+							required
+						/>
+						<Input
+							name="organize_firstname"
+							label="Имя"
+							type="text"
+							placeholder="Пётр"
+							inputSize="small"
+							error={errors.organize_firstname}
+							touched={touched.organize_firstname}
+							value={values.organize_firstname}
 							handleChange={handleChange}
 							submitCount={submitCount}
 							required
@@ -291,7 +291,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 								id="organizer-signup-form"
 								name="organizer-signup-form"
 								type="checkbox"
-								className="organizer-signup-form__input"
+								className="organizer-signup-form__checkbox"
 							/>
 							Даю согласие на обработку моих персональных данных
 						</label>
