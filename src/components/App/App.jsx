@@ -3,7 +3,6 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
-import ProfileVolunteer from '../ProfileVolunteer/ProfileVolunteer';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -39,7 +38,6 @@ function App() {
 				onClickExit={closeConfirm}
 				closeConfirm={closeConfirm}
 			/>
-			<ProfileVolunteer />
 		</>
 	);
 }
