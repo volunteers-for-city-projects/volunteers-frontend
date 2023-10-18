@@ -28,7 +28,7 @@
 		"commit": "cz",
 		"lint": "eslint . --ext .js,.jsx .",
 		"lint:fix": "npm run lint -- --fix",
-		"delpoy": "gh-pages -d storybook-static"
+		"deploy": "gh-pages -d storybook-static"
 	},
 	"eslintConfig": {
 		"extends": [
