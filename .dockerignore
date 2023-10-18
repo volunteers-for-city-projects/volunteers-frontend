@@ -1,0 +1,4 @@
+node_modules
+Dockerfile.prod
+.git
+.idea
