@@ -47,7 +47,7 @@ export default function Input({
 	let mask;
 	if (type === 'text-date') {
 		mask = '__.__.____';
-	} else if (type === 'phone' || type === 'organize_phone') {
+	} else if (type === 'phone' || type === 'phone') {
 		mask = '+_ (___) ___-__-__';
 	}
 

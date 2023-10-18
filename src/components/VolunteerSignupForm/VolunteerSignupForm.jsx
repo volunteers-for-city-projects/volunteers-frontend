@@ -9,6 +9,10 @@ import './VolunteerSignupForm.scss';
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import {
+	// createUser,
+	createVolunteer,
+} from '../../utils/api/signupApi';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -59,7 +63,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		telegram: Yup.string()
 			.min(5, 'Длина поля от 5 до 32 символов')
 			.max(32, 'Длина поля от 5 до 32 символов')
-			.matches(/^[а-яА-ЯёЁ_]{5,32}$/, 'Введите корректный username'),
+			.matches(/^@[а-яА-ЯёЁ_a-zA-Z]{5,32}$/, 'Введите корректный username'),
 		password: Yup.string()
 			.required('Поле обязательно для заполнения')
 			.min(8, 'Длина поля от 8 до 20 символов')
@@ -93,21 +97,72 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			telegram: '',
 			password: '',
 			confirm_password: '',
+			skills: '',
+			city: 1,
 		},
 		validationSchema: VolunteerSignupFormSchema,
-		onSubmit: (values) => {
-			// onSignUp({
-			// 	password: values.userPassword,
-			// 	email: values.userEmail,
-			// });
-			console.log(values);
+		onSubmit: async (values) => {
+			// функция для конверсии даты из инпута в формат даты на сервере
+			const formattedDateOfBirth = moment(values.birthday, 'DD.MM.YYYY').format(
+				'YYYY-MM-DD'
+			);
+			// функция для конверсии номера телефона из инпута в формат телефона на сервере
+			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
+			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
+
+			const formData = new FormData();
+			if (values.photo) {
+				formData.append('photo', values.photo);
+			}
+
+			try {
+				// const userResponse = await createUser({
+				// 	first_name: values.firstname,
+				// 	second_name: values.secondname,
+				// 	last_name: values.thirdname,
+				// 	email: values.email,
+				// 	password: values.password,
+				// 	re_password: values.confirm_password,
+				// });
+
+				// // eslint-disable-next-line no-console
+				// console.log('User created:', userResponse);
+
+				// const volunteerResponse = await createVolunteer({
+				// 	user: userResponse,
+				// 	skills: values.skills.split(','),
+				// 	telegram: values.telegram,
+				// 	photo: 'path/to/photo.jpg',
+				// 	date_of_birth: formattedDateOfBirth,
+				// 	phone: values.phone,
+				// 	city: values.city,
+				// });
+
+				const volunteerResponse = await createVolunteer({
+					user: {
+						first_name: values.firstname,
+						second_name: values.secondname,
+						last_name: values.thirdname,
+						email: values.email,
+						password: values.password,
+						re_password: values.confirm_password,
+					},
+					skills: values.skills || [],
+					telegram: values.telegram || '',
+					photo: values.photo || null || '' || undefined,
+					date_of_birth: formattedDateOfBirth,
+					phone: formattedPhone,
+					city: values.city || 1,
+				});
+
+				// eslint-disable-next-line no-console
+				console.log('Volunteer created:', volunteerResponse);
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error('Failed to create user and/or volunteer:', error.message);
+			}
 		},
 	});
-	console.log('Is form valid?', formik.isValid);
-
-	const handleSubmit = (values) => {
-		console.log('Данные формы:', values);
-	};
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
@@ -119,7 +174,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			method="post"
 			className="volunteer-signup-form"
 			name="volunteer-auth-form"
-			onSubmit={handleSubmit}
+			onSubmit={formik.handleSubmit}
+			encType="multipart/form-data"
 			{...restProps}
 		>
 			<InputGroup title="Общая информация">
@@ -253,7 +309,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				/>
 			</InputGroup>
 			<InputGroup title="Фото">
-				<Input name="photo" label="" type="file" inputSize="photo" />
+				<Input
+					name="photo"
+					label=""
+					type="file"
+					inputSize="photo"
+					accept="image/*"
+					onChange={(event) => {
+						formik.setFieldValue('photo', event.currentTarget.files[0]);
+					}}
+				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
 				<Input

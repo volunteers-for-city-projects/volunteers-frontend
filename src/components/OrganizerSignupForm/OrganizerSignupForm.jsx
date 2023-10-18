@@ -113,16 +113,13 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		},
 		validationSchema: OrganizerSignupFormSchema,
 		onSubmit: (values) => {
-			// onSignUp({
-			// 	password: values.userPassword,
-			// 	email: values.userEmail,
-			// });
+			// eslint-disable-next-line no-console
 			console.log(values);
 		},
 	});
-	console.log('Is form valid?', formik.isValid);
 
 	const handleSubmit = (values) => {
+		// eslint-disable-next-line no-console
 		console.log('Данные формы:', values);
 	};
 
