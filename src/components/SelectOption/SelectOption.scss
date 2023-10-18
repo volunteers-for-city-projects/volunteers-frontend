@@ -1,0 +1,40 @@
+$error-color: #bf0000;
+$text-color: #000;
+$label-color: #949494;
+
+.select-option {
+	margin: 4px 0 0;
+	&__container {
+		color: $text-color;
+		font: {
+			family: 'Fira Sans', sans-serif;
+			size: 17px;
+			weight: 400;
+			style: normal;
+		}
+		line-height: 20px;
+	}
+	&__label {
+		color: $label-color;
+		font: {
+			family: 'Fira Sans', sans-serif;
+			size: 12px;
+			weight: 400;
+			style: normal;
+		}
+	}
+	&__error-message {
+		color: $error-color;
+		display: none;
+		font: {
+			family: 'Fira Sans', sans-serif;
+			size: 12px;
+			weight: 400;
+			style: normal;
+		}
+	}
+
+	&__error-message_show {
+		display: inline-block;
+	}
+}
