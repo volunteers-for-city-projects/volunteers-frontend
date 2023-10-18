@@ -34,9 +34,8 @@ function Main() {
 
 	const handleSendMessage = (values, { resetForm }) => {
 		sendMessage(values)
-			.then((res) => {
+			.then(() => {
 				resetForm();
-				console.log(res);
 			})
 			.catch((err) => console.error(err));
 	};
