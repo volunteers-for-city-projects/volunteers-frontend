@@ -61,7 +61,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				'Проверьте правильность email адреса'
 			),
 		telegram: Yup.string()
-			.min(5, 'Длина поля от 5 до 32 символов')
+			.min(6, 'Длина поля от 5 до 32 символов')
 			.max(32, 'Длина поля от 5 до 32 символов')
 			.matches(/^@[а-яА-ЯёЁ_a-zA-Z]{5,32}$/, 'Введите корректный username'),
 		password: Yup.string()
@@ -110,34 +110,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
 
-			const formData = new FormData();
-			if (values.photo) {
-				formData.append('photo', values.photo);
-			}
-
 			try {
-				// const userResponse = await createUser({
-				// 	first_name: values.firstname,
-				// 	second_name: values.secondname,
-				// 	last_name: values.thirdname,
-				// 	email: values.email,
-				// 	password: values.password,
-				// 	re_password: values.confirm_password,
-				// });
-
-				// // eslint-disable-next-line no-console
-				// console.log('User created:', userResponse);
-
-				// const volunteerResponse = await createVolunteer({
-				// 	user: userResponse,
-				// 	skills: values.skills.split(','),
-				// 	telegram: values.telegram,
-				// 	photo: 'path/to/photo.jpg',
-				// 	date_of_birth: formattedDateOfBirth,
-				// 	phone: values.phone,
-				// 	city: values.city,
-				// });
-
 				const volunteerResponse = await createVolunteer({
 					user: {
 						first_name: values.firstname,
@@ -151,7 +124,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					telegram: values.telegram || '',
 					photo: values.photo || null || '' || undefined,
 					date_of_birth: formattedDateOfBirth,
-					phone: formattedPhone,
+					phone: formattedPhone || '',
 					city: values.city || 1,
 				});
 
@@ -225,7 +198,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					label="Дата рождения"
 					type="text-date"
 					placeholder="01.02.2010"
-					data-default="2019-12-31"
 					inputSize="small"
 					error={formik.errors.birthday}
 					touched={formik.touched.birthday}

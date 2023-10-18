@@ -9,6 +9,7 @@ import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import { createOrganization } from '../../utils/api/signupApi';
 
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -104,7 +105,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			organize_firstname: '',
 			organize_secondname: '',
 			organize_thirdname: '',
-			birthday: '',
 			organize_phone: '',
 			organize_email: '',
 			organize_ogrn: '',
@@ -112,16 +112,35 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			organize_confirm_password: '',
 		},
 		validationSchema: OrganizerSignupFormSchema,
-		onSubmit: (values) => {
-			// eslint-disable-next-line no-console
-			console.log(values);
+		onSubmit: async (values) => {
+			// функция для конверсии номера телефона из инпута в формат телефона на сервере
+			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
+			const formattedPhone = `+${getDigitsOnly(values.organize_phone)}`;
+
+			try {
+				const organizationResponse = await createOrganization({
+					contact_person: {
+						email: values.organize_email,
+						first_name: values.organize_firstname,
+						last_name: values.organize_thirdname,
+						password: values.organize_password,
+						second_name: values.organize_secondname,
+					},
+					title: values.organization,
+					ogrn: values.organize_ogrn,
+					phone: formattedPhone,
+					about: values.about_organization || '',
+					city: 1,
+				});
+
+				// eslint-disable-next-line no-console
+				console.log('Volunteer created:', organizationResponse);
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error('Failed to create user and/or volunteer:', error.message);
+			}
 		},
 	});
-
-	const handleSubmit = (values) => {
-		// eslint-disable-next-line no-console
-		console.log('Данные формы:', values);
-	};
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
@@ -132,7 +151,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			method="post"
 			className="organizer-signup-form"
 			name="organizer-auth-form"
-			onSubmit={handleSubmit}
+			onSubmit={formik.handleSubmit}
 			{...restProps}
 		>
 			<InputGroup title="Общая информация">

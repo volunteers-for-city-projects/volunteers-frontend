@@ -10,10 +10,6 @@ const createUser = async (userData) => {
 			body: JSON.stringify(userData),
 		});
 
-		if (!response.ok) {
-			throw new Error('Ошибка при создании пользователя');
-		}
-
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при создании пользователя: ${error.message}`);
@@ -30,14 +26,26 @@ const createVolunteer = async (volunteerData) => {
 			body: JSON.stringify(volunteerData),
 		});
 
-		if (!response.ok) {
-			throw new Error('Ошибка при создании волонтера');
-		}
-
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при создании волонтера: ${error.message}`);
 	}
 };
 
-export { createUser, createVolunteer };
+const createOrganization = async (organizationData) => {
+	try {
+		const response = await fetch(`${BASE_URL}/organizations/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(organizationData),
+		});
+
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при создании организации: ${error.message}`);
+	}
+};
+
+export { createUser, createVolunteer, createOrganization };

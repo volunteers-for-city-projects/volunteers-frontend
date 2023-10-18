@@ -18,6 +18,11 @@ export default function Input({
 	...restProps
 }) {
 	const [isFocus, setIsFocus] = React.useState(true);
+	// const [pics, setPics] = useState();
+	// function handlePhotoChange(e) {
+	// 	console.log(e.target.files);
+	// 	setPics(URL.createObjectURL(e.target.files[0]));
+	// }
 
 	// классы
 	let inputClass = '';
@@ -47,7 +52,7 @@ export default function Input({
 	let mask;
 	if (type === 'text-date') {
 		mask = '__.__.____';
-	} else if (type === 'phone' || type === 'phone') {
+	} else if (type === 'phone' || type === 'organize_phone') {
 		mask = '+_ (___) ___-__-__';
 	}
 
