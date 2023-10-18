@@ -17,7 +17,7 @@ import {
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-	const [selectedFile, setSelectedFile] = React.useState(null);
+	// const [selectedFile, setSelectedFile] = React.useState(null);
 
 	const VolunteerSignupFormSchema = Yup.object({
 		firstname: Yup.string()
@@ -126,7 +126,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					},
 					skills: values.skills || [],
 					telegram: values.telegram,
-					photo: selectedFile || null || '',
+					photo: values.photo || null || '' || undefined,
 					date_of_birth: formattedDateOfBirth,
 					phone: formattedPhone || '',
 					city: values.city || [] || null || '',
@@ -292,7 +292,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					type="file"
 					inputSize="photo"
 					value={formik.values.confirm_password}
-					setSelectedFile={setSelectedFile}
+					// setSelectedFile={setSelectedFile}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
