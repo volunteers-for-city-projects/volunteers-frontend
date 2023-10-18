@@ -31,7 +31,8 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				excludeEmptyString: true,
 			})
 			.min(10, 'Длина поля от 10 до 750 символов')
-			.max(750, 'Длина поля от 10 до 750 символов'),
+			.max(750, 'Длина поля от 10 до 750 символов')
+			.required('Поле обязательно для заполнения'),
 		organize_firstname: Yup.string()
 			.min(2, 'Длина поля от 2 до 40 символов')
 			.max(40, 'Длина поля от 2 до 40 символов')
@@ -191,6 +192,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				value={formik.values.about_organization}
 				handleChange={formik.handleChange}
 				submitCount={formik.submitCount}
+				required
 			/>
 			<InputGroup title="Контактные данные представителя компании">
 				<Input
