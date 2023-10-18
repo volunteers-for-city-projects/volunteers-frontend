@@ -18,12 +18,6 @@ export default function Input({
 	...restProps
 }) {
 	const [isFocus, setIsFocus] = React.useState(true);
-	// const [pics, setPics] = useState();
-	// function handlePhotoChange(e) {
-	// 	console.log(e.target.files);
-	// 	setPics(URL.createObjectURL(e.target.files[0]));
-	// }
-
 	// классы
 	let inputClass = '';
 	let labelClass = '';
@@ -41,10 +35,6 @@ export default function Input({
 		inputClass = 'large';
 		labelClass = 'large';
 		errorClass = 'large';
-	} else if (inputSize === 'photo') {
-		inputClass = 'photo';
-		labelClass = 'photo';
-		errorClass = 'photo';
 	}
 
 	// маски
@@ -72,7 +62,6 @@ export default function Input({
 				ref={type !== 'text' ? inputRef : null}
 				name={name}
 				type={type}
-				value={value}
 				placeholder={placeholder}
 				className={`input input_type-${inputClass} ${
 					(!isFocus && error) || (submitCount === 1 && error)

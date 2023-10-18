@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import './VolunteerSignupForm.scss';
 
 import Input from '../Input/Input';
+import UploadFile from '../UploadFile/UploadFile';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import {
@@ -16,6 +17,7 @@ import {
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+	const [selectedFile, setSelectedFile] = React.useState(null);
 
 	const VolunteerSignupFormSchema = Yup.object({
 		firstname: Yup.string()
@@ -61,9 +63,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				'Проверьте правильность email адреса'
 			),
 		telegram: Yup.string()
-			.min(6, 'Длина поля от 5 до 32 символов')
+			.min(5, 'Длина поля от 5 до 32 символов')
 			.max(32, 'Длина поля от 5 до 32 символов')
-			.matches(/^@[а-яА-ЯёЁ_a-zA-Z]{5,32}$/, 'Введите корректный username'),
+			.matches(/^@[а-яА-ЯёЁ_a-zA-Z]{4,32}$/, 'Введите корректный username')
+			.required('Поле обязательно для заполнения'),
 		password: Yup.string()
 			.required('Поле обязательно для заполнения')
 			.min(8, 'Длина поля от 8 до 20 символов')
@@ -97,6 +100,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			telegram: '',
 			password: '',
 			confirm_password: '',
+			photo: '',
 			skills: '',
 			city: 1,
 		},
@@ -121,11 +125,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						re_password: values.confirm_password,
 					},
 					skills: values.skills || [],
-					telegram: values.telegram || '',
-					photo: values.photo || null || '' || undefined,
+					telegram: values.telegram,
+					photo: selectedFile || null || '',
 					date_of_birth: formattedDateOfBirth,
 					phone: formattedPhone || '',
-					city: values.city || 1,
+					city: values.city || [] || null || '',
 				});
 
 				// eslint-disable-next-line no-console
@@ -248,6 +252,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
 					autoсomplete="off"
+					required
 				/>
 			</InputGroup>
 			<InputGroup title="Пароль">
@@ -281,15 +286,13 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				/>
 			</InputGroup>
 			<InputGroup title="Фото">
-				<Input
+				<UploadFile
 					name="photo"
 					label=""
 					type="file"
 					inputSize="photo"
-					accept="image/*"
-					onChange={(event) => {
-						formik.setFieldValue('photo', event.currentTarget.files[0]);
-					}}
+					value={formik.values.confirm_password}
+					setSelectedFile={setSelectedFile}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
