@@ -9,7 +9,7 @@ function NavigationLink({ label, path, anchor }) {
 			scroller.scrollTo(anchor, {
 				smooth: true,
 			});
-		}, 500);
+		}, 1);
 	};
 
 	return (
