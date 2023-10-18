@@ -1,39 +1,24 @@
+import PropTypes from 'prop-types';
 import NavBar from '../NavBar/NavBar';
 import Logo from '../Logo/Logo';
 import Contacts from '../Contacts/Contacts';
+import dataNavArray from '../../utils/dataNavArray';
 import './Footer.scss';
 
-const dataNavArray = [
-	{
-		id: 0,
-		label: 'проекты',
-		path: '/projects',
-		anchor: '',
-	},
-	{
-		id: 1,
-		label: 'новости',
-		path: '/',
-		anchor: 'news',
-	},
-	{
-		id: 2,
-		label: 'связаться с нами',
-		path: '/',
-		anchor: 'request',
-	},
-];
-
-function Footer() {
+function Footer({ platformEmail }) {
 	return (
 		<footer className="footer">
 			<div className="footer__container">
 				<Logo />
 				<NavBar dataNavArray={dataNavArray} />
-				<Contacts type="footer" />
+				<Contacts type="footer" platformEmail={platformEmail} />
 			</div>
 		</footer>
 	);
 }
+
+Footer.propTypes = {
+	platformEmail: PropTypes.string.isRequired,
+};
 
 export default Footer;

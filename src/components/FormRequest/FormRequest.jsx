@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import './FormRequest.scss';
 import InputRequest from '../InputRequest/InputRequest';
 
-function FormRequest() {
+function FormRequest({ handleSendMessage }) {
 	const [isFocus, setIsFocus] = useState(true);
 	const RequestSchema = Yup.object().shape({
 		message: Yup.string()
@@ -32,8 +33,22 @@ function FormRequest() {
 			.required('Поле обязательно для заполнения'),
 	});
 
-	const handleSubmit = (values) => {
-		console.log('Данные формы:', values);
+	const handleSubmit = (values, { resetForm }) => {
+		const formattedPhone = values.phone
+			.replaceAll('-', '')
+			.replaceAll(' ', '')
+			.replaceAll('(', '')
+			.replaceAll(')', '');
+
+		handleSendMessage(
+			{
+				name: values.firstName,
+				phone: formattedPhone,
+				email: values.email,
+				text: values.message,
+			},
+			{ resetForm }
+		);
 	};
 
 	return (
@@ -124,5 +139,9 @@ function FormRequest() {
 		</section>
 	);
 }
+
+FormRequest.propTypes = {
+	handleSendMessage: PropTypes.func.isRequired,
+};
 
 export default FormRequest;

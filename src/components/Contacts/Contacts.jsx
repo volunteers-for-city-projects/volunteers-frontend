@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Contacts.scss';
 import telegram from '../../images/icon-tg.svg';
 import vkontakte from '../../images/icon-vk.svg';
 
-function Contacts({ type }) {
+function Contacts({ type, platformEmail }) {
 	return (
 		<div className="contacts">
 			{type === 'main' && <h2 className="contacts__title">Контакты</h2>}
@@ -14,7 +13,7 @@ function Contacts({ type }) {
 						Почта тех. поддержки
 					</p>
 					<p className={`contacts__info contacts__info_type_${type}`}>
-						info@bettertogether.ru
+						{platformEmail}
 					</p>
 				</li>
 				<li className="contacts__item">
@@ -23,18 +22,28 @@ function Contacts({ type }) {
 					</p>
 					<ul className="contacts__icon-list">
 						<li>
-							<Link className="contacts__link" to="/#">
+							<a
+								className="contacts__link"
+								href="https://web.telegram.org/k/"
+								target="_blank"
+								rel="noreferrer"
+							>
 								<img className="contacts__icon" src={telegram} alt="telegram" />
-							</Link>
+							</a>
 						</li>
 						<li>
-							<Link className="contacts__link" to="/#">
+							<a
+								className="contacts__link"
+								href="https://vk.com/"
+								target="_blank"
+								rel="noreferrer"
+							>
 								<img
 									className="contacts__icon"
 									src={vkontakte}
 									alt="vkontakte"
 								/>
-							</Link>
+							</a>
 						</li>
 					</ul>
 				</li>
@@ -45,6 +54,7 @@ function Contacts({ type }) {
 
 Contacts.propTypes = {
 	type: PropTypes.string.isRequired,
+	platformEmail: PropTypes.string.isRequired,
 };
 
 export default Contacts;

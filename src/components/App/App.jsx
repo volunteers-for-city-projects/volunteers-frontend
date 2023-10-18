@@ -7,6 +7,7 @@ import ModalConfirm from '../ModalConfirm/ModalConfirm';
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
 	const [isOpenConfirmLogout, setIsOpenConfirmLogout] = useState(false);
+	const [platformEmail, setPlatformEmail] = useState('');
 	const navigate = useNavigate();
 
 	const handleConfirmLogout = () => {
@@ -30,8 +31,8 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<Outlet />
-			<Footer />
+			<Outlet context={setPlatformEmail} />
+			<Footer platformEmail={platformEmail} />
 			<ModalConfirm
 				isOpen={isOpenConfirmLogout}
 				onSubmitOk={handleLogout}
