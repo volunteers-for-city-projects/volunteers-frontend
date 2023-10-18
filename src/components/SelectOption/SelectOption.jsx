@@ -11,6 +11,7 @@ function SelectOption({
 	options,
 	handleChange,
 	errorMessage,
+	isMulti,
 }) {
 	const [selectedOption, setSelectedOption] = useState(null);
 
@@ -23,12 +24,6 @@ function SelectOption({
 		dropdownIndicator: (baseStyles) => ({
 			...baseStyles,
 			color: '#000',
-		}),
-		option: (baseStyles) => ({
-			...baseStyles,
-			// color: 'black',
-			// border: `1px dotted black`,
-			// height: '100%',
 		}),
 	};
 
@@ -63,6 +58,7 @@ function SelectOption({
 						primary: '#000',
 					},
 				})}
+				isMulti={isMulti}
 			/>
 			<span
 				className={clsx('select-option__error-message', {
@@ -87,20 +83,27 @@ SelectOption.propTypes = {
 	),
 	handleChange: PropTypes.func,
 	errorMessage: PropTypes.string,
+	isMulti: PropTypes.bool,
 };
 
 SelectOption.defaultProps = {
-	label: 'Город*',
+	label: 'Город',
 	width: 280,
 	placeholder: 'Выберите город',
 	options: [
 		{ label: 'Москва', value: 'moscow' },
+		{ label: 'Воронеж', value: 'voronezh' },
+		{ label: 'Тула', value: 'tula' },
 		{ label: 'Санкт-Петербург', value: 'sankt-petersburg' },
 		{ label: 'Екатеринбург', value: 'yekaterinburg' },
+		{ label: 'Курск', value: 'kursk' },
+		{ label: 'Белгород', value: 'belgorod' },
+		{ label: 'Казань', value: 'kazan' },
 	],
 	handleChange: (selectedOption) =>
 		console.log(`Option selected: `, selectedOption),
 	errorMessage: undefined,
+	isMulti: false,
 };
 
 export default SelectOption;
