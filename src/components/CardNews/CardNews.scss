@@ -5,6 +5,10 @@
 		max-width: 540px;
 	}
 	&__card-image {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
 		background-color: $--Light-grey;
 		height: 260px;
 		border-radius: 10px;
@@ -19,11 +23,13 @@
 		margin: 22px 0 0 22px;
 		font-size: 12px;
 		font-weight: 400;
+		font-family: $--Font-Primary;
 		line-height: 17px;
-		cursor: pointer;
+		transition: opacity 100ms ease-in;
 	}
 	&__card-button:hover {
-		opacity: 0.7;
+		opacity: 0.8;
+		cursor: pointer;
 	}
 	&__card-description {
 		margin: 23px 0 50px 0;

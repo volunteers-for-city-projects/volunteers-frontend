@@ -45,10 +45,12 @@
 		padding: 12px;
 		border-radius: 10px;
 		margin-top: 41px;
+		transition: opacity 100ms ease-in;
 	}
 
 	&__button:hover {
 		cursor: pointer;
+		opacity: 0.8;
 	}
 
 	&__inputs {
@@ -67,8 +69,7 @@
 		font-style: normal;
 		font-weight: 400;
 		line-height: 1.18;
-		font-family: 'Fira Sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-			'Cantarell', 'Droid Sans', 'Helvetica Neue', sans-serif;
+		font-family: $--Font-Primary;
 		border-radius: 10px;
 	}
 

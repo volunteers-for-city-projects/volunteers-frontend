@@ -39,8 +39,6 @@
 
 	&__button {
 		width: 286px;
-		height: 58px;
-		cursor: pointer;
 		padding: 20px;
 		box-sizing: border-box;
 		border-radius: 10px;
@@ -51,9 +49,15 @@
 		position: absolute;
 		right: 40px;
 		bottom: 40px;
+		font-family: $--Font-Primary;
+		font-size: 24px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.3;
 	}
 
 	&__button:hover {
-		opacity: 0.7;
+		opacity: 0.8;
+		cursor: pointer;
 	}
 }
