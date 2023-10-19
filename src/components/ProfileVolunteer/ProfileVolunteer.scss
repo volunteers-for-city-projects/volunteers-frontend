@@ -1,5 +1,7 @@
+@import '../../style/variables.scss';
+
 .profile {
-	background: #f6f6f6;
+	background: $--Pale-grey;
 
 	&__container {
 		display: flex;
@@ -7,12 +9,12 @@
 		margin-top: 50px;
 		margin-left: 134px;
 		margin-bottom: 168px;
-		background: white;
+		background: $--White;
 		border-radius: 10px;
 		width: 676px;
 	}
 	&__image {
-		background-color: #d7d7d7;
+		background-color: $--Light-grey;
 		width: 180px;
 		height: 180px;
 		margin-top: 36px;
@@ -23,7 +25,7 @@
 		margin-top: 40px;
 		margin-left: 36px;
 		margin-bottom: 40px;
-		
+
 		&-surname {
 			margin: 0;
 			font-size: 28px;
@@ -35,5 +37,21 @@
 		margin-top: 234px;
 		margin-bottom: 88px;
 		margin-left: 36px;
+	}
+
+	&__wrapper {
+		display: flex;
+		gap: 19px;
+	}
+	&__projects {
+		width: 960px;
+		margin-top: 50px;
+		flex-direction: column;
+	}
+	&__projects-title {
+		margin: 0;
+		font-size: 56px;
+		font-weight: 500;
+		line-height: 100%;
 	}
 }

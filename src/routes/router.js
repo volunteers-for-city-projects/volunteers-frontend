@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../components/App/App';
 import Main from '../components/Main/Main';
@@ -28,7 +27,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'profile',
-				element: <ProfileVolunteer isVolunteer />,
+				element: <ProfileVolunteer />,
 			},
 
 			{
@@ -38,9 +37,5 @@ const router = createBrowserRouter([
 		],
 	},
 ]);
-
-ProfileVolunteer.propTypes = {
-	isVolunteer: PropTypes.bool,
-};
 
 export default router;
