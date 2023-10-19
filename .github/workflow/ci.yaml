@@ -1,0 +1,26 @@
+name: Tests
+
+on:
+  push:
+    branches: [ feature/deployDocker ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Установка зависимостей
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Установка зависимостей
+      run: npm install
+
+    - name: Запуск тестов
+      run: npm run test
+
+    - name: Сборка проекта
+      run: npm run build
