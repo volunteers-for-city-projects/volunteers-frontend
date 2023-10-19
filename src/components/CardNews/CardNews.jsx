@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import './CardNews.scss';
 
@@ -16,17 +17,25 @@ function CardNews({ card }) {
 
 	const formattedDate = `${formattedDay}.${formattedMonth}.${formattedYear}`;
 
+	let tagsData;
+	if (tags) {
+		tagsData = tags.map((item) => ({
+			tag: item,
+			tagId: uuidv4(),
+		}));
+	}
+
 	return (
 		<article className="news__cards-item">
 			<ul className="news__card-image">
-				{tags.map((tag, index) => (
-					// eslint-disable-next-line react/no-array-index-key
-					<li key={index}>
-						<button className="news__card-button" type="button">
-							#{tag}
-						</button>
-					</li>
-				))}
+				{tagsData &&
+					tagsData.map(({ tagId, tag }) => (
+						<li key={tagId}>
+							<button className="news__card-button" type="button">
+								#{tag}
+							</button>
+						</li>
+					))}
 			</ul>
 			<h3 className="news__card-description">{title}</h3>
 			<p className="news__card-date">{formattedDate}</p>

@@ -24,8 +24,8 @@ function Slider({ news }) {
 			onSwiper={(swiper) => console.log(swiper)}
 		>
 			{newsData &&
-				newsData.map((card) => (
-					<SwiperSlide key={card.cardId}>
+				newsData.map(({ cardId, ...card }) => (
+					<SwiperSlide key={cardId}>
 						<CardNews card={card} />
 					</SwiperSlide>
 				))}
