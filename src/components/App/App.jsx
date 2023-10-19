@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import Main from '../Main/Main';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import FormRequest from '../FormRequest/FormRequest';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
 	const [isOpenConfirmLogout, setIsOpenConfirmLogout] = useState(false);
+	const [platformEmail, setPlatformEmail] = useState('');
 	const navigate = useNavigate();
 
 	const handleConfirmLogout = () => {
@@ -32,13 +31,8 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<div>
-				<p>App component</p>
-			</div>
-			<Main />
-			<FormRequest />
-			<Outlet />
-			<Footer />
+			<Outlet context={setPlatformEmail} />
+			<Footer platformEmail={platformEmail} />
 			<ModalConfirm
 				isOpen={isOpenConfirmLogout}
 				onSubmitOk={handleLogout}
