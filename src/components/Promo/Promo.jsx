@@ -7,7 +7,9 @@ function Promo({ plarformPromo }) {
 		<section className="promo">
 			<div className="promo__container">
 				<h1 className="promo__title">ЛучшеВместе</h1>
-				<p className="promo__subtitle">Слоган платформы?</p>
+				<p className="promo__subtitle">
+					Городские инициативы - шаг к переменам
+				</p>
 				<ul className="promo__list">
 					<li className="promo__item">
 						<h2 className="promo__item-title">{projectCount}</h2>
