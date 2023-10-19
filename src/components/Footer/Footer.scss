@@ -1,0 +1,16 @@
+@import '../../style/variables.scss';
+
+.footer {
+	background-color: $--Light-grey;
+	margin-top: auto;
+
+	&__container {
+		box-sizing: border-box;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 1920px;
+		margin: 0 auto;
+		padding: 30px 70px;
+	}
+}

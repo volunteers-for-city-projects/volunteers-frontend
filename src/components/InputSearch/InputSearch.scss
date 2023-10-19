@@ -1,0 +1,50 @@
+@import '../../style/variables.scss';
+
+.form-search {
+	box-sizing: border-box;
+	padding: 0 14px;
+	display: flex;
+	align-items: center;
+	width: 485px;
+	height: 36px;
+	border-radius: 10px;
+	background-color: $--White;
+	margin-left: 33px;
+	margin-right: 33px;
+
+	&__input-search {
+		width: 433px;
+		border: none;
+		background: $--White;
+		font-family: $--Font-Primary;
+		font-size: 17px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.18;
+	}
+
+	&__input-search:focus {
+		outline: none;
+	}
+
+	&__button-search {
+		width: 24px;
+		height: 24px;
+		background-color: transparent;
+		border: none;
+		background-image: url(../../images/header-search.svg);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 24px 24px;
+	}
+
+	@media screen and (max-width: 1920px) {
+		&__form-search {
+			width: calc(264px + (485 - 264) * (100vw - 1366px) / (1920 - 1366));
+		}
+
+		&__input-search {
+			width: calc(212px + (433 - 212) * (100vw - 1366px) / (1920 - 1366));
+		}
+	}
+}
