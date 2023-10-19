@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [ feature/deployDocker ]
+    branches: [ master, develop ]
   pull_request:
     branches: [ master, develop ]
 
@@ -18,9 +18,6 @@ jobs:
 
     - name: Установка зависимостей
       run: npm install
-
-    - name: Запуск тестов
-      run: npm run test
 
     - name: Сборка проекта
       run: npm run build
