@@ -9,6 +9,7 @@ import dataVolunteer from '../../utils/dataVolunteer';
 function ProfileVolunteer({ isVolunteer }) {
 	return (
 		<section className="profile">
+			{/* Переключить на волонтера или организатора isVolunteer или !isVolunteer */}
 			{isVolunteer ? (
 				<>
 					<ProfileMenu title="Личный кабинет волонтера" />
@@ -28,7 +29,7 @@ function ProfileVolunteer({ isVolunteer }) {
 							</div>
 						</div>
 						<div className="profile__projects">
-							<h2 className="profile__projects-title">Ваши проекты</h2>
+							<h2 className="profile__projects-title">Проекты</h2>
 						</div>
 					</div>
 				</>
