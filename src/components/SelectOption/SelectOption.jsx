@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import clsx from 'clsx';
 
 function SelectOption({
@@ -14,7 +14,7 @@ function SelectOption({
 	isMulti,
 	required,
 }) {
-	const [selectedOption, setSelectedOption] = useState(null);
+	// const [selectedOption, setSelectedOption] = useState(null);
 
 	const customStyles = {
 		control: (baseStyles) => ({
@@ -54,10 +54,9 @@ function SelectOption({
 
 	const changeOption = useCallback(
 		(option) => {
-			setSelectedOption(option);
-			handleChange(selectedOption);
+			handleChange(option); // Передать выбранный вариант в функцию handleChange
 		},
-		[handleChange, selectedOption]
+		[handleChange]
 	);
 
 	return (

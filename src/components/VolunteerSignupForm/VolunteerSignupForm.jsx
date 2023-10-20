@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import moment from 'moment';
@@ -13,14 +13,49 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import {
 	// createUser,
 	createVolunteer,
+	fetchSkills,
+	fetchCities,
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
-import citiesArray from '../../utils/citiesArray';
-import skillsArray from '../../utils/skillsArray';
+// import citiesArray from '../../utils/citiesArray';
+// import skillsArray from '../../utils/skillsArray';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+	const [cities, setCities] = useState([]);
+	const [skills, setSkills] = useState([]);
+
 	// const [selectedFile, setSelectedFile] = React.useState(null);
+
+	const handleCheckboxClick = () => {
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const citiesResponse = await fetchCities();
+				const skillsResponse = await fetchSkills();
+
+				const citiesData = citiesResponse.map((item) => ({
+					label: item.name,
+					value: item.id.toString(),
+				}));
+
+				const skillsData = skillsResponse.map((item) => ({
+					label: item.name,
+					value: item.id.toString(),
+				}));
+
+				setCities(citiesData);
+				setSkills(skillsData);
+			} catch (error) {
+				console.error('Ошибка при загрузке данных:', error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	const VolunteerSignupFormSchema = Yup.object({
 		firstname: Yup.string()
@@ -104,8 +139,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			password: '',
 			confirm_password: '',
 			photo: '',
-			skills: '',
-			city: 1,
+			skills: [],
+			city: null,
 		},
 		validationSchema: VolunteerSignupFormSchema,
 		onSubmit: async (values) => {
@@ -118,7 +153,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
 
 			try {
-				const volunteerResponse = await createVolunteer({
+				await createVolunteer({
 					user: {
 						first_name: values.firstname,
 						second_name: values.secondname,
@@ -127,26 +162,19 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						password: values.password,
 						re_password: values.confirm_password,
 					},
-					skills: values.skills || [],
 					telegram: values.telegram,
 					photo: values.photo || null || '' || undefined,
 					date_of_birth: formattedDateOfBirth,
 					phone: formattedPhone || '',
+					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
-
-				// eslint-disable-next-line no-console
-				console.log('Volunteer created:', volunteerResponse);
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to create user and/or volunteer:', error.message);
 			}
 		},
 	});
-
-	const handleCheckboxClick = () => {
-		setIsCheckboxChecked(!isCheckboxChecked);
-	};
 
 	return (
 		<form
@@ -304,15 +332,26 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					label="Навыки"
 					placeholder="Выберите навыки"
 					width={280}
-					options={skillsArray}
+					options={skills}
 					isMulti
+					value={formik.values.skills}
+					touched={formik.touched.skills}
+					handleChange={(selectedOption) => {
+						const selectedValues = selectedOption.map((option) => option.value);
+						formik.setFieldValue('skills', selectedValues);
+					}}
 				/>
 				<SelectOption
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
 					width={280}
-					options={citiesArray}
+					options={cities}
+					touched={formik.touched.city}
+					value={formik.values.city}
+					handleChange={(selectedOption) => {
+						formik.setFieldValue('city', Number(selectedOption.value));
+					}}
 				/>
 			</InputGroup>
 			<div className=" volunteer-signup-form__text-content">
