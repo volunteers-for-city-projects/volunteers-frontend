@@ -1,6 +1,6 @@
 @import '../../style/variables.scss';
 
-.confirm {
+.modal {
 	display: flex;
 	background-color: rgba(0, 0, 0, 0.5);
 	position: fixed;
@@ -32,12 +32,25 @@
 		flex-direction: column;
 		width: 1048px;
 		background-color: $--White;
-		padding: 50px 30px;
-		gap: 50px;
+		padding: 30px 30px 50px;
+		gap: 40px;
 		border-radius: 10px;
 		box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
 		cursor: default;
+	}
+
+	&__title-container {
+		display: flex;
+		justify-content: space-between;
 		align-items: center;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 28px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 1;
 	}
 
 	&__exit {
@@ -49,15 +62,34 @@
 		background-size: 24px 24px;
 		width: 24px;
 		height: 24px;
-		align-self: flex-end;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&__image {
+		height: 325px;
+		width: 580px;
+		object-fit: cover;
+		object-position: center;
 	}
 
 	&__text {
-		margin: 0;
+		margin: 30px 0 0;
 		font-size: 28px;
 		font-style: normal;
 		font-weight: 500;
 		line-height: 1;
+		text-align: center;
+	}
+
+	&__text_type_info {
+		font-size: 23px;
+		font-weight: 400;
+		max-width: 790px;
 	}
 
 	&__buttons {
@@ -76,10 +108,32 @@
 		line-height: 1.3;
 		font-family: $--Font-Primary;
 		transition: opacity 100ms ease-in;
+		background-color: $--Primary;
+		color: $--White;
+		margin-top: 40px;
+	}
+
+	&__button_type_success {
+		width: 380px;
+		padding: 9px 20px;
+	}
+
+	&__button-resend {
+		box-sizing: border-box;
+		background-color: transparent;
+		border: none;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 1.6;
+		font-family: $--Font-Primary;
+		transition: opacity 100ms ease-in;
+		margin-top: 40px;
 	}
 
 	&__button:hover,
-	&__exit:hover {
+	&__exit:hover,
+	&__button-resend:hover {
 		cursor: pointer;
 		opacity: 0.8;
 	}

@@ -2,27 +2,48 @@ import { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import ModalConfirm from '../ModalConfirm/ModalConfirm';
+import Modal from '../Modal/Modal';
+import example from '../../images/example.jpg';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
-	const [isOpenConfirmLogout, setIsOpenConfirmLogout] = useState(false);
+	const [modal, setModal] = useState({
+		isOpen: false,
+		type: 'init',
+		state: 'info',
+		title: 'init',
+		onSubmit: () => {},
+		imageLink: example,
+	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const navigate = useNavigate();
 
-	const handleConfirmLogout = () => {
-		setIsOpenConfirmLogout(!isOpenConfirmLogout);
-	};
-
-	const closeConfirm = () => {
-		setIsOpenConfirmLogout(!isOpenConfirmLogout);
-	};
-
 	const handleLogout = (event) => {
 		event.preventDefault();
-		setIsOpenConfirmLogout(!isOpenConfirmLogout);
+		setModal((prevModal) => ({
+			...prevModal,
+			isOpen: false,
+		}));
 		navigate('/');
 		setIsLoggedIn(false);
+	};
+
+	const handleConfirmLogout = () => {
+		setModal({
+			isOpen: true,
+			type: 'confirm',
+			state: 'info',
+			title: 'Выход',
+			onSubmit: handleLogout,
+			imageLink: example,
+		});
+	};
+
+	const closeModal = () => {
+		setModal((prevModal) => ({
+			...prevModal,
+			isOpen: false,
+		}));
 	};
 
 	return (
@@ -33,12 +54,7 @@ function App() {
 			/>
 			<Outlet context={setPlatformEmail} />
 			<Footer platformEmail={platformEmail} />
-			<ModalConfirm
-				isOpen={isOpenConfirmLogout}
-				onSubmitOk={handleLogout}
-				onClickExit={closeConfirm}
-				closeConfirm={closeConfirm}
-			/>
+			<Modal modal={modal} closeModal={closeModal} />
 		</>
 	);
 }
