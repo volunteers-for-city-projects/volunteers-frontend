@@ -20,6 +20,7 @@ function ProfileOrganization() {
 							label="Редактировать профиль"
 							color="white"
 							size="medium"
+							minWidth={380}
 						/>
 					</div>
 				</div>
