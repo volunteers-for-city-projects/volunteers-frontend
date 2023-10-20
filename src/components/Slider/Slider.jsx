@@ -5,7 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/scss';
 import CardNews from '../CardNews/CardNews';
-import cardsArray from '../../utils/cardsArray';
+import { cardsArray } from '../../utils/data';
+import './Slider.scss';
 
 function Slider({ news }) {
 	let newsData;
@@ -25,7 +26,7 @@ function Slider({ news }) {
 		>
 			{newsData &&
 				newsData.map(({ cardId, ...card }) => (
-					<SwiperSlide key={cardId}>
+					<SwiperSlide key={cardId} className="custom-slider">
 						<CardNews card={card} />
 					</SwiperSlide>
 				))}

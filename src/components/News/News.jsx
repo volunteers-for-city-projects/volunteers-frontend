@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import './News.scss';
 import Slider from '../Slider/Slider';
-import cardsArray from '../../utils/cardsArray';
+import { cardsArray } from '../../utils/data';
 
 function News({ news }) {
 	return (

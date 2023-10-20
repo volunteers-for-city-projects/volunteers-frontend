@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import NavBar from '../NavBar/NavBar';
 import Logo from '../Logo/Logo';
 import Contacts from '../Contacts/Contacts';
-import dataNavArray from '../../utils/dataNavArray';
+import { dataNavArray } from '../../utils/data';
 import './Footer.scss';
 
 function Footer({ platformEmail }) {

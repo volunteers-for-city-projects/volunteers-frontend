@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import './AboutProject.scss';
 import CardValues from '../CardValues/CardValues';
-import valuesArray from '../../utils/valuesArray';
+import { valuesArray } from '../../utils/data';
 
 function AboutProject({ plarformAbout }) {
 	const { aboutUs, valuations } = plarformAbout;
