@@ -14,6 +14,9 @@ import {
 	// createUser,
 	createVolunteer,
 } from '../../utils/api/signupApi';
+import SelectOption from '../SelectOption/SelectOption';
+import citiesArray from '../../utils/citiesArray';
+import skillsArray from '../../utils/skillsArray';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -296,21 +299,20 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
-				<Input
+				<SelectOption
 					name="skills"
 					label="Навыки"
-					type="text"
 					placeholder="Выберите навыки"
-					inputSize="small"
-					// required
+					width={280}
+					options={skillsArray}
+					isMulti
 				/>
-				<Input
+				<SelectOption
 					name="city"
 					label="Город"
-					type="text"
 					placeholder="Выберите город"
-					inputSize="small"
-					// required
+					width={280}
+					options={citiesArray}
 				/>
 			</InputGroup>
 			<div className=" volunteer-signup-form__text-content">
