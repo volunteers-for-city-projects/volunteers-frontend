@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { PatternFormat } from 'react-number-format';
+import clsx from 'clsx';
 import './InputRequest.scss';
 
 function InputRequest({
@@ -22,37 +23,31 @@ function InputRequest({
 			{label}
 			{isMask ? (
 				<PatternFormat
-					className={`input-request__input ${
-						(!isFocus && error) || (submitCount === 1 && error)
-							? 'input-request__input_error'
-							: ''
-					}`}
+					className={clsx('input-request__input', {
+						'input-request__input_error':
+							(!isFocus && error) || (submitCount === 1 && error),
+					})}
 					value={value}
 					format="+7 (###) ###-##-##"
 					placeholder={placeholder}
 					mask="_"
 					onChange={handleChange}
 					name={name}
-					onBlur={() => {
-						setIsFocus(false);
-					}}
+					onBlur={() => setIsFocus(false)}
 				/>
 			) : (
 				<input
-					className={`input-request__input ${
-						(!isFocus && error) || (submitCount === 1 && error)
-							? 'input-request__input_error'
-							: ''
-					}`}
+					className={clsx('input-request__input', {
+						'input-request__input_error':
+							(!isFocus && error) || (submitCount === 1 && error),
+					})}
 					name={name}
 					type={type}
 					id={htmlFor}
 					placeholder={placeholder}
 					value={value}
 					onChange={handleChange}
-					onBlur={() => {
-						setIsFocus(false);
-					}}
+					onBlur={() => setIsFocus(false)}
 				/>
 			)}
 			<span className="input-request__error">

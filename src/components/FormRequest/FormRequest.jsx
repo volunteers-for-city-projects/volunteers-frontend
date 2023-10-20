@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import './FormRequest.scss';
+import clsx from 'clsx';
 import InputRequest from '../InputRequest/InputRequest';
 
 function FormRequest({ handleSendMessage }) {
@@ -68,12 +69,11 @@ function FormRequest({ handleSendMessage }) {
 					<Form className="form-request" name="form-request">
 						<div>
 							<textarea
-								className={`form-request__textarea ${
-									(!isFocus && errors.message) ||
-									(submitCount === 1 && errors.message)
-										? 'form-request__textarea_error'
-										: ''
-								}`}
+								className={clsx('form-request__textarea', {
+									'form-request__textarea_error':
+										(!isFocus && errors.message) ||
+										(submitCount === 1 && errors.message),
+								})}
 								name="message"
 								cols="93"
 								rows="14"
@@ -88,7 +88,7 @@ function FormRequest({ handleSendMessage }) {
 							</textarea>
 							<p className="form-request__error">
 								{(!isFocus && errors.message) ||
-									(submitCount === 1 && errors.message)}
+									(submitCount === 1 && errors.message && errors.message)}
 							</p>
 						</div>
 						<div className="form-request__inputs">
