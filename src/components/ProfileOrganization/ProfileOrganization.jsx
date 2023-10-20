@@ -13,6 +13,7 @@ function ProfileOrganization() {
 					<div className="profile__name">
 						<h2 className="profile__name-surname">ООО "Организация"</h2>
 					</div>
+
 					<ProfileData dataArray={dataOrganization} />
 					<div className="profile__button">
 						<Pushbutton

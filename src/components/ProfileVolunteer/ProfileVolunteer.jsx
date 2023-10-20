@@ -25,11 +25,12 @@ function ProfileVolunteer({ isVolunteer }) {
 									label="Редактировать профиль"
 									color="white"
 									size="medium"
+									minWidth={380}
 								/>
 							</div>
 						</div>
 						<div className="profile__projects">
-							<h2 className="profile__projects-title">Проекты</h2>
+							<h2 className="profile__projects-title">Ваши проекты</h2>
 						</div>
 					</div>
 				</>

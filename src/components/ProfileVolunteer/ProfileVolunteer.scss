@@ -1,7 +1,7 @@
 @import '../../style/variables.scss';
 
 .profile {
-	background: $--Pale-grey;
+	background: #fdfdfd;
 
 	&__container {
 		display: flex;
@@ -12,6 +12,7 @@
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
+		min-height: 921px;
 	}
 	&__image {
 		background-color: $--Light-grey;
@@ -22,19 +23,24 @@
 		border-radius: 10px;
 	}
 	&__name {
-		margin-top: 40px;
+		display: flex;
+
+		align-items: center;
+		margin-top: 25px;
 		margin-left: 36px;
 		margin-bottom: 40px;
 
 		&-surname {
 			margin: 0;
+
+			align-items: center;
 			font-size: 28px;
 			font-weight: 500;
 			line-height: 28px;
 		}
 	}
 	&__button {
-		margin-top: 234px;
+		margin-top: 240px;
 		margin-bottom: 88px;
 		margin-left: 36px;
 	}
