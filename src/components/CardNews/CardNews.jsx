@@ -2,30 +2,51 @@ import PropTypes from 'prop-types';
 import './CardNews.scss';
 
 function CardNews({ card }) {
+	const { tags, title, created_at: date } = card;
+
+	const originalDate = new Date(date);
+
+	const day = originalDate.getDate();
+	const month = originalDate.getMonth() + 1;
+	const year = originalDate.getFullYear() % 100;
+
+	const formattedDay = day < 10 ? `0${day}` : day;
+	const formattedMonth = month < 10 ? `0${month}` : month;
+	const formattedYear = year < 10 ? `0${year}` : year;
+
+	const formattedDate = `${formattedDay}.${formattedMonth}.${formattedYear}`;
+
 	return (
 		<article className="news__cards-item">
-			<div className="news__card-image">
-				<button className="news__card-button">{card.tag}</button>
-			</div>
-			<h3 className="news__card-description">{card.title}</h3>
-			<p className="news__card-date">{card.date}</p>
+			<ul className="news__card-image">
+				{tags.map((tag, index) => (
+					// eslint-disable-next-line react/no-array-index-key
+					<li key={index}>
+						<button className="news__card-button" type="button">
+							#{tag}
+						</button>
+					</li>
+				))}
+			</ul>
+			<h3 className="news__card-description">{title}</h3>
+			<p className="news__card-date">{formattedDate}</p>
 		</article>
 	);
 }
 
 CardNews.propTypes = {
 	card: PropTypes.shape({
-		tag: PropTypes.string,
+		tags: PropTypes.arrayOf(PropTypes.string),
 		title: PropTypes.string,
-		date: PropTypes.string,
+		created_at: PropTypes.string,
 	}),
 };
 
 CardNews.defaultProps = {
 	card: PropTypes.shape({
-		tag: '',
+		tags: [''],
 		title: '',
-		date: '',
+		created_at: '',
 	}),
 };
 

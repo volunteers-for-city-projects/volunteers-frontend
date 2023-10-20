@@ -1,6 +1,8 @@
+@import '../../style/variables.scss';
+
 .our-values__item {
 	width: 818px;
-	background-color: #949494;
+	background-color: $--Light-grey;
 	border-radius: 10px;
 	padding: 40px 28px;
 	box-sizing: border-box;

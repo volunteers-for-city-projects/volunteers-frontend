@@ -1,5 +1,7 @@
+@import '../../style/variables.scss';
+
 .footer {
-	background-color: #d7d7d7;
+	background-color: $--Light-grey;
 	margin-top: auto;
 
 	&__container {

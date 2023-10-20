@@ -5,9 +5,11 @@ import './NavigationLink.scss';
 
 function NavigationLink({ label, path, anchor }) {
 	const scrollToAnchor = () => {
-		scroller.scrollTo(anchor, {
-			smooth: true,
-		});
+		setTimeout(() => {
+			scroller.scrollTo(anchor, {
+				smooth: true,
+			});
+		}, 1);
 	};
 
 	return (

@@ -1,0 +1,79 @@
+.text-area {
+	margin-top: 2px;
+
+	min-width: 580px;
+	max-width: 580px;
+	height: 175px;
+
+	box-sizing: border-box;
+
+	padding: 16px;
+
+	background-color: #fff;
+
+	border-radius: 10px;
+	border: 1px solid #000;
+
+	font-family: Fira Sans;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 17.746px; /* 147.883% */
+
+	&::placeholder {
+		color: #949494;
+		font-family: Fira Sans;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 17.746px; /* 147.883% */
+	}
+
+	&_error {
+		border: 1.613px solid #bf0000;
+
+		&-message {
+			height: 10px;
+
+			display: block;
+
+			margin-top: 2px;
+
+			color: #bf0000;
+			font-family: Fira Sans;
+			font-size: 10px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 10px; /* 100% */
+
+			word-wrap: break-word;
+
+			text-overflow: ellipsis;
+			white-space: wrap;
+			overflow: hidden;
+		}
+	}
+}
+
+.textarea-label {
+	display: block;
+
+	width: 280px;
+	height: 18px;
+
+	margin-top: 5px;
+
+	color: #949494;
+
+	font-family: Fira Sans;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 17.746px; /* 147.883% */
+
+	word-wrap: break-word;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

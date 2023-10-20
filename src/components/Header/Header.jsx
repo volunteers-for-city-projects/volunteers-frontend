@@ -4,28 +4,8 @@ import './Header.scss';
 import Logo from '../Logo/Logo';
 import InputSearch from '../InputSearch/InputSearch';
 import NavBar from '../NavBar/NavBar';
-import Button from './Button/Button';
-
-const dataNavArray = [
-	{
-		id: 0,
-		label: 'проекты',
-		path: '/projects',
-		anchor: '',
-	},
-	{
-		id: 1,
-		label: 'новости',
-		path: '/',
-		anchor: 'news',
-	},
-	{
-		id: 2,
-		label: 'связаться с нами',
-		path: '/',
-		anchor: 'request',
-	},
-];
+import dataNavArray from '../../utils/dataNavArray';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function Header({ isLoggedIn, handleConfirmLogout }) {
 	return (
@@ -58,9 +38,10 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 							>
 								ЛК
 							</Link>
-							<Button
+							<Pushbutton
 								label="Выход"
-								type="logout"
+								color="#FFF"
+								size="small"
 								onClick={handleConfirmLogout}
 							/>
 						</>
