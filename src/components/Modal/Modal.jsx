@@ -4,6 +4,7 @@ import './Modal.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import modalExit from '../../images/modals/exit.png';
 import modalSend from '../../images/modals/send.png';
+import modalSuccess from '../../images/modals/success.png';
 
 function Modal({ modal, closeModal }) {
 	const stopPropagation = (event) => {
@@ -16,6 +17,7 @@ function Modal({ modal, closeModal }) {
 		confirm: {
 			info: {
 				title: 'Вы действительно хотите выйти из личного кабинета?',
+				image: modalExit,
 			},
 		},
 		password: {
@@ -23,14 +25,17 @@ function Modal({ modal, closeModal }) {
 				title:
 					'На почту example@mail.ru отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.',
 				textButton: 'Письмо не пришло, отправить еще раз',
+				image: modalSend,
 			},
 			success: {
 				title: 'Пароль успешно изменён!',
 				textButton: 'Войти',
+				image: modalSuccess,
 			},
 			error: {
 				title:
 					'Мы не смогли найти пользователя с почтой example@email.ru. Проверьте правильность адреса или обратитесь в техподдержку.',
+				image: modalSend,
 			},
 		},
 		email: {
@@ -38,10 +43,12 @@ function Modal({ modal, closeModal }) {
 				title:
 					'На email examplemail.ru отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.',
 				textButton: 'Письмо не пришло, отправить еще раз',
+				image: modalSend,
 			},
 			success: {
 				title: 'Ура! Адрес электронной почты подтвержден!',
 				textButton: 'Войти в личный кабинет',
+				image: modalSuccess,
 			},
 		},
 		init: {
@@ -167,8 +174,9 @@ function Modal({ modal, closeModal }) {
 						<img
 							className={clsx('modal__image', {
 								modal__image_type_confirm: type === 'confirm',
+								modal__image_type_success: state === 'success',
 							})}
-							src={type === 'confirm' ? modalExit : modalSend}
+							src={contentText[type][state].image}
 							alt={`${type} ${state}`}
 						/>
 						{contentMap[type][state]}

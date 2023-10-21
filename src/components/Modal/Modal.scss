@@ -72,8 +72,8 @@
 	}
 
 	&__image {
-		height: 325px;
-		width: 580px;
+		height: 80px;
+		width: 150px;
 		object-fit: contain;
 		object-position: center;
 	}
@@ -81,6 +81,11 @@
 	&__image_type_confirm {
 		width: 130.371px;
 		height: 169.25px;
+	}
+
+	&__image_type_success {
+		width: 156.12;
+		height: 80px;
 	}
 
 	&__text {
@@ -128,6 +133,8 @@
 		line-height: 1.6;
 		font-family: $--Font-Primary;
 		transition: opacity 100ms ease-in;
+		text-decoration: underline;
+		color: $--Secondary;
 	}
 
 	&__button:hover,
