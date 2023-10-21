@@ -2,7 +2,7 @@
 
 .modal {
 	display: flex;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(236, 242, 251, 0.7);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -30,12 +30,12 @@
 		font-family: $--Font-Primary;
 		display: flex;
 		flex-direction: column;
-		width: 1048px;
+		width: 775px;
 		background-color: $--White;
 		padding: 30px 30px 50px;
 		gap: 40px;
 		border-radius: 10px;
-		box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+		border: 1px solid $--Primary;
 		cursor: default;
 	}
 
@@ -68,33 +68,38 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		gap: 50px;
 	}
 
 	&__image {
 		height: 325px;
 		width: 580px;
-		object-fit: cover;
+		object-fit: contain;
 		object-position: center;
 	}
 
+	&__image_type_confirm {
+		width: 130.371px;
+		height: 169.25px;
+	}
+
 	&__text {
-		margin: 30px 0 0;
-		font-size: 28px;
+		margin: 0;
+		font-size: 23px;
 		font-style: normal;
-		font-weight: 500;
+		font-weight: 400;
 		line-height: 1;
 		text-align: center;
 	}
 
-	&__text_type_info {
-		font-size: 23px;
-		font-weight: 400;
-		max-width: 790px;
+	&__text_type_confirm {
+		font-size: 28px;
+		font-weight: 500;
 	}
 
 	&__buttons {
 		display: flex;
-		gap: 55px;
+		gap: 20px;
 	}
 
 	&__button {
@@ -113,11 +118,6 @@
 		margin-top: 40px;
 	}
 
-	&__button_type_success {
-		width: 380px;
-		padding: 9px 20px;
-	}
-
 	&__button-resend {
 		box-sizing: border-box;
 		background-color: transparent;
@@ -128,7 +128,6 @@
 		line-height: 1.6;
 		font-family: $--Font-Primary;
 		transition: opacity 100ms ease-in;
-		margin-top: 40px;
 	}
 
 	&__button:hover,

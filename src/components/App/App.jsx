@@ -3,7 +3,6 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
-import example from '../../images/example.jpg';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -13,7 +12,6 @@ function App() {
 		state: 'info',
 		title: 'init',
 		onSubmit: () => {},
-		imageLink: example,
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const navigate = useNavigate();
@@ -35,7 +33,6 @@ function App() {
 			state: 'info',
 			title: 'Выход',
 			onSubmit: handleLogout,
-			imageLink: example,
 		});
 	};
 

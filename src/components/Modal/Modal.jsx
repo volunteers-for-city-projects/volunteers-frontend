@@ -1,143 +1,136 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import './Modal.scss';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
+import modalExit from '../../images/modals/exit.png';
+import modalSend from '../../images/modals/send.png';
 
 function Modal({ modal, closeModal }) {
 	const stopPropagation = (event) => {
 		event.stopPropagation();
 	};
 
-	const { isOpen, type, state, title, imageLink, onSubmit } = modal;
+	const { isOpen, type, state, title, onSubmit } = modal;
+
+	const contentText = {
+		confirm: {
+			info: {
+				title: 'Вы действительно хотите выйти из личного кабинета?',
+			},
+		},
+		password: {
+			info: {
+				title:
+					'На почту example@mail.ru отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.',
+				textButton: 'Письмо не пришло, отправить еще раз',
+			},
+			success: {
+				title: 'Пароль успешно изменён!',
+				textButton: 'Войти',
+			},
+			error: {
+				title:
+					'Мы не смогли найти пользователя с почтой example@email.ru. Проверьте правильность адреса или обратитесь в техподдержку.',
+			},
+		},
+		email: {
+			info: {
+				title:
+					'На email examplemail.ru отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.',
+				textButton: 'Письмо не пришло, отправить еще раз',
+			},
+			success: {
+				title: 'Ура! Адрес электронной почты подтвержден!',
+				textButton: 'Войти в личный кабинет',
+			},
+		},
+		init: {
+			info: {
+				title: 'Стартовое модальное окно',
+			},
+		},
+	};
 
 	const contentMap = {
 		confirm: {
 			info: (
-				<form
-					className="modal__form"
-					name={`${type}-${state}`}
-					onSubmit={onSubmit}
-				>
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
-					/>
-					<p className="modal__text">
-						Вы действительно хотите выйти из личного кабинета?
+				<>
+					<p className="modal__text modal__text_type_confirm">
+						{contentText[type][state].title}
 					</p>
 					<div className="modal__buttons">
-						<button
-							className="modal__button modal__button_type_ok"
+						<Pushbutton
+							label="Да"
+							color="#000"
+							backgroundColor="transparent"
+							size="pre-large"
 							type="submit"
-						>
-							Да
-						</button>
-						<button
-							className="modal__button modal__button_type_no"
-							type="button"
+							minWidth="198px"
+							border="1px solid #A6C94F"
+						/>
+						<Pushbutton
+							label="Нет"
+							color="#333"
+							backgroundColor="#A6C94F"
+							size="pre-large"
 							onClick={closeModal}
-						>
-							Нет
-						</button>
+							type="button"
+							minWidth="198px"
+							border="none"
+						/>
 					</div>
-				</form>
+				</>
 			),
 		},
 		password: {
 			info: (
-				<form
-					className="modal__form"
-					name={`${type}-${state}`}
-					onSubmit={onSubmit}
-				>
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
-					/>
-					<p className="modal__text modal__text_type_info">
-						На почту example@mail.ru отправлено письмо со ссылкой. Перейдите по
-						ссылке в письме для сброса пароля.
-					</p>
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
 					<button className="modal__button-resend" type="submit">
-						Письмо не пришло, отправить еще раз
+						{contentText[type][state].textButton}
 					</button>
-				</form>
+				</>
 			),
 			success: (
-				<form
-					className="modal__form"
-					name={`${type}-${state}`}
-					onSubmit={onSubmit}
-				>
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
-					/>
-					<p className="modal__text">Пароль успешно изменён!</p>
-					<button
-						className="modal__button modal__button_type_success"
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
+					<Pushbutton
+						label={contentText[type][state].textButton}
+						color="#333"
+						backgroundColor="#A6C94F"
+						size="pre-large"
+						onClick={closeModal}
 						type="submit"
-					>
-						Войти
-					</button>
-				</form>
-			),
-			error: (
-				<div className="modal__form">
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
+						minWidth="399px"
+						border="none"
 					/>
-					<p className="modal__text modal__text_type_info">
-						Мы не смогли найти пользователя с почтой example@email.ru. Проверьте
-						правильность адреса или обратитесь в техподдержку.
-					</p>
-				</div>
+				</>
 			),
+			error: <p className="modal__text">{contentText[type][state].title}</p>,
 		},
 		email: {
 			info: (
-				<form
-					className="modal__form"
-					name={`${type}-${state}`}
-					onSubmit={onSubmit}
-				>
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
-					/>
-					<p className="modal__text modal__text_type_info">
-						На email examplemail.ru отправлено письмо. Перейдите по ссылке в
-						письме для подтверждения всего email.
-					</p>
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
 					<button className="modal__button-resend" type="submit">
-						Письмо не пришло, отправить еще раз
+						{contentText[type][state].textButton}
 					</button>
-				</form>
+				</>
 			),
 			success: (
-				<form
-					className="modal__form"
-					name={`${type}-${state}`}
-					onSubmit={onSubmit}
-				>
-					<img
-						className="modal__image"
-						src={imageLink}
-						alt={`${type} ${state}`}
-					/>
-					<p className="modal__text">Адрес электронной почты подтвержден!</p>
-					<button
-						className="modal__button modal__button_type_success"
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
+					<Pushbutton
+						label={contentText[type][state].textButton}
+						color="#333"
+						backgroundColor="#A6C94F"
+						size="pre-large"
+						onClick={closeModal}
 						type="submit"
-					>
-						Вернуться на главную
-					</button>
-				</form>
+						minWidth="399px"
+						border="none"
+					/>
+				</>
 			),
 		},
 		init: {
@@ -166,7 +159,20 @@ function Modal({ modal, closeModal }) {
 							⠀
 						</button>
 					</div>
-					{contentMap[type][state]}
+					<form
+						className="modal__form"
+						name={`${type}-${state}`}
+						onSubmit={onSubmit}
+					>
+						<img
+							className={clsx('modal__image', {
+								modal__image_type_confirm: type === 'confirm',
+							})}
+							src={type === 'confirm' ? modalExit : modalSend}
+							alt={`${type} ${state}`}
+						/>
+						{contentMap[type][state]}
+					</form>
 				</div>
 			</div>
 		</div>
@@ -179,10 +185,13 @@ Modal.propTypes = {
 		type: PropTypes.string.isRequired,
 		state: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
-		imageLink: PropTypes.string.isRequired,
-		onSubmit: PropTypes.func.isRequired,
+		onSubmit: PropTypes.func,
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,
+};
+
+Pushbutton.defaultProps = {
+	onSubmit: undefined,
 };
 
 export default Modal;

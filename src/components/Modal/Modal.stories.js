@@ -1,5 +1,4 @@
 import Modal from './Modal';
-import example from '../../images/example.jpg';
 
 export default {
 	title: 'UI/Modal',
@@ -16,7 +15,6 @@ export const Confirm = {
 			state: 'info',
 			title: 'Выход',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
@@ -30,7 +28,6 @@ export const PasswordInfo = {
 			state: 'info',
 			title: 'Сброс пароля',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
@@ -44,7 +41,6 @@ export const PasswordSuccess = {
 			state: 'success',
 			title: 'Сброс пароля',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
@@ -58,7 +54,6 @@ export const PasswordError = {
 			state: 'error',
 			title: 'Сброс пароля',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
@@ -72,7 +67,6 @@ export const EmailInfo = {
 			state: 'info',
 			title: 'Подтверждение E-mail',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
@@ -84,9 +78,8 @@ export const EmailSuccess = {
 			isOpen: true,
 			type: 'email',
 			state: 'success',
-			title: 'Подтверждение E-mail',
+			title: 'E-mail подтвержден',
 			onSubmit: () => {},
-			imageLink: example,
 		},
 		closeModal: () => {},
 	},
