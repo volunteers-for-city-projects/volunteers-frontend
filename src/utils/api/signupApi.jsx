@@ -1,5 +1,23 @@
 const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
 
+const fetchCities = async () => {
+	try {
+		const response = await fetch(`${BASE_URL}/cities`); // Замените на ваше API-путь для городов
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при загрузке городов: ${error.message}`);
+	}
+};
+
+const fetchSkills = async () => {
+	try {
+		const response = await fetch(`${BASE_URL}/skills`); // Замените на ваше API-путь для навыков
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при загрузке навыков: ${error.message}`);
+	}
+};
+
 const createUser = async (userData) => {
 	try {
 		const response = await fetch(`${BASE_URL}/users/`, {
@@ -48,4 +66,10 @@ const createOrganization = async (organizationData) => {
 	}
 };
 
-export { createUser, createVolunteer, createOrganization };
+export {
+	fetchCities,
+	fetchSkills,
+	createUser,
+	createVolunteer,
+	createOrganization,
+};
