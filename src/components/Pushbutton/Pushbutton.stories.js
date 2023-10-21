@@ -48,6 +48,15 @@ export const SmallPadding = {
 	},
 };
 
+export const MinFontSize = {
+	args: {
+		size: 'mini',
+		primary: true,
+		label: 'Статус',
+		minWidth: '149px',
+	},
+};
+
 export const MinWidth180px = {
 	args: {
 		size: 'small',
