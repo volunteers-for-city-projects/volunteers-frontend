@@ -1,0 +1,60 @@
+@import '../../style/variables.scss';
+
+.profile {
+	background: #fdfdfd;
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+		margin-top: 50px;
+		margin-left: 134px;
+		margin-bottom: 168px;
+		background: $--White;
+		border-radius: 10px;
+		width: 676px;
+		min-height: 921px;
+	}
+	&__image {
+		background-color: $--Light-grey;
+		width: 180px;
+		height: 180px;
+		margin-top: 36px;
+		margin-left: 36px;
+		border-radius: 10px;
+	}
+	&__name {
+		/* display: flex;
+	align-items: center; */
+		margin-top: 25px;
+		margin-left: 36px;
+		margin-bottom: 5px;
+
+		&-surname {
+			margin-top: 5px;
+			font-size: 28px;
+			font-weight: 500;
+			line-height: 28px;
+		}
+	}
+	&__button {
+		margin-top: 240px;
+		margin-bottom: 88px;
+		margin-left: 36px;
+	}
+
+	&__wrapper {
+		display: flex;
+		gap: 19px;
+	}
+	&__projects {
+		width: 960px;
+		margin-top: 50px;
+		flex-direction: column;
+	}
+	&__projects-title {
+		margin: 0;
+		font-size: 56px;
+		font-weight: 500;
+		line-height: 100%;
+	}
+}

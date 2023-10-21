@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Signup from '../components/Signup/Signup';
 import Main from '../components/Main/Main';
 import App from '../components/App/App';
+import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
 
 const router = createBrowserRouter([
 	{
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
 				index: true,
 				element: <Main />,
 			},
+
 			{
 				path: 'registration',
 				element: <Signup />,
@@ -24,6 +26,11 @@ const router = createBrowserRouter([
 				path: 'projects',
 				// element: <Projects />,
 			},
+			{
+				path: 'profile',
+				element: <ProfileVolunteer />,
+			},
+
 			{
 				path: '*',
 				// element: <NotFoundPage />,
