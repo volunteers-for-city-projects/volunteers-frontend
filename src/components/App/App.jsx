@@ -8,6 +8,7 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
 	const [isOpenConfirmLogout, setIsOpenConfirmLogout] = useState(false);
 	const [platformEmail, setPlatformEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const handleConfirmLogout = () => {
@@ -31,7 +32,7 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<Outlet context={setPlatformEmail} />
+			<Outlet context={{ setPlatformEmail, isLoading, setIsLoading }} />
 			<Footer platformEmail={platformEmail} />
 			<ModalConfirm
 				isOpen={isOpenConfirmLogout}

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import './SignIn.scss';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -14,8 +15,8 @@ import {
 	ERROR_MESSAGE_EMAIL_REG_EX,
 } from '../../utils/constants';
 
-function SignIn({ title, subtitle, buttonSubmitText, onSignIn }) {
-	const isLoading = false;
+function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
+	const { isLoading } = useOutletContext();
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -40,7 +41,13 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn }) {
 			});
 		},
 	});
-
+	const linkClasses = clsx(
+		'sign-in__link',
+		{
+			'sign-in__link_disabled': isLoading,
+		},
+		className
+	);
 	return (
 		<section className="sign-in">
 			<h1 className="sign-in__header-title">{title}</h1>
@@ -93,7 +100,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn }) {
 							</div>
 						) : null}
 					</label>
-					<Link to="password-recovery" className="sign-in__link">
+					<Link to="password-recovery" className={linkClasses}>
 						Забыли пароль?
 					</Link>
 				</div>
@@ -113,6 +120,7 @@ SignIn.propTypes = {
 	title: PropTypes.string,
 	subtitle: PropTypes.string,
 	buttonSubmitText: PropTypes.string,
+	className: PropTypes.string,
 	onSignIn: PropTypes.func,
 };
 
@@ -120,6 +128,7 @@ SignIn.defaultProps = {
 	title: 'Войти',
 	subtitle: 'в личный кабинет',
 	buttonSubmitText: 'Войти',
+	className: '',
 	onSignIn: PropTypes.func,
 };
 

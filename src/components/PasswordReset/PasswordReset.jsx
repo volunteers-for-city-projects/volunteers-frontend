@@ -1,4 +1,5 @@
 import React from 'react';
+import { useOutletContext } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './PasswordReset.scss';
 import { useFormik } from 'formik';
@@ -11,7 +12,7 @@ import {
 } from '../../utils/constants';
 
 function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
-	const isLoading = false;
+	const { isLoading } = useOutletContext();
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import './PasswordRecovery.scss';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -17,8 +18,9 @@ function PasswordRecovery({
 	subtitle,
 	buttonSubmitText,
 	onPasswordReset,
+	className,
 }) {
-	const isLoading = false;
+	const { isLoading } = useOutletContext();
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -37,6 +39,14 @@ function PasswordRecovery({
 			});
 		},
 	});
+
+	const linkClasses = clsx(
+		'password-recovery__link',
+		{
+			'password-recovery__link_disabled': isLoading,
+		},
+		className
+	);
 
 	return (
 		<section className="password-recovery">
@@ -67,7 +77,7 @@ function PasswordRecovery({
 						</div>
 					) : null}
 				</label>
-				<Link to="password-recovery" className="password-recovery__link">
+				<Link to="password-recovery" className={linkClasses}>
 					Я вспомнил пароль!
 				</Link>
 
@@ -88,6 +98,7 @@ PasswordRecovery.propTypes = {
 	subtitle: PropTypes.string,
 	buttonSubmitText: PropTypes.string,
 	onPasswordReset: PropTypes.func,
+	className: PropTypes.string,
 };
 
 PasswordRecovery.defaultProps = {
@@ -96,6 +107,7 @@ PasswordRecovery.defaultProps = {
 		'Введите E-mail, указанный при регистрации — мы отправим вам ссылку для восстановления пароля',
 	buttonSubmitText: 'Сбросить пароль',
 	onPasswordReset: PropTypes.func,
+	className: '',
 };
 
 export default PasswordRecovery;
