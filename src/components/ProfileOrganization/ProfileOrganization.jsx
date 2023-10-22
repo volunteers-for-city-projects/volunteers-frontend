@@ -17,14 +17,6 @@ function ProfileOrganization() {
 						<h2 className="profile__name-surname">ООО "Организация"</h2>
 					</div>
 					<ProfileData dataArray={dataOrganization} />
-					<div className="profile__button">
-						<Pushbutton
-							label="Редактировать профиль"
-							color="white"
-							size="medium"
-							minWidth={380}
-						/>
-					</div>
 				</div>
 				<div className="profile__projects">
 					<h2 className="profile__projects-title">Ваши проекты</h2>
@@ -36,15 +28,27 @@ function ProfileOrganization() {
 							<CardProject cardProject={item} key={item.id} />
 						))}
 					</div>
-					<div className="profile__button">
+					<div className="projects__pagination">Пагинация</div>
+					<div className="profile__projects-button">
 						<Pushbutton
 							label="Создать новый проект"
 							color="white"
 							size="medium"
 							minWidth={380}
+							backgroundColor="#A6C94F"
 						/>
 					</div>
 				</div>
+			</div>
+			<div className="profile__button">
+				<Pushbutton
+					label="Редактировать профиль"
+					color="white"
+					size="medium"
+					minWidth={380}
+					backgroundColor="#A6C94F"
+					border="none"
+				/>
 			</div>
 		</section>
 	);

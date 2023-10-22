@@ -20,18 +20,19 @@ function ProfileVolunteer({ isVolunteer }) {
 								<h2 className="profile__name-surname">Фамилия Имя Отчество</h2>
 							</div>
 							<ProfileData dataArray={dataVolunteer} />
-							<div className="profile__button">
-								<Pushbutton
-									label="Редактировать профиль"
-									color="white"
-									size="medium"
-									minWidth={380}
-								/>
-							</div>
 						</div>
 						<div className="profile__projects">
 							<h2 className="profile__projects-title">Ваши проекты</h2>
 						</div>
+					</div>
+					<div className="profile__button">
+						<Pushbutton
+							label="Редактировать профиль"
+							color="white"
+							size="medium"
+							minWidth={380}
+							backgroundColor="#A6C94F"
+						/>
 					</div>
 				</>
 			) : (

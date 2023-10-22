@@ -9,6 +9,7 @@ function ProfileButtonsTabs() {
 				size="mini"
 				backgroundColor="#FDFDFD"
 				minWidth={149}
+				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
 				label="Статус2"
@@ -16,6 +17,7 @@ function ProfileButtonsTabs() {
 				size="mini"
 				backgroundColor="#FDFDFD"
 				minWidth={149}
+				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
 				label="Статус3"
@@ -23,6 +25,7 @@ function ProfileButtonsTabs() {
 				size="mini"
 				backgroundColor="#FDFDFD"
 				minWidth={149}
+				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
 				label="Статус4"
@@ -30,6 +33,7 @@ function ProfileButtonsTabs() {
 				size="mini"
 				backgroundColor="#FDFDFD"
 				minWidth={149}
+				border="1px solid #A6C94F"
 			/>
 		</>
 	);

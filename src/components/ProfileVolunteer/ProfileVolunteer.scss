@@ -8,12 +8,10 @@
 		flex-direction: column;
 		margin-top: 50px;
 		margin-left: 134px;
-		 margin-bottom: 104px; 
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
 		min-height: 921px;
-		/* position: relative; */
 	}
 	&__image {
 		background-image: url('../../images/fotoProfile.svg');
@@ -36,11 +34,8 @@
 		}
 	}
 	&__button {
-		/* margin-top: 121px;
-		margin-bottom: 88px;
-		margin-left: 36px; */
-		/* position: absolute;
-		bottom: 0; */
+		margin-left: 170px;
+		margin-bottom: 104px;
 	}
 
 	&__wrapper {
@@ -51,7 +46,6 @@
 		width: 960px;
 		min-height: 921px;
 		margin-top: 40px;
-		/* margin-bottom: 94px; */
 		flex-direction: column;
 	}
 	&__projects-title {
@@ -72,4 +66,7 @@
 	margin-top: 54px;
 	flex-wrap: wrap;
 	gap: 20px;
+}
+.projects__pagination {
+	height: 84px;
 }
