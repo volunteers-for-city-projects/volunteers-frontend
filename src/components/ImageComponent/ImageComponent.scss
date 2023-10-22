@@ -1,15 +1,14 @@
 @import '../../style/variables.scss';
 
 .image-component {
-    background-color: $--Light-grey;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+	background-color: $--Light-grey;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 
-    &__type {
-        &_entrance {
-            width: 880px;
-
-        }
-    }
+	&__type {
+		&_entrance {
+			width: 880px;
+		}
+	}
 }
