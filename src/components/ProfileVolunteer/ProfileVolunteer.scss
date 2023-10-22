@@ -3,19 +3,20 @@
 .profile {
 	background: #fdfdfd;
 
-	&__container {
+	&__personal {
 		display: flex;
 		flex-direction: column;
 		margin-top: 50px;
 		margin-left: 134px;
-		margin-bottom: 168px;
+		 margin-bottom: 104px; 
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
 		min-height: 921px;
+		/* position: relative; */
 	}
 	&__image {
-		background-color: $--Light-grey;
+		background-image: url('../../images/fotoProfile.svg');
 		width: 180px;
 		height: 180px;
 		margin-top: 36px;
@@ -23,8 +24,6 @@
 		border-radius: 10px;
 	}
 	&__name {
-		/* display: flex;
-	align-items: center; */
 		margin-top: 25px;
 		margin-left: 36px;
 		margin-bottom: 5px;
@@ -37,9 +36,11 @@
 		}
 	}
 	&__button {
-		margin-top: 240px;
+		/* margin-top: 121px;
 		margin-bottom: 88px;
-		margin-left: 36px;
+		margin-left: 36px; */
+		/* position: absolute;
+		bottom: 0; */
 	}
 
 	&__wrapper {
@@ -48,7 +49,9 @@
 	}
 	&__projects {
 		width: 960px;
-		margin-top: 50px;
+		min-height: 921px;
+		margin-top: 40px;
+		/* margin-bottom: 94px; */
 		flex-direction: column;
 	}
 	&__projects-title {
@@ -57,4 +60,16 @@
 		font-weight: 500;
 		line-height: 100%;
 	}
+}
+
+.profile__projects-tabs {
+	display: flex;
+	gap: 20px;
+	margin-top: 20px;
+}
+.profile__projects-cards {
+	display: flex;
+	margin-top: 54px;
+	flex-wrap: wrap;
+	gap: 20px;
 }

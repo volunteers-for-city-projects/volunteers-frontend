@@ -1,0 +1,78 @@
+.card__project {
+	box-sizing: border-box;
+	max-width: 379px;
+	border-radius: 10px;
+	min-height: 208px;
+	border: 1px solid var(--Secondary, #9bc1f9);
+	padding: 22px 16px;
+}
+.card__info {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	padding: 0;
+	margin: 0;
+}
+.card__status {
+	display: flex;
+	justify-content: space-between;
+	height: 32px;
+	align-items: center;
+}
+
+.card__data {
+	display: flex;
+	gap: 10px;
+}
+
+.card__status-count {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 32px;
+}
+.card__status-count_red {
+	color: red;
+}
+.card__status-icon {
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+.card__name {
+	margin-top: 53px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+ 
+}
+.card__name-title {
+	margin: 0;
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 28px;
+}
+.card__data {
+	display: flex;
+	margin-top: 22px;
+}
+.card__data-city {
+	margin: 0;
+	font-size: 14px;
+
+	font-weight: 300;
+	line-height: 20px;
+}
+.card__data-day {
+	margin: 0;
+	font-size: 14px;
+
+	font-weight: 700;
+	line-height: 20px;
+}
+.card__data-time {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 20px;
+}

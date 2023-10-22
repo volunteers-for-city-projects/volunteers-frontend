@@ -14,7 +14,7 @@ function ProfileVolunteer({ isVolunteer }) {
 				<>
 					<ProfileMenu title="Личный кабинет волонтера" />
 					<div className="profile__wrapper">
-						<div className="profile__container">
+						<div className="profile__personal">
 							<div className="profile__image" />
 							<div className="profile__name">
 								<h2 className="profile__name-surname">Фамилия Имя Отчество</h2>
