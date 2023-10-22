@@ -1,15 +1,9 @@
 import React from 'react';
-import { useImage } from 'react-image';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import './ImageComponent.scss';
 
-function ImageComponent({ srcList, type, altImage }) {
-	const { src } = useImage({
-		srcList,
-		useSuspense: false,
-	});
-
+function ImageComponent({ src, type, altImage }) {
 	return (
 		<img
 			src={src}
@@ -22,13 +16,13 @@ function ImageComponent({ srcList, type, altImage }) {
 export default ImageComponent;
 
 ImageComponent.propTypes = {
-	srcList: PropTypes.string,
+	src: PropTypes.string,
 	type: PropTypes.oneOf(['entrance', 'registration']),
 	altImage: PropTypes.string,
 };
 
 ImageComponent.defaultProps = {
-	srcList: '',
+	src: '',
 	type: 'entrance',
 	altImage: 'Рисунок',
 };
