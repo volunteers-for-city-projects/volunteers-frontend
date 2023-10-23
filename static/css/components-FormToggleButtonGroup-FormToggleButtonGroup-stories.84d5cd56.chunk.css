@@ -1,0 +1,4 @@
+.toggle-button{width:190px;height:36px;box-sizing:border-box;border:none;border-radius:8px;background-color:rgba(0,0,0,0);font-family:Fira Sans;font-size:17px;font-style:normal;font-weight:400;line-height:20px;cursor:pointer}.toggle-button_active{background-color:#2a2a2a;color:#fff}
+.toggle-button-group{max-width:-webkit-max-content;max-width:max-content;box-sizing:border-box;margin-bottom:26px;display:flex;border:1px solid #000;border-radius:10px;overflow:hidden}
+
+/*# sourceMappingURL=components-FormToggleButtonGroup-FormToggleButtonGroup-stories.84d5cd56.chunk.css.map*/
