@@ -7,6 +7,7 @@ import Login from '../components/Login/Login';
 import LoginSignIn from '../components/LoginSignIn/LoginSignIn';
 import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPasswordRecovery';
 import LoginPasswordReset from '../components/LoginPasswordReset/LoginPasswordReset';
+import NotFound from '../components/NotFound/NotFound';
 
 const router = createBrowserRouter([
 	{
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
 
 			{
 				path: '*',
-				// element: <NotFoundPage />,
+				element: <NotFound />,
 			},
 		],
 	},
