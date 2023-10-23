@@ -121,6 +121,19 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					}}
 					required
 				/>
+				<Input
+					name="organize_ogrn"
+					label="ОГРН"
+					type="text"
+					placeholder=""
+					inputSize="small"
+					error={formik.errors.organize_ogrn}
+					touched={formik.touched.organize_ogrn}
+					value={formik.values.organize_ogrn}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					required
+				/>
 			</InputGroup>
 			<InputTextArea
 				label="Об организации"
@@ -173,6 +186,18 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					name="organize_empty"
+					label=""
+					type="text"
+					className="input_empty"
+					placeholder="example@mail.ru"
+					inputSize="small"
+					error={formik.errors.organize_email}
+					touched={formik.touched.organize_email}
+					value={formik.values.organize_email}
+					handleChange={formik.handleChange}
+				/>
+				<Input
 					name="organize_email"
 					label="E-mail"
 					type="text"
@@ -198,27 +223,12 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 			</InputGroup>
-			<InputGroup title="Дополнительная информация">
-				<Input
-					name="organize_ogrn"
-					label="ОГРН"
-					type="text"
-					placeholder=""
-					inputSize="small"
-					error={formik.errors.organize_ogrn}
-					touched={formik.touched.organize_ogrn}
-					value={formik.values.organize_ogrn}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					required
-				/>
-			</InputGroup>
 			<InputGroup title="Пароль">
 				<Input
 					name="organize_password"
 					label="Пароль"
 					type="password"
-					placeholder=""
+					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.organize_password}
 					touched={formik.touched.organize_password}
@@ -229,9 +239,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				/>
 				<Input
 					name="organize_confirm_password"
-					label="Повтор пароля"
+					label="Повторный пароль"
 					type="password"
-					placeholder=""
+					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.organize_confirm_password}
 					touched={formik.touched.organize_confirm_password}
@@ -246,7 +256,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					label="Зарегистрироваться"
 					color="white"
 					size="medium"
-					disabled={!formik.isValid || !isCheckboxChecked}
+					disabled={
+						!formik.isValid || !isCheckboxChecked || formik.values.city === null
+					}
 					type="submit"
 				/>
 				<p className="organizer-signup-form__text">

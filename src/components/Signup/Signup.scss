@@ -4,7 +4,7 @@
 }
 
 .signup {
-	margin: 0 auto 119px;
+	margin: 78px auto 72px;
 	padding: 0 130px 0;
 
 	display: flex;
@@ -12,7 +12,8 @@
 
 	&__wrap {
 		display: flex;
-		gap: 20px;
+		align-items: center;
+		gap: 64px;
 	}
 
 	&__image {
@@ -24,7 +25,15 @@
 		height: 967px;
 		background-position: center center;
 		background-repeat: no-repeat;
-		background-color: grey;
+		background-color: transparent;
+		background-size: 722px 625px;
+
+		&_organizer {
+			background-image: url(../../images/signup_background_image_organize.svg);
+		}
+		&_volunteer {
+			background-image: url(../../images/signup_background_image.svg);
+		}
 	}
 	&__content-wrap {
 		display: flex;
@@ -32,7 +41,7 @@
 		// gap: 27px;
 	}
 	&__title {
-		margin: 0 0 39px 0;
+		margin: 0 0 21px 0;
 
 		font-family: Fira Sans;
 		font-size: 56px;

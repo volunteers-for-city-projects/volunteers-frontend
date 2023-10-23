@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.scss';
 
-import PageMenu from '../PageMenu/PageMenu';
+// import PageMenu from '../PageMenu/PageMenu';
 import VolunteerSignupForm from '../VolunteerSignupForm/VolunteerSignupForm';
 import OrganizerSignupForm from '../OrganizerSignupForm/OrganizerSignupForm';
 import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGroup';
@@ -29,9 +29,13 @@ export default function Signup() {
 	return (
 		<main className="content">
 			<section className="signup">
-				<PageMenu title={isPageTitle} isProjectPage={false} projectTitle="" />
+				{/* <PageMenu title={isPageTitle} isProjectPage={false} projectTitle="" /> */}
 				<div className="signup__wrap">
-					<div className="signup__image" />
+					<div
+						className={`signup__image
+					${isActiveForm === 'volunteer' && 'signup__image_volunteer'}
+					${isActiveForm === 'organizer' && 'signup__image_organizer'}`}
+					/>
 					<div className="signup__content-wrap">
 						<h1 className="signup__title">{isPageTitle}</h1>
 						<FormToggleButtonGroup

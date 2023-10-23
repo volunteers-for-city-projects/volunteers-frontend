@@ -228,7 +228,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="password"
 					label="Пароль"
 					type="password"
-					placeholder=""
+					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.password}
 					touched={formik.touched.password}
@@ -240,9 +240,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				/>
 				<Input
 					name="confirm_password"
-					label="Повтор пароля"
+					label="Повторный пароль"
 					type="password"
-					placeholder=""
+					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.confirm_password}
 					touched={formik.touched.confirm_password}
@@ -277,6 +277,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						const selectedValues = selectedOption.map((option) => option.value);
 						formik.setFieldValue('skills', selectedValues);
 					}}
+					required
 				/>
 				<SelectOption
 					name="city"
@@ -289,6 +290,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={(selectedOption) => {
 						formik.setFieldValue('city', Number(selectedOption.value));
 					}}
+					required
 				/>
 			</InputGroup>
 			<div className=" volunteer-signup-form__text-content">
@@ -296,7 +298,12 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					label="Зарегистрироваться"
 					color="white"
 					size="medium"
-					disabled={!formik.isValid || !isCheckboxChecked}
+					disabled={
+						!formik.isValid ||
+						!isCheckboxChecked ||
+						formik.values.city === null ||
+						formik.values.skills.length === 0
+					}
 					type="submit"
 				/>
 				<p className="volunteer-signup-form__text">

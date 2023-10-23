@@ -1,5 +1,7 @@
+$error-color: #f78254;
+
 .text-area {
-	margin-top: 2px;
+	margin-top: 10px;
 
 	min-width: 580px;
 	max-width: 580px;
@@ -15,22 +17,22 @@
 	border: 1px solid #000;
 
 	font-family: Fira Sans;
-	font-size: 12px;
+	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 17.746px; /* 147.883% */
+	line-height: 23px;
 
 	&::placeholder {
-		color: #949494;
+		color: #959595;
 		font-family: Fira Sans;
-		font-size: 12px;
+		font-size: 20px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 17.746px; /* 147.883% */
+		line-height: 23px;
 	}
 
 	&_error {
-		border: 1.613px solid #bf0000;
+		border: 1px solid $error-color;
 
 		&-message {
 			height: 10px;
@@ -39,7 +41,7 @@
 
 			margin-top: 2px;
 
-			color: #bf0000;
+			color: $error-color;
 			font-family: Fira Sans;
 			font-size: 10px;
 			font-style: normal;
@@ -63,17 +65,17 @@
 
 	margin-top: 5px;
 
-	color: #949494;
+	color: #3f3f3f;
 
 	font-family: Fira Sans;
-	font-size: 12px;
+	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 17.746px; /* 147.883% */
+	line-height: 23px;
 
 	word-wrap: break-word;
 
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
+	// overflow: hidden;
 }
