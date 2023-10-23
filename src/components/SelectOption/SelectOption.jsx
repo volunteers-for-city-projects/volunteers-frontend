@@ -22,8 +22,11 @@ function SelectOption({
 			borderRadius: '10px',
 			borderColor: '#000',
 			borderWidth: '1.613px',
+			minHeight: '36px',
+			maxHeight: '36px',
+			boxShadow: 'none',
 			'&:hover': {
-				borderColor: '#000',
+				// borderColor: '#007aff',
 			},
 		}),
 		dropdownIndicator: (baseStyles) => ({
