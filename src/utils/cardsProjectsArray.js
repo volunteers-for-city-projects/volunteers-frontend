@@ -16,7 +16,7 @@ const cardsProjectsArray = [
 		time: '10:00 - 16:00',
 	},
 	{
-		id: 1,
+		id: 2,
 		status: '23 заявки',
 		nameProject: 'Уборка пляжа',
 		city: 'г. Москва',
@@ -31,9 +31,10 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		isModeration: true,
 	},
 	{
-		id: 1,
+		id: 4,
 		status: '23 заявки',
 		nameProject: 'Уборка пляжа',
 		city: 'г. Москва',
@@ -47,6 +48,7 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		isTheEnd: true,
 	},
 	{
 		id: 6,
@@ -55,6 +57,7 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		isModeration: true,
 	},
 	{
 		id: 7,
@@ -71,6 +74,7 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		isTheEnd: true,
 	},
 ];
 

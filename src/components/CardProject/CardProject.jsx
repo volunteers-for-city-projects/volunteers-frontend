@@ -3,12 +3,22 @@ import './CardProject.scss';
 import pensil from '../../images/pensil.svg';
 
 function CardProject({ cardProject }) {
-	const { status, nameProject, city, day, time } = cardProject;
+	const { status, nameProject, city, day, time, isModeration, isTheEnd } =
+		cardProject;
+	const baseStatusClassName = 'card__status-count';
+	const moderStatusClassName = 'card__status-count_moder';
+	const endStatusClassName = `card__status-count ${
+		isTheEnd && 'card__status-count_end'
+	}`;
+	const statusClassName = `${baseStatusClassName} ${
+		isModeration ? moderStatusClassName : endStatusClassName
+	}`;
+
 	return (
 		<article className="card__project">
 			<ul className="card__info">
 				<li className="card__status">
-					<p className="card__status-count">{status}</p>
+					<p className={statusClassName}>{status}</p>
 					<img className="card__status-icon" src={pensil} alt="редактировать" />
 				</li>
 				<li className="card__name">
@@ -35,6 +45,8 @@ CardProject.propTypes = {
 			city: PropTypes.string.isRequired,
 			day: PropTypes.string.isRequired,
 			time: PropTypes.string.isRequired,
+			isModeration: PropTypes.bool.isRequired,
+			isTheEnd: PropTypes.bool.isRequired,
 		})
 	).isRequired,
 };
