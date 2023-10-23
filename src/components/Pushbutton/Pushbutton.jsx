@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './pushbutton.scss';
+import clsx from 'clsx';
 
 export const Pushbutton = ({
 	primary,
@@ -28,7 +29,7 @@ export const Pushbutton = ({
 		<button
 			{...props}
 			type="button"
-			className={['pushbutton', `pushbutton__size_${size}`, mode].join(' ')}
+			className={clsx(['pushbutton', `pushbutton__size_${size}`, mode])}
 			style={styleObject}
 			{...option}
 		>
@@ -43,7 +44,7 @@ Pushbutton.propTypes = {
 	backgroundColor: PropTypes.string,
 	color: PropTypes.string,
 	minWidth: PropTypes.string,
-	size: PropTypes.oneOf(['small', 'medium', 'large']),
+	size: PropTypes.oneOf(['mini', 'small', 'medium', 'large']),
 	label: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,

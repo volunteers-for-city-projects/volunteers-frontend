@@ -102,3 +102,12 @@ export const ResetPassword = {
 		minWidth: '380px',
 	},
 };
+
+export const Status = {
+	args: {
+		primary: true,
+		label: 'Статус',
+		size: 'mini',
+		minWidth: '149px',
+	},
+};

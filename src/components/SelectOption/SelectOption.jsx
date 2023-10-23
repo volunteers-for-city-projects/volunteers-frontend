@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import clsx from 'clsx';
 
 function SelectOption({
@@ -12,33 +12,57 @@ function SelectOption({
 	handleChange,
 	errorMessage,
 	isMulti,
+	required,
 }) {
-	const [selectedOption, setSelectedOption] = useState(null);
+	// const [selectedOption, setSelectedOption] = useState(null);
 
 	const customStyles = {
 		control: (baseStyles) => ({
 			...baseStyles,
 			borderRadius: '10px',
-			border: '2px solid black',
+			borderColor: '#000',
+			borderWidth: '1.613px',
+			'&:hover': {
+				borderColor: '#000',
+			},
 		}),
 		dropdownIndicator: (baseStyles) => ({
 			...baseStyles,
 			color: '#000',
+			'&:hover': {
+				color: '#000',
+			},
+		}),
+		placeholder: (baseStyles) => ({
+			...baseStyles,
+			color: '#959595',
+		}),
+		menu: (baseStyles) => ({
+			...baseStyles,
+			padding: '8px 0px',
+		}),
+		option: (baseStyles) => ({
+			...baseStyles,
+			fontFamily: 'Fira Sans',
+			fontSize: '14px',
+			fontStyle: 'normal',
+			fontWeight: '300',
+			lineHeight: '20px',
+			padding: '8px 16px',
 		}),
 	};
 
 	const changeOption = useCallback(
 		(option) => {
-			setSelectedOption(option);
-			handleChange(selectedOption);
+			handleChange(option); // Передать выбранный вариант в функцию handleChange
 		},
-		[handleChange, selectedOption]
+		[handleChange]
 	);
 
 	return (
-		<div className="select-option__container" style={{ maxWidth: width }}>
+		<div className="select-option__container" style={{ width }}>
 			<label className="select-option__label" htmlFor="select-option">
-				{label}
+				{required ? `${label}*` : label}
 			</label>
 			<Select
 				className="select-option"
@@ -84,6 +108,7 @@ SelectOption.propTypes = {
 	handleChange: PropTypes.func,
 	errorMessage: PropTypes.string,
 	isMulti: PropTypes.bool,
+	required: PropTypes.bool,
 };
 
 SelectOption.defaultProps = {
@@ -104,6 +129,7 @@ SelectOption.defaultProps = {
 		console.log(`Option selected: `, selectedOption),
 	errorMessage: undefined,
 	isMulti: false,
+	required: false,
 };
 
 export default SelectOption;

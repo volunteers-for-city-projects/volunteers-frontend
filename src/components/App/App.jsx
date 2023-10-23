@@ -14,6 +14,7 @@ function App() {
 		onSubmit: () => {},
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const handleLogout = (event) => {
@@ -49,7 +50,7 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<Outlet context={setPlatformEmail} />
+			<Outlet context={{ setPlatformEmail, isLoading, setIsLoading }} />
 			<Footer platformEmail={platformEmail} />
 			<Modal modal={modal} closeModal={closeModal} />
 		</>

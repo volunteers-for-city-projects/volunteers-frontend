@@ -16,7 +16,7 @@ function Main() {
 	const [news, setNews] = useState([]);
 	const [plarformAbout, setPlatformAbout] = useState({});
 	const [plarformPromo, setPlatformPromo] = useState({});
-	const setPlatformEmail = useOutletContext();
+	const { setPlatformEmail } = useOutletContext();
 
 	useEffect(() => {
 		Promise.all([getNews(), getPlatformAbout()])

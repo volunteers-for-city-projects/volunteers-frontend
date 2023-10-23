@@ -21,6 +21,12 @@
 	}
 
 	&__size {
+		&_mini {
+			font-size: 12px;
+			line-height: 12px;
+			padding: 20px;
+		}
+
 		&_small {
 			font-size: 17px;
 			line-height: 20px;
@@ -41,7 +47,7 @@
 
 		&_large {
 			padding: 20px;
-			font-size: 24px;
+			font-size: 23px;
 			line-height: 130%;
 		}
 	}
