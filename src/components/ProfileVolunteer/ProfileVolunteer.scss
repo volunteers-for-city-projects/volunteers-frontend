@@ -2,7 +2,7 @@
 
 .profile {
 	background: #fdfdfd;
-
+	
 	&__personal {
 		display: flex;
 		flex-direction: column;
@@ -43,11 +43,11 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-		margin-bottom: 104px;
+		margin-bottom: 98px;
 	}
 	&__projects {
 		width: 960px;
-		min-height: 921px;
+		min-height: 979px;
 		margin-top: 40px;
 		flex-direction: column;
 	}

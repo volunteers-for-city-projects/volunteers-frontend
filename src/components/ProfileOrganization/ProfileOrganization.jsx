@@ -9,7 +9,7 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 
 function ProfileOrganization() {
 	return (
-		<section className="profile-org">
+		<section className="profile-organization">
 			<ProfileMenu title="Личный кабинет организатора" />
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -22,8 +22,8 @@ function ProfileOrganization() {
 						<Pushbutton
 							label="Редактировать профиль"
 							color="white"
-							size="medium"
-							minWidth={380}
+							size="pre-large"
+							minWidth="380px"
 							backgroundColor="#A6C94F"
 							border="none"
 						/>
@@ -39,13 +39,18 @@ function ProfileOrganization() {
 							<CardProject cardProject={item} key={item.id} />
 						))}
 					</div>
-					<div className="profile__projects-pagination" />
+					<div className="profile__projects-pagination">
+						<button className="profile__projects-btn profile__projects-btn_activ">
+							1
+						</button>
+						<button className="profile__projects-btn">2</button>
+					</div>
 					<div className="profile__projects-button">
 						<Pushbutton
 							label="Создать новый проект"
 							color="white"
-							size="medium"
-							minWidth={283}
+							size="pre-large"
+							minWidth="283px"
 							backgroundColor="#A6C94F"
 						/>
 					</div>

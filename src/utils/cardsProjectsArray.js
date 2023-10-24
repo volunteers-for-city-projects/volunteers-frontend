@@ -1,3 +1,7 @@
+import city from '../images/city.png';
+import nature from '../images/nature.png';
+import window from '../images/window.png';
+
 const cardsProjectsArray = [
 	{
 		id: 0,
@@ -6,6 +10,7 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		image: nature,
 	},
 	{
 		id: 1,
@@ -14,67 +19,45 @@ const cardsProjectsArray = [
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
+		image: city,
 	},
 	{
 		id: 2,
-		status: '23 заявки',
-		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
-		day: '24.10.2023',
-		time: '10:00 - 16:00',
-	},
-
-	{
-		id: 3,
 		status: 'Проект на модерации',
 		nameProject: 'Проект с длинным названием про экологию',
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		isModeration: true,
+		image: window,
+	},
+	{
+		id: 3,
+		status: '23 заявки',
+		nameProject: 'Уборка пляжа',
+		city: 'г. Москва',
+		day: '24.10.2023',
+		time: '10:00 - 16:00',
+		image: nature,
 	},
 	{
 		id: 4,
-		status: '23 заявки',
-		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
-		day: '24.10.2023',
-		time: '10:00 - 16:00',
-	},
-	{
-		id: 5,
-		status: 'Проект завершён 12.10.2023',
-		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
-		day: '24.10.2023',
-		time: '10:00 - 16:00',
-		isTheEnd: true,
-	},
-	{
-		id: 6,
 		status: 'Проект на модерации',
 		nameProject: 'Проект с длинным названием про экологию',
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		isModeration: true,
+		image: window,
 	},
 	{
-		id: 7,
+		id: 5,
 		status: '23 заявки',
 		nameProject: 'Уборка пляжа',
 		city: 'г. Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
-	},
-	{
-		id: 8,
-		status: 'Проект завершён 12.10.2023',
-		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
-		day: '24.10.2023',
-		time: '10:00 - 16:00',
-		isTheEnd: true,
+		image: nature,
 	},
 ];
 

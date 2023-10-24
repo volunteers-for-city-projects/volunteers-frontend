@@ -44,7 +44,7 @@ Pushbutton.propTypes = {
 	backgroundColor: PropTypes.string,
 	color: PropTypes.string,
 	minWidth: PropTypes.string,
-	size: PropTypes.oneOf(['mini', 'small', 'medium', 'large']),
+	size: PropTypes.oneOf(['mini', 'small', 'medium', 'large', 'pre-large']),
 	label: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,

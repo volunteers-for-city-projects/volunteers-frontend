@@ -26,12 +26,14 @@
 		margin-top: 25px;
 		margin-left: 36px;
 		margin-bottom: 5px;
+	
 
 		&-surname {
 			margin-top: 5px;
 			font-size: 28px;
 			font-weight: 500;
 			line-height: 28px;
+			color: $--Text;
 		}
 	}
 	&__button {
@@ -43,19 +45,22 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-		margin-bottom: 104px;
+		margin-bottom: 98px;
 	}
 	&__projects {
 		width: 960px;
-		min-height: 921px;
+		min-height: 979px;
 		margin-top: 40px;
+		display: flex;
 		flex-direction: column;
+		position: relative;
 
 		&-title {
 			margin: 0;
 			font-size: 56px;
 			font-weight: 500;
 			line-height: 100%;
+			color: $--Text;
 		}
 		&-tabs {
 			display: flex;
@@ -69,7 +74,33 @@
 			gap: 18px;
 		}
 		&-pagination {
-			height: 120px;
+			margin-top: 20px;
+			margin-bottom: 18px;
+			display: flex;
+			margin-left: 210px;
+			gap: 20px;
+		}
+		&-button {
+			position: absolute;
+			bottom: 0;
+		}
+		&-btn {
+			width: 64px;
+			height: 64px;
+			background-color: white;
+			color: #959595;
+
+			border: 1px solid #959595;
+			border-radius: 6px;
+			font-size: 18px;
+			font-weight: 800;
+			line-height: normal;
+			padding: 0;
+		}
+		&-btn_activ {
+			background-color: #a6c94f;
+			border: none;
+			color: white;
 		}
 	}
 }

@@ -8,10 +8,10 @@ import dataVolunteer from '../../utils/dataVolunteer';
 
 function ProfileVolunteer({ isVolunteer }) {
 	return (
-		<section className="profile">
+		<>
 			{/* Переключить на волонтера или организатора isVolunteer или !isVolunteer */}
 			{!isVolunteer ? (
-				<>
+				<section className="profile-volunteer">
 					<ProfileMenu title="Личный кабинет волонтера" />
 					<div className="profile__wrapper">
 						<div className="profile__personal">
@@ -24,8 +24,8 @@ function ProfileVolunteer({ isVolunteer }) {
 								<Pushbutton
 									label="Редактировать профиль"
 									color="white"
-									size="medium"
-									minWidth={380}
+									size="pre-large"
+									minWidth="380px"
 									backgroundColor="#A6C94F"
 								/>
 							</div>
@@ -34,11 +34,11 @@ function ProfileVolunteer({ isVolunteer }) {
 							<h2 className="profile__projects-title">Ваши проекты</h2>
 						</div>
 					</div>
-				</>
+				</section>
 			) : (
 				<ProfileOrganization />
 			)}
-		</section>
+		</>
 	);
 }
 

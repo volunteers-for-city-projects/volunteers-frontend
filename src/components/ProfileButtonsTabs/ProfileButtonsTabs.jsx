@@ -8,7 +8,7 @@ function ProfileButtonsTabs() {
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
-				minWidth={149}
+				minWidth="149px"
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
@@ -16,7 +16,7 @@ function ProfileButtonsTabs() {
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
-				minWidth={149}
+				minWidth="149px"
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
@@ -24,7 +24,7 @@ function ProfileButtonsTabs() {
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
-				minWidth={149}
+				minWidth="149px"
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
@@ -32,7 +32,7 @@ function ProfileButtonsTabs() {
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
-				minWidth={149}
+				minWidth="149px"
 				border="1px solid #A6C94F"
 			/>
 		</>
