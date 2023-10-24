@@ -4,7 +4,7 @@ import './Header.scss';
 import Logo from '../Logo/Logo';
 import InputSearch from '../InputSearch/InputSearch';
 import NavBar from '../NavBar/NavBar';
-import dataNavArray from '../../utils/dataNavArray';
+import { dataNavArray } from '../../utils/data';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function Header({ isLoggedIn, handleConfirmLogout }) {

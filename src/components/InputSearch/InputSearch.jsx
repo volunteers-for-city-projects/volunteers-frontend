@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import './InputSearch.scss';
 
-function InputSearch({ label, placeholder }) {
+function InputSearch({ label, placeholder, border, width }) {
 	function handleSubmit(event) {
 		event.preventDefault();
 	}
 
 	return (
-		<form className="form-search" onSubmit={handleSubmit}>
+		<form
+			className="form-search"
+			onSubmit={handleSubmit}
+			style={{ border, width }}
+		>
 			<input
 				className="form-search__input-search"
 				type="text"
@@ -25,10 +29,14 @@ function InputSearch({ label, placeholder }) {
 InputSearch.propTypes = {
 	placeholder: PropTypes.string.isRequired,
 	label: PropTypes.string,
+	border: PropTypes.string,
+	width: PropTypes.string,
 };
 
 InputSearch.defaultProps = {
 	label: '',
+	border: 'none',
+	width: 'auto',
 };
 
 export default InputSearch;

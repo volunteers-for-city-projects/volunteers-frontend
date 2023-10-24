@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { getNews, getPlatformAbout, sendMessage } from '../../api/main-page';
+import {
+	getNews,
+	getPlatformAbout,
+	sendMessage,
+} from '../../utils/api/main-page';
 import './Main.scss';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
