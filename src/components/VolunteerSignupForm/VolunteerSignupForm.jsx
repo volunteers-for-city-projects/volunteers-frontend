@@ -126,6 +126,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		>
 			<InputGroup title="Общая информация">
 				<Input
+					id="firstname"
 					name="firstname"
 					label="Имя"
 					type="text"
@@ -140,6 +141,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="secondname"
 					name="secondname"
 					label="Фамилия"
 					type="text"
@@ -153,6 +155,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="thirdname"
 					name="thirdname"
 					type="text"
 					label="Отчество"
@@ -167,6 +170,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="birthday"
 					name="birthday"
 					label="Дата рождения"
 					type="text-date"
@@ -183,6 +187,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Контактные данные">
 				<Input
+					id="phone"
 					name="phone"
 					label="Телефон"
 					type="phone"
@@ -196,6 +201,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					autoсomplete="off"
 				/>
 				<Input
+					id="email"
 					name="email"
 					label="E-mail"
 					type="email"
@@ -210,6 +216,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="telegram"
 					name="telegram"
 					label="Telegram"
 					type="text"
@@ -225,6 +232,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Пароль">
 				<Input
+					id="password"
 					name="password"
 					label="Введите пароль"
 					type="password"
@@ -239,6 +247,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="confirm_password"
 					name="confirm_password"
 					label="Повторный пароль"
 					type="password"
@@ -255,6 +264,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Фото">
 				<UploadFile
+					id="photo"
 					name="photo"
 					label=""
 					type="file"
@@ -265,6 +275,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
 				<SelectOption
+					id="skills"
 					name="skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
@@ -280,6 +291,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<SelectOption
+					id="city"
 					name="city"
 					label="Город"
 					placeholder="Выберите город"

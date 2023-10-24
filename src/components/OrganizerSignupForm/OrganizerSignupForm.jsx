@@ -96,6 +96,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		>
 			<InputGroup title="Общая информация">
 				<Input
+					id="organization"
 					name="organization"
 					label="Название организации"
 					type="text"
@@ -109,6 +110,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<SelectOption
+					id="city"
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
@@ -122,6 +124,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_ogrn"
 					name="organize_ogrn"
 					label="ОГРН"
 					type="text"
@@ -136,8 +139,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				/>
 			</InputGroup>
 			<InputTextArea
-				label="Об организации"
+				id="about_organization"
 				name="about_organization"
+				label="Об организации"
 				placeholder="Расскажите коротко об организации"
 				error={formik.errors.about_organization}
 				touched={formik.touched.about_organization}
@@ -147,6 +151,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			/>
 			<InputGroup title="Контактные данные представителя компании">
 				<Input
+					id="organize_secondname"
 					name="organize_secondname"
 					label="Фамилия"
 					type="text"
@@ -160,6 +165,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_firstname"
 					name="organize_firstname"
 					label="Имя"
 					type="text"
@@ -173,6 +179,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_thirdname"
 					name="organize_thirdname"
 					type="text"
 					label="Отчество"
@@ -186,6 +193,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_empty"
 					name="organize_empty"
 					label=""
 					type="text"
@@ -198,6 +206,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={formik.handleChange}
 				/>
 				<Input
+					id="organize_email"
 					name="organize_email"
 					label="E-mail"
 					type="text"
@@ -210,6 +219,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_phone"
 					name="organize_phone"
 					label="Телефон"
 					type="organize_phone"
@@ -225,6 +235,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Пароль">
 				<Input
+					id="organize_password"
 					name="organize_password"
 					label="Введите пароль"
 					type="password"
@@ -238,6 +249,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="organize_confirm_password"
 					name="organize_confirm_password"
 					label="Повторный пароль"
 					type="password"
