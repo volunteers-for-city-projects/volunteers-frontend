@@ -142,7 +142,7 @@ $error-color: #f78254;
 	// overflow: hidden;
 
 	&_type-small {
-		width: 280px;
+		width: 400px;
 		height: 14px;
 	}
 
@@ -152,7 +152,7 @@ $error-color: #f78254;
 
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		overflow: hidden;
+		// overflow: hidden;
 	}
 
 	&_type-large {

@@ -226,7 +226,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			<InputGroup title="Пароль">
 				<Input
 					name="organize_password"
-					label="Пароль"
+					label="Введите пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
