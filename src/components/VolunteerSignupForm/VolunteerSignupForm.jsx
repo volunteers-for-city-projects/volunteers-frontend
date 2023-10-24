@@ -74,11 +74,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		},
 		validationSchema: VolunteerSignupFormSchema,
 		onSubmit: async (values) => {
-			// функция для конверсии даты из инпута в формат даты на сервере
+			// конверсия даты из инпута в формат даты на сервере
 			const formattedDateOfBirth = moment(values.birthday, 'DD.MM.YYYY').format(
 				'YYYY-MM-DD'
 			);
-			// функция для конверсии номера телефона из инпута в формат телефона на сервере
+			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
 			// функция для добавления файла

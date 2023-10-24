@@ -1,7 +1,7 @@
 $error-color: #f78254;
 
 .text-area {
-	margin-top: 10px;
+	margin-top: 11px;
 
 	min-width: 580px;
 	max-width: 580px;
@@ -35,18 +35,18 @@ $error-color: #f78254;
 		border: 1px solid $error-color;
 
 		&-message {
-			height: 10px;
+			height: 14px;
 
 			display: block;
 
-			margin-top: 2px;
+			margin-top: 6px;
 
 			color: $error-color;
 			font-family: Fira Sans;
-			font-size: 10px;
+			font-size: 14px;
 			font-style: normal;
 			font-weight: 400;
-			line-height: 10px; /* 100% */
+			line-height: 130%;
 
 			word-wrap: break-word;
 
@@ -63,7 +63,7 @@ $error-color: #f78254;
 	width: 280px;
 	height: 18px;
 
-	margin-top: 5px;
+	margin-top: 11px;
 
 	color: #3f3f3f;
 

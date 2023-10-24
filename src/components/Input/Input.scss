@@ -1,6 +1,8 @@
 $error-color: #f78254;
 
 .label {
+	margin-top: px;
+
 	display: block;
 	width: 280px;
 	height: 18px;
@@ -38,6 +40,7 @@ $error-color: #f78254;
 
 .input {
 	margin-top: 16px;
+	height: 50px;
 
 	display: block;
 	box-sizing: border-box;
@@ -123,7 +126,7 @@ $error-color: #f78254;
 .error-message {
 	display: block;
 
-	margin-top: 11px;
+	margin-top: 6px;
 
 	color: $error-color;
 	font-family: Fira Sans;
@@ -140,7 +143,7 @@ $error-color: #f78254;
 
 	&_type-small {
 		width: 280px;
-		height: 10px;
+		height: 14px;
 	}
 
 	&_type-medium {
@@ -163,7 +166,7 @@ $error-color: #f78254;
 
 	&_type-photo {
 		width: 280px;
-		height: 9px;
+		height: 14px;
 
 		text-overflow: ellipsis;
 		white-space: nowrap;

@@ -4,8 +4,8 @@
 }
 
 .signup {
-	margin: 78px auto 72px;
-	padding: 0 130px 0;
+	margin: 30px auto 70px;
+	padding: 0 164px 0 34px;
 
 	display: flex;
 	flex-direction: column;
@@ -13,26 +13,30 @@
 	&__wrap {
 		display: flex;
 		align-items: center;
-		gap: 64px;
+		gap: 85px;
 	}
 
 	&__image {
-		margin: 6px 0 0;
+		margin: 47px 0 0;
+		padding-bottom: 10px;
 
-		border-radius: 10px;
+		border-radius: 50px;
 
-		min-width: 680px;
-		height: 967px;
+		min-width: 695px;
+		min-height: 967px;
+		max-height: 1000px;
+
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-color: transparent;
-		background-size: 722px 625px;
 
 		&_organizer {
 			background-image: url(../../images/signup_background_image_organize.svg);
+			background-size: 722px 625px;
 		}
 		&_volunteer {
 			background-image: url(../../images/signup_background_image.svg);
+			background-size: 722px 625px;
 		}
 	}
 	&__content-wrap {
@@ -41,7 +45,7 @@
 		// gap: 27px;
 	}
 	&__title {
-		margin: 0 0 21px 0;
+		margin: 0 0 39px 0;
 
 		font-family: Fira Sans;
 		font-size: 56px;
