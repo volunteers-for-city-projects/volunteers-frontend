@@ -4,7 +4,6 @@ on:
   workflow_call:
 
 jobs:
-
   build_front:
     name: Push backend Docker image to DockerHub
     runs-on: ubuntu-latest
