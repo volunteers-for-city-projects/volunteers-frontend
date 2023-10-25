@@ -50,7 +50,9 @@ function App() {
 				isLoggedIn={isLoggedIn}
 				handleConfirmLogout={handleConfirmLogout}
 			/>
-			<Outlet context={{ setPlatformEmail, isLoading, setIsLoading }} />
+			<Outlet
+				context={{ setPlatformEmail, isLoading, setIsLoading, isLoggedIn }}
+			/>
 			<Footer platformEmail={platformEmail} />
 			<Modal modal={modal} closeModal={closeModal} />
 		</>
