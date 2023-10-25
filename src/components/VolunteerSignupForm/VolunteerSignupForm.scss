@@ -3,14 +3,14 @@
 
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 
 	&__text {
 		position: relative;
 		&-content {
 			display: flex;
 			flex-direction: column;
-			gap: 8px;
+			gap: 6px;
 
 			width: 380px;
 
