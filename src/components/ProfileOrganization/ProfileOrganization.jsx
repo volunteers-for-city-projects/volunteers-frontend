@@ -52,6 +52,7 @@ function ProfileOrganization() {
 							size="pre-large"
 							minWidth="283px"
 							backgroundColor="#A6C94F"
+							border="none"
 						/>
 					</div>
 				</div>

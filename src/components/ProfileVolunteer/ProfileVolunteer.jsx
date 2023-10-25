@@ -27,6 +27,7 @@ function ProfileVolunteer({ isVolunteer }) {
 									size="pre-large"
 									minWidth="380px"
 									backgroundColor="#A6C94F"
+									border="none"
 								/>
 							</div>
 						</div>
