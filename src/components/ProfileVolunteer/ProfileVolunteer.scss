@@ -4,7 +4,6 @@
 	background: #fdfdfd;
 	margin: 0 auto;
 
-
 	&__personal {
 		display: flex;
 		flex-direction: column;
@@ -52,12 +51,14 @@
 		min-height: 979px;
 		margin-top: 40px;
 		flex-direction: column;
+		position: relative;
 	}
 	&__projects-title {
 		margin: 0;
 		font-size: 56px;
-		font-weight: 500;
+		font-weight: 400;
 		line-height: 100%;
+		color: $--Text;
 	}
 }
 }

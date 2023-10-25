@@ -2,9 +2,7 @@
 
 .profile {
 	background: #fdfdfd;
-	max-width: 1920px;
 	margin: 0 auto;
-	box-sizing: border-box;
 
 	&__personal {
 		display: flex;
@@ -59,7 +57,8 @@
 		&-title {
 			margin: 0;
 			font-size: 56px;
-			font-weight: 500;
+			font-weight: 400;
+			font-style: normal;
 			line-height: 100%;
 			color: $--Text;
 		}
