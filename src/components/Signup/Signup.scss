@@ -5,7 +5,7 @@
 
 .signup {
 	margin: 30px auto 70px;
-	padding: 0 164px 0 34px;
+	padding: 0 175px 0 34px;
 
 	display: flex;
 	flex-direction: column;
@@ -13,11 +13,10 @@
 	&__wrap {
 		display: flex;
 		align-items: center;
-		gap: 85px;
+		gap: 80px;
 	}
 
 	&__image {
-		margin: 47px 0 0;
 		padding-bottom: 10px;
 
 		border-radius: 50px;
@@ -32,11 +31,14 @@
 
 		&_organizer {
 			background-image: url(../../images/signup_background_image_organize.svg);
-			background-size: 722px 625px;
+			background-size: 640px 715px;
+			translate: 50px -27px;
 		}
 		&_volunteer {
 			background-image: url(../../images/signup_background_image.svg);
 			background-size: 722px 625px;
+
+			translate: 2px 20px;
 		}
 	}
 	&__content-wrap {
