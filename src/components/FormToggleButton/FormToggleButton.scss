@@ -1,3 +1,8 @@
+$color: #a6c94f;
+$font-family: Fira Sans;
+$font-size: 20px;
+$line-height: 23px;
+
 .toggle-button {
 	width: 190px;
 	height: 36px;
@@ -5,20 +10,20 @@
 	box-sizing: border-box;
 
 	border: none;
-	border-radius: 8px;
+	border-radius: 5px;
 
 	background-color: transparent;
 
-	font-family: Fira Sans;
-	font-size: 17px;
+	font-family: $font-family;
+	font-size: $font-size;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 20px;
+	line-height: $line-height;
 
 	cursor: pointer;
 
 	&_active {
-		background-color: #2a2a2a;
+		background-color: $color;
 		color: #fff;
 	}
 }

@@ -4,7 +4,8 @@
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	margin: 100px 130px;
+	max-width: 1660px;
+	margin: 100px 0;
 	gap: 50px;
 
 	&__title-container {

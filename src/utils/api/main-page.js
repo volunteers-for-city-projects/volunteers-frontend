@@ -3,7 +3,7 @@ import {
 	ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT,
 	ENDPOINT_MAIN_PAGE_FEEDBACK,
 	ENDPOINT_MAIN_PAGE_SEARCH,
-} from '../utils/endpoints';
+} from '../endpoints';
 
 export async function getNews() {
 	try {
