@@ -1,3 +1,5 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11.0769 15.4302V0H12.9231V15.3102L16.8849 11.3465L18.192 12.6535L12.0258 18.8197L5.37231 12.6757L6.624 11.3206L11.0769 15.4302ZM1.84615 22.1538V11.0769H0V24H24V11.0769H22.1538V22.1538H1.84615Z" fill="black"/>
+<g id="Icons">
+<path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#A6C94F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>

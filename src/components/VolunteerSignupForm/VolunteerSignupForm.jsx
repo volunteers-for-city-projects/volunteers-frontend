@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import moment from 'moment';
-import * as Yup from 'yup';
 
 import './VolunteerSignupForm.scss';
 
@@ -10,22 +9,21 @@ import Input from '../Input/Input';
 import UploadFile from '../UploadFile/UploadFile';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
 import {
-	// createUser,
+	// postPhoto,
 	createVolunteer,
-	fetchSkills,
-	fetchCities,
+	getSkills,
+	getCities,
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
-// import citiesArray from '../../utils/citiesArray';
-// import skillsArray from '../../utils/skillsArray';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 
-	// const [selectedFile, setSelectedFile] = React.useState(null);
+	const [selectedFile, setSelectedFile] = React.useState(null);
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
@@ -34,8 +32,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const citiesResponse = await fetchCities();
-				const skillsResponse = await fetchSkills();
+				const citiesResponse = await getCities();
+				const skillsResponse = await getSkills();
 
 				const citiesData = citiesResponse.map((item) => ({
 					label: item.name,
@@ -57,74 +55,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		fetchData();
 	}, []);
 
-	const VolunteerSignupFormSchema = Yup.object({
-		firstname: Yup.string()
-			.min(2, 'Длина поля от 2 до 40 символов')
-			.max(40, 'Длина поля от 2 до 40 символов')
-			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите имя кириллицей')
-			.required('Поле обязательно для заполнения'),
-		secondname: Yup.string()
-			.min(2, 'Длина поля от 2 до 40 символов')
-			.max(40, 'Длина поля от 2 до 40 символов')
-			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите фамилию кириллицей')
-			.required('Поле обязательно для заполнения'),
-		thirdname: Yup.string()
-			.min(2, 'Длина поля от 2 до 40 символов')
-			.max(40, 'Длина поля от 2 до 40 символов')
-			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите отчество кириллицей')
-			.required('Поле обязательно для заполнения'),
-		birthday: Yup.string()
-			.min(10, 'Введите корректную дату')
-			.max(10, 'Введите корректную дату')
-			.matches(
-				/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/,
-				'Для регистрации вам должно быть не менее 18 лет'
-			)
-			.test('age', 'Вам должно быть 18 лет или старше', (value) => {
-				const birthdate = moment(value, 'DD.MM.YYYY');
-				const today = moment();
-				return today.diff(birthdate, 'years') >= 18;
-			})
-			.required('Поле обязательно для заполнения'),
-		phone: Yup.string()
-			.matches(
-				/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-				'Введите корректный телефон'
-			)
-			.required('Поле обязательно для заполнения'),
-		email: Yup.string()
-			.required('Поле обязательно для заполнения')
-			.min(5, 'Длина поля от 5 до 256 символов')
-			.max(256, 'Длина поля от 5 до 256 символов')
-			.matches(
-				/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-				'Проверьте правильность email адреса'
-			),
-		telegram: Yup.string()
-			.min(5, 'Длина поля от 5 до 32 символов')
-			.max(32, 'Длина поля от 5 до 32 символов')
-			.matches(/^@[а-яА-ЯёЁ_a-zA-Z]{4,32}$/, 'Введите корректный username')
-			.required('Поле обязательно для заполнения'),
-		password: Yup.string()
-			.required('Поле обязательно для заполнения')
-			.min(8, 'Длина поля от 8 до 20 символов')
-			.max(20, 'Длина поля от 8 до 20 символов')
-			.matches(
-				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-				'Пароль должен содержать латинские и кириллические буквы, цифры и спецсимволы'
-			)
-			.oneOf([Yup.ref('confirm_password'), null], 'Пароли не совпадают'),
-		confirm_password: Yup.string()
-			.required('Поле обязательно для заполнения')
-			.min(8, 'Длина поля от 8 до 20 символов')
-			.max(20, 'Длина поля от 8 до 20 символов')
-			.matches(
-				/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-				'Пароль должен содержать латинские и кириллические буквы, цифры и спецсимволы'
-			)
-			.oneOf([Yup.ref('password'), null], 'Пароли не совпадают'),
-	});
-
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -144,13 +74,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		},
 		validationSchema: VolunteerSignupFormSchema,
 		onSubmit: async (values) => {
-			// функция для конверсии даты из инпута в формат даты на сервере
+			// конверсия даты из инпута в формат даты на сервере
 			const formattedDateOfBirth = moment(values.birthday, 'DD.MM.YYYY').format(
 				'YYYY-MM-DD'
 			);
-			// функция для конверсии номера телефона из инпута в формат телефона на сервере
+			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
+			const formattedPhone = `${getDigitsOnly(values.phone)}`;
+			// функция для добавления файла
+			const formData = new FormData();
+			formData.append('file', selectedFile);
 
 			try {
 				await createVolunteer({
@@ -165,7 +98,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					telegram: values.telegram,
 					photo: values.photo || null || '' || undefined,
 					date_of_birth: formattedDateOfBirth,
-					phone: formattedPhone || '',
+					phone:
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						formattedPhone,
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
@@ -173,6 +108,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to create user and/or volunteer:', error.message);
 			}
+			// try {
+			// 	await postPhoto(formData);
+			// } catch (error) {
+			// 	console.error('Failed to create user and/or volunteer:', error.message);
+			// }
 		},
 	});
 
@@ -188,6 +128,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		>
 			<InputGroup title="Общая информация">
 				<Input
+					id="firstname"
 					name="firstname"
 					label="Имя"
 					type="text"
@@ -202,6 +143,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="secondname"
 					name="secondname"
 					label="Фамилия"
 					type="text"
@@ -215,6 +157,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="thirdname"
 					name="thirdname"
 					type="text"
 					label="Отчество"
@@ -229,6 +172,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="birthday"
 					name="birthday"
 					label="Дата рождения"
 					type="text-date"
@@ -245,6 +189,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Контактные данные">
 				<Input
+					id="phone"
 					name="phone"
 					label="Телефон"
 					type="phone"
@@ -258,6 +203,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					autoсomplete="off"
 				/>
 				<Input
+					id="email"
 					name="email"
 					label="E-mail"
 					type="email"
@@ -272,6 +218,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="telegram"
 					name="telegram"
 					label="Telegram"
 					type="text"
@@ -283,15 +230,15 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
 					autoсomplete="off"
-					required
 				/>
 			</InputGroup>
 			<InputGroup title="Пароль">
 				<Input
+					id="password"
 					name="password"
-					label="Пароль"
+					label="Введите пароль"
 					type="password"
-					placeholder=""
+					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.password}
 					touched={formik.touched.password}
@@ -302,10 +249,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
+					id="confirm_password"
 					name="confirm_password"
-					label="Повтор пароля"
+					label="Повторный пароль"
 					type="password"
-					placeholder=""
+					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.confirm_password}
 					touched={formik.touched.confirm_password}
@@ -318,20 +266,22 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Фото">
 				<UploadFile
+					id="photo"
 					name="photo"
 					label=""
 					type="file"
 					inputSize="photo"
 					value={formik.values.confirm_password}
-					// setSelectedFile={setSelectedFile}
+					setSelectedFile={setSelectedFile}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
 				<SelectOption
+					id="skills"
 					name="skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
-					width={280}
+					width={400}
 					options={skills}
 					isMulti
 					value={formik.values.skills}
@@ -340,18 +290,21 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						const selectedValues = selectedOption.map((option) => option.value);
 						formik.setFieldValue('skills', selectedValues);
 					}}
+					required
 				/>
 				<SelectOption
+					id="city"
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={280}
+					width={400}
 					options={cities}
 					touched={formik.touched.city}
 					value={formik.values.city}
 					handleChange={(selectedOption) => {
 						formik.setFieldValue('city', Number(selectedOption.value));
 					}}
+					required
 				/>
 			</InputGroup>
 			<div className=" volunteer-signup-form__text-content">
@@ -359,7 +312,12 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					label="Зарегистрироваться"
 					color="white"
 					size="medium"
-					disabled={!formik.isValid || !isCheckboxChecked}
+					disabled={
+						!formik.isValid ||
+						!isCheckboxChecked ||
+						formik.values.city === null ||
+						formik.values.skills.length === 0
+					}
 					type="submit"
 				/>
 				<p className="volunteer-signup-form__text">

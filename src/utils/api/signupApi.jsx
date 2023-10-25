@@ -1,6 +1,6 @@
 const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
 
-const fetchCities = async () => {
+const getCities = async () => {
 	try {
 		const response = await fetch(`${BASE_URL}/cities`); // Замените на ваше API-путь для городов
 		return await response.json();
@@ -9,7 +9,7 @@ const fetchCities = async () => {
 	}
 };
 
-const fetchSkills = async () => {
+const getSkills = async () => {
 	try {
 		const response = await fetch(`${BASE_URL}/skills`); // Замените на ваше API-путь для навыков
 		return await response.json();
@@ -66,10 +66,24 @@ const createOrganization = async (organizationData) => {
 	}
 };
 
+const postPhoto = async (formData) => {
+	try {
+		const response = await fetch(`${BASE_URL}/media`, {
+			method: 'POST',
+			body: JSON.stringify(formData),
+		});
+
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при создании организации: ${error.message}`);
+	}
+};
+
 export {
-	fetchCities,
-	fetchSkills,
+	getCities,
+	getSkills,
 	createUser,
 	createVolunteer,
 	createOrganization,
+	postPhoto,
 };

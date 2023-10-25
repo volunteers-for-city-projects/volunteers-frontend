@@ -1,7 +1,7 @@
 .form-fieldset {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 5px 20px;
+	gap: 15px 20px;
 
 	padding: 0;
 	margin: 0;
@@ -9,9 +9,7 @@
 	border: none;
 }
 .form-legend {
-	// margin: 0 0 11px 0;
-
-	margin: 0 0 13px 0;
+	margin: 0 0 24px 0;
 	padding: 0;
 
 	color: #000;
@@ -19,6 +17,6 @@
 	font-family: Fira Sans;
 	font-size: 23px;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 500;
 	line-height: 130%; /* 29.9px */
 }
