@@ -281,7 +281,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
-					width={280}
+					width={400}
 					options={skills}
 					isMulti
 					value={formik.values.skills}
@@ -297,7 +297,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={280}
+					width={400}
 					options={cities}
 					touched={formik.touched.city}
 					value={formik.values.city}

@@ -114,7 +114,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={280}
+					width={400}
 					options={cities}
 					touched={formik.touched.city}
 					value={formik.values.city}

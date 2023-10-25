@@ -19,38 +19,49 @@ function SelectOption({
 	const customStyles = {
 		control: (baseStyles) => ({
 			...baseStyles,
-			borderRadius: '10px',
-			borderColor: '#000',
-			borderWidth: '1.613px',
-			minHeight: '36px',
-			maxHeight: '36px',
-			boxShadow: 'none',
+			fontFamily: 'Fira Sans',
+			fontSize: '20px',
+			fontStyle: 'normal',
+			fontWeight: '400',
+			lineHeight: '23px',
+			borderRadius: '5px',
+			borderColor: '#3f3f3f',
+			borderWidth: '1px',
+			minHeight: '48px',
+			padding: '2px 5px',
 			'&:hover': {
-				// borderColor: '#007aff',
+				borderColor: '#3f3f3f',
 			},
 		}),
 		dropdownIndicator: (baseStyles) => ({
 			...baseStyles,
-			color: '#000',
+			padding: '11px 12px',
+			// width: '5px',
+			// height: '5px',
+			color: '#3f3f3f',
 			'&:hover': {
-				color: '#000',
+				color: '#3f3f3f',
 			},
 		}),
 		placeholder: (baseStyles) => ({
 			...baseStyles,
-			color: '#959595',
+			fontFamily: 'Fira Sans',
+			fontSize: '20px',
+			fontStyle: 'normal',
+			fontWeight: '400',
+			lineHeight: '23px',
+			color: '#c5c5c5',
 		}),
 		menu: (baseStyles) => ({
 			...baseStyles,
-			padding: '8px 0px',
 		}),
 		option: (baseStyles) => ({
 			...baseStyles,
 			fontFamily: 'Fira Sans',
-			fontSize: '14px',
+			fontSize: '20px',
 			fontStyle: 'normal',
-			fontWeight: '300',
-			lineHeight: '20px',
+			fontWeight: '400',
+			lineHeight: '23px',
 			padding: '8px 16px',
 		}),
 	};
@@ -78,11 +89,11 @@ function SelectOption({
 				styles={customStyles}
 				theme={(theme) => ({
 					...theme,
-					borderRadius: 10,
+					borderRadius: 5,
 					colors: {
 						...theme.colors,
-						primary25: '#d7d7d7',
-						primary: '#000',
+						primary25: '#a6c94f',
+						primary: '#a6c94f',
 					},
 				})}
 				isMulti={isMulti}
