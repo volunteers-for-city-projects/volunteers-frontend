@@ -2,12 +2,14 @@
 
 .profile {
 	background: #fdfdfd;
+	max-width: 1920px;
+	margin: 0 auto;
+	box-sizing: border-box;
 
 	&__personal {
 		display: flex;
 		flex-direction: column;
 		margin-top: 50px;
-		margin-left: 134px;
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
@@ -26,7 +28,6 @@
 		margin-top: 25px;
 		margin-left: 36px;
 		margin-bottom: 5px;
-	
 
 		&-surname {
 			margin-top: 5px;
@@ -45,7 +46,7 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-		margin-bottom: 98px;
+		margin: 0 130px 98px;
 	}
 	&__projects {
 		width: 960px;
@@ -79,6 +80,7 @@
 			display: flex;
 			margin-left: 210px;
 			gap: 20px;
+			width: 588px;
 		}
 		&-button {
 			position: absolute;
@@ -87,9 +89,8 @@
 		&-btn {
 			width: 64px;
 			height: 64px;
-			background-color: white;
+			background-color: $--White;
 			color: #959595;
-
 			border: 1px solid #959595;
 			border-radius: 6px;
 			font-size: 18px;
@@ -98,9 +99,9 @@
 			padding: 0;
 		}
 		&-btn_activ {
-			background-color: #a6c94f;
+			background-color: $--Button_primary;
 			border: none;
-			color: white;
+			color: $--White;
 		}
 	}
 }

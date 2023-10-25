@@ -39,16 +39,25 @@ function CardProject({ cardProject }) {
 export default CardProject;
 
 CardProject.propTypes = {
-	cardProject: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			status: PropTypes.string.isRequired,
-			nameProject: PropTypes.string.isRequired,
-			city: PropTypes.string.isRequired,
-			day: PropTypes.string.isRequired,
-			time: PropTypes.string.isRequired,
-			isModeration: PropTypes.bool.isRequired,
-			image: PropTypes.string.isRequired,
-		})
-	).isRequired,
+	cardProject: PropTypes.shape({
+		status: PropTypes.string,
+		nameProject: PropTypes.string,
+		city: PropTypes.string,
+		day: PropTypes.string,
+		time: PropTypes.string,
+		isModeration: PropTypes.bool,
+		image: PropTypes.string,
+	}),
+};
+
+CardProject.defaultProps = {
+	cardProject: PropTypes.shape({
+		status: '',
+		nameProject: '',
+		city: '',
+		day: '',
+		time: '',
+		isModeration: true,
+		image: '',
+	}),
 };

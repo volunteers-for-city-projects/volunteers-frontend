@@ -9,7 +9,7 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 
 function ProfileOrganization() {
 	return (
-		<section className="profile-organization">
+		<section className="profile">
 			<ProfileMenu title="Личный кабинет организатора" />
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -40,10 +40,10 @@ function ProfileOrganization() {
 						))}
 					</div>
 					<div className="profile__projects-pagination">
+						<button className="profile__projects-btn">&#60;</button>
 						<button className="profile__projects-btn profile__projects-btn_activ">
 							1
 						</button>
-						<button className="profile__projects-btn">2</button>
 					</div>
 					<div className="profile__projects-button">
 						<Pushbutton

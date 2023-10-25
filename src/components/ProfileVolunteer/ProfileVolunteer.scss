@@ -2,12 +2,13 @@
 
 .profile {
 	background: #fdfdfd;
-	
+	margin: 0 auto;
+
+
 	&__personal {
 		display: flex;
 		flex-direction: column;
 		margin-top: 50px;
-		margin-left: 134px;
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
@@ -32,6 +33,7 @@
 			font-size: 28px;
 			font-weight: 500;
 			line-height: 28px;
+			color: $--Text;
 		}
 	}
 	&__button {
@@ -43,8 +45,8 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-		margin-bottom: 98px;
-	}
+	    margin: 0 130px 98px;
+	
 	&__projects {
 		width: 960px;
 		min-height: 979px;
@@ -57,4 +59,5 @@
 		font-weight: 500;
 		line-height: 100%;
 	}
+}
 }

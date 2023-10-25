@@ -11,7 +11,7 @@ function ProfileVolunteer({ isVolunteer }) {
 		<>
 			{/* Переключить на волонтера или организатора isVolunteer или !isVolunteer */}
 			{!isVolunteer ? (
-				<section className="profile-volunteer">
+				<section className="profile">
 					<ProfileMenu title="Личный кабинет волонтера" />
 					<div className="profile__wrapper">
 						<div className="profile__personal">
