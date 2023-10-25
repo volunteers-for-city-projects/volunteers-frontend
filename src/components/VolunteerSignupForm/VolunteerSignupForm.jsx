@@ -80,7 +80,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `+${getDigitsOnly(values.phone)}`;
+			const formattedPhone = `${getDigitsOnly(values.phone)}`;
 			// функция для добавления файла
 			const formData = new FormData();
 			formData.append('file', selectedFile);
@@ -98,7 +98,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					telegram: values.telegram,
 					photo: values.photo || null || '' || undefined,
 					date_of_birth: formattedDateOfBirth,
-					phone: formattedPhone || '',
+					phone:
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						formattedPhone,
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
