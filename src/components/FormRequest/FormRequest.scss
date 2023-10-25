@@ -2,14 +2,19 @@
 
 .request {
 	box-sizing: border-box;
+	background-image: url('../../images/main-page/cloud.png');
+	background-repeat: no-repeat;
+	background-size: 641px 332px;
+	background-position: right bottom 363px;
+	max-width: 1920px;
+	margin: 0 auto;
 
 	&__container {
 		max-width: 1660px;
-		margin: 94px auto 105px;
+		margin: 0 auto 94px;
 		display: flex;
 		flex-direction: column;
 		gap: 35px;
-		position: relative;
 	}
 
 	&__container-title {

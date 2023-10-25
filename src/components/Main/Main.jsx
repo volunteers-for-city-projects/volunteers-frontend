@@ -5,7 +5,6 @@ import {
 	getPlatformAbout,
 	sendMessage,
 } from '../../utils/api/main-page';
-import './Main.scss';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import News from '../News/News';
@@ -49,10 +48,8 @@ function Main() {
 			<Promo plarformPromo={plarformPromo} />
 			<AboutProject plarformAbout={plarformAbout} />
 			{news.length > 0 && <News news={news} />}
-			<div className="content-main__wrapper-background content-main__wrapper-background_type_join-request">
-				<JoinButtons />
-				<FormRequest handleSendMessage={handleSendMessage} />
-			</div>
+			<JoinButtons />
+			<FormRequest handleSendMessage={handleSendMessage} />
 		</main>
 	);
 }
