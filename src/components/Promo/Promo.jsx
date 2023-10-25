@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useOutletContext } from 'react-router-dom';
+import clsx from 'clsx';
 import './Promo.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
@@ -34,7 +35,11 @@ function Promo({ plarformPromo }) {
 						/>
 					</div>
 				)}
-				<ul className="promo__list">
+				<ul
+					className={clsx('promo__list', {
+						promo__list_type_login: isLoggedIn,
+					})}
+				>
 					<li className="promo__item">
 						<h2 className="promo__item-title">{projectCount}</h2>
 						<p className="promo__item-subtitle">проекта</p>
