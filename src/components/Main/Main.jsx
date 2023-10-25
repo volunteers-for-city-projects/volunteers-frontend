@@ -45,12 +45,14 @@ function Main() {
 	};
 
 	return (
-		<main className="content ">
+		<main className="content-main">
 			<Promo plarformPromo={plarformPromo} />
 			<AboutProject plarformAbout={plarformAbout} />
-			{news && <News news={news} />}
-			<JoinButtons />
-			<FormRequest handleSendMessage={handleSendMessage} />
+			{news.length > 0 && <News news={news} />}
+			<div className="content-main__wrapper-background content-main__wrapper-background_type_join-request">
+				<JoinButtons />
+				<FormRequest handleSendMessage={handleSendMessage} />
+			</div>
 		</main>
 	);
 }
