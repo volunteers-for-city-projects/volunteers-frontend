@@ -61,6 +61,8 @@
 		align-items: center;
 		z-index: 2;
 		color: #3f3f3f;
+		
+	
 	}
 	&__name-title {
 		margin: 0;
@@ -70,6 +72,8 @@
 		z-index: 2;
 		color: #3f3f3f;
 		align-self: last baseline;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	&__data {
 		display: flex;
@@ -100,5 +104,15 @@
 			line-height: 20px;
 			z-index: 2;
 		}
+	}
+}
+
+
+@media screen and (max-width: 1918px) {
+	.card__project {
+		width: 356px;
+	}
+	.card__name-title {
+		font-size: 26px;
 	}
 }

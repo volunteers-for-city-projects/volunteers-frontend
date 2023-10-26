@@ -3,6 +3,7 @@
 .profile {
 	background: #fdfdfd;
 	margin: 0 auto;
+	max-width: 1920px;
 
 	&__personal {
 		display: flex;
@@ -44,7 +45,7 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-		margin: 0 124px 98px;
+		padding: 0 124px 98px;
 	}
 	&__projects {
 		width: 960px;
@@ -79,7 +80,6 @@
 			display: flex;
 			margin-left: 210px;
 			gap: 20px;
-			width: 588px;
 		}
 		&-button {
 			position: absolute;
@@ -102,5 +102,28 @@
 			border: none;
 			color: $--White;
 		}
+	}
+}
+
+@media screen and (max-width: 1918px) {
+	.profile__personal {
+		width: 491px;
+	}
+	.profile__projects {
+		width: 732px;
+		position: relative;
+	}
+	.profile__wrapper {
+		gap: 0;
+		padding: 0 35px 98px 91px;
+	}
+	.profile__projects-pagination {
+		margin-left: 82px;
+	}
+	.profile__projects-button {
+		position: absolute;
+		bottom: 0;
+		left: 236px;
+		right: 210px;
 	}
 }

@@ -3,6 +3,7 @@
 .profile {
 	background: #fdfdfd;
 	margin: 0 auto;
+	max-width: 1920px;
 
 	&__personal {
 		display: flex;
@@ -44,7 +45,8 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-	    margin: 0 130px 98px;
+		padding: 0 130px 98px;
+		margin: 0 auto;
 	
 	&__projects {
 		width: 960px;
@@ -61,4 +63,18 @@
 		color: $--Text;
 	}
 }
+}
+
+@media screen and (max-width: 1918px) {
+
+	.profile__personal {
+		width: 491px;
+	}
+	.profile__projects {
+		width: 732px;
+	}
+	.profile__wrapper {
+		gap: 0;
+		padding: 0 35px 98px 91px;
+	}
 }

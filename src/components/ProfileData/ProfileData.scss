@@ -15,7 +15,6 @@
 			font-size: 23px;
 			font-weight: 500;
 			line-height: 130%;
-			
 		}
 		&-subtitle {
 			font-size: 20px;
@@ -23,5 +22,12 @@
 			line-height: 23px;
 			margin: 10px 0 0;
 		}
+	}
+}
+
+@media screen and (max-width: 1918px) {
+	.profile__data {
+		padding: 0 35px 16px 0;
+		gap: 40px;
 	}
 }
