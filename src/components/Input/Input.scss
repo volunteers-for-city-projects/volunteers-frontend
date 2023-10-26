@@ -1,21 +1,25 @@
+$error-color: #f78254;
+
 .label {
+	margin-top: px;
+
 	display: block;
 	width: 280px;
 	height: 18px;
 
-	color: #949494;
+	color: #3f3f3f;
 
 	font-family: Fira Sans;
-	font-size: 12px;
+	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 17.746px; /* 147.883% */
+	line-height: 23px; /* 147.883% */
 
 	word-wrap: break-word;
 
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
+	// overflow: hidden;
 
 	&_type-large {
 		font-family: Fira Sans;
@@ -35,28 +39,27 @@
 }
 
 .input {
-	margin-top: 4px;
+	margin-top: 16px;
+	height: 50px;
 
 	display: block;
 	box-sizing: border-box;
 
-	border-radius: 10px;
-	border: 1.613px solid #000;
+	border-radius: 5px;
+	border: 1px solid #000;
 
 	background-color: transparent;
 
-	color: #000;
-	font-family: Fira Sans;
-	font-size: 16px;
+	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 16px; /* 100% */
+	line-height: 23px; /* 147.883% */
 
 	&_type-small {
-		width: 280px;
-		height: 36px;
+		width: 400px;
+		height: 50px;
 
-		padding: 0 10px;
+		padding: 18px 16px;
 	}
 
 	&_type-medium {
@@ -104,40 +107,43 @@
 	}
 
 	&_error {
-		border: 1.613px solid #bf0000;
+		border: 1px solid $error-color;
 	}
 
 	&::placeholder {
-		color: #bdbdbd;
+		color: #959595;
 		font-family: Fira Sans;
-		font-size: 16px;
+		font-size: 20px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 16px; /* 100% */
+		line-height: 23px;
+	}
+	&_empty {
+		display: none;
 	}
 }
 
 .error-message {
 	display: block;
 
-	margin-top: 2px;
+	margin-top: 6px;
 
-	color: #bf0000;
+	color: $error-color;
 	font-family: Fira Sans;
-	font-size: 10px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 10px; /* 100% */
+	line-height: 130%;
 
 	word-wrap: break-word;
 
 	text-overflow: ellipsis;
 	white-space: pre-wrap;
-	overflow: hidden;
+	// overflow: hidden;
 
 	&_type-small {
-		width: 280px;
-		height: 10px;
+		width: 400px;
+		height: 14px;
 	}
 
 	&_type-medium {
@@ -146,7 +152,7 @@
 
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		overflow: hidden;
+		// overflow: hidden;
 	}
 
 	&_type-large {
@@ -160,7 +166,7 @@
 
 	&_type-photo {
 		width: 280px;
-		height: 9px;
+		height: 14px;
 
 		text-overflow: ellipsis;
 		white-space: nowrap;

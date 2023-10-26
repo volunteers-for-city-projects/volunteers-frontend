@@ -44,21 +44,63 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-	    margin: 0 130px 98px;
-	
+		margin: 0 130px 98px;
+	}
 	&__projects {
 		width: 960px;
 		min-height: 979px;
 		margin-top: 40px;
+		display: flex;
 		flex-direction: column;
 		position: relative;
+
+		&-title {
+			margin: 0;
+			font-size: 56px;
+			font-weight: 400;
+			font-style: normal;
+			line-height: 100%;
+			color: $--Text;
+		}
+		&-tabs {
+			display: flex;
+			gap: 20px;
+			margin-top: 20px;
+		}
+		&-cards {
+			display: flex;
+			margin-top: 40px;
+			flex-wrap: wrap;
+			gap: 18px;
+		}
+		&-pagination {
+			margin-top: 20px;
+			margin-bottom: 18px;
+			display: flex;
+			margin-left: 210px;
+			gap: 20px;
+			width: 588px;
+		}
+		&-button {
+			position: absolute;
+			bottom: 0;
+		}
+		&-btn {
+			width: 64px;
+			height: 64px;
+			background-color: $--White;
+			color: #959595;
+			border: 1px solid #959595;
+			border-radius: 6px;
+			font-size: 18px;
+			font-weight: 800;
+			line-height: normal;
+			padding: 0;
+		}
+		&-btn_activ {
+			background-color: $--Button_primary;
+			border: none;
+			color: $--White;
+		}
 	}
-	&__projects-title {
-		margin: 0;
-		font-size: 56px;
-		font-weight: 400;
-		line-height: 100%;
-		color: $--Text;
-	}
-}
 }

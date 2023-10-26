@@ -1,7 +1,7 @@
 @import '../../style/variables.scss';
 
 .select-option {
-	margin: 4px 0 0;
+	margin: 16px 0 0;
 
 	&__container {
 		color: $--Black;
@@ -15,13 +15,20 @@
 	}
 
 	&__label {
-		color: $--Dark-grey;
+		display: block;
+		width: 280px;
+		height: 18px;
+		color: #3f3f3f;
 		font: {
 			family: 'Fira Sans', sans-serif;
-			size: 12px;
+			size: 20px;
 			weight: 400;
 			style: normal;
 		}
+		line-height: 23px;
+		word-wrap: break-word;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	&__error-message {

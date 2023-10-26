@@ -4,27 +4,42 @@
 }
 
 .signup {
-	margin: 0 auto 119px;
-	padding: 0 130px 0;
+	margin: 30px auto 70px;
+	padding: 0 177px 0 56px;
 
 	display: flex;
 	flex-direction: column;
 
 	&__wrap {
 		display: flex;
-		gap: 20px;
+		align-items: center;
+		gap: 80px;
 	}
 
 	&__image {
-		margin: 6px 0 0;
+		padding-bottom: 10px;
 
-		border-radius: 10px;
+		border-radius: 50px;
 
-		min-width: 680px;
-		height: 967px;
+		min-width: 695px;
+		min-height: 967px;
+		max-height: 1000px;
+
 		background-position: center center;
 		background-repeat: no-repeat;
-		background-color: grey;
+		background-color: transparent;
+
+		&_organizer {
+			background-image: url(../../images/signup_background_image_organize.svg);
+			background-size: 640px 715px;
+			translate: 50px -27px;
+		}
+		&_volunteer {
+			background-image: url(../../images/signup_background_image.svg);
+			background-size: 722px 625px;
+
+			translate: 2px 0px;
+		}
 	}
 	&__content-wrap {
 		display: flex;
