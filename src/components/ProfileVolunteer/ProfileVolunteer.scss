@@ -44,21 +44,21 @@
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-	    margin: 0 130px 98px;
-	
-	&__projects {
-		width: 960px;
-		min-height: 979px;
-		margin-top: 40px;
-		flex-direction: column;
-		position: relative;
+		margin: 0 130px 98px;
+
+		&__projects {
+			width: 960px;
+			min-height: 979px;
+			margin-top: 40px;
+			flex-direction: column;
+			position: relative;
+		}
+		&__projects-title {
+			margin: 0;
+			font-size: 56px;
+			font-weight: 400;
+			line-height: 100%;
+			color: $--Text;
+		}
 	}
-	&__projects-title {
-		margin: 0;
-		font-size: 56px;
-		font-weight: 400;
-		line-height: 100%;
-		color: $--Text;
-	}
-}
 }
