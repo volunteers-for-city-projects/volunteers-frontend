@@ -4,7 +4,7 @@
 	margin: 0;
 	font-family: $--Font-Primary;
 	border-radius: 10px;
-	border: 1px solid $--Primary;
+	border: 1px solid $--Button_primary;
 	font-style: normal;
 	font-weight: 400;
 	display: inline-block;
@@ -16,8 +16,10 @@
 		}
 
 		&_secondary {
-			background-color: $--Primary;
+			background-color: $--Button_primary;
+			color: $--White;
 		}
+
 	}
 
 	&__size {
@@ -49,6 +51,13 @@
 			padding: 20px;
 			font-size: 23px;
 			line-height: 130%;
+		}
+
+		&_entrance {
+			font-size: 23px;
+			line-height: 1.3;
+			padding: 6px;
+			min-height: 48px;
 		}
 	}
 

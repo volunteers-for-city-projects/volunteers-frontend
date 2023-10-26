@@ -1,14 +1,20 @@
 @import '../../style/variables.scss';
 
 .image-component {
-	background-color: $--Light-grey;
+	background-color: transparent;
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
 
 	&__type {
 		&_entrance {
-			width: 880px;
+			width: 632px;
+			height: 515px;
 		}
 	}
+	&__wrapper {
+		display: flex;
+		align-items: center;
+	}
 }
+

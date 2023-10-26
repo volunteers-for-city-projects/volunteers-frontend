@@ -13,7 +13,7 @@ function LoginPasswordReset() {
 				onSaveChanges={handleSaveChanges}
 			/>
 			<ImageComponent
-				srcList=""
+				src=""
 				type="entrance"
 				altImage="Человек заходит в дверь"
 			/>

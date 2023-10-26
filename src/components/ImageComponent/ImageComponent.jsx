@@ -5,11 +5,13 @@ import './ImageComponent.scss';
 
 function ImageComponent({ src, type, altImage }) {
 	return (
-		<img
-			src={src}
-			className={clsx('image-component', `image-component__type_${type}`)}
-			alt={altImage}
-		/>
+		<div className="image-component__wrapper">
+			<img
+				src={src}
+				className={clsx('image-component', `image-component__type_${type}`)}
+				alt={altImage}
+			/>
+		</div>
 	);
 }
 

@@ -13,6 +13,7 @@ export const Pushbutton = ({
 	onClick,
 	minWidth,
 	border,
+	alignSelf,
 	...option
 }) => {
 	const mode = primary
@@ -21,9 +22,9 @@ export const Pushbutton = ({
 	const props = { disabled, onClick };
 	let styleObject = {};
 	if (backgroundColor) {
-		styleObject = { backgroundColor, minWidth, color, border };
+		styleObject = { backgroundColor, minWidth, color, border, alignSelf };
 	} else {
-		styleObject = { minWidth, color };
+		styleObject = { minWidth, color, border, alignSelf };
 	}
 	return (
 		<button
@@ -44,11 +45,22 @@ Pushbutton.propTypes = {
 	backgroundColor: PropTypes.string,
 	color: PropTypes.string,
 	minWidth: PropTypes.string,
-	size: PropTypes.oneOf(['mini', 'small', 'medium', 'large']),
+	size: PropTypes.oneOf([
+		'mini',
+		'small',
+		'medium',
+		'large',
+		'medium-large',
+		'pre-large',
+		'pre-large-var',
+		'large-var',
+		'entrance',
+	]),
 	label: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,
 	border: PropTypes.string,
+	alignSelf: PropTypes.string,
 };
 
 Pushbutton.defaultProps = {
@@ -60,4 +72,5 @@ Pushbutton.defaultProps = {
 	disabled: false,
 	onClick: undefined,
 	border: 'none',
+	alignSelf: '',
 };
