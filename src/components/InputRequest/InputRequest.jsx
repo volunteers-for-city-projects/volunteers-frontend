@@ -25,7 +25,7 @@ function InputRequest({
 				<PatternFormat
 					className={clsx('input-request__input', {
 						'input-request__input_error':
-							(!isFocus && error) || (submitCount === 1 && error),
+							(!isFocus && error) || (submitCount >= 1 && error),
 					})}
 					value={value}
 					format="+7 (###) ###-##-##"
@@ -39,7 +39,7 @@ function InputRequest({
 				<input
 					className={clsx('input-request__input', {
 						'input-request__input_error':
-							(!isFocus && error) || (submitCount === 1 && error),
+							(!isFocus && error) || (submitCount >= 1 && error),
 					})}
 					name={name}
 					type={type}
@@ -51,7 +51,7 @@ function InputRequest({
 				/>
 			)}
 			<span className="input-request__error">
-				{(!isFocus && error) || (submitCount === 1 && error && error)}
+				{((!isFocus && error) || (submitCount >= 1 && error)) && error}
 			</span>
 		</label>
 	);

@@ -19,10 +19,10 @@ function NotFound() {
 					</p>
 				</div>
 				<div className="not-found__container-elements">
-					<InputSearch border="1px solid #000" />
+					<InputSearch border="1px solid #000" placeholder="Поиск инициатив" />
 					<Pushbutton
 						label="Перейти на главную страницу"
-						color="#333"
+						color="#FFF"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						onClick={() => navigate('/')}

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import './FormRequest.scss';
 import clsx from 'clsx';
 import InputRequest from '../InputRequest/InputRequest';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function FormRequest({ handleSendMessage }) {
 	const [isFocus, setIsFocus] = useState(true);
@@ -54,88 +55,103 @@ function FormRequest({ handleSendMessage }) {
 
 	return (
 		<section className="request" id="request">
-			<h2 className="request__title">Связаться c нами</h2>
-			<Formik
-				initialValues={{
-					message: '',
-					firstName: '',
-					phone: '',
-					email: '',
-				}}
-				validationSchema={RequestSchema}
-				onSubmit={handleSubmit}
-			>
-				{({ handleChange, values, errors, touched, submitCount }) => (
-					<Form className="form-request" name="form-request">
-						<div>
-							<textarea
-								className={clsx('form-request__textarea', {
-									'form-request__textarea_error':
-										(!isFocus && errors.message) ||
-										(submitCount === 1 && errors.message),
-								})}
-								name="message"
-								cols="93"
-								rows="14"
-								placeholder="Введете сообщение для менеджера"
-								value={values.message}
-								onChange={handleChange}
-								onBlur={() => {
-									setIsFocus(false);
-								}}
-							>
-								{values.message}
-							</textarea>
-							<p className="form-request__error">
-								{(!isFocus && errors.message) ||
-									(submitCount === 1 && errors.message && errors.message)}
-							</p>
-						</div>
-						<div className="form-request__inputs">
-							<InputRequest
-								name="firstName"
-								type="text"
-								htmlFor="firstName"
-								label="Имя*"
-								placeholder="Введите ваше имя"
-								value={values.firstName}
-								error={errors.firstName}
-								handleChange={handleChange}
-								touched={touched.firstName}
-								submitCount={submitCount}
-							/>
-							<InputRequest
-								name="phone"
-								type="text"
-								htmlFor="phone"
-								label="Телефон*"
-								placeholder="Введите ваш номер телефона"
-								value={values.phone}
-								error={errors.phone}
-								handleChange={handleChange}
-								isMask
-								touched={touched.phone}
-								submitCount={submitCount}
-							/>
-							<InputRequest
-								name="email"
-								type="text"
-								htmlFor="email"
-								label="Emai*"
-								placeholder="Введите ваш email"
-								value={values.email}
-								error={errors.email}
-								handleChange={handleChange}
-								touched={touched.email}
-								submitCount={submitCount}
-							/>
-							<button className="form-request__button" type="submit">
-								Оставить заявку
-							</button>
-						</div>
-					</Form>
-				)}
-			</Formik>
+			<div className="request__container">
+				<div className="request__container-title">
+					<h2 className="request__title">Связаться c нами</h2>
+					<p className="request__subtitle">
+						Если у вас остались вопросы, вы можете связаться с нами через форму
+						обратной связи и мы обязательно ответим вам в течении трех дней
+					</p>
+				</div>
+				<Formik
+					initialValues={{
+						message: '',
+						firstName: '',
+						phone: '',
+						email: '',
+					}}
+					validationSchema={RequestSchema}
+					onSubmit={handleSubmit}
+				>
+					{({ handleChange, values, errors, touched, submitCount }) => (
+						<Form className="form-request" name="form-request">
+							<div className="form-request__container-textarea">
+								<p className="form-request__textarea-label">Сообщение*</p>
+								<textarea
+									className={clsx('form-request__textarea', {
+										'form-request__textarea_error':
+											(!isFocus && errors.message) ||
+											(submitCount >= 1 && errors.message),
+									})}
+									name="message"
+									placeholder="Введете сообщение для менеджера"
+									value={values.message}
+									onChange={handleChange}
+									onBlur={() => {
+										setIsFocus(false);
+									}}
+								>
+									{values.message}
+								</textarea>
+								<p className="form-request__error">
+									{((!isFocus && errors.message) ||
+										(submitCount >= 1 && errors.message)) &&
+										errors.message}
+								</p>
+							</div>
+							<div className="form-request__inputs">
+								<div className="form-request__inputs-fields">
+									<InputRequest
+										name="firstName"
+										type="text"
+										htmlFor="firstName"
+										label="Имя*"
+										placeholder="Введите ваше имя"
+										value={values.firstName}
+										error={errors.firstName}
+										handleChange={handleChange}
+										touched={touched.firstName}
+										submitCount={submitCount}
+									/>
+									<InputRequest
+										name="phone"
+										type="text"
+										htmlFor="phone"
+										label="Телефон*"
+										placeholder="Введите ваш номер телефона"
+										value={values.phone}
+										error={errors.phone}
+										handleChange={handleChange}
+										isMask
+										touched={touched.phone}
+										submitCount={submitCount}
+									/>
+									<InputRequest
+										name="email"
+										type="text"
+										htmlFor="email"
+										label="Emai*"
+										placeholder="Введите ваш email"
+										value={values.email}
+										error={errors.email}
+										handleChange={handleChange}
+										touched={touched.email}
+										submitCount={submitCount}
+									/>
+								</div>
+								<Pushbutton
+									label="Оставить заявку"
+									backgroundColor="#A6C94F"
+									size="large-var"
+									border="none"
+									color="#FFF"
+									type="submit"
+								/>
+							</div>
+						</Form>
+					)}
+				</Formik>
+			</div>
 		</section>
 	);
 }

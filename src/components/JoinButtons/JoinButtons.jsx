@@ -1,27 +1,43 @@
 import './JoinButtons.scss';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function JoinButtons() {
 	return (
 		<section className="join">
 			<div className="join__container">
 				<h2 className="join__title">
-					Присоединяйтесь к нам <br /> и получите доступ ко всем <br />
-					возможностям
+					Присоединяйтесь к нам и получите доступ ко всем возможностям
 				</h2>
 				<div className="join__items">
-					<div className="join__item">
+					<div className="join__item join__item_volunteer">
 						<h3 className="join__subtitle">
-							Станьте организатором,чтобы привлечь <br /> помощников и создать
-							свою команду
+							Станьте волонтёром, чтобы помочь людям, приобрести уникальный опыт
+							и работать с командой единомышленников
 						</h3>
-						<button className="join__button">Стать организатором</button>
+						<Pushbutton
+							label="Стать волонтером"
+							backgroundColor="#A6C94F"
+							size="large-var"
+							border="none"
+							color="#FFF"
+							minWidth="234px"
+							alignSelf="flex-end"
+						/>
 					</div>
-					<div className="join__item">
+					<div className="join__item join__item_organizer">
 						<h3 className="join__subtitle">
-							Cтаньте волонтёром, чтобы помочь людям, <br /> приобрести
-							уникальный опыт и работать <br /> с командой единомышленников
+							Станьте организатором, чтобы привлечь помощников и создать свою
+							команду
 						</h3>
-						<button className="join__button">Стать волонтером</button>
+						<Pushbutton
+							label="Стать организатором"
+							backgroundColor="#A6C94F"
+							size="large-var"
+							border="none"
+							color="#FFF"
+							minWidth="268px"
+							alignSelf="flex-end"
+						/>
 					</div>
 				</div>
 			</div>

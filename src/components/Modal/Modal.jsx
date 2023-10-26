@@ -77,7 +77,7 @@ function Modal({ modal, closeModal }) {
 						/>
 						<Pushbutton
 							label="Нет"
-							color="#333"
+							color="#FFF"
 							backgroundColor="#A6C94F"
 							size="pre-large"
 							onClick={closeModal}

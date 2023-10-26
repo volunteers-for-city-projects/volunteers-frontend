@@ -5,7 +5,6 @@ import {
 	getPlatformAbout,
 	sendMessage,
 } from '../../utils/api/main-page';
-import './Main.scss';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import News from '../News/News';
@@ -45,10 +44,10 @@ function Main() {
 	};
 
 	return (
-		<main className="content ">
+		<main className="content-main">
 			<Promo plarformPromo={plarformPromo} />
 			<AboutProject plarformAbout={plarformAbout} />
-			{news && <News news={news} />}
+			{news.length > 0 && <News news={news} />}
 			<JoinButtons />
 			<FormRequest handleSendMessage={handleSendMessage} />
 		</main>

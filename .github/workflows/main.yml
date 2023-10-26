@@ -3,11 +3,10 @@ name: Main Volunteers-for-city-projects frontend workflow
 
 on:
   push:
-    branches: 
+    branches:
       - develop
 
 jobs:
-
   call_tests:
     name: Tests
     uses: volunteers-for-city-projects/volunteers-frontend/.github/workflows/ci.yml@develop
@@ -25,19 +24,18 @@ jobs:
     needs:
       - call_build
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-    - name: Executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          cd better-together
-          sudo docker compose -f docker-compose.production.yml pull
-          sudo docker compose -f docker-compose.production.yml down
-          sudo docker compose -f docker-compose.production.yml up -d
-          sudo docker system prune -f
-
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+            cd better-together
+            sudo docker compose -f docker-compose.production.yml pull
+            sudo docker compose -f docker-compose.production.yml down
+            sudo docker compose -f docker-compose.production.yml up -d
+            sudo docker system prune -f

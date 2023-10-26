@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import './InputSearch.scss';
+import iconDefault from '../../images/not-found/search.svg';
 
-function InputSearch({ label, placeholder, border, width }) {
+function InputSearch({ placeholder, border, width, icon }) {
 	function handleSubmit(event) {
 		event.preventDefault();
 	}
@@ -20,7 +21,7 @@ function InputSearch({ label, placeholder, border, width }) {
 				maxLength="100"
 			/>
 			<button className="form-search__button-search" type="submit">
-				{label}
+				<img className="form-search__icon" src={icon} alt="icon-search" />
 			</button>
 		</form>
 	);
@@ -28,15 +29,15 @@ function InputSearch({ label, placeholder, border, width }) {
 
 InputSearch.propTypes = {
 	placeholder: PropTypes.string.isRequired,
-	label: PropTypes.string,
 	border: PropTypes.string,
 	width: PropTypes.string,
+	icon: PropTypes.string,
 };
 
 InputSearch.defaultProps = {
-	label: '',
 	border: 'none',
 	width: 'auto',
+	icon: iconDefault,
 };
 
 export default InputSearch;

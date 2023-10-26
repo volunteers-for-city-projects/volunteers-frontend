@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .contacts {
 	display: flex;
 	flex-direction: column;
@@ -28,13 +30,14 @@
 	}
 
 	&__list_type_footer {
-		gap: 16px;
+		gap: 7px;
 	}
 
 	&__item {
 		display: flex;
 		flex-direction: column;
-		gap: 15px;
+		gap: 10px;
+		align-items: flex-end;
 	}
 
 	&__subtitle,
@@ -51,9 +54,10 @@
 
 	&__subtitle_type_footer,
 	&__info_type_footer {
-		font-size: 17px;
+		font-size: 20px;
 		font-weight: 400;
-		line-height: 1.18;
+		line-height: 1.15;
+		color: $--Text;
 	}
 
 	&__subtitle_type_main {

@@ -1,41 +1,69 @@
 @import '../../style/variables.scss';
 
 .join {
+	box-sizing: border-box;
+	background-image: url('../../images/main-page/cloud.png');
+	background-repeat: no-repeat;
+	background-size: 641px 332px;
+	background-position: right bottom -204px;
+	max-width: 1920px;
+	margin: 0 auto;
+
 	&__container {
-		margin: 100px 0 0;
 		max-width: 1660px;
+		margin: 0 auto;
+		padding: 128px 0 94px;
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
 	}
 
 	&__title {
 		margin: 0;
 		font-size: 56px;
-		font-weight: 500;
-		line-height: 100%;
+		font-weight: 400;
+		line-height: 1;
+		max-width: 1102px;
+		color: $--Primary;
 	}
 
 	&__items {
 		display: flex;
 		gap: 20px;
-		margin-top: 50px;
 	}
+
 	&__item {
-		position: relative;
 		width: 820px;
 		height: 360px;
-		padding: 40px;
+		padding: 32px 38px 40px 40px;
 		box-sizing: border-box;
 		border-radius: 10px;
-		background: #858585;
+		background: $--Join;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		background-repeat: no-repeat;
+	}
+
+	&__item_volunteer {
+		background-image: url('../../images/main-page/volunteer.svg');
+		background-position: bottom -22px left -38px;
+		background-size: 268px 239px;
+	}
+
+	&__item_organizer {
+		background-image: url('../../images/main-page/organizer.svg');
+		background-position: bottom -17px left -33px;
+		background-size: 260.49px 267.354px;
 	}
 
 	&__subtitle {
-		color: $--White;
-		font-size: 28px;
-		font-weight: 500;
-		line-height: 28px;
+		margin: 0;
+		color: $--Primary;
+		font-size: 25px;
+		font-weight: 400;
+		line-height: 1.48;
+		max-width: 507px;
 	}
 
 	&__button {
