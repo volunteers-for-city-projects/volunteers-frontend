@@ -17,6 +17,7 @@ function Modal({ modal, closeModal }) {
 		confirm: {
 			info: {
 				title: 'Вы действительно хотите выйти из личного кабинета?',
+				textButton: '',
 				image: modalExit,
 			},
 		},
@@ -35,6 +36,7 @@ function Modal({ modal, closeModal }) {
 			error: {
 				title:
 					'Мы не смогли найти пользователя с почтой example@email.ru. Проверьте правильность адреса или обратитесь в техподдержку.',
+				textButton: '',
 				image: modalSend,
 			},
 		},
@@ -54,6 +56,7 @@ function Modal({ modal, closeModal }) {
 		init: {
 			info: {
 				title: 'Стартовое модальное окно',
+				textButton: '',
 			},
 		},
 	};
