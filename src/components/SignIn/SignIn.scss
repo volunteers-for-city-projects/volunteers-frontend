@@ -62,7 +62,6 @@
 	}
 
 	&__input {
-
 		width: 100%;
 		display: block;
 		padding: 12px 16px;
@@ -79,7 +78,7 @@
 		line-height: 23px;
 		position: relative;
 
-		color: var(--Text, #3F3F3F);
+		color: var(--Text, #3f3f3f);
 
 		&_type-error {
 			border-color: $--Error;
@@ -172,7 +171,6 @@
 			cursor: default;
 			opacity: 0.5;
 		}
-
 	}
 
 	&__icon {
