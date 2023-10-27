@@ -29,10 +29,12 @@
 		margin: 0;
 		color: $--Text;
 	}
+
+	@media screen and (max-width: 1918px) {
+		&-wrapper {
+			margin-top: 34px;
+		}
+	}
+	
 }
 
-@media screen and (max-width: 1918px) {
-	.profile__menu-wrapper {
-		margin-top: 34px;
-	}
-}

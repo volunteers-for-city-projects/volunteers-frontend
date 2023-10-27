@@ -23,11 +23,10 @@
 			margin: 10px 0 0;
 		}
 	}
-}
-
-@media screen and (max-width: 1918px) {
-	.profile__data {
-		padding: 0 35px 16px 0;
-		gap: 40px;
+	@media screen and (max-width: 1918px) {
+		&__data {
+			padding: 0 35px 16px 0;
+			gap: 40px;
+		}
 	}
 }

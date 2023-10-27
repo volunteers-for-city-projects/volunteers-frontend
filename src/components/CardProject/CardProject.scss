@@ -55,7 +55,7 @@
 	}
 
 	&__name {
-		margin-top: 53px;
+		padding-top: 53px;
 		height: 47px;
 		display: flex;
 		align-items: center;
@@ -105,14 +105,16 @@
 			z-index: 2;
 		}
 	}
+
+	@media screen and (max-width: 1918px) {
+		&__project {
+			width: 356px;
+		}
+		&__name-title {
+			font-size: 26px;
+		}
+	}
 }
 
 
-@media screen and (max-width: 1918px) {
-	.card__project {
-		width: 356px;
-	}
-	.card__name-title {
-		font-size: 26px;
-	}
-}
+
