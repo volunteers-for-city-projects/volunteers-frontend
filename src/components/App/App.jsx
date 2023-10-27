@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -54,7 +55,11 @@ function App() {
 				context={{ setPlatformEmail, isLoading, setIsLoading, isLoggedIn }}
 			/>
 			<Footer platformEmail={platformEmail} />
-			<Modal modal={modal} closeModal={closeModal} />
+			{modal.isOpen &&
+				createPortal(
+					<Modal modal={modal} closeModal={closeModal} />,
+					document.body
+				)}
 		</>
 	);
 }
