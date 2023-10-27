@@ -1,16 +1,45 @@
 import PropTypes from 'prop-types';
+import { useOutletContext } from 'react-router-dom';
+import clsx from 'clsx';
 import './Promo.scss';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function Promo({ plarformPromo }) {
 	const { projectCount, volunteersCount, organizersCount } = plarformPromo;
+	const { isLoggedIn } = useOutletContext();
+
 	return (
 		<section className="promo">
 			<div className="promo__container">
 				<h1 className="promo__title">ЛучшеВместе</h1>
 				<p className="promo__subtitle">
-					Городские инициативы - шаг к переменам
+					Городские инициативы — шаг к переменам
 				</p>
-				<ul className="promo__list">
+				{!isLoggedIn && (
+					<div className="promo__buttons">
+						<Pushbutton
+							label="Стать оранизатором"
+							backgroundColor="#A6C94F"
+							size="pre-large-var"
+							border="none"
+							color="#FFF"
+							minWidth="286px"
+						/>
+						<Pushbutton
+							label="Стать волонтёром"
+							backgroundColor="transparent"
+							size="pre-large-var"
+							border="1px solid #A6C94F"
+							color="#3F3F3F"
+							minWidth="286px"
+						/>
+					</div>
+				)}
+				<ul
+					className={clsx('promo__list', {
+						promo__list_type_login: isLoggedIn,
+					})}
+				>
 					<li className="promo__item">
 						<h2 className="promo__item-title">{projectCount}</h2>
 						<p className="promo__item-subtitle">проекта</p>

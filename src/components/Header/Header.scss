@@ -1,7 +1,7 @@
 @import '../../style/variables.scss';
 
 .header {
-	background-color: $--Light-grey;
+	background-color: $--Background-HF;
 	position: sticky;
 	top: 0;
 	z-index: 99;
@@ -10,15 +10,16 @@
 		box-sizing: border-box;
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
 		align-items: center;
 		max-width: 1920px;
 		margin: 0 auto;
-		padding: 30px 130px;
+		padding: 26px 130px;
 	}
 
 	&__buttons {
 		display: flex;
-		gap: 22px;
+		gap: 16px;
 	}
 
 	&__link {

@@ -37,3 +37,10 @@
 		local('FiraSans-Bold'),
 		url('./FiraSans-Bold.ttf') format('truetype');
 }
+
+@font-face {
+	font-family: 'Helios Cond';
+	font-style: normal;
+	font-weight: 300;
+	src: url('./HeliosCond-Light.otf') format('opentype');
+}

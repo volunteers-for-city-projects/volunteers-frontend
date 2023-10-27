@@ -1,7 +1,7 @@
 @import '../../style/variables.scss';
 
 .footer {
-	background-color: $--Light-grey;
+	background-color: $--Background-HF;
 	margin-top: auto;
 
 	&__container {
@@ -11,6 +11,6 @@
 		align-items: center;
 		max-width: 1920px;
 		margin: 0 auto;
-		padding: 30px 70px;
+		padding: 16px 70px;
 	}
 }
