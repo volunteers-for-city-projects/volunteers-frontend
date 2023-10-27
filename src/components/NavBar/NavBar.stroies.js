@@ -12,7 +12,7 @@ export default {
 				id: 1,
 				label: 'Link',
 				path: '/#',
-				isAnchor: false,
+				anchor: '',
 			},
 		],
 	},
