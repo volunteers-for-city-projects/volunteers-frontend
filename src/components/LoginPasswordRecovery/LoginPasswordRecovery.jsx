@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import PasswordRecovery from '../PasswordRecovery/PasswordRecovery';
 import ImageComponent from '../ImageComponent/ImageComponent';
+import flashlight from '../../images/flashlight.svg';
 
 function LoginPasswordRecovery() {
 	const { handlePasswordReset, isLoading } = useOutletContext();
@@ -16,8 +17,8 @@ function LoginPasswordRecovery() {
 				onPasswordReset={handlePasswordReset}
 			/>
 			<ImageComponent
-				srcList=""
-				type="entrance"
+				src={flashlight}
+				type="flashlight"
 				altImage="Человек заходит в дверь"
 			/>
 		</>

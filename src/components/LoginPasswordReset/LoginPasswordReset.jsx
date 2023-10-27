@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import PasswordReset from '../PasswordReset/PasswordReset';
 import ImageComponent from '../ImageComponent/ImageComponent';
+import flashlight from '../../images/flashlight.svg';
 
 function LoginPasswordReset() {
 	const { handleSaveChanges, isLoading } = useOutletContext();
@@ -13,8 +14,8 @@ function LoginPasswordReset() {
 				onSaveChanges={handleSaveChanges}
 			/>
 			<ImageComponent
-				src=""
-				type="entrance"
+				src={flashlight}
+				type="flashlight"
 				altImage="Человек заходит в дверь"
 			/>
 		</>

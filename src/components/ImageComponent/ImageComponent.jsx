@@ -19,7 +19,7 @@ export default ImageComponent;
 
 ImageComponent.propTypes = {
 	src: PropTypes.string,
-	type: PropTypes.oneOf(['entrance', 'registration']),
+	type: PropTypes.oneOf(['entrance', 'registration', 'flashlight']),
 	altImage: PropTypes.string,
 };
 
