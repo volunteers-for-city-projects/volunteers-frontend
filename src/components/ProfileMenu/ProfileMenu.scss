@@ -3,7 +3,7 @@
 .profile__menu {
 	&-wrapper {
 		display: flex;
-		margin-top: 50px;
+		margin-top: 30px;
 		margin-left: 130px;
 		align-items: center;
 		gap: 8px;
@@ -30,11 +30,11 @@
 		color: $--Text;
 	}
 
-	@media screen and (max-width: 1918px) {
+	/*@media screen and (max-width: 1918px) {
 		&-wrapper {
 			margin-top: 34px;
 		}
-	}
+	}*/
 	
 }
 
