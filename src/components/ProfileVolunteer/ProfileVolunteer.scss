@@ -14,22 +14,21 @@
 		width: 676px;
 		min-height: 921px;
 		position: relative;
+		padding: 40px;
+		box-sizing: border-box;
 	}
 	&__image {
 		background-image: url('../../images/fotoProfile.svg');
 		width: 180px;
 		height: 180px;
-		margin-top: 36px;
-		margin-left: 36px;
 		border-radius: 10px;
 	}
 	&__name {
-		margin-top: 25px;
-		margin-left: 36px;
-		margin-bottom: 5px;
+		margin-top: 10px;
+		margin-bottom: 10px;
 
 		&-surname {
-			margin-top: 5px;
+			margin: 0;
 			font-size: 28px;
 			font-weight: 500;
 			line-height: 28px;
@@ -44,9 +43,9 @@
 
 	&__wrapper {
 		display: flex;
-		gap: 19px;
-		padding: 0 130px 98px;
-		margin: 0 auto;
+		gap: 25px;
+		padding: 0 120px 98px;
+		box-sizing: border-box;
 
 		&__projects {
 			width: 960px;
@@ -63,16 +62,17 @@
 			color: $--Text;
 		}
 	}
-	@media screen and (max-width: 1918px) {
+	@media screen and (max-width: 1919px) {
 		&__personal {
-			width: 491px;
+			width: 377px;
+			padding: 16px 0 16px 60px;
 		}
 		&__projects {
 			width: 732px;
 		}
 		&__wrapper {
-			gap: 0;
-			padding: 0 35px 98px 91px;
+			gap: 90px;
+			padding: 0 73px 98px;
 		}
 	}
 }

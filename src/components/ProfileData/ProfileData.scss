@@ -4,11 +4,9 @@
 	&__data {
 		display: flex;
 		flex-direction: column;
-		gap: 30px;
-		margin-left: 36px;
-		margin-right: 10px;
-		padding: 0px 30px 26px 0px;
+		gap: 20px;
 		color: $--Text;
+		box-sizing: border-box;
 
 		&-title {
 			margin: 0;
@@ -23,10 +21,16 @@
 			margin: 10px 0 0;
 		}
 	}
-	@media screen and (max-width: 1918px) {
+	/*@media screen and (max-width: 1919px) {
 		&__data {
 			padding: 0 35px 16px 0;
-			gap: 40px;
+			&-title {
+				font-size: 16px;
+			}
+			&-subtitle {
+				font-size: 14px;
+			}
 		}
-	}
+	
+	}*/
 }

@@ -6,6 +6,7 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
+import ProfilePagination from '../ProfilePagination/ProfilePagination';
 
 function ProfileOrganization() {
 	return (
@@ -39,12 +40,8 @@ function ProfileOrganization() {
 							<CardProject cardProject={item} key={item.id} />
 						))}
 					</div>
-					<div className="profile__projects-pagination">
-						<button className="profile__projects-btn">&#60;</button>
-						<button className="profile__projects-btn profile__projects-btn_activ">
-							1
-						</button>
-					</div>
+					{cardsProjectsArray.length >= 6 ? <ProfilePagination /> : null}
+
 					<div className="profile__projects-button">
 						<Pushbutton
 							label="Создать новый проект"
