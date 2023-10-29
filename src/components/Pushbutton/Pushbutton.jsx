@@ -24,7 +24,7 @@ export const Pushbutton = ({
 	if (backgroundColor) {
 		styleObject = { backgroundColor, minWidth, color, border, alignSelf };
 	} else {
-		styleObject = { minWidth, color };
+		styleObject = { minWidth, color, border, alignSelf };
 	}
 	return (
 		<button
@@ -54,6 +54,7 @@ Pushbutton.propTypes = {
 		'pre-large',
 		'pre-large-var',
 		'large-var',
+		'entrance',
 	]),
 	label: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
