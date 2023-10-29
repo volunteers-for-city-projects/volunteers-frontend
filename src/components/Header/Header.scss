@@ -1,0 +1,60 @@
+@import '../../style/variables.scss';
+
+.header {
+	background-color: $--Background-HF;
+	position: sticky;
+	top: 0;
+	z-index: 99;
+
+	&__container {
+		box-sizing: border-box;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		max-width: 1920px;
+		margin: 0 auto;
+		padding: 26px 130px;
+	}
+
+	&__buttons {
+		display: flex;
+		gap: 16px;
+	}
+
+	&__link {
+		box-sizing: border-box;
+		text-decoration: none;
+		font-size: 17px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1.18;
+		border-radius: 10px;
+		padding: 8px 0;
+		transition: opacity 100ms ease-in;
+	}
+
+	&__link:hover {
+		opacity: 0.8;
+		cursor: pointer;
+	}
+
+	&__link_type_registration,
+	&__link_type_profile {
+		background-color: $--White;
+		color: $--Black;
+		padding: 12px;
+	}
+
+	&__link_type_login {
+		background-color: $--Primary;
+		color: $--White;
+		padding: 12px;
+	}
+
+	@media screen and (max-width: 1919px) {
+		&__container {
+			padding: 30px 93px;
+		}
+	}
+}

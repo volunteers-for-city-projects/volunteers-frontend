@@ -1,0 +1,175 @@
+$error-color: #f78254;
+
+.label {
+	margin-top: px;
+
+	display: block;
+	width: 280px;
+	height: 18px;
+
+	color: #3f3f3f;
+
+	font-family: Fira Sans;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 23px; /* 147.883% */
+
+	word-wrap: break-word;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	// overflow: hidden;
+
+	&_type-large {
+		font-family: Fira Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 20px; /* 142.857% */
+	}
+
+	&_type-photo {
+		width: 24px;
+		height: 24px;
+		border: none;
+
+		display: none;
+	}
+}
+
+.input {
+	margin-top: 16px;
+	height: 50px;
+
+	display: block;
+	box-sizing: border-box;
+
+	border-radius: 5px;
+	border: 1px solid #000;
+
+	background-color: transparent;
+
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 23px; /* 147.883% */
+
+	&_type-small {
+		width: 400px;
+		height: 50px;
+
+		padding: 18px 16px;
+	}
+
+	&_type-medium {
+		width: 380px;
+		height: 36px;
+
+		padding: 0 10px;
+	}
+
+	&_type-large {
+		margin-top: 12px;
+
+		width: 540px;
+		height: 48px;
+
+		padding: 0 10px;
+	}
+
+	&_type-photo {
+		width: 24px;
+		height: 24px;
+
+		position: relative;
+
+		border: none;
+		border-radius: 0;
+
+		visibility: hidden;
+	}
+
+	&_type-photo::after {
+		content: url('../../images/icon__signup-photo-download.svg');
+
+		width: 24px;
+		height: 24px;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		background-repeat: no-repeat;
+		visibility: visible;
+
+		cursor: pointer;
+	}
+
+	&_error {
+		border: 1px solid $error-color;
+	}
+
+	&::placeholder {
+		color: #959595;
+		font-family: Fira Sans;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 23px;
+	}
+	&_empty {
+		display: none;
+	}
+}
+
+.error-message {
+	display: block;
+
+	margin-top: 6px;
+
+	color: $error-color;
+	font-family: Fira Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 130%;
+
+	word-wrap: break-word;
+
+	text-overflow: ellipsis;
+	white-space: pre-wrap;
+	// overflow: hidden;
+
+	&_type-small {
+		width: 400px;
+		height: 14px;
+	}
+
+	&_type-medium {
+		width: 380px;
+		max-height: 16px;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		// overflow: hidden;
+	}
+
+	&_type-large {
+		width: 540px;
+		max-height: 16px;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	&_type-photo {
+		width: 280px;
+		height: 14px;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}

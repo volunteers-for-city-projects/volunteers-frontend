@@ -1,0 +1,23 @@
+@import '../../style/variables.scss';
+
+.image-component {
+	background-color: transparent;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+
+	&__type {
+		&_entrance {
+			width: 632px;
+			height: 515px;
+		}
+		&_flashlight {
+			width: 165px;
+			height: 480px;
+		}
+	}
+	&__wrapper {
+		display: flex;
+		align-items: center;
+	}
+}
