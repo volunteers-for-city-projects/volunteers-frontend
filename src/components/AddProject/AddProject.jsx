@@ -28,7 +28,7 @@ function AddProject() {
 		events: '',
 		tasks: '',
 		provide: '',
-		city: '',
+		city: null,
 		address: '',
 		date: '',
 		timeRange: '',
@@ -137,18 +137,28 @@ function AddProject() {
 		onSubmit: async (values) => {
 			try {
 				await createProject({
-					contact_person: {
-						email: values.organize_email,
-						first_name: values.organize_firstname,
-						last_name: values.organize_thirdname,
-						password: values.organize_password,
-						second_name: values.organize_secondname,
+					name: values.name,
+					description: values.description,
+					start_datetime: values.date, // '2023-10-29T11:22:03.148Z',
+					end_datetime: values.timeRange, // '2023-10-29T11:22:03.148Z',
+					application_date: values.application_date, // '2023-10-29T11:22:03.148Z',
+					event_purpose: values.goal,
+					event_address: {
+						address_line: values.address,
+						street: 'string',
+						house: 'string',
+						block: 'string',
+						building: 'string',
 					},
-					title: values.organization,
-					ogrn: values.organize_ogrn,
-					// phone: formattedPhone,
-					about: values.about_organization || '',
-					city: 1,
+					project_tasks: values.tasks,
+					project_events: values.events,
+					organizer_provides: values.provide,
+					organization: 0,
+					city: values.city,
+					category: 0, // values.categoryProject,
+					status_project: 'open',
+					participants: 0,
+					status_approve: 'approved',
 				});
 
 				// eslint-disable-next-line no-console
@@ -167,16 +177,16 @@ function AddProject() {
 
 	useEffect(() => {
 		Promise.all([getSkills(), getCities(), getProjectCategories()])
-			.then(([skillsResponce, citiesResponce, projectCategoriesResponce]) => {
-				const skillsArray = skillsResponce.map((item) => ({
+			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
+				const skillsArray = skillsResponse.map((item) => ({
 					label: item.name,
 					value: item.id.toString(),
 				}));
-				const citiesArray = citiesResponce.map((item) => ({
+				const citiesArray = citiesResponse.map((item) => ({
 					label: item.name,
 					value: item.id.toString(),
 				}));
-				const projectCategoriesArray = projectCategoriesResponce.map(
+				const projectCategoriesArray = projectCategoriesResponse.map(
 					(item) => ({
 						label: item.name,
 						value: item.id.toString(),
@@ -303,7 +313,7 @@ function AddProject() {
 								placeholder="Выберите город"
 								width={400}
 								options={cities}
-								errorMessage={formik.errors.city}
+								error={formik.errors.city}
 								touched={formik.touched.city}
 								value={formik.values.city}
 								handleChange={(selectedOption) => {
@@ -311,6 +321,7 @@ function AddProject() {
 									console.log(selectedValues);
 									formik.setFieldValue('city', selectedValues);
 								}}
+								submitCount={formik.submitCount}
 								required
 							/>
 							<Input
@@ -374,7 +385,7 @@ function AddProject() {
 								placeholder="Выберите категорию"
 								width={400}
 								options={projectCategories}
-								errorMessage={formik.errors.categoryProject}
+								error={formik.errors.categoryProject}
 								touched={formik.touched.categoryProject}
 								value={formik.values.categoryProject}
 								handleChange={(selectedOption) => {
@@ -384,6 +395,7 @@ function AddProject() {
 									);
 									formik.setFieldValue('categoryProject', selectedValues);
 								}}
+								submitCount={formik.submitCount}
 								isMulti
 								required
 							/>
@@ -392,7 +404,7 @@ function AddProject() {
 								placeholder="Выберите навыки"
 								width={400}
 								options={skills}
-								errorMessage={formik.errors.skills}
+								error={formik.errors.skills}
 								touched={formik.touched.skills}
 								value={formik.values.skills}
 								handleChange={(selectedOption) => {
@@ -402,6 +414,7 @@ function AddProject() {
 									);
 									formik.setFieldValue('skills', selectedValues);
 								}}
+								submitCount={formik.submitCount}
 								isMulti
 								required
 							/>
