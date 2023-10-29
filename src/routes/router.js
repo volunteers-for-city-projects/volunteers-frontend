@@ -8,6 +8,7 @@ import LoginSignIn from '../components/LoginSignIn/LoginSignIn';
 import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPasswordRecovery';
 import LoginPasswordReset from '../components/LoginPasswordReset/LoginPasswordReset';
 import NotFound from '../components/NotFound/NotFound';
+import AddProject from '../components/AddProject/AddProject';
 
 const router = createBrowserRouter([
 	{
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
 				path: 'profile',
 				element: <ProfileVolunteer />,
 			},
+			{ path: 'project-add', element: <AddProject /> },
 
 			{
 				path: '*',

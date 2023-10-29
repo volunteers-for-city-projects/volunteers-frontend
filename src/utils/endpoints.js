@@ -10,3 +10,5 @@ export const ENDPOINT_ABOUT_ME = `auth/me/`;
 export const ENDPOINT_RESET_PASSWORD = `auth/reset_password/`;
 export const ENDPOINT_CHANGE_PASSWORD = `auth/change_password/`;
 
+export const ENDPOINT_ORGANIZER_PROJECT_CATEGORIES = `${URL}project_categories/`;
+export const ENDPOINT_ORGANIZER_PROJECTS = `${URL}projects/`;
