@@ -1,0 +1,61 @@
+@import '../../style/variables.scss';
+
+.profile-volunteer-form {
+	margin: 0 auto;
+
+	&__form-wrap {
+		gap: 20px;
+		display: flex;
+	}
+
+	&__inputs-wrap {
+		width: 1097px;
+
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__photo-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+
+		position: relative;
+		translate: 0 7px;
+	}
+
+	&__photo {
+		width: 540px;
+		height: 540px;
+		object-fit: cover;
+		border-radius: 5px;
+	}
+
+	&__text-wrap {
+		display: flex;
+		gap: 20px;
+	}
+
+	&__text {
+		margin: 0;
+
+		font-family: Fira Sans;
+		font-size: 23px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 130%; /* 29.9px */
+	}
+
+	&__buttons {
+		margin-top: 50px;
+
+		display: flex;
+		gap: 20px;
+	}
+
+	&__button {
+		max-width: 401px;
+		border: none;
+	}
+}

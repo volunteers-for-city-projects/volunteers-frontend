@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import moment from 'moment';
 
-import './VolunteerSignupForm.scss';
+import './ProfileOrganizationForm.scss';
 
 import Input from '../Input/Input';
-import UploadFile from '../UploadFile/UploadFile';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
+import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
 import {
 	// postPhoto,
 	createVolunteer,
@@ -18,16 +16,9 @@ import {
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
-	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
-
-	const [selectedFile, setSelectedFile] = React.useState(null);
-
-	const handleCheckboxClick = () => {
-		setIsCheckboxChecked(!isCheckboxChecked);
-	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -59,31 +50,22 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			firstname: '',
-			secondname: '',
-			thirdname: '',
-			birthday: '',
-			phone: '',
-			email: '',
-			telegram: '',
-			password: '',
-			confirm_password: '',
-			photo: '',
-			skills: [],
-			city: null,
+			profile_volunteer_firstname: '',
+			profile_volunteer_secondname: '',
+			profile_volunteer_thirdname: '',
+			profile_volunteer_phone: '',
+			profile_volunteer_telegram: '',
+			profile_volunteer_password: '',
+			profile_volunteer_confirm_password: '',
+			profile_volunteer_photo: '',
+			profile_volunteer_skills: [],
+			profile_volunteer_city: null,
 		},
-		validationSchema: VolunteerSignupFormSchema,
+		validationSchema: ProfileVolunteerFormSchema,
 		onSubmit: async (values) => {
-			// конверсия даты из инпута в формат даты на сервере
-			const formattedDateOfBirth = moment(values.birthday, 'DD.MM.YYYY').format(
-				'YYYY-MM-DD'
-			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `${getDigitsOnly(values.phone)}`;
-			// функция для добавления файла
-			const formData = new FormData();
-			formData.append('file', selectedFile);
 
 			try {
 				await createVolunteer({
@@ -91,13 +73,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						first_name: values.firstname,
 						second_name: values.secondname,
 						last_name: values.thirdname,
-						email: values.email,
 						password: values.password,
 						re_password: values.confirm_password,
 					},
 					telegram: values.telegram,
 					photo: values.photo || null || '' || undefined,
-					date_of_birth: formattedDateOfBirth,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
@@ -108,11 +88,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to create user and/or volunteer:', error.message);
 			}
-			// try {
-			// 	await postPhoto(formData);
-			// } catch (error) {
-			// 	console.error('Failed to create user and/or volunteer:', error.message);
-			// }
 		},
 	});
 
@@ -128,8 +103,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		>
 			<InputGroup title="Общая информация">
 				<Input
-					id="firstname"
-					name="firstname"
+					id="profile_volunteer_firstname"
+					name="profile_volunteer_firstname"
 					label="Имя"
 					type="text"
 					placeholder="Пётр"
@@ -143,8 +118,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="secondname"
-					name="secondname"
+					id="profile_volunteer_secondname"
+					name="profile_volunteer_secondname"
 					label="Фамилия"
 					type="text"
 					placeholder="Иванов"
@@ -157,8 +132,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="thirdname"
-					name="thirdname"
+					id="profile_volunteer_thirdname"
+					name="profile_volunteer_thirdname"
 					type="text"
 					label="Отчество"
 					placeholder="Сергеевич"
@@ -171,26 +146,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					autoсomplete="off"
 					required
 				/>
-				<Input
-					id="birthday"
-					name="birthday"
-					label="Дата рождения"
-					type="text-date"
-					placeholder="01.02.2010"
-					inputSize="small"
-					error={formik.errors.birthday}
-					touched={formik.touched.birthday}
-					value={formik.values.birthday}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
 			</InputGroup>
 			<InputGroup title="Контактные данные">
 				<Input
-					id="phone"
-					name="phone"
+					id="profile_volunteer_phone"
+					name="profile_volunteer_phone"
 					label="Телефон"
 					type="phone"
 					placeholder="+7 977 000-00-00"
@@ -203,23 +163,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					autoсomplete="off"
 				/>
 				<Input
-					id="email"
-					name="email"
-					label="E-mail"
-					type="email"
-					placeholder="example@email.ru"
-					inputSize="small"
-					error={formik.errors.email}
-					touched={formik.touched.email}
-					value={formik.values.email}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
-				<Input
-					id="telegram"
-					name="telegram"
+					id="profile_volunteer_telegram"
+					name="profile_volunteer_telegram"
 					label="Telegram"
 					type="text"
 					placeholder="@name"
@@ -234,8 +179,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			</InputGroup>
 			<InputGroup title="Пароль">
 				<Input
-					id="password"
-					name="password"
+					id="profile_volunteer_password"
+					name="profile_volunteer_password"
 					label="Введите пароль"
 					type="password"
 					placeholder="Пароль"
@@ -249,8 +194,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="confirm_password"
-					name="confirm_password"
+					id="profile_volunteer_confirm_password"
+					name="profile_volunteer_confirm_password"
 					label="Повторный пароль"
 					type="password"
 					placeholder="Повторный пароль"
@@ -264,21 +209,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 			</InputGroup>
-			<InputGroup title="Фото">
-				<UploadFile
-					id="photo"
-					name="photo"
-					label=""
-					type="file"
-					inputSize="photo"
-					value={formik.values.photo}
-					setSelectedFile={setSelectedFile}
-				/>
-			</InputGroup>
 			<InputGroup title="Дополнительная информация">
 				<SelectOption
-					id="skills"
-					name="skills"
+					id="profile_volunteer_skills"
+					name="profile_volunteer_skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
 					width={400}
@@ -293,8 +227,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<SelectOption
-					id="city"
-					name="city"
+					id="profile_volunteer_city"
+					name="profile_volunteer_city"
 					label="Город"
 					placeholder="Выберите город"
 					width={400}
@@ -307,47 +241,44 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 			</InputGroup>
-			<div className=" volunteer-signup-form__text-content">
-				<Pushbutton
-					label="Зарегистрироваться"
-					color="white"
-					backgroundColor="#A6C94F"
-					border="none"
-					size="medium"
-					disabled={
-						!formik.isValid ||
-						!isCheckboxChecked ||
-						formik.values.city === null ||
-						formik.values.skills.length === 0
-					}
-					type="submit"
-				/>
-				<p className="volunteer-signup-form__text">
-					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
-					18 лет, и соглашаюсь с Политикой конфиденциальности
-				</p>
-				<label
-					htmlFor="volunteer-signup-form-checkbox"
-					className="volunteer-signup-form__text"
-				>
-					<input
-						id="volunteer-signup-form-checkbox"
-						name="volunteer-signup-form"
-						type="checkbox"
-						className="volunteer-signup-form__checkbox"
-						onClick={handleCheckboxClick}
+			<div className="profile-form__buttons">
+				<div className="profile-form__button">
+					<Pushbutton
+						label="Сохранить изменения"
+						color="white"
+						size="medium"
+						minWidth={399}
+						disabled={
+							!formik.isValid ||
+							formik.values.city === null ||
+							formik.values.skills.length === 0
+						}
+						type="submit"
 					/>
-					Даю согласие на обработку моих персональных данных
-				</label>
+				</div>
+				<div className="profile-form__button">
+					<Pushbutton
+						label="Отменить изменения"
+						color="white"
+						size="medium"
+						minWidth={399}
+						disabled={
+							!formik.isValid ||
+							formik.values.city === null ||
+							formik.values.skills.length === 0
+						}
+						type="submit"
+					/>
+				</div>
 			</div>
 		</form>
 	);
 }
 
-VolunteerSignupForm.propTypes = {
+ProfileOrganizationForm.propTypes = {
 	onSubmit: PropTypes.func,
 };
 
-VolunteerSignupForm.defaultProps = {
+ProfileOrganizationForm.defaultProps = {
 	onSubmit: () => {},
 };

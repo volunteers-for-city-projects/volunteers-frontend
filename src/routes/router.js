@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Signup from '../components/Signup/Signup';
 import Main from '../components/Main/Main';
 import App from '../components/App/App';
-import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
+import Profile from '../components/Profile/Profile';
 import Login from '../components/Login/Login';
 import LoginSignIn from '../components/LoginSignIn/LoginSignIn';
 import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPasswordRecovery';
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'profile',
-				element: <ProfileVolunteer />,
+				element: <Profile />,
 			},
 
 			{

@@ -1,0 +1,20 @@
+.profile-volunteer-edit {
+	margin: 0 auto;
+	margin-bottom: 118px;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__name {
+		margin: 0;
+
+		font-family: Fira Sans;
+		font-size: 56px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 100%; /* 56px */
+	}
+}

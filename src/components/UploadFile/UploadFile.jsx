@@ -9,7 +9,6 @@ export default function UploadFile({
 	placeholder,
 	value,
 	setSelectedFile,
-	inputSize,
 	disabled,
 	required,
 	error,
@@ -22,7 +21,7 @@ export default function UploadFile({
 	};
 
 	return (
-		<div>
+		<>
 			<label htmlFor={name} className="label-file label-file_type-photo">
 				{required ? `${label}*` : label}
 			</label>
@@ -37,7 +36,7 @@ export default function UploadFile({
 				onChange={handleFileChange}
 				{...restProps}
 			/>
-		</div>
+		</>
 	);
 }
 
@@ -47,7 +46,6 @@ UploadFile.propTypes = {
 	setSelectedFile: PropTypes.func,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
-	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
@@ -57,7 +55,6 @@ UploadFile.propTypes = {
 
 UploadFile.defaultProps = {
 	placeholder: null,
-	inputSize: 'medium',
 	disabled: false,
 	required: false,
 	error: '',

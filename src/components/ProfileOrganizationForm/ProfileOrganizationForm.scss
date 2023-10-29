@@ -1,0 +1,13 @@
+@import '../../style/variables.scss';
+
+.profile-form {
+	background: #fdfdfd;
+	margin: 0 auto;
+
+	&__buttons {
+		display: flex;
+	}
+	&__button {
+		max-width: 401px;
+	}
+}
