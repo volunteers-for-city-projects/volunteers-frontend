@@ -134,4 +134,15 @@
 		height: 10px;
 		margin-top: 2px;
 	}
+
+
+}
+
+@media screen and (max-width: 1919px) {
+	.request__container {
+		max-width: 1178px;
+	}
+	.form-request__textarea {
+		width: 701px;
+	}
 }

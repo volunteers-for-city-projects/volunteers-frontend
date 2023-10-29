@@ -76,4 +76,11 @@
 		height: 260px;
 		border-radius: 10px;
 	}
+
+	@media screen and (max-width: 1919px) {
+		&__container-block {
+			max-width: 1178px;
+		}
+
+	}
 }
