@@ -71,24 +71,25 @@
 			padding: 6px;
 			min-height: 48px;
 
-    &_large-var {
-			padding: 8px;
-			font-size: 23px;
-			line-height: 1.3;
-			font-weight: 500;
+			&_large-var {
+				padding: 8px;
+				font-size: 23px;
+				line-height: 1.3;
+				font-weight: 500;
+			}
 		}
-	}
 
-	&:hover {
-		opacity: 0.8;
-		transition: opacity 100ms ease-in;
-		cursor: pointer;
-	}
+		&:hover {
+			opacity: 0.8;
+			transition: opacity 100ms ease-in;
+			cursor: pointer;
+		}
 
-	&:disabled {
-		color: #606060;
-		cursor: default;
-		background: #cbcbcb;
-		opacity: 0.5;
+		&:disabled {
+			color: #606060;
+			cursor: default;
+			background: #cbcbcb;
+			opacity: 0.5;
+		}
 	}
 }
