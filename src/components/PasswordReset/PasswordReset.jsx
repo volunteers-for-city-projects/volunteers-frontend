@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import './PasswordReset.scss';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -34,7 +35,6 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 		onSubmit: (values) => {
 			onSaveChanges({
 				password: values.userPassword,
-				passwordConfirm: values.userPasswordConfirm,
 			});
 		},
 	});
@@ -54,7 +54,10 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						<input
 							type="password"
 							placeholder="Пароль"
-							className="password-reset__input"
+							className={clsx('password-reset__input', {
+								'password-reset__input_type-error':
+									formik.touched.userEmail && formik.errors.userEmail,
+							})}
 							id="userPassword"
 							name="userPassword"
 							minLength="5"
@@ -80,7 +83,10 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						<input
 							type="password"
 							placeholder="Пароль"
-							className="password-reset__input"
+							className={clsx('password-reset__input', {
+								'password-reset__input_type-error':
+									formik.touched.userEmail && formik.errors.userEmail,
+							})}
 							id="userPasswordConfirm"
 							name="userPasswordConfirm"
 							minLength="5"

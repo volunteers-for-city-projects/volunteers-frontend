@@ -29,42 +29,61 @@ function Login() {
 			.finally(setIsLoading(false));
 	};
 
-	const handlePasswordReset = () => {
+	const handlePasswordReset = ({ email }) => {
 		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-			navigate('/login/password-reset');
-		}, 2000);
+		apiLogin
+			.resetPassword({ email })
+			.then(() => {
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					onSubmit: (event) => {
+						event.preventDefault();
+						handlePasswordReset({ email });
+					},
+				});
+			})
+			.catch((err) => {
+				// eslint-disable-next-line
+				alert(err.non_field_errors[0]);
+			})
+			.finally(setIsLoading(false));
 	};
 
-	const handleSaveChanges = () => {
+	const handleSaveChanges = ({ password, uid, token }) => {
 		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-			setModal({
-				isOpen: true,
-				type: 'password',
-				state: 'success',
-				title: 'Сброс пароля',
-				onSubmit: (event) => {
-					event.preventDefault();
-					navigate('/login');
-				},
+		apiLogin
+			.resetPasswordConfirm({ password, uid, token })
+			.then(() => {
+				setModal({
+					isOpen: true,
+					type: 'password',
+					state: 'success',
+					onSubmit: (event) => {
+						event.preventDefault();
+						navigate('/login');
+					},
+				});
+			})
+			.catch((err) => {
+				// eslint-disable-next-line
+				alert(err.non_field_errors[0]);
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
-		}, 2000);
 	};
 
 	return (
-		<main className="login">
-			<Outlet
-				context={{
-					isLoading,
-					handleSignIn,
-					handlePasswordReset,
-					handleSaveChanges,
-				}}
-			/>
-		</main>
+		<Outlet
+			context={{
+				isLoading,
+				handleSignIn,
+				handlePasswordReset,
+				handleSaveChanges,
+			}}
+		/>
 	);
 }
 

@@ -62,7 +62,10 @@ function PasswordRecovery({
 					<input
 						type="email"
 						placeholder="Email"
-						className="password-recovery__input"
+						className={clsx('password-recovery__input', {
+							'password-recovery__input_type-error':
+								formik.touched.userEmail && formik.errors.userEmail,
+						})}
 						id="userEmail"
 						name="userEmail"
 						onChange={formik.handleChange}
@@ -76,10 +79,10 @@ function PasswordRecovery({
 							{formik.errors.userEmail}
 						</div>
 					) : null}
+					<Link to=".." className={linkClasses}>
+						Вспомнил пароль!
+					</Link>
 				</label>
-				<Link to="password-recovery" className={linkClasses}>
-					Я вспомнил пароль!
-				</Link>
 
 				<Pushbutton
 					color="White"
