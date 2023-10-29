@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import clsx from 'clsx';
 
 function SelectOption({
@@ -10,12 +10,13 @@ function SelectOption({
 	placeholder,
 	options,
 	handleChange,
-	errorMessage,
+	error,
+	submitCount,
 	isMulti,
 	required,
+	...restProps
 }) {
-	// const [selectedOption, setSelectedOption] = useState(null);
-
+	const [isFocused, setIsFocused] = useState(false);
 	const customStyles = {
 		control: (baseStyles) => ({
 			...baseStyles,
@@ -25,9 +26,9 @@ function SelectOption({
 			fontWeight: '400',
 			lineHeight: '23px',
 			borderRadius: '5px',
-			borderColor: '#3f3f3f',
+			borderColor: isFocused && error?.length > 0 ? '#f78254' : '#3f3f3f',
 			borderWidth: '1px',
-			minHeight: '48px',
+			minHeight: '50px',
 			padding: '2px 5px',
 			'&:hover': {
 				borderColor: '#3f3f3f',
@@ -68,6 +69,7 @@ function SelectOption({
 
 	const changeOption = useCallback(
 		(option) => {
+			console.log('change');
 			handleChange(option); // Передать выбранный вариант в функцию handleChange
 		},
 		[handleChange]
@@ -83,6 +85,9 @@ function SelectOption({
 				placeholder={placeholder}
 				options={options}
 				onChange={changeOption}
+				onBlur={() => {
+					setIsFocused(true);
+				}}
 				components={{
 					IndicatorSeparator: () => null,
 				}}
@@ -97,13 +102,14 @@ function SelectOption({
 					},
 				})}
 				isMulti={isMulti}
+				{...restProps}
 			/>
 			<span
 				className={clsx('select-option__error-message', {
-					'select-option__error-message_show': errorMessage?.length > 0,
+					'select-option__error-message_show': isFocused && error?.length > 0,
 				})}
 			>
-				{errorMessage}
+				{error}
 			</span>
 		</div>
 	);
@@ -120,7 +126,8 @@ SelectOption.propTypes = {
 		})
 	),
 	handleChange: PropTypes.func,
-	errorMessage: PropTypes.string,
+	error: PropTypes.string,
+	submitCount: PropTypes.number,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
 };
@@ -141,7 +148,8 @@ SelectOption.defaultProps = {
 	],
 	handleChange: (selectedOption) =>
 		console.log(`Option selected: `, selectedOption),
-	errorMessage: undefined,
+	error: undefined,
+	submitCount: 0,
 	isMulti: false,
 	required: false,
 };
