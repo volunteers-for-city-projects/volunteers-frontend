@@ -2,20 +2,20 @@
 
 .profile {
 	background: #fdfdfd;
+	margin: 0 auto;
 
-	&__container {
+	&__personal {
 		display: flex;
 		flex-direction: column;
 		margin-top: 50px;
-		margin-left: 134px;
-		margin-bottom: 168px;
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
 		min-height: 921px;
+		position: relative;
 	}
 	&__image {
-		background-color: $--Light-grey;
+		background-image: url('../../images/fotoProfile.svg');
 		width: 180px;
 		height: 180px;
 		margin-top: 36px;
@@ -23,8 +23,6 @@
 		border-radius: 10px;
 	}
 	&__name {
-		/* display: flex;
-	align-items: center; */
 		margin-top: 25px;
 		margin-left: 36px;
 		margin-bottom: 5px;
@@ -34,27 +32,33 @@
 			font-size: 28px;
 			font-weight: 500;
 			line-height: 28px;
+			color: $--Text;
 		}
 	}
 	&__button {
-		margin-top: 240px;
-		margin-bottom: 88px;
-		margin-left: 36px;
+		position: absolute;
+		bottom: 0;
+		left: 36px;
 	}
 
 	&__wrapper {
 		display: flex;
 		gap: 19px;
-	}
-	&__projects {
-		width: 960px;
-		margin-top: 50px;
-		flex-direction: column;
-	}
-	&__projects-title {
-		margin: 0;
-		font-size: 56px;
-		font-weight: 500;
-		line-height: 100%;
+		margin: 0 130px 98px;
+
+		&__projects {
+			width: 960px;
+			min-height: 979px;
+			margin-top: 40px;
+			flex-direction: column;
+			position: relative;
+		}
+		&__projects-title {
+			margin: 0;
+			font-size: 56px;
+			font-weight: 400;
+			line-height: 100%;
+			color: $--Text;
+		}
 	}
 }

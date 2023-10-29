@@ -9,7 +9,10 @@ function Footer({ platformEmail }) {
 	return (
 		<footer className="footer">
 			<div className="footer__container">
-				<Logo />
+				<Logo
+					label="ЛучшеВместе"
+					sublabel="Городские инициативы — шаг к переменам"
+				/>
 				<NavBar dataNavArray={dataNavArray} />
 				<Contacts type="footer" platformEmail={platformEmail} />
 			</div>

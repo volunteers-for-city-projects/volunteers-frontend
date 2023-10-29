@@ -16,11 +16,12 @@ function AboutProject({ plarformAbout }) {
 
 	return (
 		<section className="about-project">
-			<h2 className="about-project__title">О нас</h2>
-			<p className="about-project__description">{aboutUs}</p>
-
+			<div className="about-project__container-about">
+				<h2 className="about-project__title">О нас</h2>
+				<p className="about-project__description">{aboutUs}</p>
+			</div>
 			<div className="about-project__container">
-				<h2 className="our-values__title">Лучше Вместе - это:</h2>
+				<h2 className="our-values__title">ЛучшеВместе - это:</h2>
 				<div className="our-values__cards">
 					{valuationsData &&
 						valuationsData.map(({ valuesId, ...cardValues }) => (

@@ -16,6 +16,11 @@ export default function UploadFile({
 	submitCount,
 	...restProps
 }) {
+	const handleFileChange = (event) => {
+		const file = event.target.files[0];
+		setSelectedFile(file);
+	};
+
 	return (
 		<div>
 			<label htmlFor={name} className="label-file label-file_type-photo">
@@ -28,9 +33,8 @@ export default function UploadFile({
 				placeholder={placeholder}
 				className="input-file input-file_type-photo"
 				required={required}
-				onChange={(e) => {
-					setSelectedFile(e.target.files[0]); // Save the selected file locally
-				}}
+				accept="image/*" // Укажите типы файлов, которые разрешено загружать
+				onChange={handleFileChange}
 				{...restProps}
 			/>
 		</div>

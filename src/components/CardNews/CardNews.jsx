@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './CardNews.scss';
 
 function CardNews({ card }) {
-	const { tags, title, created_at: date } = card;
+	const { tags, title, picture, created_at: date } = card;
 
 	const originalDate = new Date(date);
 
@@ -27,7 +27,10 @@ function CardNews({ card }) {
 
 	return (
 		<article className="news__cards-item">
-			<ul className="news__card-image">
+			<ul
+				className="news__card-image"
+				style={{ backgroundImage: `url(${picture})` }}
+			>
 				{tagsData &&
 					tagsData.map(({ tagId, tag }) => (
 						<li key={tagId}>
@@ -37,8 +40,10 @@ function CardNews({ card }) {
 						</li>
 					))}
 			</ul>
-			<h3 className="news__card-description">{title}</h3>
-			<p className="news__card-date">{formattedDate}</p>
+			<div className="news__card-container">
+				<h3 className="news__card-description">{title}</h3>
+				<p className="news__card-date">{formattedDate}</p>
+			</div>
 		</article>
 	);
 }
@@ -47,6 +52,7 @@ CardNews.propTypes = {
 	card: PropTypes.shape({
 		tags: PropTypes.arrayOf(PropTypes.string),
 		title: PropTypes.string,
+		picture: PropTypes.string,
 		created_at: PropTypes.string,
 	}),
 };
@@ -56,6 +62,7 @@ CardNews.defaultProps = {
 		tags: [''],
 		title: '',
 		created_at: '',
+		picture: null,
 	}),
 };
 
