@@ -69,18 +69,15 @@
 		line-height: 1;
 		color: $--Primary;
 	}
-
-
 }
 @media screen and (max-width: 1919px) {
 	.about-project {
-		padding: 42px 90px 0 90px;
-	
 		&__container-about {
 			gap: 70px;
-			
+			max-width: 1178px;
+		}
+		&__container {
+			max-width: 1178px;
 		}
 	}
-
-
 }
