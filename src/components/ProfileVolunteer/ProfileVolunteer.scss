@@ -5,6 +5,11 @@
 	margin: 0 auto;
 	max-width: 1920px;
 
+	&__menu-container {
+		margin-left: 130px;
+		margin-top: 30px;
+	}
+
 	&__personal {
 		display: flex;
 		flex-direction: column;
