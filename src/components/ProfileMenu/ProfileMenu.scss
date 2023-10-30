@@ -1,13 +1,9 @@
 @import '../../style/variables.scss';
 
 .profile__menu {
-	&-wrapper {
-		display: flex;
-		margin-top: 30px;
-		margin-left: 130px;
-		align-items: center;
-		gap: 8px;
-	}
+	display: flex;
+	align-items: center;
+	gap: 8px;
 
 	&-title {
 		color: rgba($--Text, 0.6);
