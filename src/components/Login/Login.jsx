@@ -1,15 +1,32 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import './Login.scss';
+import { apiLogin } from '../../utils/api/login-route';
 
 function Login() {
-	const { isLoading, setIsLoading } = useOutletContext();
+	const { isLoading, setIsLoading, setIsCurrentUser, setIsLoggedIn, setModal } =
+		useOutletContext();
+
 	const navigate = useNavigate();
 
-	const handleSignIn = () => {
+	const handleSignIn = ({ password, email }) => {
 		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 5000);
+		apiLogin
+			.signIn({ password, email })
+			.then((data) => {
+				if (data.auth_token) {
+					localStorage.setItem('token', data.auth_token);
+					apiLogin.getUserInformation().then((user) => {
+						setIsCurrentUser(user);
+						setIsLoggedIn(true);
+						navigate('/profile');
+					});
+				}
+			})
+			.catch((err) => {
+				// eslint-disable-next-line
+				alert(err.non_field_errors[0]);
+			})
+			.finally(setIsLoading(false));
 	};
 
 	const handlePasswordReset = () => {
@@ -17,14 +34,24 @@ function Login() {
 		setTimeout(() => {
 			setIsLoading(false);
 			navigate('/login/password-reset');
-		}, 5000);
+		}, 2000);
 	};
 
 	const handleSaveChanges = () => {
 		setIsLoading(true);
 		setTimeout(() => {
 			setIsLoading(false);
-		}, 5000);
+			setModal({
+				isOpen: true,
+				type: 'password',
+				state: 'success',
+				title: 'Сброс пароля',
+				onSubmit: (event) => {
+					event.preventDefault();
+					navigate('/login');
+				},
+			});
+		}, 2000);
 	};
 
 	return (

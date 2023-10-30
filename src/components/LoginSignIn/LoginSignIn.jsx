@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import SignIn from '../SignIn/SignIn';
 import ImageComponent from '../ImageComponent/ImageComponent';
+import entrance from '../../images/entrance.svg';
 
 function LoginSignIn() {
 	const { handleSignIn, isLoading } = useOutletContext();
@@ -13,7 +14,7 @@ function LoginSignIn() {
 				onSignIn={handleSignIn}
 			/>
 			<ImageComponent
-				srcList=""
+				src={entrance}
 				type="entrance"
 				altImage="Человек заходит в дверь"
 			/>

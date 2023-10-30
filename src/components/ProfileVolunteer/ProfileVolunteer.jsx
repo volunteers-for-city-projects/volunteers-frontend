@@ -8,7 +8,9 @@ import dataVolunteer from '../../utils/dataVolunteer';
 function ProfileVolunteer({ handleIsForm }) {
 	return (
 		<section className="profile">
-			<ProfileMenu title="Личный кабинет волонтера" />
+			<div className="profile__menu-container">
+				<ProfileMenu title="Личный кабинет волонтера" />
+			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
 					<div className="profile__image" />
