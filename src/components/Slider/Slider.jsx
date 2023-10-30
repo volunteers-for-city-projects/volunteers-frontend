@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 // eslint-disable-next-line import/no-unresolved
@@ -9,13 +10,15 @@ import { cardsArray } from '../../utils/data';
 import './Slider.scss';
 
 function Slider({ news }) {
-	let newsData;
-	if (news) {
-		newsData = news.map((item) => ({
-			...item,
-			cardId: uuidv4(),
-		}));
-	}
+	const newsData = useMemo(() => {
+		if (news) {
+			return news.map((item) => ({
+				...item,
+				cardId: uuidv4(),
+			}));
+		}
+		return [];
+	}, [news]);
 
 	return (
 		<Swiper
