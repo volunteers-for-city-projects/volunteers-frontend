@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 import './FormRequest.scss';
@@ -6,8 +7,9 @@ import clsx from 'clsx';
 import RequestFormSchema from '../../utils/validationSchemas/RequestFormSchema';
 import InputRequest from '../InputRequest/InputRequest';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import PopupWindow from '../PopupWindow/PopupWindow';
 
-function FormRequest({ handleSendMessage }) {
+function FormRequest({ handleSendMessage, popup }) {
 	const [isFocus, setIsFocus] = useState(true);
 
 	const handleSubmit = (values, { resetForm }) => {
@@ -123,11 +125,21 @@ function FormRequest({ handleSendMessage }) {
 									border="none"
 									color="#FFF"
 									type="submit"
+									disabled={popup.isOpen}
 								/>
 							</div>
 						</Form>
 					)}
 				</Formik>
+				{popup.isOpen &&
+					createPortal(
+						<PopupWindow
+							text={popup.text}
+							type={popup.type}
+							isOpen={popup.isOpen}
+						/>,
+						document.querySelector('.request__container')
+					)}
 			</div>
 		</section>
 	);
@@ -135,6 +147,11 @@ function FormRequest({ handleSendMessage }) {
 
 FormRequest.propTypes = {
 	handleSendMessage: PropTypes.func.isRequired,
+	popup: PropTypes.shape({
+		isOpen: PropTypes.bool.isRequired,
+		text: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 export default FormRequest;
