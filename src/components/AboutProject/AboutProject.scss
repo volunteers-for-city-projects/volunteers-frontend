@@ -72,9 +72,15 @@
 }
 @media screen and (max-width: 1919px) {
 	.about-project {
+		
+		background-position:
+		top 306px right,
+		bottom -100px left;
+
 		&__container-about {
 			gap: 70px;
 			max-width: 1178px;
+		
 		}
 		&__container {
 			max-width: 1178px;

@@ -78,6 +78,9 @@
 	}
 
 	@media screen and (max-width: 1919px) {
+		&__container {
+			background: none;
+		}
 		&__container-block {
 			max-width: 1178px;
 		}
