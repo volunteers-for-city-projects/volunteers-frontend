@@ -13,7 +13,7 @@
 	&__personal {
 		display: flex;
 		flex-direction: column;
-		align-items: start;
+		/*align-items: start;*/
 		justify-content: space-between;
 		margin-top: 50px;
 		background: $--White;
@@ -59,7 +59,7 @@
 			margin-top: 40px;
 			display: flex;
 			flex-direction: column;
-			align-items: start;
+			/*align-items: start;*/
 			justify-content: space-between;
 		}
 		&__projects-title {
