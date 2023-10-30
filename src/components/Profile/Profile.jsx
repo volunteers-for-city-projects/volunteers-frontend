@@ -5,7 +5,7 @@ import './Profile.scss';
 import ProfileVolunteer from '../ProfileVolunteer/ProfileVolunteer';
 import ProfileVolunteerEdit from '../ProfileVolunteerEdit/ProfileVolunteerEdit';
 import ProfileOrganization from '../ProfileOrganization/ProfileOrganization';
-import ProfileOrganizationForm from '../ProfileOrganizationForm/ProfileOrganizationForm';
+import ProfileOrganizationEdit from '../ProfileOrganizationEdit/ProfileOrganizationEdit';
 
 function Profile() {
 	const [isForm, setIsForm] = useState(false);
@@ -16,7 +16,7 @@ function Profile() {
 	};
 
 	useEffect(() => {
-		setIsVolunteer(true);
+		setIsVolunteer(false);
 	}, []);
 
 	if (isVolunteer) {
@@ -24,8 +24,6 @@ function Profile() {
 			// eslint-disable-next-line no-return-assign
 			return (
 				<ProfileVolunteerEdit
-					isVolunteer={isVolunteer}
-					isForm={isForm}
 					handleIsForm={handleIsForm}
 					firstname="Фамилия"
 					secondname="Имя"
@@ -42,23 +40,23 @@ function Profile() {
 			/>
 		);
 	}
-	if (isForm) {
+
+	if (!isVolunteer) {
+		if (isForm) {
+			return (
+				<ProfileOrganizationEdit
+					handleIsForm={handleIsForm}
+					organization="ООО «Организация»"
+				/>
+			);
+		}
 		return (
-			<ProfileOrganizationForm
-				isVolunteer={isVolunteer}
-				isForm={isForm}
+			<ProfileOrganization
+				title="Личный кабинет организатора"
 				handleIsForm={handleIsForm}
 			/>
 		);
 	}
-	return (
-		<ProfileOrganization
-			title="Личный кабинет организатора"
-			isVolunteer={isVolunteer}
-			isForm={isForm}
-			handleIsForm={handleIsForm}
-		/>
-	);
 }
 
 export default Profile;

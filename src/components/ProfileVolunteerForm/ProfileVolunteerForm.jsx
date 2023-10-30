@@ -27,7 +27,7 @@ export default function ProfileVolunteerForm({
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 
-	const [selectedFile, setSelectedFile] = React.useState(null);
+	const [selectedFile, setSelectedFile] = useState(null);
 
 	console.log(selectedFile);
 
@@ -76,7 +76,7 @@ export default function ProfileVolunteerForm({
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.phone)}`;
+			const formattedPhone = `${getDigitsOnly(values.profile_volunteer_phone)}`;
 
 			try {
 				await createVolunteer({
@@ -128,7 +128,6 @@ export default function ProfileVolunteerForm({
 							name="photo"
 							label=""
 							type="file"
-							inputSize="photo"
 							value={formik.values.photo}
 							setSelectedFile={setSelectedFile}
 						/>
@@ -291,7 +290,7 @@ export default function ProfileVolunteerForm({
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth={399}
+								minWidth="399px"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -307,7 +306,7 @@ export default function ProfileVolunteerForm({
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth={399}
+								minWidth="399px"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {

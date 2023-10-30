@@ -13,7 +13,9 @@ function ProfileVolunteerEdit({
 }) {
 	return (
 		<section className="profile-volunteer-edit">
-			<ProfileMenu title="Личный кабинет волонтера" />
+			<div className="profile-volunteer-edit__menu-container">
+				<ProfileMenu title="Личный кабинет волонтера" />
+			</div>
 			<div className="profile-volunteer-edit__wrapper">
 				<h1 className="profile-volunteer-edit__name">
 					{firstname} {secondname} {thirdname}

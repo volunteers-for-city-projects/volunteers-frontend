@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
+
 import ProfileData from '../ProfileData/ProfileData';
 import dataOrganization from '../../utils/dataOrganization';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
@@ -8,7 +10,7 @@ import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 
-function ProfileOrganization() {
+function ProfileOrganization({ handleIsForm }) {
 	return (
 		<section className="profile">
 			<div className="profile__menu-container">
@@ -31,6 +33,7 @@ function ProfileOrganization() {
 							minWidth="380px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleIsForm}
 						/>
 					</div>
 				</div>
@@ -61,5 +64,13 @@ function ProfileOrganization() {
 		</section>
 	);
 }
+
+ProfileOrganization.propTypes = {
+	handleIsForm: PropTypes.func,
+};
+
+ProfileOrganization.defaultProps = {
+	handleIsForm: () => {},
+};
 
 export default ProfileOrganization;

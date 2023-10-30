@@ -5,39 +5,40 @@ import { useFormik } from 'formik';
 import './ProfileOrganizationForm.scss';
 
 import Input from '../Input/Input';
+import InputTextArea from '../InputTextArea/InputTextArea';
 import InputGroup from '../InputGroup/InputGroup';
+import UploadFile from '../UploadFile/UploadFile';
+import ProfilePhoto from '../../images/fotoProfile.svg';
+
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
+import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/ProfileOrganizationFormSchema';
 import {
 	// postPhoto,
-	createVolunteer,
-	getSkills,
 	getCities,
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
+export default function ProfileOrganizationForm({
+	onSubmit,
+	handleIsForm,
+	...restProps
+}) {
 	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
+	const [selectedFile, setSelectedFile] = useState(null);
+
+	console.log(selectedFile);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const citiesResponse = await getCities();
-				const skillsResponse = await getSkills();
 
 				const citiesData = citiesResponse.map((item) => ({
 					label: item.name,
 					value: item.id.toString(),
 				}));
 
-				const skillsData = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
 				setCities(citiesData);
-				setSkills(skillsData);
 			} catch (error) {
 				console.error('Ошибка при загрузке данных:', error);
 			}
@@ -50,25 +51,26 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			profile_volunteer_firstname: '',
-			profile_volunteer_secondname: '',
-			profile_volunteer_thirdname: '',
-			profile_volunteer_phone: '',
-			profile_volunteer_telegram: '',
-			profile_volunteer_password: '',
-			profile_volunteer_confirm_password: '',
-			profile_volunteer_photo: '',
-			profile_volunteer_skills: [],
-			profile_volunteer_city: null,
+			profile_organize_organization: '',
+			profile_organize_about_organization: '',
+			profile_organize_city: '',
+			profile_organize_firstname: '',
+			profile_organize_secondname: '',
+			profile_organize_thirdname: '',
+			profile_organize_phone: '',
+			profile_organize_email: '',
+			profile_organize_ogrn: '',
+			profile_organize_password: '',
+			profile_organize_confirm_password: '',
 		},
-		validationSchema: ProfileVolunteerFormSchema,
+		validationSchema: ProfileOrganizationFormSchema,
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `${getDigitsOnly(values.phone)}`;
 
 			try {
-				await createVolunteer({
+				await {
 					user: {
 						first_name: values.firstname,
 						second_name: values.secondname,
@@ -83,10 +85,10 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 						formattedPhone,
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
-				});
+				};
 			} catch (error) {
 				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				console.error('Failed to create user and/or organize:', error.message);
 			}
 		},
 	});
@@ -95,180 +97,219 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 		<form
 			action="#"
 			method="post"
-			className="volunteer-signup-form"
-			name="volunteer-auth-form"
+			className="organize-signup-form"
+			name="organize-auth-form"
 			onSubmit={formik.handleSubmit}
 			encType="multipart/form-data"
 			{...restProps}
 		>
-			<InputGroup title="Общая информация">
-				<Input
-					id="profile_volunteer_firstname"
-					name="profile_volunteer_firstname"
-					label="Имя"
-					type="text"
-					placeholder="Пётр"
-					inputSize="small"
-					error={formik.errors.firstname}
-					touched={formik.touched.firstname}
-					value={formik.values.firstname}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
-				<Input
-					id="profile_volunteer_secondname"
-					name="profile_volunteer_secondname"
-					label="Фамилия"
-					type="text"
-					placeholder="Иванов"
-					inputSize="small"
-					error={formik.errors.secondname}
-					touched={formik.touched.secondname}
-					value={formik.values.secondname}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					required
-				/>
-				<Input
-					id="profile_volunteer_thirdname"
-					name="profile_volunteer_thirdname"
-					type="text"
-					label="Отчество"
-					placeholder="Сергеевич"
-					inputSize="small"
-					error={formik.errors.thirdname}
-					touched={formik.touched.thirdname}
-					value={formik.values.thirdname}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
-			</InputGroup>
-			<InputGroup title="Контактные данные">
-				<Input
-					id="profile_volunteer_phone"
-					name="profile_volunteer_phone"
-					label="Телефон"
-					type="phone"
-					placeholder="+7 977 000-00-00"
-					inputSize="small"
-					error={formik.errors.phone}
-					touched={formik.touched.phone}
-					value={formik.values.phone}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-				/>
-				<Input
-					id="profile_volunteer_telegram"
-					name="profile_volunteer_telegram"
-					label="Telegram"
-					type="text"
-					placeholder="@name"
-					inputSize="small"
-					error={formik.errors.telegram}
-					touched={formik.touched.telegram}
-					value={formik.values.telegram}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-				/>
-			</InputGroup>
-			<InputGroup title="Пароль">
-				<Input
-					id="profile_volunteer_password"
-					name="profile_volunteer_password"
-					label="Введите пароль"
-					type="password"
-					placeholder="Пароль"
-					inputSize="small"
-					error={formik.errors.password}
-					touched={formik.touched.password}
-					value={formik.values.password}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
-				<Input
-					id="profile_volunteer_confirm_password"
-					name="profile_volunteer_confirm_password"
-					label="Повторный пароль"
-					type="password"
-					placeholder="Повторный пароль"
-					inputSize="small"
-					error={formik.errors.confirm_password}
-					touched={formik.touched.confirm_password}
-					value={formik.values.confirm_password}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
-				/>
-			</InputGroup>
-			<InputGroup title="Дополнительная информация">
-				<SelectOption
-					id="profile_volunteer_skills"
-					name="profile_volunteer_skills"
-					label="Навыки"
-					placeholder="Выберите навыки"
-					width={400}
-					options={skills}
-					isMulti
-					value={formik.values.skills}
-					touched={formik.touched.skills}
-					handleChange={(selectedOption) => {
-						const selectedValues = selectedOption.map((option) => option.value);
-						formik.setFieldValue('skills', selectedValues);
-					}}
-					required
-				/>
-				<SelectOption
-					id="profile_volunteer_city"
-					name="profile_volunteer_city"
-					label="Город"
-					placeholder="Выберите город"
-					width={400}
-					options={cities}
-					touched={formik.touched.city}
-					value={formik.values.city}
-					handleChange={(selectedOption) => {
-						formik.setFieldValue('city', Number(selectedOption.value));
-					}}
-					required
-				/>
-			</InputGroup>
-			<div className="profile-form__buttons">
-				<div className="profile-form__button">
-					<Pushbutton
-						label="Сохранить изменения"
-						color="white"
-						size="medium"
-						minWidth={399}
-						disabled={
-							!formik.isValid ||
-							formik.values.city === null ||
-							formik.values.skills.length === 0
-						}
-						type="submit"
+			<div className="profile-organize-form__form-wrap">
+				<div className="profile-organize-form__photo-wrap">
+					<img
+						className="profile-organize-form__photo"
+						src={ProfilePhoto}
+						alt="Фотография пользователя"
 					/>
+					<div className="profile-organize-form__text-wrap">
+						<p className="profile-organize-form__text">
+							Загрузить новую фотографию*
+						</p>
+						<UploadFile
+							id="photo"
+							name="photo"
+							label=""
+							type="file"
+							value={formik.values.photo}
+							setSelectedFile={setSelectedFile}
+						/>
+					</div>
 				</div>
-				<div className="profile-form__button">
-					<Pushbutton
-						label="Отменить изменения"
-						color="white"
-						size="medium"
-						minWidth={399}
-						disabled={
-							!formik.isValid ||
-							formik.values.city === null ||
-							formik.values.skills.length === 0
-						}
-						type="submit"
+				<div className="profile-organize-form__inputs-wrap">
+					<InputGroup title="Общая информация">
+						<Input
+							id="profile_organize_organization"
+							name="profile_organize_organization"
+							label="Название организации"
+							type="text"
+							placeholder="ООО «Ромашка»"
+							inputSize="small"
+							error={formik.errors.profile_organize_organization}
+							touched={formik.touched.profile_organize_organization}
+							value={formik.values.profile_organize_organization}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							required
+						/>
+						<SelectOption
+							id="profile_organize_city"
+							name="profile_organize_city"
+							label="Город"
+							placeholder="Выберите город"
+							width={400}
+							options={cities}
+							touched={formik.touched.profile_organize_city}
+							value={formik.values.profile_organize_city}
+							handleChange={(selectedOption) => {
+								formik.setFieldValue('city', Number(selectedOption.value));
+							}}
+							required
+						/>
+					</InputGroup>
+					<InputTextArea
+						id="profile_organize_about_organization"
+						name="profile_organize_about_organization"
+						label="Об организации"
+						placeholder="Расскажите коротко об организации"
+						error={formik.errors.profile_organize_about_organization}
+						touched={formik.touched.profile_organize_about_organization}
+						value={formik.values.profile_organize_about_organization}
+						handleChange={formik.handleChange}
+						submitCount={formik.submitCount}
 					/>
+
+					<InputGroup title="Контактные данные представителя компании">
+						<Input
+							id="profile_organize_firstname"
+							name="profile_organize_firstname"
+							label="Фамилия"
+							type="text"
+							placeholder="Иванов"
+							inputSize="small"
+							error={formik.errors.profile_organize_firstname}
+							touched={formik.touched.profile_organize_firstname}
+							value={formik.values.profile_organize_firstname}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+						<Input
+							id="profile_organize_secondname"
+							name="profile_organize_secondname"
+							label="Имя"
+							type="text"
+							placeholder="Пётр"
+							inputSize="small"
+							error={formik.errors.profile_organize_secondname}
+							touched={formik.touched.profile_organize_secondname}
+							value={formik.values.profile_organize_secondname}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+						<Input
+							id="profile_organize_phone"
+							name="profile_organize_phone"
+							label="Телефон"
+							type="phone"
+							placeholder="+7 977 000-00-00"
+							inputSize="small"
+							error={formik.errors.phone}
+							touched={formik.touched.phone}
+							value={formik.values.phone}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+						<Input
+							id="profile_organize_thirdname"
+							name="profile_organize_thirdname"
+							label="Отчество"
+							type="text"
+							placeholder="Сергеевич"
+							inputSize="small"
+							error={formik.errors.profile_organize_thirdname}
+							touched={formik.touched.profile_organize_thirdname}
+							value={formik.values.profile_organize_thirdname}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+					</InputGroup>
+					<InputGroup title="Дополнительная информация">
+						<Input
+							id="profile_organize_ogrn"
+							name="profile_organize_ogrn"
+							label="ОГРН"
+							type="text"
+							placeholder="1-02-66-05-60662-0"
+							inputSize="small"
+							error={formik.errors.profile_organize_ogrn}
+							touched={formik.touched.profile_organize_ogrn}
+							value={formik.values.profile_organize_ogrn}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							required
+						/>
+					</InputGroup>
+					<InputGroup title="Пароль">
+						<Input
+							id="profile_organize_password"
+							name="profile_organize_password"
+							label="Введите пароль"
+							type="password"
+							placeholder="Пароль"
+							inputSize="small"
+							error={formik.errors.password}
+							touched={formik.touched.password}
+							value={formik.values.password}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+						<Input
+							id="profile_organize_confirm_password"
+							name="profile_organize_confirm_password"
+							label="Повторный пароль"
+							type="password"
+							placeholder="Повторный пароль"
+							inputSize="small"
+							error={formik.errors.confirm_password}
+							touched={formik.touched.confirm_password}
+							value={formik.values.confirm_password}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+					</InputGroup>
+					<div className="profile-organize-form__buttons">
+						<div className="profile-organize-form__button">
+							<Pushbutton
+								label="Сохранить изменения"
+								color="white"
+								backgroundColor="#A6C94F"
+								border="1px solid #A6C94F"
+								minWidth="399px"
+								size="pre-large"
+								disabled={
+									!formik.isValid ||
+									formik.values.profile_volunteer_city === null
+								}
+								type="submit"
+							/>
+						</div>
+						<div className="profile-volunteer-form__button">
+							<Pushbutton
+								primary
+								color="#333333"
+								label="Отменить изменения"
+								size="pre-large"
+								minWidth="399px"
+								border="1px solid #A6C94F"
+								type="button"
+								onClick={() => {
+									formik.handleReset();
+									formik.resetForm({});
+									handleIsForm();
+								}}
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -277,8 +318,10 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 
 ProfileOrganizationForm.propTypes = {
 	onSubmit: PropTypes.func,
+	handleIsForm: PropTypes.func,
 };
 
 ProfileOrganizationForm.defaultProps = {
 	onSubmit: () => {},
+	handleIsForm: () => {},
 };

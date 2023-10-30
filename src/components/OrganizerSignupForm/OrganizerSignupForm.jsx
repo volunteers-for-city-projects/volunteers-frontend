@@ -74,10 +74,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				});
 
 				// eslint-disable-next-line no-console
-				console.log('Volunteer created:', organizationResponse);
+				console.log('Organization created:', organizationResponse);
 			} catch (error) {
 				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				console.error('Failed to create user and/or organize:', error.message);
 			}
 		},
 	});
@@ -100,7 +100,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="organization"
 					label="Название организации"
 					type="text"
-					placeholder=""
+					placeholder="ООО «Ромашка»"
 					inputSize="small"
 					error={formik.errors.organization}
 					touched={formik.touched.organization}
@@ -128,7 +128,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="organize_ogrn"
 					label="ОГРН"
 					type="text"
-					placeholder=""
+					placeholder="1-02-66-05-60662-0"
 					inputSize="small"
 					error={formik.errors.organize_ogrn}
 					touched={formik.touched.organize_ogrn}
