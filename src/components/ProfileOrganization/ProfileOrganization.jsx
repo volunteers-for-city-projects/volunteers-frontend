@@ -6,18 +6,23 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
+import ProfilePagination from '../ProfilePagination/ProfilePagination';
 
 function ProfileOrganization() {
 	return (
 		<section className="profile">
-			<ProfileMenu title="Личный кабинет организатора" />
+			<div className="profile__menu-container">
+				<ProfileMenu title="Личный кабинет организатора" />
+			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
-					<div className="profile__image" />
-					<div className="profile__name">
-						<h2 className="profile__name-surname">ООО "Организация"</h2>
+					<div className="profile__personal-container">
+						<div className="profile__image" />
+						<div className="profile__name">
+							<h2 className="profile__name-surname">ООО "Организация"</h2>
+						</div>
+						<ProfileData dataArray={dataOrganization} />
 					</div>
-					<ProfileData dataArray={dataOrganization} />
 					<div className="profile__button">
 						<Pushbutton
 							label="Редактировать профиль"
@@ -39,12 +44,8 @@ function ProfileOrganization() {
 							<CardProject cardProject={item} key={item.id} />
 						))}
 					</div>
-					<div className="profile__projects-pagination">
-						<button className="profile__projects-btn">&#60;</button>
-						<button className="profile__projects-btn profile__projects-btn_activ">
-							1
-						</button>
-					</div>
+					{cardsProjectsArray.length >= 6 ? <ProfilePagination /> : null}
+
 					<div className="profile__projects-button">
 						<Pushbutton
 							label="Создать новый проект"

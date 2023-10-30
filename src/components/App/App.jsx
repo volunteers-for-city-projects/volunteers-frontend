@@ -16,6 +16,15 @@ function App() {
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+	const [isCurrentUser, setIsCurrentUser] = useState({
+		first_name: '',
+		second_name: '',
+		last_name: '',
+		role: '',
+		id: null,
+		email: '',
+	});
+
 	const navigate = useNavigate();
 
 	const handleLogout = (event) => {
@@ -52,7 +61,16 @@ function App() {
 				handleConfirmLogout={handleConfirmLogout}
 			/>
 			<Outlet
-				context={{ setPlatformEmail, isLoading, setIsLoading, isLoggedIn }}
+				context={{
+					setPlatformEmail,
+					isLoading,
+					setIsLoading,
+					isCurrentUser,
+					setIsCurrentUser,
+					isLoggedIn,
+					setIsLoggedIn,
+					setModal,
+				}}
 			/>
 			<Footer platformEmail={platformEmail} />
 			{modal.isOpen &&

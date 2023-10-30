@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import './SignIn.scss';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -14,9 +14,12 @@ import {
 	ERROR_MESSAGE_PASSWORD_MAX,
 	ERROR_MESSAGE_EMAIL_REG_EX,
 } from '../../utils/constants';
+import telegram from '../../images/icon-tg.svg';
+import vkontakte from '../../images/icon-vk.svg';
 
 function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 	const { isLoading } = useOutletContext();
+	const navigate = useNavigate();
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -41,6 +44,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 			});
 		},
 	});
+
 	const linkClasses = clsx(
 		'sign-in__link',
 		{
@@ -48,6 +52,11 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 		},
 		className
 	);
+
+	const onClickRegestration = () => {
+		navigate('/registration');
+	};
+
 	return (
 		<section className="sign-in">
 			<h1 className="sign-in__header-title">{title}</h1>
@@ -63,7 +72,10 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 						<input
 							type="email"
 							placeholder="Email"
-							className="sign-in__input"
+							className={clsx('sign-in__input', {
+								'sign-in__input_type-error':
+									formik.touched.userEmail && formik.errors.userEmail,
+							})}
 							id="userEmail"
 							name="userEmail"
 							onChange={formik.handleChange}
@@ -78,6 +90,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 							</div>
 						) : null}
 					</label>
+
 					<label className="sign-in__label" htmlFor="userPassword">
 						Пароль
 						<input
@@ -99,20 +112,44 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 								{formik.errors.userPassword}
 							</div>
 						) : null}
+						<Link to="password-recovery" className={linkClasses}>
+							Забыли пароль?
+						</Link>
 					</label>
-					<Link to="password-recovery" className={linkClasses}>
-						Забыли пароль?
-					</Link>
 				</div>
 				<Pushbutton
-					color="White"
 					label={buttonSubmitText}
-					minWidth="380px"
-					size="medium"
+					color="#fff"
+					size="entrance"
+					minWidth="100%"
 					disabled={!formik.isValid || isLoading}
 					type="submit"
 				/>
 			</form>
+			<Pushbutton
+				label="Зарегистрироваться"
+				color="#3F3F3F"
+				primary
+				border="1px solid #a6c94f"
+				size="entrance"
+				minWidth="100%"
+				disabled={!formik.isValid || isLoading}
+				type="button"
+				onClick={onClickRegestration}
+			/>
+			<h2 className="sign-in__heading-button-icon-list">Через соцсети</h2>
+			<ul className="sign-in__button-icon-list">
+				<li>
+					<button className="sign-in__button" disabled={isLoading}>
+						<img className="sign-in__icon" src={telegram} alt="Телеграмм" />
+					</button>
+				</li>
+				<li>
+					<button className="sign-in__button" disabled={isLoading}>
+						<img className="sign-in__icon" src={vkontakte} alt="ВКонтакте" />
+					</button>
+				</li>
+			</ul>
 		</section>
 	);
 }
