@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import './Login.scss';
 import { apiLogin } from '../../utils/api/login-route';
+import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
 
 function Login() {
 	const { isLoading, setIsLoading, setIsCurrentUser, setIsLoggedIn, setModal } =
@@ -56,6 +57,7 @@ function Login() {
 
 	return (
 		<main className="login">
+			<BreadCrumbs />
 			<Outlet
 				context={{
 					isLoading,
