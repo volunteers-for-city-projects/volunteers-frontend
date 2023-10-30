@@ -13,14 +13,18 @@
 	&__personal {
 		display: flex;
 		flex-direction: column;
+		align-items: start;
+		justify-content: space-between;
 		margin-top: 50px;
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
-		min-height: 921px;
-		position: relative;
-		padding: 40px;
+		padding: 40px 40px 0 40px;
 		box-sizing: border-box;
+		&-container {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 	&__image {
 		background-image: url('../../images/fotoProfile.svg');
@@ -41,9 +45,7 @@
 		}
 	}
 	&__button {
-		position: absolute;
-		bottom: 0;
-		left: 36px;
+		margin-top: 200px;
 	}
 
 	&__wrapper {
@@ -54,10 +56,11 @@
 
 		&__projects {
 			width: 960px;
-			min-height: 979px;
 			margin-top: 40px;
+			display: flex;
 			flex-direction: column;
-			position: relative;
+			align-items: start;
+			justify-content: space-between;
 		}
 		&__projects-title {
 			margin: 0;
@@ -68,9 +71,16 @@
 		}
 	}
 	@media screen and (max-width: 1919px) {
+		&__menu-container {
+			margin-left: 100px;
+		}
 		&__personal {
 			width: 377px;
 			padding: 16px 0 16px 60px;
+		}
+		&__button {
+			margin-top: 50px;
+			margin-left: 35px;
 		}
 		&__projects {
 			width: 732px;

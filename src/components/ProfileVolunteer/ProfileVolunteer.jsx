@@ -17,11 +17,15 @@ function ProfileVolunteer({ isVolunteer }) {
 					</div>
 					<div className="profile__wrapper">
 						<div className="profile__personal">
-							<div className="profile__image" />
-							<div className="profile__name">
-								<h2 className="profile__name-surname">Фамилия Имя Отчество</h2>
+							<div className="profile__personal-container">
+								<div className="profile__image" />
+								<div className="profile__name">
+									<h2 className="profile__name-surname">
+										Фамилия Имя Отчество
+									</h2>
+								</div>
+								<ProfileData dataArray={dataVolunteer} />
 							</div>
-							<ProfileData dataArray={dataVolunteer} />
 							<div className="profile__button">
 								<Pushbutton
 									label="Редактировать профиль"
