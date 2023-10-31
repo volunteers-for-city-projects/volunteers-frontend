@@ -133,7 +133,6 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 				border="1px solid #a6c94f"
 				size="entrance"
 				minWidth="100%"
-				disabled={!formik.isValid || isLoading}
 				type="button"
 				onClick={onClickRegestration}
 			/>
