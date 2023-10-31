@@ -1,10 +1,24 @@
 export const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
 
+const flattenObject = (obj) =>
+	Object.keys(obj).reduce((result, key) => {
+		if (typeof obj[key] === 'object') {
+			return result.concat(flattenObject(obj[key]));
+		}
+
+		return result.concat({ textError: obj[key] });
+	}, []);
+
 const handleResponse = (res) => {
+	if (res.statusText === 'No Content') {
+		return res;
+	}
+
 	if (res.ok) {
 		return res.json();
 	}
-	return Promise.reject(new Error(`Ошибка: ${res.status}`));
+
+	return res.json().then((error) => Promise.reject(flattenObject(error)));
 };
 
 const request = (endpoint, method, body, jwt) => {
@@ -17,7 +31,7 @@ const request = (endpoint, method, body, jwt) => {
 		headers: jwt
 			? {
 					...headers,
-					Authorization: `Bearer ${jwt}`,
+					Authorization: `Token ${jwt}`,
 			  }
 			: headers,
 	};
