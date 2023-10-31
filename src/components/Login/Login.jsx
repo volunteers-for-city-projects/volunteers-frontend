@@ -1,30 +1,38 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import './Login.scss';
-import { apiLogin } from '../../utils/api/login-route';
+import { signIn, getUserInformation } from '../../utils/api/login';
 
 function Login() {
-	const { isLoading, setIsLoading, setIsCurrentUser, setIsLoggedIn, setModal } =
+	const { isLoading, setIsLoading, setCurrentUser, setIsLoggedIn, setModal } =
 		useOutletContext();
 
 	const navigate = useNavigate();
 
 	const handleSignIn = ({ password, email }) => {
 		setIsLoading(true);
-		apiLogin
-			.signIn({ password, email })
+		signIn({ password, email })
 			.then((data) => {
 				if (data.auth_token) {
 					localStorage.setItem('token', data.auth_token);
-					apiLogin.getUserInformation().then((user) => {
-						setIsCurrentUser(user);
+					getUserInformation().then((user) => {
+						setCurrentUser(user);
 						setIsLoggedIn(true);
 						navigate('/profile');
 					});
 				}
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(setIsLoading(false));
 	};

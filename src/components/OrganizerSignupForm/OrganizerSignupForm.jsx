@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 
 import './OrganizerSignupForm.scss';
 
+import { useOutletContext } from 'react-router-dom';
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
@@ -15,6 +16,7 @@ import { createOrganization, getCities } from '../../utils/api/signupApi';
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
+	const { setModal } = useOutletContext();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -73,11 +75,19 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					city: 1,
 				});
 
-				// eslint-disable-next-line no-console
 				console.log('Volunteer created:', organizationResponse);
 			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				if (Array.isArray(error)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: error,
+					});
+				} else {
+					console.error(error);
+				}
 			}
 		},
 	});
