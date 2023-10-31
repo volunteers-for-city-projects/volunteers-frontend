@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
+import { getUserInformation, logOut } from '../../utils/api/login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [isLoggedIn, setIsLoggedIn] = useState(
+		Boolean(localStorage.getItem('token'))
+	);
 	const [modal, setModal] = useState({
 		isOpen: false,
 		type: 'init',
@@ -16,7 +19,7 @@ function App() {
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isCurrentUser, setIsCurrentUser] = useState({
+	const [currentUser, setCurrentUser] = useState({
 		first_name: '',
 		second_name: '',
 		last_name: '',
@@ -27,14 +30,38 @@ function App() {
 
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		getUserInformation()
+			.then((user) => {
+				console.log(user);
+				setIsLoggedIn(true);
+				setCurrentUser(user);
+			})
+			.catch((err) => {
+				setIsLoggedIn(false);
+				console.error(err);
+			});
+	}, [isLoggedIn]);
+
+	const closeModal = () => {
+		setModal({
+			type: '',
+			state: '',
+			title: '',
+			isOpen: false,
+		});
+	};
+
 	const handleLogout = (event) => {
 		event.preventDefault();
-		setModal((prevModal) => ({
-			...prevModal,
-			isOpen: false,
-		}));
-		navigate('/');
-		setIsLoggedIn(false);
+		closeModal();
+		logOut()
+			.then(() => {
+				localStorage.removeItem('token');
+				navigate('/');
+				setIsLoggedIn(false);
+			})
+			.catch((err) => console.error(err));
 	};
 
 	const handleConfirmLogout = () => {
@@ -45,13 +72,6 @@ function App() {
 			title: 'Выход',
 			onSubmit: handleLogout,
 		});
-	};
-
-	const closeModal = () => {
-		setModal((prevModal) => ({
-			...prevModal,
-			isOpen: false,
-		}));
 	};
 
 	return (
@@ -65,8 +85,8 @@ function App() {
 					setPlatformEmail,
 					isLoading,
 					setIsLoading,
-					isCurrentUser,
-					setIsCurrentUser,
+					currentUser,
+					setCurrentUser,
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,

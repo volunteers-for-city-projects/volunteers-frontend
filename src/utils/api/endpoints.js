@@ -12,7 +12,11 @@ export const ENDPOINT_VOLUNTEERS = 'volunteers/';
 export const ENDPOINT_ORGANIZATIONS = 'organizations/';
 export const ENDPOINT_MEDIA = 'media/';
 
-export const ENDPOINT_SIGNIN = `${URL}auth/token/login/`;
-export const ENDPOINT_ABOUT_ME = `${URL}auth/me/`;
+export const ENDPOINT_SIGNIN = 'auth/token/login/';
+export const ENDPOINT_ABOUT_ME = 'auth/me/';
 export const ENDPOINT_RESET_PASSWORD = `${URL}auth/reset_password/`;
 export const ENDPOINT_CHANGE_PASSWORD = `${URL}auth/change_password/`;
+export const ENDPOINT_LOGOUT = 'auth/token/logout/';
+
+export const ENDPOINT_PROFILE_VOLUNTEER = 'volunteers/';
+export const ENDPOINT_PROFILE_ORGANIZATION = 'organizations/';
