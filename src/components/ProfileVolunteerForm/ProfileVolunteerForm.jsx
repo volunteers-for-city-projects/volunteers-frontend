@@ -13,13 +13,14 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
 import {
 	// postPhoto,
-	createVolunteer,
+	updateVolunteer,
 	getSkills,
 	getCities,
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
 export default function ProfileVolunteerForm({
+	volunteerId,
 	onSubmit,
 	handleIsForm,
 	...restProps
@@ -79,25 +80,23 @@ export default function ProfileVolunteerForm({
 			const formattedPhone = `${getDigitsOnly(values.profile_volunteer_phone)}`;
 
 			try {
-				await createVolunteer({
+				await updateVolunteer(volunteerId, {
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
 						last_name: values.profile_volunteer_thirdname,
-						password: values.profile_volunteer_password,
-						re_password: values.profile_volunteer_confirm_password,
 					},
 					telegram: values.profile_volunteer_telegram,
-					photo: values.profile_volunteer_photo || null || '' || undefined,
+					// photo: values.profile_volunteer_photo || null || '' || undefined,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
 					skills: values.profile_volunteer_skills || [],
-					city: values.profile_volunteer_city || [] || null || '',
+					city: values.profile_volunteer_city,
 				});
 			} catch (error) {
 				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				console.error('Ошибка в обновлении данных волонтера:', error.message);
 			}
 		},
 	});
@@ -324,6 +323,7 @@ export default function ProfileVolunteerForm({
 }
 
 ProfileVolunteerForm.propTypes = {
+	volunteerId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
 	handleIsForm: PropTypes.func,
 };

@@ -41,7 +41,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		initialValues: {
 			organization: '',
 			about_organization: '',
-			organize_city: '',
+			organize_city: null,
 			organize_firstname: '',
 			organize_secondname: '',
 			organize_thirdname: '',
@@ -68,9 +68,11 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					},
 					title: values.organization,
 					ogrn: values.organize_ogrn,
-					phone: formattedPhone,
+					phone:
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						formattedPhone,
 					about: values.about_organization || '' || undefined,
-					city: 1,
+					city: values.organize_city,
 				});
 
 				// eslint-disable-next-line no-console
@@ -116,10 +118,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					placeholder="Выберите город"
 					width={400}
 					options={cities}
-					touched={formik.touched.city}
-					value={formik.values.city}
+					touched={formik.touched.organize_city}
+					value={formik.values.organize_city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('city', Number(selectedOption.value));
+						formik.setFieldValue('organize_city', Number(selectedOption.value));
 					}}
 					required
 				/>

@@ -15,10 +15,12 @@ import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/Pro
 import {
 	// postPhoto,
 	getCities,
+	updateOrganization,
 } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
 export default function ProfileOrganizationForm({
+	organizationId,
 	onSubmit,
 	handleIsForm,
 	...restProps
@@ -27,6 +29,7 @@ export default function ProfileOrganizationForm({
 	const [selectedFile, setSelectedFile] = useState(null);
 
 	console.log(selectedFile);
+	console.log(cities);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -53,12 +56,11 @@ export default function ProfileOrganizationForm({
 		initialValues: {
 			profile_organize_organization: '',
 			profile_organize_about_organization: '',
-			profile_organize_city: '',
+			profile_organize_city: null,
 			profile_organize_firstname: '',
 			profile_organize_secondname: '',
 			profile_organize_thirdname: '',
 			profile_organize_phone: '',
-			profile_organize_email: '',
 			profile_organize_ogrn: '',
 			profile_organize_password: '',
 			profile_organize_confirm_password: '',
@@ -67,25 +69,25 @@ export default function ProfileOrganizationForm({
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.phone)}`;
+			const formattedPhone = `${getDigitsOnly(values.profile_organize_phone)}`;
 
 			try {
-				await {
-					user: {
-						first_name: values.firstname,
-						second_name: values.secondname,
-						last_name: values.thirdname,
-						password: values.password,
-						re_password: values.confirm_password,
+				await updateOrganization(1, {
+					contact_person: {
+						email: values.organize_email,
+						first_name: values.profile_organize_firstname,
+						last_name: values.profile_organize_thirdname,
+						password: values.profile_organize_password,
+						second_name: values.profile_organize_secondname,
 					},
-					telegram: values.telegram,
-					photo: values.photo || null || '' || undefined,
+					title: values.profile_organize_organization,
+					ogrn: values.profile_organize_ogrn,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					skills: values.skills || [],
-					city: values.city || [] || null || '',
-				};
+					about: values.profile_organize_organization || '' || undefined,
+					city: values.profile_organize_city,
+				});
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to create user and/or organize:', error.message);
@@ -150,7 +152,11 @@ export default function ProfileOrganizationForm({
 							touched={formik.touched.profile_organize_city}
 							value={formik.values.profile_organize_city}
 							handleChange={(selectedOption) => {
-								formik.setFieldValue('city', Number(selectedOption.value));
+								formik.setFieldValue(
+									'profile_organize_city',
+									Number(selectedOption.value)
+								);
+								console.log(selectedOption.value);
 							}}
 							required
 						/>
@@ -205,9 +211,9 @@ export default function ProfileOrganizationForm({
 							type="phone"
 							placeholder="+7 977 000-00-00"
 							inputSize="small"
-							error={formik.errors.phone}
-							touched={formik.touched.phone}
-							value={formik.values.phone}
+							error={formik.errors.profile_organize_phone}
+							touched={formik.touched.profile_organize_phone}
+							value={formik.values.profile_organize_phone}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"
@@ -253,9 +259,9 @@ export default function ProfileOrganizationForm({
 							type="password"
 							placeholder="Пароль"
 							inputSize="small"
-							error={formik.errors.password}
-							touched={formik.touched.password}
-							value={formik.values.password}
+							error={formik.errors.profile_organize_password}
+							touched={formik.touched.profile_organize_password}
+							value={formik.values.profile_organize_password}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"
@@ -268,9 +274,9 @@ export default function ProfileOrganizationForm({
 							type="password"
 							placeholder="Повторный пароль"
 							inputSize="small"
-							error={formik.errors.confirm_password}
-							touched={formik.touched.confirm_password}
-							value={formik.values.confirm_password}
+							error={formik.errors.profile_organize_confirm_password}
+							touched={formik.touched.profile_organize_confirm_password}
+							value={formik.values.profile_organize_confirm_password}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"
@@ -288,12 +294,12 @@ export default function ProfileOrganizationForm({
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
-									formik.values.profile_volunteer_city === null
+									formik.values.profile_organize_city === null
 								}
 								type="submit"
 							/>
 						</div>
-						<div className="profile-volunteer-form__button">
+						<div className="profile-organize-form__button">
 							<Pushbutton
 								primary
 								color="#333333"
@@ -317,6 +323,7 @@ export default function ProfileOrganizationForm({
 }
 
 ProfileOrganizationForm.propTypes = {
+	organizationId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
 	handleIsForm: PropTypes.func,
 };

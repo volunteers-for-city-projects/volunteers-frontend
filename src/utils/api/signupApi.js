@@ -2,7 +2,7 @@ const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
 
 const getCities = async () => {
 	try {
-		const response = await fetch(`${BASE_URL}/cities`); // Замените на ваше API-путь для городов
+		const response = await fetch(`${BASE_URL}/cities`);
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при загрузке городов: ${error.message}`);
@@ -11,7 +11,7 @@ const getCities = async () => {
 
 const getSkills = async () => {
 	try {
-		const response = await fetch(`${BASE_URL}/skills`); // Замените на ваше API-путь для навыков
+		const response = await fetch(`${BASE_URL}/skills`);
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при загрузке навыков: ${error.message}`);
@@ -50,6 +50,22 @@ const createVolunteer = async (volunteerData) => {
 	}
 };
 
+const updateVolunteer = async (volunteerId, updatedVolunteerData) => {
+	try {
+		const response = await fetch(`${BASE_URL}/volunteers/${volunteerId}/`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(updatedVolunteerData),
+		});
+
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при обновлении волонтера: ${error.message}`);
+	}
+};
+
 const createOrganization = async (organizationData) => {
 	try {
 		const response = await fetch(`${BASE_URL}/organizations/`, {
@@ -63,6 +79,25 @@ const createOrganization = async (organizationData) => {
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при создании организации: ${error.message}`);
+	}
+};
+
+const updateOrganization = async (organizationId, updatedOrganizationData) => {
+	try {
+		const response = await fetch(
+			`${BASE_URL}/organizations/${organizationId}/`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedOrganizationData),
+			}
+		);
+
+		return await response.json();
+	} catch (error) {
+		throw new Error(`Ошибка при обновлении организации: ${error.message}`);
 	}
 };
 
@@ -84,6 +119,8 @@ export {
 	getSkills,
 	createUser,
 	createVolunteer,
+	updateVolunteer,
 	createOrganization,
+	updateOrganization,
 	postPhoto,
 };
