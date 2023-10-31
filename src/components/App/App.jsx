@@ -15,7 +15,6 @@ function App() {
 		type: 'init',
 		state: 'info',
 		title: 'init',
-		onSubmit: () => {},
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -31,24 +30,26 @@ function App() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		getUserInformation()
-			.then((user) => {
-				console.log(user);
-				setIsLoggedIn(true);
-				setCurrentUser(user);
-			})
-			.catch((err) => {
-				setIsLoggedIn(false);
-				console.error(err);
-			});
+		if (isLoggedIn) {
+			getUserInformation()
+				.then((user) => {
+					console.log(user);
+					setIsLoggedIn(true);
+					setCurrentUser(user);
+				})
+				.catch((err) => {
+					setIsLoggedIn(false);
+					console.error(err);
+				});
+		}
 	}, [isLoggedIn]);
 
 	const closeModal = () => {
 		setModal({
-			type: '',
-			state: '',
-			title: '',
 			isOpen: false,
+			type: 'init',
+			state: 'info',
+			title: 'init',
 		});
 	};
 
