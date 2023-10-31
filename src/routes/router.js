@@ -8,6 +8,10 @@ import LoginSignIn from '../components/LoginSignIn/LoginSignIn';
 import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPasswordRecovery';
 import LoginPasswordReset from '../components/LoginPasswordReset/LoginPasswordReset';
 import NotFound from '../components/NotFound/NotFound';
+import {
+	ProtectedRouteElementForUnauthorized,
+	ProtectedRouteElementForAuthorized,
+} from './ProtectedRoute';
 
 const router = createBrowserRouter([
 	{
@@ -21,11 +25,19 @@ const router = createBrowserRouter([
 
 			{
 				path: 'registration',
-				element: <Signup />,
+				element: (
+					<ProtectedRouteElementForAuthorized>
+						<Signup />
+					</ProtectedRouteElementForAuthorized>
+				),
 			},
 			{
 				path: 'login/',
-				element: <Login />,
+				element: (
+					<ProtectedRouteElementForAuthorized>
+						<Login />
+					</ProtectedRouteElementForAuthorized>
+				),
 				children: [
 					{
 						index: true,
@@ -47,9 +59,12 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'profile',
-				element: <ProfileVolunteer />,
+				element: (
+					<ProtectedRouteElementForUnauthorized>
+						<ProfileVolunteer />
+					</ProtectedRouteElementForUnauthorized>
+				),
 			},
-
 			{
 				path: '*',
 				element: <NotFound />,
