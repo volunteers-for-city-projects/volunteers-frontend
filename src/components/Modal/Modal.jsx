@@ -1,17 +1,30 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { v4 as uuidv4 } from 'uuid';
 import './Modal.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import modalExit from '../../images/modals/exit.png';
 import modalSend from '../../images/modals/send.png';
 import modalSuccess from '../../images/modals/success.png';
+import modalError from '../../images/modals/error.png';
 
 function Modal({ modal, closeModal }) {
 	const stopPropagation = (event) => {
 		event.stopPropagation();
 	};
 
-	const { isOpen, type, state, title, onSubmit } = modal;
+	const { isOpen, type, state, title, onSubmit, errorArray } = modal;
+
+	const errorsData = useMemo(() => {
+		if (errorArray && Array.isArray(errorArray)) {
+			return errorArray.map(({ textError }) => ({
+				textError,
+				id: uuidv4(),
+			}));
+		}
+		return [];
+	}, [errorArray]);
 
 	const contentText = {
 		confirm: {
@@ -57,6 +70,13 @@ function Modal({ modal, closeModal }) {
 			info: {
 				title: 'Стартовое модальное окно',
 				textButton: '',
+			},
+		},
+		error: {
+			info: {
+				errorsArray: errorsData,
+				textButton: '',
+				image: modalError,
 			},
 		},
 	};
@@ -146,6 +166,18 @@ function Modal({ modal, closeModal }) {
 		init: {
 			info: <div>Стартовое модальное окно</div>,
 		},
+		error: {
+			info: (
+				<ul className="modal__list-errors">
+					{contentText[type][state].errorsArray &&
+						contentText[type][state].errorsArray.map((item) => (
+							<li key={item.id}>
+								<p className="modal__text">{item.textError}</p>
+							</li>
+						))}
+				</ul>
+			),
+		},
 	};
 
 	return (
@@ -197,6 +229,11 @@ Modal.propTypes = {
 		state: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		onSubmit: PropTypes.func,
+		errorArray: PropTypes.arrayOf(
+			PropTypes.shape({
+				textError: PropTypes.string.isRequired,
+			})
+		),
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,
 };
