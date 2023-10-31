@@ -16,6 +16,11 @@ function Main() {
 	const [plarformAbout, setPlatformAbout] = useState({});
 	const [plarformPromo, setPlatformPromo] = useState({});
 	const { setPlatformEmail } = useOutletContext();
+	const [popup, setPopup] = useState({
+		isOpen: false,
+		text: '',
+		type: 'success',
+	});
 
 	useEffect(() => {
 		Promise.all([getNews(), getPlatformAbout()])
@@ -35,12 +40,35 @@ function Main() {
 			.catch((err) => console.error(err));
 	}, [setPlatformEmail]);
 
+	const closePopup = () => {
+		setTimeout(() => {
+			setPopup((prevPopup) => ({
+				...prevPopup,
+				isOpen: false,
+			}));
+		}, 3000);
+	};
+
 	const handleSendMessage = (values, { resetForm }) => {
 		sendMessage(values)
 			.then(() => {
 				resetForm();
+				setPopup({
+					isOpen: true,
+					text: 'Ваш запрос отправлен',
+					type: 'success',
+				});
+				closePopup();
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				setPopup({
+					isOpen: true,
+					text: 'Ваш запрос не был отправлен попробуйте еще раз',
+					type: 'error',
+				});
+				closePopup();
+			});
 	};
 
 	return (
@@ -49,7 +77,7 @@ function Main() {
 			<AboutProject plarformAbout={plarformAbout} />
 			{news.length > 0 && <News news={news} />}
 			<JoinButtons />
-			<FormRequest handleSendMessage={handleSendMessage} />
+			<FormRequest handleSendMessage={handleSendMessage} popup={popup} />
 		</main>
 	);
 }

@@ -6,11 +6,13 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function News({ news }) {
 	return (
-		<section className="news" id="news">
+		<section className="news">
 			<div className="news__container">
 				<div className="news__container-block">
 					<div className="news__wrapper">
-						<h2 className="news__wrapper-title">Новости</h2>
+						<h2 className="news__wrapper-title" id="news">
+							Новости
+						</h2>
 						<Pushbutton
 							label="Смотреть все новости"
 							backgroundColor="#A6C94F"
