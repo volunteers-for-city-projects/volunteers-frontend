@@ -109,7 +109,6 @@ function Modal({ modal, closeModal }) {
 						color="#333"
 						backgroundColor="#A6C94F"
 						size="pre-large"
-						onClick={closeModal}
 						type="submit"
 						minWidth="399px"
 						border="none"
@@ -135,7 +134,6 @@ function Modal({ modal, closeModal }) {
 						color="#333"
 						backgroundColor="#A6C94F"
 						size="pre-large"
-						onClick={closeModal}
 						type="submit"
 						minWidth="399px"
 						border="none"
@@ -193,9 +191,9 @@ function Modal({ modal, closeModal }) {
 Modal.propTypes = {
 	modal: PropTypes.shape({
 		isOpen: PropTypes.bool.isRequired,
-		type: PropTypes.string.isRequired,
-		state: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
+		type: PropTypes.string,
+		state: PropTypes.string,
+		title: PropTypes.string,
 		onSubmit: PropTypes.func,
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,

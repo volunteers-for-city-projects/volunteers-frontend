@@ -10,7 +10,7 @@ import {
 	REG_EX_EMAIL,
 	ERROR_MESSAGE_REQUIRED,
 	ERROR_MESSAGE_EMAIL,
-	ERROR_MESSAGE_EMAIL_REG_EX,
+	ERROR_MESSAGE_EMAIL_MIN_MAX,
 } from '../../utils/constants';
 
 function PasswordRecovery({
@@ -30,7 +30,9 @@ function PasswordRecovery({
 		validationSchema: Yup.object({
 			userEmail: Yup.string()
 				.email(ERROR_MESSAGE_EMAIL)
-				.matches(REG_EX_EMAIL, ERROR_MESSAGE_EMAIL_REG_EX)
+				.matches(REG_EX_EMAIL, ERROR_MESSAGE_EMAIL)
+				.min(5, ERROR_MESSAGE_EMAIL_MIN_MAX)
+				.max(256, ERROR_MESSAGE_EMAIL_MIN_MAX)
 				.required(ERROR_MESSAGE_REQUIRED),
 		}),
 		onSubmit: (values) => {
@@ -70,7 +72,7 @@ function PasswordRecovery({
 						name="userEmail"
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
-						value={formik.values.userEmail}
+						value={formik.values.userEmail ?? ''}
 						disabled={isLoading}
 						required
 					/>

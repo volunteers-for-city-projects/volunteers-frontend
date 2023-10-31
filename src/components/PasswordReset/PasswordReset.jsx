@@ -10,6 +10,9 @@ import {
 	ERROR_MESSAGE_REQUIRED,
 	ERROR_MESSAGE_PASSWORD_MIN,
 	ERROR_MESSAGE_PASSWORD_MAX,
+	REG_EX_PASSWORD,
+	ERROR_MESSAGE_PASSWORD_REG_EX,
+	ERROR_MESSAGE_PASSWORD_NO_MATCH,
 } from '../../utils/constants';
 
 function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
@@ -23,13 +26,16 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 		},
 		validationSchema: Yup.object({
 			userPassword: Yup.string()
-				.min(5, ERROR_MESSAGE_PASSWORD_MIN)
+				.min(8, ERROR_MESSAGE_PASSWORD_MIN)
 				.max(20, ERROR_MESSAGE_PASSWORD_MAX)
+				.matches(REG_EX_PASSWORD, ERROR_MESSAGE_PASSWORD_REG_EX)
 				.required(ERROR_MESSAGE_REQUIRED),
 			userPasswordConfirm: Yup.string()
-				.min(5, ERROR_MESSAGE_PASSWORD_MIN)
+				.min(8, ERROR_MESSAGE_PASSWORD_MIN)
 				.max(20, ERROR_MESSAGE_PASSWORD_MAX)
-				.required(ERROR_MESSAGE_REQUIRED),
+				.matches(REG_EX_PASSWORD, ERROR_MESSAGE_PASSWORD_REG_EX)
+				.required(ERROR_MESSAGE_REQUIRED)
+				.oneOf([Yup.ref('userPassword')], ERROR_MESSAGE_PASSWORD_NO_MATCH),
 		}),
 
 		onSubmit: (values) => {
@@ -62,7 +68,7 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 							name="userPassword"
 							minLength="5"
 							maxLength="20"
-							value={formik.values.userPassword}
+							value={formik.values.userPassword ?? ''}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled={isLoading}
@@ -91,7 +97,7 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 							name="userPasswordConfirm"
 							minLength="5"
 							maxLength="20"
-							value={formik.values.userPasswordConfirm}
+							value={formik.values.userPasswordConfirm ?? ''}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled={isLoading}
