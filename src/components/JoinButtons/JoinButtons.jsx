@@ -20,7 +20,7 @@ function JoinButtons() {
 							size="large-var"
 							border="none"
 							color="#FFF"
-							minWidth="234px"
+							minWidth="280px"
 							alignSelf="flex-end"
 						/>
 					</div>
@@ -35,7 +35,7 @@ function JoinButtons() {
 							size="large-var"
 							border="none"
 							color="#FFF"
-							minWidth="268px"
+							minWidth="280px"
 							alignSelf="flex-end"
 						/>
 					</div>

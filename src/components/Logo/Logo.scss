@@ -37,4 +37,12 @@
 		font-weight: 300;
 		line-height: 1.3;
 	}
+	@media screen and (max-width: 1919px) {
+		&__label {
+			font-size: 35px;
+		}
+		&__sublabel {
+			font-size: 14px;
+		}
+	}
 }
