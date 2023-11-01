@@ -39,6 +39,7 @@ function App() {
 				})
 				.catch((err) => {
 					setIsLoggedIn(false);
+					localStorage.removeItem('token');
 					console.error(err);
 				});
 		}
