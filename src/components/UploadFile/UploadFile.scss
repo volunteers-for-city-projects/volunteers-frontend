@@ -44,6 +44,14 @@
 	font-weight: 400;
 	line-height: 16px;
 
+	&__image {
+		width: 153px;
+		height: 177px;
+		border-radius: 5px;
+		object-fit: cover;
+		object-position: center;
+	}
+
 	&_type-photo {
 		width: 24px;
 		height: 40px;
