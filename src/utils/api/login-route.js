@@ -2,7 +2,7 @@ import {
 	ENDPOINT_SIGNIN,
 	ENDPOINT_ABOUT_ME,
 	ENDPOINT_RESET_PASSWORD,
-	// ENDPOINT_CHANGE_PASSWORD,
+	ENDPOINT_RESET_PASSWORD_CONFIRM,
 	URL,
 } from '../endpoints';
 
@@ -16,6 +16,15 @@ class LoginApi {
 		return fetch(`${this.baseUrl}${endPoint}`, options).then((res) => {
 			if (res.ok) {
 				return res.json();
+			}
+			return res.json().then((result) => Promise.reject(result));
+		});
+	}
+
+	requestResponseWithoutBody(endPoint, options) {
+		return fetch(`${this.baseUrl}${endPoint}`, options).then((res) => {
+			if (res.ok) {
+				return res;
 			}
 			return res.json().then((result) => Promise.reject(result));
 		});
@@ -51,12 +60,24 @@ class LoginApi {
 		});
 	}
 
-	resetPassword(email) {
-		return this.request(ENDPOINT_RESET_PASSWORD, {
+	resetPassword({ email }) {
+		return this.requestResponseWithoutBody(ENDPOINT_RESET_PASSWORD, {
 			method: 'POST',
 			headers: this.headers,
 			body: JSON.stringify({
 				email,
+			}),
+		});
+	}
+
+	resetPasswordConfirm({ uid, token, password }) {
+		return this.requestResponseWithoutBody(ENDPOINT_RESET_PASSWORD_CONFIRM, {
+			method: 'POST',
+			headers: this.headers,
+			body: JSON.stringify({
+				uid,
+				token,
+				new_password: password,
 			}),
 		});
 	}

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import './AboutProject.scss';
@@ -6,13 +7,16 @@ import { valuesArray } from '../../utils/data';
 
 function AboutProject({ plarformAbout }) {
 	const { aboutUs, valuations } = plarformAbout;
-	let valuationsData;
-	if (valuations) {
-		valuationsData = valuations.map((item) => ({
-			...item,
-			valuesId: uuidv4(),
-		}));
-	}
+
+	const valuationsData = useMemo(() => {
+		if (valuations) {
+			return valuations.map((item) => ({
+				...item,
+				valuesId: uuidv4(),
+			}));
+		}
+		return [];
+	}, [valuations]);
 
 	return (
 		<section className="about-project">

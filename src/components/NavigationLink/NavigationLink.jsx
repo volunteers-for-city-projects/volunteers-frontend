@@ -8,6 +8,7 @@ function NavigationLink({ label, path, anchor }) {
 		setTimeout(() => {
 			scroller.scrollTo(anchor, {
 				smooth: true,
+				offset: -150,
 			});
 		}, 1);
 	};

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useOutletContext } from 'react-router-dom';
 import moment from 'moment';
 
 import './VolunteerSignupForm.scss';
@@ -24,6 +25,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [skills, setSkills] = useState([]);
 
 	const [selectedFile, setSelectedFile] = React.useState(null);
+
+	const { setModal } = useOutletContext();
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
@@ -105,8 +108,17 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					city: values.city || [] || null || '',
 				});
 			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				if (Array.isArray(error)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: error,
+					});
+				} else {
+					console.error(error);
+				}
 			}
 			// try {
 			// 	await postPhoto(formData);
