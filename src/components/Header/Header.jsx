@@ -22,7 +22,7 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 					placeholder="Поиск"
 					border="1px solid #9BC1F9"
 					icon={iconSearch}
-					width="450px"
+					// width="450px"
 				/>
 				<NavBar dataNavArray={dataNavArray} />
 				<div className="header__buttons">
@@ -35,6 +35,7 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 								border="none"
 								color="#FFF"
 								onClick={() => navigate('/registration')}
+								minWidth="150px"
 							/>
 							<Pushbutton
 								label="Вход"
@@ -43,6 +44,7 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 								border="1px solid #A6C94F"
 								color="#3F3F3F"
 								onClick={() => navigate('/login')}
+								minWidth="150px"
 							/>
 						</>
 					) : (
@@ -54,6 +56,7 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 								border="none"
 								color="#FFF"
 								onClick={() => navigate('/profile')}
+								minWidth="150px"
 							/>
 							<Pushbutton
 								label="Выход"
@@ -62,6 +65,7 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 								onClick={handleConfirmLogout}
 								border="1px solid #A6C94F"
 								color="#3F3F3F"
+								minWidth="150px"
 							/>
 						</>
 					)}

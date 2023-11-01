@@ -26,4 +26,7 @@
 		margin: 0;
 		color: $--Text;
 	}
+	@media screen and (max-width: 1919px) {
+		max-width: 570px;
+	}
 }

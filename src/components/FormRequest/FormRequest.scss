@@ -135,4 +135,24 @@
 		height: 10px;
 		margin-top: 2px;
 	}
+
+
+}
+
+@media screen and (max-width: 1919px) {
+	.request {
+		background-image: none;
+	}
+	.form-request {
+		gap: 70px;
+	}
+	.request__container {
+		max-width: 1178px;
+		&-title  {
+			max-width: 697px;
+		}
+	}
+	.form-request__textarea {
+		width: 701px;
+	}
 }

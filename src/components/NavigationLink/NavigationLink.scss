@@ -20,4 +20,12 @@
 	&__link_active {
 		font-weight: 700;
 	}
+
+	@media screen and (max-width: 1919px) {
+		&__link {
+			font-size: 20px;
+			font-weight: 400;
+			line-height: 23px;
+		}
+	}
 }
