@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import './CardNews.scss';
@@ -17,13 +18,15 @@ function CardNews({ card }) {
 
 	const formattedDate = `${formattedDay}.${formattedMonth}.${formattedYear}`;
 
-	let tagsData;
-	if (tags) {
-		tagsData = tags.map((item) => ({
-			tag: item,
-			tagId: uuidv4(),
-		}));
-	}
+	const tagsData = useMemo(() => {
+		if (tags) {
+			return tags.map((item) => ({
+				tag: item,
+				tagId: uuidv4(),
+			}));
+		}
+		return [];
+	}, [tags]);
 
 	return (
 		<article className="news__cards-item">

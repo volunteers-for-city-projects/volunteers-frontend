@@ -1,64 +1,39 @@
-const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
+import request from './request';
+import {
+	ENDPOINT_CITIES,
+	ENDPOINT_SKILLS,
+	ENDPOINT_USERS,
+	ENDPOINT_VOLUNTEERS,
+	ENDPOINT_ORGANIZATIONS,
+	ENDPOINT_MEDIA,
+} from './endpoints';
 
-const getCities = async () => {
-	try {
-		const response = await fetch(`${BASE_URL}/cities`);
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при загрузке городов: ${error.message}`);
-	}
-};
+const getCities = () => request(ENDPOINT_CITIES, 'GET');
 
-const getSkills = async () => {
-	try {
-		const response = await fetch(`${BASE_URL}/skills`);
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при загрузке навыков: ${error.message}`);
-	}
-};
+const getSkills = () => request(ENDPOINT_SKILLS, 'GET');
 
-const createUser = async (userData) => {
-	try {
-		const response = await fetch(`${BASE_URL}/users/`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(userData),
-		});
+const createUser = (userData) => request(ENDPOINT_USERS, 'POST', userData);
 
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при создании пользователя: ${error.message}`);
-	}
-};
+const createVolunteer = (volunteerData) =>
+	request(ENDPOINT_VOLUNTEERS, 'POST', volunteerData);
 
-const createVolunteer = async (volunteerData) => {
-	try {
-		const response = await fetch(`${BASE_URL}/volunteers/`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(volunteerData),
-		});
+const createOrganization = (organizationData) =>
+	request(ENDPOINT_ORGANIZATIONS, 'POST', organizationData);
 
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при создании волонтера: ${error.message}`);
-	}
-};
+const postPhoto = (formData) => request(ENDPOINT_MEDIA, 'POST', formData);
 
 const updateVolunteer = async (volunteerId, updatedVolunteerData) => {
 	try {
-		const response = await fetch(`${BASE_URL}/volunteers/${volunteerId}/`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(updatedVolunteerData),
-		});
+		const response = await fetch(
+			`${ENDPOINT_VOLUNTEERS}/volunteers/${volunteerId}/`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedVolunteerData),
+			}
+		);
 
 		return await response.json();
 	} catch (error) {
@@ -66,26 +41,10 @@ const updateVolunteer = async (volunteerId, updatedVolunteerData) => {
 	}
 };
 
-const createOrganization = async (organizationData) => {
-	try {
-		const response = await fetch(`${BASE_URL}/organizations/`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(organizationData),
-		});
-
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при создании организации: ${error.message}`);
-	}
-};
-
 const updateOrganization = async (organizationId, updatedOrganizationData) => {
 	try {
 		const response = await fetch(
-			`${BASE_URL}/organizations/${organizationId}/`,
+			`${ENDPOINT_ORGANIZATIONS}/organizations/${organizationId}/`,
 			{
 				method: 'PUT',
 				headers: {
@@ -98,19 +57,6 @@ const updateOrganization = async (organizationId, updatedOrganizationData) => {
 		return await response.json();
 	} catch (error) {
 		throw new Error(`Ошибка при обновлении организации: ${error.message}`);
-	}
-};
-
-const postPhoto = async (formData) => {
-	try {
-		const response = await fetch(`${BASE_URL}/media`, {
-			method: 'POST',
-			body: JSON.stringify(formData),
-		});
-
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при создании организации: ${error.message}`);
 	}
 };
 

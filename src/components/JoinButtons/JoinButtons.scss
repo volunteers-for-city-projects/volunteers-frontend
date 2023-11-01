@@ -89,4 +89,15 @@
 		opacity: 0.8;
 		cursor: pointer;
 	}
+
+	@media screen and (max-width: 1919px) {
+		background-image: none;
+		&__container {
+			max-width: 1178px;
+			padding: 110px 0 94px;
+		}
+		&__item {
+			width: 580px;
+		}
+	}
 }

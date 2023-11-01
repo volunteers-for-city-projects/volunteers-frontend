@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import './PasswordReset.scss';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -9,6 +10,9 @@ import {
 	ERROR_MESSAGE_REQUIRED,
 	ERROR_MESSAGE_PASSWORD_MIN,
 	ERROR_MESSAGE_PASSWORD_MAX,
+	REG_EX_PASSWORD,
+	ERROR_MESSAGE_PASSWORD_REG_EX,
+	ERROR_MESSAGE_PASSWORD_NO_MATCH,
 } from '../../utils/constants';
 
 function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
@@ -22,19 +26,21 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 		},
 		validationSchema: Yup.object({
 			userPassword: Yup.string()
-				.min(5, ERROR_MESSAGE_PASSWORD_MIN)
+				.min(8, ERROR_MESSAGE_PASSWORD_MIN)
 				.max(20, ERROR_MESSAGE_PASSWORD_MAX)
+				.matches(REG_EX_PASSWORD, ERROR_MESSAGE_PASSWORD_REG_EX)
 				.required(ERROR_MESSAGE_REQUIRED),
 			userPasswordConfirm: Yup.string()
-				.min(5, ERROR_MESSAGE_PASSWORD_MIN)
+				.min(8, ERROR_MESSAGE_PASSWORD_MIN)
 				.max(20, ERROR_MESSAGE_PASSWORD_MAX)
-				.required(ERROR_MESSAGE_REQUIRED),
+				.matches(REG_EX_PASSWORD, ERROR_MESSAGE_PASSWORD_REG_EX)
+				.required(ERROR_MESSAGE_REQUIRED)
+				.oneOf([Yup.ref('userPassword')], ERROR_MESSAGE_PASSWORD_NO_MATCH),
 		}),
 
 		onSubmit: (values) => {
 			onSaveChanges({
 				password: values.userPassword,
-				passwordConfirm: values.userPasswordConfirm,
 			});
 		},
 	});
@@ -54,12 +60,15 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						<input
 							type="password"
 							placeholder="Пароль"
-							className="password-reset__input"
+							className={clsx('password-reset__input', {
+								'password-reset__input_type-error':
+									formik.touched.userEmail && formik.errors.userEmail,
+							})}
 							id="userPassword"
 							name="userPassword"
 							minLength="5"
 							maxLength="20"
-							value={formik.values.userPassword}
+							value={formik.values.userPassword ?? ''}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled={isLoading}
@@ -80,12 +89,15 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						<input
 							type="password"
 							placeholder="Пароль"
-							className="password-reset__input"
+							className={clsx('password-reset__input', {
+								'password-reset__input_type-error':
+									formik.touched.userEmail && formik.errors.userEmail,
+							})}
 							id="userPasswordConfirm"
 							name="userPasswordConfirm"
 							minLength="5"
 							maxLength="20"
-							value={formik.values.userPasswordConfirm}
+							value={formik.values.userPasswordConfirm ?? ''}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled={isLoading}

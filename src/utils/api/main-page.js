@@ -1,50 +1,20 @@
+import request from './request';
 import {
 	ENDPOINT_MAIN_PAGE_NEWS,
 	ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT,
 	ENDPOINT_MAIN_PAGE_FEEDBACK,
 	ENDPOINT_MAIN_PAGE_SEARCH,
-} from '../endpoints';
+} from './endpoints';
 
-export async function getNews() {
-	try {
-		const response = await fetch(ENDPOINT_MAIN_PAGE_NEWS);
-		return response.json();
-	} catch (error) {
-		throw new Error(console.error(error));
-	}
-}
+const getNews = () => request(ENDPOINT_MAIN_PAGE_NEWS, 'GET');
 
-export async function getPlatformAbout() {
-	try {
-		const response = await fetch(ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT);
-		return response.json();
-	} catch (error) {
-		throw new Error(console.error(error));
-	}
-}
+const getPlatformAbout = () =>
+	request(ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT, 'GET');
 
-export async function getSearchProject(search) {
-	try {
-		const response = await fetch(
-			`${ENDPOINT_MAIN_PAGE_SEARCH}?search=${search}`
-		);
-		return response.json();
-	} catch (error) {
-		throw new Error(console.error(error));
-	}
-}
+const getSearchProject = (search) =>
+	request(`${ENDPOINT_MAIN_PAGE_SEARCH}?search=${search}`, 'GET');
 
-export async function sendMessage(value) {
-	try {
-		const response = await fetch(ENDPOINT_MAIN_PAGE_FEEDBACK, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(value),
-		});
-		return response.json();
-	} catch (error) {
-		throw new Error(console.error(error));
-	}
-}
+const sendMessage = (value) =>
+	request(ENDPOINT_MAIN_PAGE_FEEDBACK, 'POST', value);
+
+export { getNews, getPlatformAbout, getSearchProject, sendMessage };
