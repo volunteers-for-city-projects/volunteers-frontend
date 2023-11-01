@@ -17,48 +17,20 @@ const createUser = (userData) => request(ENDPOINT_USERS, 'POST', userData);
 const createVolunteer = (volunteerData) =>
 	request(ENDPOINT_VOLUNTEERS, 'POST', volunteerData);
 
+const updateVolunteer = (volunteerId, updatedVolunteerData) =>
+	request(`${ENDPOINT_VOLUNTEERS}${volunteerId}/`, 'PUT', updatedVolunteerData);
+
 const createOrganization = (organizationData) =>
 	request(ENDPOINT_ORGANIZATIONS, 'POST', organizationData);
 
+const updateOrganization = (organizationId, updatedOrganizationData) =>
+	request(
+		`${ENDPOINT_ORGANIZATIONS}${organizationId}/`,
+		'PUT',
+		updatedOrganizationData
+	);
+
 const postPhoto = (formData) => request(ENDPOINT_MEDIA, 'POST', formData);
-
-const updateVolunteer = async (volunteerId, updatedVolunteerData) => {
-	try {
-		const response = await fetch(
-			`${ENDPOINT_VOLUNTEERS}/volunteers/${volunteerId}/`,
-			{
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedVolunteerData),
-			}
-		);
-
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при обновлении волонтера: ${error.message}`);
-	}
-};
-
-const updateOrganization = async (organizationId, updatedOrganizationData) => {
-	try {
-		const response = await fetch(
-			`${ENDPOINT_ORGANIZATIONS}/organizations/${organizationId}/`,
-			{
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedOrganizationData),
-			}
-		);
-
-		return await response.json();
-	} catch (error) {
-		throw new Error(`Ошибка при обновлении организации: ${error.message}`);
-	}
-};
 
 export {
 	getCities,

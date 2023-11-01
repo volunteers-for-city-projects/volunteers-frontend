@@ -205,19 +205,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="organize_empty"
-					name="organize_empty"
-					label=""
-					type="text"
-					className="input_empty"
-					placeholder="example@mail.ru"
-					inputSize="small"
-					error={formik.errors.organize_email}
-					touched={formik.touched.organize_email}
-					value={formik.values.organize_email}
-					handleChange={formik.handleChange}
-				/>
-				<Input
 					id="organize_email"
 					name="organize_email"
 					label="E-mail"

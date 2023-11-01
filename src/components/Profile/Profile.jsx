@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './Profile.scss';
+
+import { useOutletContext } from 'react-router-dom';
 
 import ProfileVolunteer from '../ProfileVolunteer/ProfileVolunteer';
 import ProfileVolunteerEdit from '../ProfileVolunteerEdit/ProfileVolunteerEdit';
@@ -8,40 +10,28 @@ import ProfileOrganization from '../ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../ProfileOrganizationEdit/ProfileOrganizationEdit';
 
 function Profile() {
+	const { currentUser } = useOutletContext();
+	const { role } = currentUser;
+
 	const [isForm, setIsForm] = useState(false);
-	const [isVolunteer, setIsVolunteer] = useState(false);
 
 	const handleIsForm = () => {
 		setIsForm((prev) => !prev);
 	};
 
-	useEffect(() => {
-		setIsVolunteer(false);
-	}, []);
-
-	if (isVolunteer) {
+	if (role === 'volunteer') {
 		if (isForm) {
-			// eslint-disable-next-line no-return-assign
-			return (
-				<ProfileVolunteerEdit
-					handleIsForm={handleIsForm}
-					firstname="Фамилия"
-					secondname="Имя"
-					thirdname="Отчество"
-				/>
-			);
+			return <ProfileVolunteerEdit handleIsForm={handleIsForm} />;
 		}
 		return (
 			<ProfileVolunteer
 				title="Личный кабинет волонтера"
-				isVolunteer={isVolunteer}
-				isForm={isForm}
 				handleIsForm={handleIsForm}
 			/>
 		);
 	}
 
-	if (!isVolunteer) {
+	if (role === 'organizer') {
 		if (isForm) {
 			return (
 				<ProfileOrganizationEdit

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
+import { useOutletContext } from 'react-router-dom';
 
 import ProfileData from '../ProfileData/ProfileData';
 import dataOrganization from '../../utils/dataOrganization';
@@ -11,6 +12,9 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 
 function ProfileOrganization({ handleIsForm }) {
+	const { currentUser } = useOutletContext();
+	const { title: organizationTitle } = currentUser;
+
 	return (
 		<section className="profile">
 			<div className="profile__menu-container">
@@ -21,7 +25,7 @@ function ProfileOrganization({ handleIsForm }) {
 					<div className="profile__personal-container">
 						<div className="profile__image" />
 						<div className="profile__name">
-							<h2 className="profile__name-surname">ООО "Организация"</h2>
+							<h2 className="profile__name-surname">{organizationTitle}</h2>
 						</div>
 						<ProfileData dataArray={dataOrganization} />
 					</div>

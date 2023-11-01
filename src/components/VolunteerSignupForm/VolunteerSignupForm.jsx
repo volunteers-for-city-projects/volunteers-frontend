@@ -99,7 +99,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						re_password: values.confirm_password,
 					},
 					telegram: values.telegram,
-					photo: values.photo || null || '' || undefined,
+					photo: values.photo || '',
 					date_of_birth: formattedDateOfBirth,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
@@ -282,7 +282,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					inputSize="photo"
 					value={formik.values.photo}
 					setSelectedFile={setSelectedFile}
 				/>

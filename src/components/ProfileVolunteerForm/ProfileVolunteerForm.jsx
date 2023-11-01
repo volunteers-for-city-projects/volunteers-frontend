@@ -89,6 +89,7 @@ export default function ProfileVolunteerForm({
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
+					photo: '',
 					skills: values.profile_volunteer_skills || [],
 					city: values.profile_volunteer_city,
 				});
