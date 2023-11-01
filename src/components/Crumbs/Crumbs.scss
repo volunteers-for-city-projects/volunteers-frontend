@@ -1,24 +1,22 @@
 @import '../../style/variables.scss';
 .crumbs {
-    list-style-type: none;    
-    display: flex;
-    margin: 0;
-    padding: 0;
-    gap: 8px;
+	list-style-type: none;
+	display: flex;
+	margin: 0;
+	padding: 0;
+	gap: 8px;
 
-    &__item {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-    }
+	&__item {
+		display: flex;
+		gap: 8px;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+	}
 
-
-
-    &__separator {
-        width: 24px;
-        height: 24px;
-        display: block;
-    }
+	&__separator {
+		width: 24px;
+		height: 24px;
+		display: block;
+	}
 }

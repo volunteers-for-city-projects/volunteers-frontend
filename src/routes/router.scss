@@ -1,23 +1,22 @@
 @import '../style/variables.scss';
 
 .router__link {
-    color: $--Text;
-    font-family: $--Font-Primary;
-    font-size: 23px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 130%;
-    text-decoration: none;
+	color: $--Text;
+	font-family: $--Font-Primary;
+	font-size: 23px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 130%;
+	text-decoration: none;
 
-    &:hover {
-        opacity: 0.7;
+	&:hover {
+		opacity: 0.7;
 		transition: opacity 100ms ease-in;
 		cursor: pointer;
-
-    }
-    &_disabled {
-        pointer-events: none;
-        cursor: default;
-        opacity: 0.6;
-    }
+	}
+	&_disabled {
+		pointer-events: none;
+		cursor: default;
+		opacity: 0.6;
+	}
 }
