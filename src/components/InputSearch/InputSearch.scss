@@ -51,7 +51,7 @@
 
 	@media screen and (max-width: 1919px) {
 		&__input-search {
-			width: 80px;
+			width: calc(80px + (400 - 80) * (100vw - 1366px) / (1920 - 1366));
 		}
 	}
 }
