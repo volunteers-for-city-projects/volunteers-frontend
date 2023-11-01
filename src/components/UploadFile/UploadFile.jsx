@@ -22,7 +22,7 @@ export default function UploadFile({
 		const file = event.target.files[0];
 		const reader = new FileReader();
 
-		reader.onload = function () {
+		reader.onload = function handleFileLoad() {
 			const base64Data = reader.result;
 			setFieldValue('photo', base64Data);
 			setImage(base64Data);
@@ -33,7 +33,9 @@ export default function UploadFile({
 
 	return (
 		<>
-			{image && <img className="input-file__image" src={image} alt="" />}
+			{image && (
+				<img className="input-file__image" src={image} alt="Фото волонтёра" />
+			)}
 			<div>
 				<label htmlFor={name} className="label-file label-file_type-photo">
 					{required ? `${label}*` : label}
