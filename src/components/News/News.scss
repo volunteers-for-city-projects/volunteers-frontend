@@ -79,17 +79,19 @@
 
 	@media screen and (max-width: 1919px) {
 		&__container {
-			// background: none;
-			background: linear-gradient(to right, rgb(255, 255, 255) 20%, rgba(166, 201, 79, 0.16) 50%, rgba(255, 255, 255, 0.21) 80%);
-            background-repeat: no-repeat;
-            background-position: bottom;
-            background-size: 100% 570px;
-
+			background: linear-gradient(
+				to right,
+				rgb(255, 255, 255) 20%,
+				rgba(166, 201, 79, 0.16) 50%,
+				rgba(255, 255, 255, 0.21) 80%
+			);
+			background-repeat: no-repeat;
+			background-position: bottom;
+			background-size: 100% 570px;
 		}
 		&__container-block {
 			max-width: 1178px;
 			padding: 170px 0 30px;
 		}
-
 	}
 }
