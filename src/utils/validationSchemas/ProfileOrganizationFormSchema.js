@@ -44,17 +44,4 @@ export const ProfileOrganizationFormSchema = Yup.object({
 			excludeEmptyString: true,
 		})
 		.required('Поле обязательно для заполнения'),
-	profile_organize_password: Yup.string()
-		.required('Поле обязательно для заполнения')
-		.min(8, 'Длина поля от 8 до 20 символов')
-		.max(20, 'Длина поля от 8 до 20 символов')
-		.oneOf(
-			[Yup.ref('profile_organize_confirm_password'), null],
-			'Пароли не совпадают'
-		),
-	profile_organize_confirm_password: Yup.string()
-		.required('Поле обязательно для заполнения')
-		.min(8, 'Длина поля от 8 до 20 символов')
-		.max(20, 'Длина поля от 8 до 20 символов')
-		.oneOf([Yup.ref('profile_organize_password'), null], 'Пароли не совпадают'),
 });

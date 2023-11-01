@@ -62,8 +62,6 @@ export default function ProfileOrganizationForm({
 			profile_organize_thirdname: '',
 			profile_organize_phone: '',
 			profile_organize_ogrn: '',
-			profile_organize_password: '',
-			profile_organize_confirm_password: '',
 		},
 		validationSchema: ProfileOrganizationFormSchema,
 		onSubmit: async (values) => {
@@ -72,7 +70,7 @@ export default function ProfileOrganizationForm({
 			const formattedPhone = `${getDigitsOnly(values.profile_organize_phone)}`;
 
 			try {
-				await updateOrganization(1, {
+				await updateOrganization(organizationId || 1, {
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.profile_organize_firstname,
@@ -120,6 +118,7 @@ export default function ProfileOrganizationForm({
 							id="photo"
 							name="photo"
 							label=""
+							className="profile-organize-form__upload-file"
 							type="file"
 							value={formik.values.photo}
 							setSelectedFile={setSelectedFile}
@@ -248,38 +247,6 @@ export default function ProfileOrganizationForm({
 							value={formik.values.profile_organize_ogrn}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
-							required
-						/>
-					</InputGroup>
-					<InputGroup title="Пароль">
-						<Input
-							id="profile_organize_password"
-							name="profile_organize_password"
-							label="Введите пароль"
-							type="password"
-							placeholder="Пароль"
-							inputSize="small"
-							error={formik.errors.profile_organize_password}
-							touched={formik.touched.profile_organize_password}
-							value={formik.values.profile_organize_password}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
-							required
-						/>
-						<Input
-							id="profile_organize_confirm_password"
-							name="profile_organize_confirm_password"
-							label="Повторный пароль"
-							type="password"
-							placeholder="Повторный пароль"
-							inputSize="small"
-							error={formik.errors.profile_organize_confirm_password}
-							touched={formik.touched.profile_organize_confirm_password}
-							value={formik.values.profile_organize_confirm_password}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
 							required
 						/>
 					</InputGroup>

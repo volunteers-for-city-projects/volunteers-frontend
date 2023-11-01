@@ -67,8 +67,6 @@ export default function ProfileVolunteerForm({
 			profile_volunteer_thirdname: '',
 			profile_volunteer_phone: '',
 			profile_volunteer_telegram: '',
-			profile_volunteer_password: '',
-			profile_volunteer_confirm_password: '',
 			profile_volunteer_photo: '',
 			profile_volunteer_skills: [],
 			profile_volunteer_city: null,
@@ -80,7 +78,7 @@ export default function ProfileVolunteerForm({
 			const formattedPhone = `${getDigitsOnly(values.profile_volunteer_phone)}`;
 
 			try {
-				await updateVolunteer(volunteerId, {
+				await updateVolunteer(volunteerId || 1, {
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
@@ -127,6 +125,7 @@ export default function ProfileVolunteerForm({
 							name="photo"
 							label=""
 							type="file"
+							className="profile-volunteer-form__upload-file"
 							value={formik.values.photo}
 							setSelectedFile={setSelectedFile}
 						/>
@@ -207,38 +206,6 @@ export default function ProfileVolunteerForm({
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"
-						/>
-					</InputGroup>
-					<InputGroup title="Пароль">
-						<Input
-							id="profile_volunteer_password"
-							name="profile_volunteer_password"
-							label="Введите пароль"
-							type="password"
-							placeholder="Пароль"
-							inputSize="small"
-							error={formik.errors.profile_volunteer_password}
-							touched={formik.touched.profile_volunteer_password}
-							value={formik.values.profile_volunteer_password}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
-							required
-						/>
-						<Input
-							id="profile_volunteer_confirm_password"
-							name="profile_volunteer_confirm_password"
-							label="Повторный пароль"
-							type="password"
-							placeholder="Повторный пароль"
-							inputSize="small"
-							error={formik.errors.profile_volunteer_confirm_password}
-							touched={formik.touched.profile_volunteer_confirm_password}
-							value={formik.values.profile_volunteer_confirm_password}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
-							required
 						/>
 					</InputGroup>
 					<InputGroup title="Дополнительная информация">

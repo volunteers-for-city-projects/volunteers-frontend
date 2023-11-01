@@ -95,22 +95,4 @@ export const ProfileVolunteerFormSchema = Yup.object({
 			/^[@_a-zA-Z_0-9]{4,32}$/,
 			'Имя должно cостоять из латинских букв или цифр'
 		),
-	profile_volunteer_password: Yup.string()
-		.required('Поле обязательно для заполнения')
-		.min(8, 'Длина поля от 8 до 20 символов')
-		.max(20, 'Длина поля от 8 до 20 символов')
-		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
-		.oneOf(
-			[Yup.ref('profile_volunteer_confirm_password'), null],
-			'Пароли не совпадают'
-		),
-	profile_volunteer_confirm_password: Yup.string()
-		.required('Поле обязательно для заполнения')
-		.min(8, 'Длина поля от 8 до 20 символов')
-		.max(20, 'Длина поля от 8 до 20 символов')
-		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
-		.oneOf(
-			[Yup.ref('profile_volunteer_password'), null],
-			'Пароли не совпадают'
-		),
 });

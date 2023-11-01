@@ -32,7 +32,7 @@ export default function UploadFile({
 				placeholder={placeholder}
 				className="input-file input-file_type-photo"
 				required={required}
-				accept="image/*" // Укажите типы файлов, которые разрешено загружать
+				accept="image/*"
 				onChange={handleFileChange}
 				{...restProps}
 			/>
