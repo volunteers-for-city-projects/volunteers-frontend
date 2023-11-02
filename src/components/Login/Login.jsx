@@ -2,7 +2,6 @@ import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import './Login.scss';
 import { apiLogin } from '../../utils/api/login-route';
 import { signIn, getUserInformation } from '../../utils/api/login';
-import { Crumbs } from '../Crumbs/Crumbs';
 
 function Login() {
 	const { isLoading, setIsLoading, setCurrentUser, setIsLoggedIn, setModal } =
@@ -86,17 +85,14 @@ function Login() {
 	};
 
 	return (
-		<>
-			<Crumbs />
-			<Outlet
-				context={{
-					isLoading,
-					handleSignIn,
-					handlePasswordReset,
-					handleSaveChanges,
-				}}
-			/>
-		</>
+		<Outlet
+			context={{
+				isLoading,
+				handleSignIn,
+				handlePasswordReset,
+				handleSaveChanges,
+			}}
+		/>
 	);
 }
 
