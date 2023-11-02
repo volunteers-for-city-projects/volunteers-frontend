@@ -273,7 +273,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					type="file"
 					inputSize="photo"
 					value={formik.values.confirm_password}
+					error={formik.errors.photo}
 					setFieldValue={formik.setFieldValue}
+					setFieldError={formik.setFieldError}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">

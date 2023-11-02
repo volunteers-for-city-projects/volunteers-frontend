@@ -152,6 +152,7 @@ export const VolunteerSignupFormSchema = Yup.object({
 		/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
 		'Введите корректный телефон'
 	),
+	photo: Yup.string(),
 	email: Yup.string()
 		.required('Поле обязательно для заполнения')
 		.min(5, 'Длина поля от 5 до 320 символов')

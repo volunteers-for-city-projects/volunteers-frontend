@@ -8,11 +8,12 @@ export default function UploadFile({
 	type,
 	placeholder,
 	value,
+	error,
 	setFieldValue,
+	setFieldError,
 	inputSize,
 	disabled,
 	required,
-	error,
 	submitCount,
 	...restProps
 }) {
@@ -22,13 +23,20 @@ export default function UploadFile({
 		const file = event.target.files[0];
 		const reader = new FileReader();
 
-		reader.onload = function handleFileLoad() {
-			const base64Data = reader.result;
-			setFieldValue('photo', base64Data);
-			setImage(base64Data);
-		};
-
-		reader.readAsDataURL(file);
+		if (file) {
+			if (file.size >= 20 * (1024 * 1024)) {
+				setFieldError('photo', 'Размер не более 20 Мбайт');
+				// eslint-disable-next-line no-param-reassign
+				event.target.value = '';
+			} else {
+				reader.onload = function handleFileLoad() {
+					const base64Data = reader.result;
+					setFieldValue('photo', base64Data);
+					setImage(base64Data);
+				};
+				reader.readAsDataURL(file);
+			}
+		}
 	};
 
 	return (
@@ -46,10 +54,13 @@ export default function UploadFile({
 					placeholder={placeholder}
 					className="input-file input-file_type-photo"
 					required={required}
-					accept="image/*"
+					accept="image/png, image/jpeg"
 					onChange={handleFileChange}
 					{...restProps}
 				/>
+				<span className="error-message error-message_type-photo">
+					{error && error}
+				</span>
 			</div>
 		</>
 	);
@@ -58,14 +69,15 @@ export default function UploadFile({
 UploadFile.propTypes = {
 	name: PropTypes.string.isRequired,
 	value: PropTypes.string,
+	error: PropTypes.string,
 	setFieldValue: PropTypes.func,
+	setFieldError: PropTypes.func,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
-	error: PropTypes.string,
 	submitCount: PropTypes.number,
 };
 
@@ -74,8 +86,9 @@ UploadFile.defaultProps = {
 	inputSize: 'medium',
 	disabled: false,
 	required: false,
-	error: '',
 	submitCount: 0,
 	setFieldValue: () => {},
+	setFieldError: () => {},
 	value: '',
+	error: '',
 };
