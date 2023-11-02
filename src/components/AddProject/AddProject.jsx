@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import './AddProject.scss';
 import Input from '../Input/Input';
-import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -205,6 +204,7 @@ function AddProject() {
 		<section className="add-project">
 			<form
 				name="add-project-form"
+				className="add-project__form"
 				action="#"
 				method="post"
 				onSubmit={formik.handleSubmit}
@@ -229,29 +229,30 @@ function AddProject() {
 						onClick={handleChangeName}
 					/> */}
 				</div>
-				<div className="add-project__content">
-					<div className="add-project__image-wrapper">
-						<img alt="Изображение проекта" src={projectImage} />
-						<div className="add-project__upload-image-container">
-							<span className="add-project__upload-image-label">
-								Загрузить новую фотографию*
-							</span>
-							<input
-								name="image"
-								className="add-project__button add-project__upload-image-button"
-								type="file"
-								aria-label="Загрузить новую фотографию"
-								accept="image/*"
-								onChange={(event) => {
-									console.log(event.target.files[0]);
-									// formik.setFieldValue('image', event.target.files[0]);
-								}}
-								value={formik.values.image}
-							/>
-						</div>
+				<div className="add-project__image-wrapper">
+					<img alt="Изображение проекта" src={projectImage} />
+					<div className="add-project__upload-image-container">
+						<span className="add-project__upload-image-label">
+							Загрузить новую фотографию*
+						</span>
+						<input
+							name="image"
+							className="add-project__button add-project__upload-image-button"
+							type="file"
+							aria-label="Загрузить новую фотографию"
+							accept="image/*"
+							onChange={(event) => {
+								console.log(event.target.files[0]);
+								// formik.setFieldValue('image', event.target.files[0]);
+							}}
+							value={formik.values.image}
+						/>
 					</div>
+				</div>
+				<div className="add-project__content">
 					<div className="add-project__form-wrapper">
-						<InputGroup title="Общая информация">
+						<h2>Общая информация</h2>
+						<div className="add-project__category-1">
 							<InputTextArea
 								name="description"
 								label="Описание проекта"
@@ -305,8 +306,9 @@ function AddProject() {
 								handleChange={formik.handleChange}
 								submitCount={formik.submitCount}
 							/>
-						</InputGroup>
-						<InputGroup title="Место проведения">
+						</div>
+						<h2>Место проведения</h2>
+						<div className="add-project__category-2">
 							<SelectOption
 								name="city"
 								label="Город"
@@ -337,8 +339,9 @@ function AddProject() {
 								submitCount={formik.submitCount}
 								required
 							/>
-						</InputGroup>
-						<InputGroup title="Сроки проведения">
+						</div>
+						<h2>Сроки проведения</h2>
+						<div className="add-project__category-3">
 							<Input
 								name="date"
 								type="text"
@@ -378,8 +381,9 @@ function AddProject() {
 								submitCount={formik.submitCount}
 								required
 							/>
-						</InputGroup>
-						<InputGroup title="Дополнительная информация">
+						</div>
+						<h2>Дополнительная информация</h2>
+						<div className="add-project__category-3">
 							<SelectOption
 								label="Категория проекта"
 								placeholder="Выберите категорию"
@@ -418,7 +422,7 @@ function AddProject() {
 								isMulti
 								required
 							/>
-						</InputGroup>
+						</div>
 						<div className="add-project__form-buttons">
 							<Pushbutton
 								label="Опубликовать проект"

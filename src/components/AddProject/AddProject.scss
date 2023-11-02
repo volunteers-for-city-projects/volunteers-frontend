@@ -1,16 +1,16 @@
 @import '../../style/variables.scss';
 
 .add-project {
-	max-width: 1858px;
 	margin: 0 auto;
-	padding: 38px 130px 223px;
-	box-sizing: border-box;
+	// padding: 38px 130px 223px;
+	max-width: 1598px;
 
 	&__name-container {
 		margin: 54px 0 76px;
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		grid-area: name;
 	}
 
 	&__input-name {
@@ -55,6 +55,7 @@
 	&__content {
 		display: flex;
 		gap: 20px;
+		grid-area: contnt;
 	}
 
 	&__image-wrapper {
@@ -62,6 +63,7 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 60px;
+		grid-area: image;
 	}
 
 	&__upload-image-container {
@@ -109,12 +111,61 @@
 	}
 
 	&__form-wrapper {
-		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
 	}
 
 	&__form-buttons {
-		margin: 309px 0 0;
 		display: flex;
 		gap: 41px;
+	}
+
+	&__category-1 {
+		display: grid;
+		grid-template-columns: minmax(400px, 580px) minmax(400px, 580px);
+		column-gap: 20px;
+	}
+
+	&__category-2 {
+		display: grid;
+		grid-template-columns: min-content 1fr;
+		gap: 20px;
+	}
+	&__category-3 {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 400px);
+		gap: 20px;
+	}
+	&__form {
+		display: grid;
+		grid-template:
+			'name name'
+			'image contnt';
+		column-gap: 20px;
+	}
+	@media screen and (max-width: 1366px) {
+		&__form {
+			display: grid;
+			grid-template:
+				'name image'
+				'contnt contnt';
+		}
+
+		&__name-container {
+			margin: 0;
+			display: flex;
+			align-items: flex-end;
+			gap: 12px;
+			grid-area: name;
+		}
+
+		&__image-wrapper {
+			max-width: 463px;
+			display: flex;
+			flex-direction: column;
+			row-gap: 16px;
+			grid-area: image;
+		}
 	}
 }
