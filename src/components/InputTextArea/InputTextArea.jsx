@@ -18,7 +18,7 @@ export default function InputTextArea({
 	const [isFocus, setIsFocus] = React.useState(true);
 
 	return (
-		<div>
+		<div className="text-area__container">
 			<label htmlFor={name} className="textarea-label">
 				{required ? `${label}*` : label}
 			</label>
