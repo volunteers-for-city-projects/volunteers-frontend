@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import './SignIn.scss';
@@ -20,6 +20,25 @@ import telegram from '../../images/icon-tg.svg';
 import vkontakte from '../../images/icon-vk.svg';
 
 function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
+	useEffect(() => {
+		const script = document.createElement('script');
+		script.src = 'https://telegram.org/js/telegram-widget.js?22';
+		script['data-telegram-login'] = '@TwoGetherBot';
+		script['data-size'] = 'large';
+		script['data-onauth'] = 'onTelegramAuth(user)';
+		script['data-request-access'] = 'write';
+		script.async = true;
+		document.body.appendChild(script);
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
+
+	function onTelegramAuth(user) {
+		console.log('hi its i am');
+		console.log(user);
+	}
+
 	const { isLoading } = useOutletContext();
 	const navigate = useNavigate();
 	const formik = useFormik({
@@ -144,7 +163,11 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 			<h2 className="sign-in__heading-button-icon-list">Через соцсети</h2>
 			<ul className="sign-in__button-icon-list">
 				<li>
-					<button className="sign-in__button" disabled={isLoading}>
+					<button
+						className="sign-in__button"
+						disabled={isLoading}
+						onClick={onTelegramAuth}
+					>
 						<img className="sign-in__icon" src={telegram} alt="Телеграмм" />
 					</button>
 				</li>
