@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import './AddProject.scss';
-import Input from '../Input/Input';
+import CustomInput from '../CustomInput/CustomInput';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -20,7 +20,7 @@ function AddProject() {
 	// const [selectedImage, setSelectedImage] = useState(null);
 
 	const initialValues = {
-		name: 'Название проекта*',
+		name: '',
 		// image: null,
 		description: '',
 		goal: '',
@@ -40,7 +40,7 @@ function AddProject() {
 		name: Yup.string()
 			.min(2, 'Длина поля от 2 до 100 символов')
 			.max(100, 'Длина поля от 2 до 100 символов')
-			.matches(/^[А-Яа-яЁёa-zA-Z\s-]+$/, 'Введите название кириллицей')
+			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите название кириллицей')
 			.required('Поле обязательно для заполнения'),
 		description: Yup.string()
 			.min(10, 'Количество символов от 10 до 750')
@@ -138,9 +138,10 @@ function AddProject() {
 				await createProject({
 					name: values.name,
 					description: values.description,
-					start_datetime: values.date, // '2023-10-29T11:22:03.148Z',
-					end_datetime: values.timeRange, // '2023-10-29T11:22:03.148Z',
-					application_date: values.application_date, // '2023-10-29T11:22:03.148Z',
+					start_datetime: values.date,
+					end_datetime: values.timeRange,
+					start_date_application: values.application_date,
+					end_date_application: values.application_date,
 					event_purpose: values.goal,
 					event_address: {
 						address_line: values.address,
@@ -154,10 +155,11 @@ function AddProject() {
 					organizer_provides: values.provide,
 					organization: 0,
 					city: values.city,
-					category: 0, // values.categoryProject,
+					categories: values.categoryProject,
 					status_project: 'open',
 					participants: 0,
 					status_approve: 'approved',
+					skills: values.skills,
 				});
 
 				// eslint-disable-next-line no-console
@@ -210,17 +212,15 @@ function AddProject() {
 				onSubmit={formik.handleSubmit}
 			>
 				<div className="add-project__name-container">
-					<Input
+					<CustomInput
 						name="name"
 						type="text"
 						label=""
 						placeholder="Введите название проекта"
-						inputSize="large"
 						error={formik.errors.name}
 						touched={formik.touched.name}
 						value={formik.values.name}
 						handleChange={formik.handleChange}
-						submitCount={formik.submitCount}
 					/>
 					{/* <input
 						className="add-project__button add-project__edit-button"
@@ -249,201 +249,191 @@ function AddProject() {
 						/>
 					</div>
 				</div>
-				<div className="add-project__content">
-					<div className="add-project__form-wrapper">
-						<h2>Общая информация</h2>
-						<div className="add-project__category-1">
-							<InputTextArea
-								name="description"
-								label="Описание проекта"
-								placeholder="Расскажите о проекте"
-								error={formik.errors.description}
-								touched={formik.touched.description}
-								value={formik.values.description}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<InputTextArea
-								name="goal"
-								label="Цель проекта"
-								placeholder=""
-								error={formik.errors.goal}
-								touched={formik.touched.goal}
-								value={formik.values.goal}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<InputTextArea
-								name="events"
-								label="Мероприятия"
-								placeholder="Например: Лекция по экологии; Посадка саженцев;"
-								error={formik.errors.events}
-								touched={formik.touched.events}
-								value={formik.values.events}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-							/>
-							<InputTextArea
-								name="tasks"
-								label="Задачи проекта"
-								placeholder="Опишите, какие задачи будут стоять перед волонтёрами: к примеру, «уборка территории» и «высадка деревьев»"
-								error={formik.errors.tasks}
-								touched={formik.touched.tasks}
-								value={formik.values.tasks}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<InputTextArea
-								name="provide"
-								label="Организатор предоставляет:"
-								placeholder="Например: саженцы, перчатки, обед"
-								error={formik.errors.provide}
-								touched={formik.touched.provide}
-								value={formik.values.provide}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-							/>
-						</div>
-						<h2>Место проведения</h2>
-						<div className="add-project__category-2">
-							<SelectOption
-								name="city"
-								label="Город"
-								placeholder="Выберите город"
-								width={400}
-								options={cities}
-								error={formik.errors.city}
-								touched={formik.touched.city}
-								value={formik.values.city}
-								handleChange={(selectedOption) => {
-									const selectedValues = selectedOption.value;
-									console.log(selectedValues);
-									formik.setFieldValue('city', selectedValues);
-								}}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<Input
-								name="address"
-								type="text"
-								label="Адрес"
-								placeholder="Улица, дом, корпус, строение"
-								inputSize="extra-large"
-								error={formik.errors.address}
-								touched={formik.touched.address}
-								value={formik.values.address}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-						</div>
-						<h2>Сроки проведения</h2>
-						<div className="add-project__category-3">
-							<Input
-								name="date"
-								type="text"
-								label="Дата проведения"
-								placeholder="01.02.2023"
-								inputSize="small"
-								error={formik.errors.date}
-								touched={formik.touched.date}
-								value={formik.values.date}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<Input
-								name="timeRange"
-								type="text"
-								label="Время проведения (местное время)"
-								placeholder="10:00 - 16:00"
-								inputSize="small"
-								error={formik.errors.timeRange}
-								touched={formik.touched.timeRange}
-								value={formik.values.timeRange}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-							<Input
-								name="submissionDate"
-								type="text"
-								label="Дата подачи заявок"
-								placeholder="02.10.2023 - 12.10.2023"
-								inputSize="small"
-								error={formik.errors.submissionDate}
-								touched={formik.touched.submissionDate}
-								value={formik.values.submissionDate}
-								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
-								required
-							/>
-						</div>
-						<h2>Дополнительная информация</h2>
-						<div className="add-project__category-3">
-							<SelectOption
-								label="Категория проекта"
-								placeholder="Выберите категорию"
-								width={400}
-								options={projectCategories}
-								error={formik.errors.categoryProject}
-								touched={formik.touched.categoryProject}
-								value={formik.values.categoryProject}
-								handleChange={(selectedOption) => {
-									console.log(selectedOption);
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
-									formik.setFieldValue('categoryProject', selectedValues);
-								}}
-								submitCount={formik.submitCount}
-								isMulti
-								required
-							/>
-							<SelectOption
-								label="Навыки"
-								placeholder="Выберите навыки"
-								width={400}
-								options={skills}
-								error={formik.errors.skills}
-								touched={formik.touched.skills}
-								value={formik.values.skills}
-								handleChange={(selectedOption) => {
-									console.log(selectedOption);
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
-									formik.setFieldValue('skills', selectedValues);
-								}}
-								submitCount={formik.submitCount}
-								isMulti
-								required
-							/>
-						</div>
-						<div className="add-project__form-buttons">
-							<Pushbutton
-								label="Опубликовать проект"
-								size="large-var"
-								minWidth="380px"
-								color="#FDFDFD"
-								backgroundColor="#A6C94F"
-								border="1px solid #A6C94F"
-								disabled={!formik.isValid}
-								type="submit"
-							/>
-							<Pushbutton
-								label="Сохранить как черновик"
-								size="large-var"
-								minWidth="380px"
-								color="#333"
-								backgroundColor="#FDFDFD"
-								border="1px solid #A6C94F"
-								type="save"
-							/>
-						</div>
+				<div className="add-project__form-wrapper">
+					<h2 className="add-project__caption-group">Общая информация</h2>
+					<div className="add-project__general-group">
+						<InputTextArea
+							name="description"
+							label="Описание проекта"
+							placeholder="Расскажите о проекте"
+							error={formik.errors.description}
+							touched={formik.touched.description}
+							value={formik.values.description}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							required
+						/>
+						<InputTextArea
+							name="goal"
+							label="Цель проекта"
+							placeholder=""
+							error={formik.errors.goal}
+							touched={formik.touched.goal}
+							value={formik.values.goal}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							required
+						/>
+						<InputTextArea
+							name="events"
+							label="Мероприятия"
+							placeholder="Например: Лекция по экологии; Посадка саженцев;"
+							error={formik.errors.events}
+							touched={formik.touched.events}
+							value={formik.values.events}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+						/>
+						<InputTextArea
+							name="tasks"
+							label="Задачи проекта"
+							placeholder="Опишите, какие задачи будут стоять перед волонтёрами: к примеру, «уборка территории» и «высадка деревьев»"
+							error={formik.errors.tasks}
+							touched={formik.touched.tasks}
+							value={formik.values.tasks}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							required
+						/>
+						<InputTextArea
+							name="provide"
+							label="Организатор предоставляет:"
+							placeholder="Например: саженцы, перчатки, обед"
+							error={formik.errors.provide}
+							touched={formik.touched.provide}
+							value={formik.values.provide}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+						/>
+					</div>
+					<h2 className="add-project__caption-group">Место проведения</h2>
+					<div className="add-project__place-group">
+						<SelectOption
+							name="city"
+							label="Город"
+							placeholder="Выберите город"
+							width={400}
+							options={cities}
+							error={formik.errors.city}
+							touched={formik.touched.city}
+							value={formik.values.city}
+							handleChange={(selectedOption) => {
+								const selectedValues = selectedOption.value;
+								console.log(selectedValues);
+								formik.setFieldValue('city', selectedValues);
+							}}
+							submitCount={formik.submitCount}
+							required
+						/>
+						<CustomInput
+							name="address"
+							type="text"
+							label="Адрес"
+							placeholder="Улица, дом, корпус, строение"
+							error={formik.errors.address}
+							touched={formik.touched.address}
+							value={formik.values.address}
+							handleChange={formik.handleChange}
+							required
+						/>
+					</div>
+					<h2 className="add-project__caption-group">Сроки проведения</h2>
+					<div className="add-project__dates-group">
+						<CustomInput
+							name="date"
+							type="text"
+							label="Дата проведения"
+							placeholder="01.02.2023 - 12.10.2023"
+							error={formik.errors.date}
+							touched={formik.touched.date}
+							value={formik.values.date}
+							handleChange={formik.handleChange}
+							required
+						/>
+						<CustomInput
+							name="timeRange"
+							type="text"
+							label="Время проведения (местное время)"
+							placeholder="10:00 - 16:00"
+							error={formik.errors.timeRange}
+							touched={formik.touched.timeRange}
+							value={formik.values.timeRange}
+							handleChange={formik.handleChange}
+							required
+						/>
+						<CustomInput
+							name="submissionDate"
+							type="text"
+							label="Дата подачи заявок"
+							placeholder="02.10.2023 - 12.10.2023"
+							error={formik.errors.submissionDate}
+							touched={formik.touched.submissionDate}
+							value={formik.values.submissionDate}
+							handleChange={formik.handleChange}
+							required
+						/>
+					</div>
+					<h2 className="add-project__caption-group">
+						Дополнительная информация
+					</h2>
+					<div className="add-project__additional-group">
+						<SelectOption
+							label="Категория проекта"
+							placeholder="Выберите категорию"
+							width={400}
+							options={projectCategories}
+							error={formik.errors.categoryProject}
+							touched={formik.touched.categoryProject}
+							value={formik.values.categoryProject}
+							handleChange={(selectedOption) => {
+								console.log(selectedOption);
+								const selectedValues = selectedOption.map(
+									(option) => option.value
+								);
+								formik.setFieldValue('categoryProject', selectedValues);
+							}}
+							isMulti
+							required
+						/>
+						<SelectOption
+							label="Навыки"
+							placeholder="Выберите навыки"
+							width={400}
+							options={skills}
+							error={formik.errors.skills}
+							touched={formik.touched.skills}
+							value={formik.values.skills}
+							handleChange={(selectedOption) => {
+								console.log(selectedOption);
+								const selectedValues = selectedOption.map(
+									(option) => option.value
+								);
+								formik.setFieldValue('skills', selectedValues);
+							}}
+							isMulti
+							required
+						/>
+					</div>
+					<div className="add-project__form-buttons">
+						<Pushbutton
+							label="Опубликовать проект"
+							size="large-var"
+							minWidth="380px"
+							color="#FDFDFD"
+							backgroundColor="#A6C94F"
+							border="1px solid #A6C94F"
+							disabled={!formik.isValid}
+							type="submit"
+						/>
+						<Pushbutton
+							label="Сохранить как черновик"
+							size="large-var"
+							minWidth="380px"
+							color="#333"
+							backgroundColor="#FDFDFD"
+							border="1px solid #A6C94F"
+							type="save"
+						/>
 					</div>
 				</div>
 			</form>
