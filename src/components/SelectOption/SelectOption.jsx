@@ -11,10 +11,8 @@ function SelectOption({
 	options,
 	handleChange,
 	error,
-	submitCount,
 	isMulti,
 	required,
-	...restProps
 }) {
 	const [isFocused, setIsFocused] = useState(false);
 	const customStyles = {
@@ -37,8 +35,6 @@ function SelectOption({
 		dropdownIndicator: (baseStyles) => ({
 			...baseStyles,
 			padding: '11px 12px',
-			// width: '5px',
-			// height: '5px',
 			color: '#3f3f3f',
 			'&:hover': {
 				color: '#3f3f3f',
@@ -102,7 +98,6 @@ function SelectOption({
 					},
 				})}
 				isMulti={isMulti}
-				{...restProps}
 			/>
 			<span
 				className={clsx('select-option__error-message', {
@@ -127,7 +122,6 @@ SelectOption.propTypes = {
 	),
 	handleChange: PropTypes.func,
 	error: PropTypes.string,
-	submitCount: PropTypes.number,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
 };
@@ -149,7 +143,6 @@ SelectOption.defaultProps = {
 	handleChange: (selectedOption) =>
 		console.log(`Option selected: `, selectedOption),
 	error: undefined,
-	submitCount: 0,
 	isMulti: false,
 	required: false,
 };
