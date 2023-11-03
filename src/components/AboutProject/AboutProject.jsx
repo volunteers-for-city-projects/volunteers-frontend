@@ -20,7 +20,7 @@ function AboutProject({ plarformAbout }) {
 
 	return (
 		aboutUs &&
-		valuationsData.lenght > 0 && (
+		valuationsData.length > 0 && (
 			<section className="about-project">
 				<div className="about-project__container-about">
 					<h2 className="about-project__title">О нас</h2>
