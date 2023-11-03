@@ -92,21 +92,23 @@
 	}
 	@media screen and (max-width: 1919px) {
 		background-size:
-		390.384px 578px,
-		300px 578px;
-		background-position: top left, top right;
+			390.384px 578px,
+			300px 578px;
+		background-position:
+			top left,
+			top right;
 
-	&__title {
-		font-size: 100px;
+		&__title {
+			font-size: 100px;
+		}
+		&__subtitle {
+			font-size: 28px;
+		}
+		&__container {
+			padding: 130px 0 80px;
+		}
+		&__buttons {
+			margin-top: 80px;
+		}
 	}
-	&__subtitle {
-		font-size: 28px;
-	}
-	&__container{
-		padding: 130px 0 80px;
-	} 
-	&__buttons {
-		margin-top: 80px;
-	}
-}
 }
