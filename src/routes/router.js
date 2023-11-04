@@ -24,7 +24,7 @@ const router = createBrowserRouter([
 			},
 
 			{
-				path: '/registration',
+				path: 'registration',
 				element: (
 					<ProtectedRouteElementForAuthorized>
 						<Signup />
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: '/login',
+				path: 'login',
 				element: (
 					<ProtectedRouteElementForAuthorized>
 						<Login />
@@ -44,21 +44,21 @@ const router = createBrowserRouter([
 						element: <LoginSignIn />,
 					},
 					{
-						path: '/login/password-recovery',
+						path: 'password-recovery',
 						element: <LoginPasswordRecovery />,
 					},
 					{
-						path: '/login/password-reset/:uid/:token',
+						path: 'password-reset/:uid/:token',
 						element: <LoginPasswordReset />,
 					},
 				],
 			},
 			{
-				path: '/projects',
+				path: 'projects',
 				// element: <Projects />,
 			},
 			{
-				path: '/profile',
+				path: 'profile',
 				element: (
 					<ProtectedRouteElementForUnauthorized>
 						<ProfileVolunteer />
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: '/*',
+				path: '*',
 				element: <NotFound />,
 			},
 		],
