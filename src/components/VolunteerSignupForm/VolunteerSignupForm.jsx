@@ -12,7 +12,6 @@ import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
 import {
-	// postPhoto,
 	createVolunteer,
 	getSkills,
 	getCities,
@@ -23,8 +22,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
-
-	const [selectedFile, setSelectedFile] = React.useState(null);
 
 	const { setModal } = useOutletContext();
 
@@ -84,9 +81,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `${getDigitsOnly(values.phone)}`;
-			// функция для добавления файла
-			const formData = new FormData();
-			formData.append('file', selectedFile);
 
 			try {
 				await createVolunteer({
@@ -99,7 +93,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						re_password: values.confirm_password,
 					},
 					telegram: values.telegram,
-					photo: values.photo || null || '' || undefined,
+					photo: values.photo || '',
 					date_of_birth: formattedDateOfBirth,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
@@ -120,11 +114,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					console.error(error);
 				}
 			}
-			// try {
-			// 	await postPhoto(formData);
-			// } catch (error) {
-			// 	console.error('Failed to create user and/or volunteer:', error.message);
-			// }
 		},
 	});
 
@@ -284,7 +273,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					type="file"
 					inputSize="photo"
 					value={formik.values.confirm_password}
-					setSelectedFile={setSelectedFile}
+					error={formik.errors.photo}
+					setFieldValue={formik.setFieldValue}
+					setFieldError={formik.setFieldError}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">

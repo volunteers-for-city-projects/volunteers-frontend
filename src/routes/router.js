@@ -1,4 +1,4 @@
-import { Link, createBrowserRouter } from 'react-router-dom';
+import { Link, createHashRouter } from 'react-router-dom';
 import Signup from '../components/Signup/Signup';
 import Main from '../components/Main/Main';
 import App from '../components/App/App';
@@ -14,7 +14,7 @@ import {
 } from './ProtectedRoute';
 import './router.scss';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: 'login/',
+				path: 'login',
 				element: (
 					<ProtectedRouteElementForAuthorized>
 						<Login />

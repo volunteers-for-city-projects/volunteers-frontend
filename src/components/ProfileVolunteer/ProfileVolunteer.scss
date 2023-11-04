@@ -13,7 +13,6 @@
 	&__personal {
 		display: flex;
 		flex-direction: column;
-		/*align-items: start;*/
 		justify-content: space-between;
 		margin-top: 50px;
 		background: $--White;
@@ -45,7 +44,9 @@
 		}
 	}
 	&__button {
-		margin-top: 200px;
+		display: flex;
+		gap: 20px;
+		z-index: 1;
 	}
 
 	&__wrapper {
@@ -53,16 +54,21 @@
 		gap: 25px;
 		padding: 0 120px 98px;
 		box-sizing: border-box;
+		position: relative;
+	}
 
-		&__projects {
-			width: 960px;
-			margin-top: 40px;
+	&__projects {
+		width: 960px;
+		margin-top: 40px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		&-container {
 			display: flex;
 			flex-direction: column;
-			/*align-items: start;*/
-			justify-content: space-between;
 		}
-		&__projects-title {
+		&-title {
 			margin: 0;
 			font-size: 56px;
 			font-weight: 400;
@@ -70,6 +76,25 @@
 			color: $--Text;
 		}
 	}
+	&__blank {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		&-title {
+			font-size: 23px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 130%;
+			margin-top: 40px;
+		}
+		&-image {
+			width: 570px;
+			height: 568px;
+			margin-top: 150px;
+			margin-left: 500px;
+		}
+	}
+
 	@media screen and (max-width: 1919px) {
 		&__menu-container {
 			margin-left: 100px;
@@ -88,6 +113,9 @@
 		&__wrapper {
 			gap: 90px;
 			padding: 0 73px 98px;
+		}
+		&__blank-image {
+			margin-left: 172px;
 		}
 	}
 }

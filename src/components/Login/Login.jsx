@@ -50,6 +50,9 @@ function Login() {
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });
+						setModal({
+							isOpen: false,
+						});
 					},
 				});
 			})
@@ -72,6 +75,9 @@ function Login() {
 					onSubmit: (event) => {
 						event.preventDefault();
 						navigate('/login');
+						setModal({
+							isOpen: false,
+						});
 					},
 				});
 			})
