@@ -23,21 +23,13 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 	useEffect(() => {
 		const script = document.createElement('script');
 		script.src = 'https://telegram.org/js/telegram-widget.js?22';
-		script['data-telegram-login'] = '@TwoGetherBot';
-		script['data-size'] = 'large';
-		script['data-onauth'] = 'onTelegramAuth(user)';
-		script['data-request-access'] = 'write';
+		script.setAttribute('data-telegram-login', 'TwoGetherBot');
+		script.setAttribute('data-size', 'large');
+		script.setAttribute('data-request-access', 'write');
+		script.setAttribute('data-auth-url', 'http://localhost:3000/login');
 		script.async = true;
-		document.body.appendChild(script);
-		return () => {
-			document.body.removeChild(script);
-		};
+		document.sign.append(script);
 	}, []);
-
-	function onTelegramAuth(user) {
-		console.log('hi its i am');
-		console.log(user);
-	}
 
 	const { isLoading } = useOutletContext();
 	const navigate = useNavigate();
@@ -82,7 +74,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 	};
 
 	return (
-		<section className="sign-in">
+		<section id="sign" className="sign-in">
 			<h1 className="sign-in__header-title">{title}</h1>
 			<p className="sign-in__header-text">{subtitle}</p>
 			<form
@@ -163,11 +155,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 			<h2 className="sign-in__heading-button-icon-list">Через соцсети</h2>
 			<ul className="sign-in__button-icon-list">
 				<li>
-					<button
-						className="sign-in__button"
-						disabled={isLoading}
-						onClick={onTelegramAuth}
-					>
+					<button className="sign-in__button" disabled={isLoading}>
 						<img className="sign-in__icon" src={telegram} alt="Телеграмм" />
 					</button>
 				</li>

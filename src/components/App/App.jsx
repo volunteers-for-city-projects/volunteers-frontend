@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { getUserInformation, logOut } from '../../utils/api/login';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
 		state: 'info',
 		title: 'init',
 	});
-	const [platformEmail, setPlatformEmail] = useState('');
+	// const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [currentUser, setCurrentUser] = useState({
 		first_name: '',
@@ -83,7 +83,7 @@ function App() {
 			/>
 			<Outlet
 				context={{
-					setPlatformEmail,
+					// setPlatformEmail,
 					isLoading,
 					setIsLoading,
 					currentUser,
@@ -93,7 +93,7 @@ function App() {
 					setModal,
 				}}
 			/>
-			<Footer platformEmail={platformEmail} />
+			{/* <Footer platformEmail={platformEmail} /> */}
 			{modal.isOpen &&
 				createPortal(
 					<Modal modal={modal} closeModal={closeModal} />,
