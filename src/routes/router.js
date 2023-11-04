@@ -1,4 +1,4 @@
-import { createHashRouter } from 'react-router-dom';
+import { Link, createHashRouter } from 'react-router-dom';
 import Signup from '../components/Signup/Signup';
 import Main from '../components/Main/Main';
 import App from '../components/App/App';
@@ -12,11 +12,19 @@ import {
 	ProtectedRouteElementForUnauthorized,
 	ProtectedRouteElementForAuthorized,
 } from './ProtectedRoute';
+import './router.scss';
 
 const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
+		handle: {
+			crumb: () => (
+				<Link to="/" className="router__link">
+					Главная
+				</Link>
+			),
+		},
 		children: [
 			{
 				index: true,
@@ -38,6 +46,14 @@ const router = createHashRouter([
 						<Login />
 					</ProtectedRouteElementForAuthorized>
 				),
+				handle: {
+					crumb: () => (
+						<Link to="/login" className="router__link">
+							Вход
+						</Link>
+					),
+				},
+
 				children: [
 					{
 						index: true,
@@ -46,6 +62,13 @@ const router = createHashRouter([
 					{
 						path: 'password-recovery',
 						element: <LoginPasswordRecovery />,
+						handle: {
+							crumb: () => (
+								<Link to="/login/password-recovery" className="router__link">
+									Восстановление
+								</Link>
+							),
+						},
 					},
 					{
 						path: 'password-reset/:uid/:token',
