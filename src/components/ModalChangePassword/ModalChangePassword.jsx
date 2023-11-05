@@ -16,6 +16,7 @@ function ModalChangePassword({ isOpen, onClose, onSubmit }) {
 
 				<div className="modal__inputs">
 					<Input
+						name="oldpassword"
 						type="text"
 						label="Старый пароль*"
 						placeholder=""
@@ -23,12 +24,14 @@ function ModalChangePassword({ isOpen, onClose, onSubmit }) {
 					/>
 					<div className="modal__inputs-group">
 						<Input
+							name="newpassword"
 							type="text"
 							label="Новый пароль*"
 							placeholder=""
 							inputSize="mini"
 						/>
 						<Input
+							name="repeatnewpassword"
 							type="text"
 							label="Повтор нового пароля*"
 							placeholder=""

@@ -86,6 +86,10 @@ function App() {
 		setModalChangePassword(false);
 	};
 
+	const handleChangePasswordSubmit = (e) => {
+		e.preventDefault();
+	};
+
 	return (
 		<>
 			<Header
@@ -115,6 +119,7 @@ function App() {
 			<ModalChangePassword
 				isOpen={modalChangePassword}
 				onClose={closeModalPassword}
+				onSubmit={handleChangePasswordSubmit}
 			/>
 		</>
 	);
