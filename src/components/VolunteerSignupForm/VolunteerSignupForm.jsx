@@ -271,7 +271,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					inputSize="photo"
 					value={formik.values.confirm_password}
 					error={formik.errors.photo}
 					setFieldValue={formik.setFieldValue}

@@ -11,7 +11,6 @@ export default function UploadFile({
 	error,
 	setFieldValue,
 	setFieldError,
-	inputSize,
 	disabled,
 	required,
 	submitCount,
