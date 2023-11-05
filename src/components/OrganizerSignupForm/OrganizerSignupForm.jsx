@@ -5,9 +5,12 @@ import { useFormik } from 'formik';
 import './OrganizerSignupForm.scss';
 
 import { useOutletContext } from 'react-router-dom';
+
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
+import UploadFile from '../UploadFile/UploadFile';
+
 import SelectOption from '../SelectOption/SelectOption';
 import { OrganizerSignupFormSchema } from '../../utils/validationSchemas/OrganizerSignupFormSchema';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -16,6 +19,9 @@ import { createOrganization, getCities } from '../../utils/api/signupApi';
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
+
+	const [selectedFile, setSelectedFile] = React.useState(null);
+
 	const { setModal } = useOutletContext();
 
 	useEffect(() => {
@@ -58,6 +64,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			// функция для конверсии номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `+${getDigitsOnly(values.organize_phone)}`;
+
+			const formData = new FormData();
+			formData.append('file', selectedFile);
 
 			try {
 				const organizationResponse = await createOrganization({
@@ -161,6 +170,17 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				handleChange={formik.handleChange}
 				submitCount={formik.submitCount}
 			/>
+			<InputGroup title="Фото">
+				<UploadFile
+					id="photo"
+					name="photo"
+					label=""
+					type="file"
+					value={formik.values.photo}
+					setSelectedFile={setSelectedFile}
+				/>
+			</InputGroup>
+
 			<InputGroup title="Контактные данные представителя компании">
 				<Input
 					id="organize_secondname"
@@ -236,7 +256,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="organize_password"
 					name="organize_password"
-					label="Введите пароль"
+					label="Пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
@@ -266,7 +286,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"
-					size="medium"
+					backgroundColor="#A6C94F"
+					border="1px solid #A6C94F"
+					minWidth="399px"
+					size="pre-large"
 					disabled={
 						!formik.isValid || !isCheckboxChecked || formik.values.city === null
 					}

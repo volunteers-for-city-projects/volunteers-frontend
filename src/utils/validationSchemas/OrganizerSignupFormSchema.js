@@ -56,10 +56,12 @@ export const OrganizerSignupFormSchema = Yup.object({
 		.required('Поле обязательно для заполнения')
 		.min(8, 'Длина поля от 8 до 20 символов')
 		.max(20, 'Длина поля от 8 до 20 символов')
+		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
 		.oneOf([Yup.ref('organize_confirm_password'), null], 'Пароли не совпадают'),
 	organize_confirm_password: Yup.string()
 		.required('Поле обязательно для заполнения')
 		.min(8, 'Длина поля от 8 до 20 символов')
 		.max(20, 'Длина поля от 8 до 20 символов')
+		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
 		.oneOf([Yup.ref('organize_password'), null], 'Пароли не совпадают'),
 });

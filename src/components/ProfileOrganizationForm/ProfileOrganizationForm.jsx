@@ -70,7 +70,7 @@ export default function ProfileOrganizationForm({
 			const formattedPhone = `${getDigitsOnly(values.profile_organize_phone)}`;
 
 			try {
-				await updateOrganization(organizationId || 2, {
+				await updateOrganization(organizationId || 3, {
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.profile_organize_firstname,
@@ -83,7 +83,7 @@ export default function ProfileOrganizationForm({
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					about: values.profile_organize_organization || '' || undefined,
+					about: values.profile_organize_about_organization || '' || undefined,
 					photo: '',
 					city: values.profile_organize_city,
 				});

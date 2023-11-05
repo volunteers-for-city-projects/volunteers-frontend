@@ -248,7 +248,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="password"
 					name="password"
-					label="Введите пароль"
+					label="Пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
@@ -323,8 +323,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					label="Зарегистрироваться"
 					color="white"
 					backgroundColor="#A6C94F"
-					border="none"
-					size="medium"
+					border="1px solid #A6C94F"
+					minWidth="399px"
+					size="pre-large"
 					disabled={
 						!formik.isValid ||
 						!isCheckboxChecked ||
