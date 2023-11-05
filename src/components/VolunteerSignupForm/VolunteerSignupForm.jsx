@@ -101,6 +101,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
+
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					onSubmit: (event) => {
+						event.preventDefault();
+						// ожидаем  api/auth/resend_activation
+					},
+				});
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({

@@ -71,6 +71,10 @@ const router = createHashRouter([
 						},
 					},
 					{
+						path: 'password-activate/:uid/:token',
+						element: <LoginSignIn />,
+					},
+					{
 						path: 'password-reset/:uid/:token',
 						element: <LoginPasswordReset />,
 					},

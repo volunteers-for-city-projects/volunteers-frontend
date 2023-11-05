@@ -20,3 +20,5 @@ export const ENDPOINT_LOGOUT = 'auth/token/logout/';
 
 export const ENDPOINT_PROFILE_VOLUNTEER = 'volunteers/';
 export const ENDPOINT_PROFILE_ORGANIZATION = 'organizations/';
+
+export const ENDPOINT_ACTIVATION_USER = 'auth/activation/';
