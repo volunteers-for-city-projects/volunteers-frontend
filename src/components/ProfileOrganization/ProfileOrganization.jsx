@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
 import ProfileData from '../ProfileData/ProfileData';
 import dataOrganization from '../../utils/dataOrganization';
@@ -9,7 +10,7 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import city from '../../images/city.png';
 
-function ProfileOrganization() {
+function ProfileOrganization({ handleChangePassword }) {
 	return (
 		<section className="profile">
 			<div className="profile__menu-container">
@@ -32,6 +33,7 @@ function ProfileOrganization() {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleChangePassword}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"
@@ -84,3 +86,7 @@ function ProfileOrganization() {
 }
 
 export default ProfileOrganization;
+
+ProfileOrganization.propTypes = {
+	handleChangePassword: PropTypes.func.isRequired,
+};

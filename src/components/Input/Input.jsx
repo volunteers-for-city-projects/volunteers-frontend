@@ -23,7 +23,11 @@ export default function Input({
 	let labelClass = '';
 	let errorClass = '';
 
-	if (inputSize === 'small') {
+	if (inputSize === 'mini') {
+		inputClass = 'mini';
+		labelClass = 'mini';
+		errorClass = 'mini';
+	} else if (inputSize === 'small') {
 		inputClass = 'small';
 		labelClass = 'small';
 		errorClass = 'small';
@@ -92,7 +96,7 @@ Input.propTypes = {
 	handleChange: PropTypes.func,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
-	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
+	inputSize: PropTypes.oneOf(['mini', 'small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
