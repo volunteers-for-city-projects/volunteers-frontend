@@ -10,7 +10,8 @@ import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
 
 function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser } = useOutletContext();
+	const { currentUser, handleChangePassword } = useOutletContext();
+
 	const {
 		firstName,
 		lastName,
@@ -94,6 +95,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleChangePassword}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"

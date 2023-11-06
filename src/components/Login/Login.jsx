@@ -1,5 +1,4 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import './Login.scss';
 import { apiLogin } from '../../utils/api/login-route';
 import { signIn, getUserInformation } from '../../utils/api/login';
 
@@ -47,6 +46,7 @@ function Login() {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					emailprop: email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });
@@ -54,8 +54,17 @@ function Login() {
 				});
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(setIsLoading(false));
 	};
@@ -79,8 +88,17 @@ function Login() {
 				});
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(() => {
 				setIsLoading(false);

@@ -49,8 +49,8 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			about_organization: '',
 			organize_city: null,
 			organize_firstname: '',
+			organize_lastname: '',
 			organize_secondname: '',
-			organize_thirdname: '',
 			organize_phone: '',
 			organize_email: '',
 			organize_ogrn: '',
@@ -68,14 +68,14 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.organize_firstname,
-						last_name: values.organize_thirdname,
+						last_name: values.organize_secondname,
 						password: values.organize_password,
-						second_name: values.organize_secondname,
+						second_name: values.organize_lastname,
 					},
 					title: values.organization,
 					ogrn: values.organize_ogrn,
 					phone:
-						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						(formattedPhone.length > 1 && `${formattedPhone}`) ||
 						formattedPhone,
 					about: values.about_organization || '' || undefined,
 					city: values.organize_city,
@@ -86,6 +86,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					emailprop: values.organize_email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						// ожидаем  api/auth/resend_activation
@@ -191,20 +192,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 
 			<InputGroup title="Контактные данные представителя компании">
 				<Input
-					id="organize_secondname"
-					name="organize_secondname"
-					label="Фамилия"
-					type="text"
-					placeholder="Иванов"
-					inputSize="small"
-					error={formik.errors.organize_secondname}
-					touched={formik.touched.organize_secondname}
-					value={formik.values.organize_secondname}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					required
-				/>
-				<Input
 					id="organize_firstname"
 					name="organize_firstname"
 					label="Имя"
@@ -219,15 +206,29 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="organize_thirdname"
-					name="organize_thirdname"
+					id="organize_secondname"
+					name="organize_secondname"
 					type="text"
 					label="Отчество"
 					placeholder="Сергеевич"
 					inputSize="small"
-					error={formik.errors.organize_thirdname}
-					touched={formik.touched.organize_thirdname}
-					value={formik.values.organize_thirdname}
+					error={formik.errors.organize_secondname}
+					touched={formik.touched.organize_secondname}
+					value={formik.values.organize_secondname}
+					handleChange={formik.handleChange}
+					submitCount={formik.submitCount}
+					required
+				/>
+				<Input
+					id="organize_lastname"
+					name="organize_lastname"
+					label="Фамилия"
+					type="text"
+					placeholder="Иванов"
+					inputSize="small"
+					error={formik.errors.organize_lastname}
+					touched={formik.touched.organize_lastname}
+					value={formik.values.organize_lastname}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
 					required

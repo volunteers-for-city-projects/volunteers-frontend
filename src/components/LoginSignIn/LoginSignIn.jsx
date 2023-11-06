@@ -19,7 +19,7 @@ function LoginSignIn() {
 				await activateUser({ uid, token });
 				setModal({
 					isOpen: true,
-					type: 'password',
+					type: 'email',
 					state: 'success',
 					onSubmit: (event) => {
 						event.preventDefault();
@@ -28,9 +28,18 @@ function LoginSignIn() {
 						});
 					},
 				});
-			} catch {
-				// eslint-disable-next-line
-				alert('Не судьба!');
+			} catch (err) {
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			} finally {
 				setIsLoading(false);
 			}
