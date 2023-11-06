@@ -75,7 +75,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					title: values.organization,
 					ogrn: values.organize_ogrn,
 					phone:
-						(formattedPhone.length > 1 && `${formattedPhone}`) ||
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
 					about: values.about_organization || '' || undefined,
 					city: values.organize_city,
