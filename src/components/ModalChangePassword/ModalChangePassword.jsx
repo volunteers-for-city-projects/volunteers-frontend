@@ -5,16 +5,16 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function ModalChangePassword({ isOpen, onClose, onSubmit }) {
 	return (
-		<div className={`modal ${isOpen ? 'modal_opened' : ''}`}>
-			<form onSubmit={onSubmit} className="modal__container" noValidate>
-				<button className="modal__close" type="button" onClick={onClose}>
+		<div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
+			<form onSubmit={onSubmit} className="popup__container" noValidate>
+				<button className="popup__close" type="button" onClick={onClose}>
 					{' '}
 				</button>
-				<div className="modal__title-container">
-					<h2 className="modal__title">Изменение пароля</h2>
+				<div className="popup__title-container">
+					<h2 className="popup__title">Изменение пароля</h2>
 				</div>
 
-				<div className="modal__inputs">
+				<div className="popup__inputs">
 					<Input
 						name="oldpassword"
 						type="text"
@@ -22,7 +22,7 @@ function ModalChangePassword({ isOpen, onClose, onSubmit }) {
 						placeholder=""
 						inputSize="mini"
 					/>
-					<div className="modal__inputs-group">
+					<div className="popup__inputs-group">
 						<Input
 							name="newpassword"
 							type="text"
