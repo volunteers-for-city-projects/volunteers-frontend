@@ -11,7 +11,6 @@ export default function UploadFile({
 	error,
 	setFieldValue,
 	setFieldError,
-	inputSize,
 	disabled,
 	required,
 	submitCount,
@@ -74,7 +73,6 @@ UploadFile.propTypes = {
 	setFieldError: PropTypes.func,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
-	inputSize: PropTypes.oneOf(['small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,
 	required: PropTypes.bool,
@@ -83,7 +81,6 @@ UploadFile.propTypes = {
 
 UploadFile.defaultProps = {
 	placeholder: null,
-	inputSize: 'medium',
 	disabled: false,
 	required: false,
 	submitCount: 0,

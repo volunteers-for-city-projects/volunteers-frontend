@@ -17,8 +17,18 @@ const createUser = (userData) => request(ENDPOINT_USERS, 'POST', userData);
 const createVolunteer = (volunteerData) =>
 	request(ENDPOINT_VOLUNTEERS, 'POST', volunteerData);
 
+const updateVolunteer = (volunteerId, updatedVolunteerData) =>
+	request(`${ENDPOINT_VOLUNTEERS}${volunteerId}/`, 'PUT', updatedVolunteerData);
+
 const createOrganization = (organizationData) =>
 	request(ENDPOINT_ORGANIZATIONS, 'POST', organizationData);
+
+const updateOrganization = (organizationId, updatedOrganizationData) =>
+	request(
+		`${ENDPOINT_ORGANIZATIONS}${organizationId}/`,
+		'PUT',
+		updatedOrganizationData
+	);
 
 const postPhoto = (formData) => request(ENDPOINT_MEDIA, 'POST', formData);
 
@@ -27,6 +37,8 @@ export {
 	getSkills,
 	createUser,
 	createVolunteer,
+	updateVolunteer,
 	createOrganization,
+	updateOrganization,
 	postPhoto,
 };

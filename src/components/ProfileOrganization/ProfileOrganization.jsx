@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
+import { useOutletContext } from 'react-router-dom';
+
 import ProfileData from '../ProfileData/ProfileData';
 import dataOrganization from '../../utils/dataOrganization';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
@@ -9,7 +12,10 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import city from '../../images/city.png';
 
-function ProfileOrganization() {
+function ProfileOrganization({ handleIsForm }) {
+	const { currentUser } = useOutletContext();
+	const { title: organizationTitle } = currentUser;
+
 	return (
 		<section className="profile">
 			<div className="profile__menu-container">
@@ -20,7 +26,7 @@ function ProfileOrganization() {
 					<div className="profile__personal-container">
 						<div className="profile__image" />
 						<div className="profile__name">
-							<h2 className="profile__name-surname">ООО "Организация"</h2>
+							<h2 className="profile__name-surname">{organizationTitle}</h2>
 						</div>
 						<ProfileData dataArray={dataOrganization} />
 					</div>
@@ -40,6 +46,7 @@ function ProfileOrganization() {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleIsForm}
 						/>
 					</div>
 				</div>
@@ -82,5 +89,13 @@ function ProfileOrganization() {
 		</section>
 	);
 }
+
+ProfileOrganization.propTypes = {
+	handleIsForm: PropTypes.func,
+};
+
+ProfileOrganization.defaultProps = {
+	handleIsForm: () => {},
+};
 
 export default ProfileOrganization;

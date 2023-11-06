@@ -4,7 +4,7 @@ import {
 	ENDPOINT_RESET_PASSWORD,
 	// ENDPOINT_CHANGE_PASSWORD,
 	URL,
-} from '../utils/api/endpoints';
+} from '../utils/endpoints';
 
 class LoginApi {
 	constructor(options) {

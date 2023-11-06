@@ -12,7 +12,7 @@
 
 	&__wrap {
 		display: flex;
-		align-items: center;
+		// align-items: center;
 		gap: 80px;
 	}
 
@@ -32,13 +32,13 @@
 		&_organizer {
 			background-image: url(../../images/signup_background_image_organize.svg);
 			background-size: 640px 715px;
-			translate: 50px -27px;
+			translate: 50px -118px;
 		}
 		&_volunteer {
 			background-image: url(../../images/signup_background_image.svg);
 			background-size: 722px 625px;
 
-			translate: 2px 0px;
+			translate: 5px -112px;
 		}
 	}
 	&__content-wrap {
@@ -47,7 +47,7 @@
 		// gap: 27px;
 	}
 	&__title {
-		margin: 0 0 39px 0;
+		margin: 14px 0 26px 0;
 
 		font-family: Fira Sans;
 		font-size: 56px;
