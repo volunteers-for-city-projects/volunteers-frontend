@@ -1,5 +1,4 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import './Login.scss';
 import { apiLogin } from '../../utils/api/login-route';
 import { signIn, getUserInformation } from '../../utils/api/login';
 
@@ -47,6 +46,7 @@ function Login() {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					emailprop: email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });

@@ -90,6 +90,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					emailprop: values.organize_email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						// ожидаем  api/auth/resend_activation

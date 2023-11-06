@@ -106,6 +106,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					emailprop: values.email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						// ожидаем  api/auth/resend_activation
