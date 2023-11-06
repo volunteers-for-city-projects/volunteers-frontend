@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useOutletContext } from 'react-router-dom';
 
 import './ProfileVolunteerForm.scss';
 
@@ -12,7 +13,6 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
 import {
-	// postPhoto,
 	updateVolunteer,
 	getSkills,
 	getCities,
@@ -25,6 +25,18 @@ export default function ProfileVolunteerForm({
 	handleIsForm,
 	...restProps
 }) {
+	const { currentUser } = useOutletContext();
+	const {
+		firstName,
+		lastName,
+		secondName,
+		city,
+		phone,
+		userSkills,
+		photo,
+		telegram,
+	} = currentUser;
+
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 
@@ -62,20 +74,20 @@ export default function ProfileVolunteerForm({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			profile_volunteer_firstname: '',
-			profile_volunteer_secondname: '',
-			profile_volunteer_thirdname: '',
-			profile_volunteer_phone: '',
-			profile_volunteer_telegram: '',
-			profile_volunteer_photo: '',
-			profile_volunteer_skills: [],
-			profile_volunteer_city: null,
+			profile_volunteer_firstname: firstName,
+			profile_volunteer_secondname: secondName,
+			profile_volunteer_thirdname: lastName,
+			profile_volunteer_phone: phone,
+			profile_volunteer_telegram: telegram,
+			profile_volunteer_photo: photo,
+			profile_volunteer_skills: userSkills,
+			profile_volunteer_city: city,
 		},
 		validationSchema: ProfileVolunteerFormSchema,
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.profile_volunteer_phone)}`;
+			const formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
 
 			try {
 				await updateVolunteer(volunteerId || 1, {
@@ -114,7 +126,7 @@ export default function ProfileVolunteerForm({
 				<div className="profile-volunteer-form__photo-wrap">
 					<img
 						className="profile-volunteer-form__photo"
-						src={ProfilePhoto}
+						src={photo || ProfilePhoto}
 						alt="Фотография пользователя"
 					/>
 					<div className="profile-volunteer-form__text-wrap">

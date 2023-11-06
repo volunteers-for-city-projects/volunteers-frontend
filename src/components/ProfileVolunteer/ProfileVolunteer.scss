@@ -26,10 +26,11 @@
 		}
 	}
 	&__image {
-		background-image: url('../../images/fotoProfile.svg');
 		width: 180px;
 		height: 180px;
 		border-radius: 10px;
+		object-fit: cover;
+		object-position: center;
 	}
 	&__name {
 		margin-top: 10px;

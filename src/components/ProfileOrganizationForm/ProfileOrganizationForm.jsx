@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useOutletContext } from 'react-router-dom';
 
 import './ProfileOrganizationForm.scss';
 
@@ -25,6 +26,19 @@ export default function ProfileOrganizationForm({
 	handleIsForm,
 	...restProps
 }) {
+	const { currentUser } = useOutletContext();
+	const {
+		firstName,
+		lastName,
+		secondName,
+		about,
+		city,
+		phone,
+		photo,
+		ogrn,
+		title,
+	} = currentUser;
+
 	const [cities, setCities] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(null);
 
@@ -54,14 +68,14 @@ export default function ProfileOrganizationForm({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			profile_organize_organization: '',
-			profile_organize_about_organization: '',
-			profile_organize_city: null,
-			profile_organize_firstname: '',
-			profile_organize_secondname: '',
-			profile_organize_thirdname: '',
-			profile_organize_phone: '',
-			profile_organize_ogrn: '',
+			profile_organize_organization: title,
+			profile_organize_about_organization: about,
+			profile_organize_city: city,
+			profile_organize_firstname: firstName,
+			profile_organize_secondname: secondName,
+			profile_organize_thirdname: lastName,
+			profile_organize_phone: phone,
+			profile_organize_ogrn: ogrn,
 		},
 		validationSchema: ProfileOrganizationFormSchema,
 		onSubmit: async (values) => {
@@ -108,7 +122,7 @@ export default function ProfileOrganizationForm({
 				<div className="profile-organize-form__photo-wrap">
 					<img
 						className="profile-organize-form__photo"
-						src={ProfilePhoto}
+						src={photo || ProfilePhoto}
 						alt="Фотография пользователя"
 					/>
 					<div className="profile-organize-form__text-wrap">

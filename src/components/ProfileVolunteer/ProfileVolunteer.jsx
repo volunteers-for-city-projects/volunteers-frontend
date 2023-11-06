@@ -1,19 +1,68 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
 import { useOutletContext } from 'react-router-dom';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
-import dataVolunteer from '../../utils/dataVolunteer';
-import city from '../../images/city.png';
+import { getCities } from '../../utils/api/signupApi';
+import cityImage from '../../images/city.png';
+import volunteerImage from '../../images/fotoProfile.svg';
 
 function ProfileVolunteer({ handleIsForm }) {
 	const { currentUser } = useOutletContext();
 	const {
-		first_name: firstName,
-		last_name: lastName,
-		second_name: secondName,
+		firstName,
+		lastName,
+		secondName,
+		email,
+		city,
+		phone,
+		userSkills,
+		photo,
+		telegram,
 	} = currentUser;
+	const [cityName, setCityName] = useState('');
+
+	const dataVolunteer = [
+		{
+			id: 0,
+			title: 'Город:',
+			subtitle: cityName[0],
+		},
+		{
+			id: 1,
+			title: 'Контактные данные:',
+			subtitle: [email, phone, telegram]
+				.filter((item) => item !== '')
+				.join(', '),
+		},
+		{
+			id: 2,
+			title: 'Навыки:',
+			subtitle: userSkills
+				? userSkills.map((item) => item.name).join(', ')
+				: [],
+		},
+	];
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const citiesResponse = await getCities();
+
+				const citiesData = citiesResponse
+					.filter((item) => city === item.id)
+					.map((item) => item.name);
+
+				setCityName(citiesData);
+			} catch (error) {
+				console.error('Ошибка при загрузке данных:', error);
+			}
+		};
+
+		fetchData();
+	}, [city]);
 
 	return (
 		<section className="profile">
@@ -23,13 +72,19 @@ function ProfileVolunteer({ handleIsForm }) {
 			<div className="profile__wrapper">
 				<div className="profile__personal">
 					<div className="profile__personal-container">
-						<div className="profile__image" />
+						<img
+							className="profile__image"
+							src={photo || volunteerImage}
+							alt="Фото волонтера"
+						/>
 						<div className="profile__name">
 							<h2 className="profile__name-surname">
-								{`${lastName} ${firstName} ${secondName}`}
+								{`${firstName} ${secondName} ${lastName}`}
 							</h2>
 						</div>
-						<ProfileData dataArray={dataVolunteer} />
+						{dataVolunteer.length > 0 && (
+							<ProfileData dataArray={dataVolunteer} />
+						)}
 					</div>
 					<div className="profile__button">
 						<Pushbutton
@@ -58,7 +113,11 @@ function ProfileVolunteer({ handleIsForm }) {
 							<p className="profile__blank-title">
 								Здесь будут отображаться ваши проекты
 							</p>
-							<img className="profile__blank-image" src={city} alt="город" />
+							<img
+								className="profile__blank-image"
+								src={cityImage}
+								alt="город"
+							/>
 						</div>
 					</div>
 				</div>
