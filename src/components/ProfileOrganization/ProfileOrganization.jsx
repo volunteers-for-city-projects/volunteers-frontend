@@ -13,7 +13,7 @@ import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import city from '../../images/city.png';
 
 function ProfileOrganization({ handleIsForm }) {
-	const { currentUser } = useOutletContext();
+	const { currentUser, handleChangePassword } = useOutletContext();
 	const { title: organizationTitle } = currentUser;
 
 	return (
@@ -38,6 +38,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleChangePassword}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"

@@ -8,7 +8,8 @@ import dataVolunteer from '../../utils/dataVolunteer';
 import city from '../../images/city.png';
 
 function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser } = useOutletContext();
+	const { currentUser, handleChangePassword } = useOutletContext();
+
 	const {
 		first_name: firstName,
 		last_name: lastName,
@@ -39,6 +40,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleChangePassword}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"

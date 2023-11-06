@@ -5,6 +5,7 @@ import { getUserInformation, logOut } from '../../utils/api/login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
+import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -26,6 +27,7 @@ function App() {
 		id: null,
 		email: '',
 	});
+	const [modalChangePassword, setModalChangePassword] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -76,6 +78,18 @@ function App() {
 		});
 	};
 
+	const handleChangePassword = () => {
+		setModalChangePassword(true);
+	};
+
+	const closeModalPassword = () => {
+		setModalChangePassword(false);
+	};
+
+	const handleChangePasswordSubmit = (e) => {
+		e.preventDefault();
+	};
+
 	return (
 		<>
 			<Header
@@ -92,6 +106,7 @@ function App() {
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
+					handleChangePassword,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />
@@ -100,6 +115,12 @@ function App() {
 					<Modal modal={modal} closeModal={closeModal} />,
 					document.body
 				)}
+
+			<ModalChangePassword
+				isOpen={modalChangePassword}
+				onClose={closeModalPassword}
+				onSubmit={handleChangePasswordSubmit}
+			/>
 		</>
 	);
 }
