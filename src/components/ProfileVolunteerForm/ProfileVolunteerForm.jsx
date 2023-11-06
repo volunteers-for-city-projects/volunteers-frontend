@@ -12,7 +12,6 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
 import {
-	// postPhoto,
 	updateVolunteer,
 	getSkills,
 	getCities,
@@ -27,10 +26,6 @@ export default function ProfileVolunteerForm({
 }) {
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
-
-	const [selectedFile, setSelectedFile] = useState(null);
-
-	console.log(selectedFile);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -63,8 +58,8 @@ export default function ProfileVolunteerForm({
 		validateOnChange: true,
 		initialValues: {
 			profile_volunteer_firstname: '',
+			profile_volunteer_lastname: '',
 			profile_volunteer_secondname: '',
-			profile_volunteer_thirdname: '',
 			profile_volunteer_phone: '',
 			profile_volunteer_telegram: '',
 			profile_volunteer_photo: '',
@@ -82,7 +77,7 @@ export default function ProfileVolunteerForm({
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
-						last_name: values.profile_volunteer_thirdname,
+						last_name: values.profile_volunteer_lastname,
 					},
 					telegram: values.profile_volunteer_telegram,
 					// photo: values.profile_volunteer_photo || null || '' || undefined,
@@ -128,7 +123,7 @@ export default function ProfileVolunteerForm({
 							type="file"
 							className="profile-volunteer-form__upload-file"
 							value={formik.values.photo}
-							setSelectedFile={setSelectedFile}
+							setFieldValue={formik.setFieldValue}
 						/>
 					</div>
 				</div>
@@ -152,30 +147,30 @@ export default function ProfileVolunteerForm({
 						<Input
 							id="profile_volunteer_secondname"
 							name="profile_volunteer_secondname"
-							label="Фамилия"
 							type="text"
-							placeholder="Иванов"
+							label="Отчество"
+							placeholder="Сергеевич"
 							inputSize="small"
 							error={formik.errors.profile_volunteer_secondname}
 							touched={formik.touched.profile_volunteer_secondname}
 							value={formik.values.profile_volunteer_secondname}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
+							autoсomplete="off"
 							required
 						/>
 						<Input
-							id="profile_volunteer_thirdname"
-							name="profile_volunteer_thirdname"
+							id="profile_volunteer_lastname"
+							name="profile_volunteer_lastname"
+							label="Фамилия"
 							type="text"
-							label="Отчество"
-							placeholder="Сергеевич"
+							placeholder="Иванов"
 							inputSize="small"
-							error={formik.errors.profile_volunteer_thirdname}
-							touched={formik.touched.profile_volunteer_thirdname}
-							value={formik.values.profile_volunteer_thirdname}
+							error={formik.errors.profile_volunteer_lastname}
+							touched={formik.touched.profile_volunteer_lastname}
+							value={formik.values.profile_volunteer_lastname}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
-							autoсomplete="off"
 							required
 						/>
 					</InputGroup>

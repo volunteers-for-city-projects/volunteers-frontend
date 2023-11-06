@@ -20,12 +20,12 @@ export const OrganizerSignupFormSchema = Yup.object({
 		.max(40, 'Длина поля от 2 до 40 символов')
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите имя кириллицей')
 		.required('Поле обязательно для заполнения'),
-	organize_secondname: Yup.string()
+	organize_lastname: Yup.string()
 		.min(2, 'Длина поля от 2 до 40 символов')
 		.max(40, 'Длина поля от 2 до 40 символов')
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите фамилию кириллицей')
 		.required('Поле обязательно для заполнения'),
-	organize_thirdname: Yup.string()
+	organize_secondname: Yup.string()
 		.min(2, 'Длина поля от 2 до 40 символов')
 		.max(40, 'Длина поля от 2 до 40 символов')
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите отчество кириллицей')

@@ -60,8 +60,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		validateOnChange: true,
 		initialValues: {
 			firstname: '',
+			lastname: '',
 			secondname: '',
-			thirdname: '',
 			birthday: '',
 			phone: '',
 			email: '',
@@ -87,7 +87,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					user: {
 						first_name: values.firstname,
 						second_name: values.secondname,
-						last_name: values.thirdname,
+						last_name: values.lastname,
 						email: values.email,
 						password: values.password,
 						re_password: values.confirm_password,
@@ -156,30 +156,30 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="secondname"
 					name="secondname"
-					label="Фамилия"
 					type="text"
-					placeholder="Иванов"
+					label="Отчество"
+					placeholder="Сергеевич"
 					inputSize="small"
 					error={formik.errors.secondname}
 					touched={formik.touched.secondname}
 					value={formik.values.secondname}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
+					autoсomplete="off"
 					required
 				/>
 				<Input
-					id="thirdname"
-					name="thirdname"
+					id="lastname"
+					name="lastname"
+					label="Фамилия"
 					type="text"
-					label="Отчество"
-					placeholder="Сергеевич"
+					placeholder="Иванов"
 					inputSize="small"
-					error={formik.errors.thirdname}
-					touched={formik.touched.thirdname}
-					value={formik.values.thirdname}
+					error={formik.errors.lastname}
+					touched={formik.touched.lastname}
+					value={formik.values.lastname}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					autoсomplete="off"
 					required
 				/>
 				<Input
@@ -281,8 +281,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					value={formik.values.confirm_password}
-					error={formik.errors.photo}
 					setFieldValue={formik.setFieldValue}
 					setFieldError={formik.setFieldError}
 				/>
