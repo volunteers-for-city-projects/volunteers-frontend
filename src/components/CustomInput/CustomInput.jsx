@@ -41,13 +41,8 @@ export default function CustomInput({
 				}}
 				{...props}
 			/>
-
-			<span
-				className={clsx('input__error-message', {
-					'input__error-message_show': isFocused && error?.length > 0,
-				})}
-			>
-				{error}
+			<span className="input__error-message">
+				{isFocused && error?.length > 0 && error}
 			</span>
 		</div>
 	);
