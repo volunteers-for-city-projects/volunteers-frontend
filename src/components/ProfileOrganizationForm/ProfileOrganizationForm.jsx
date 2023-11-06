@@ -26,10 +26,6 @@ export default function ProfileOrganizationForm({
 	...restProps
 }) {
 	const [cities, setCities] = useState([]);
-	const [selectedFile, setSelectedFile] = useState(null);
-
-	console.log(selectedFile);
-	console.log(cities);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -74,7 +70,7 @@ export default function ProfileOrganizationForm({
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.profile_organize_firstname,
-						last_name: values.profile_organize_thirdname,
+						last_name: values.profile_organize_lastname,
 						password: values.profile_organize_password,
 						second_name: values.profile_organize_secondname,
 					},
@@ -121,8 +117,6 @@ export default function ProfileOrganizationForm({
 							label=""
 							className="profile-organize-form__upload-file"
 							type="file"
-							value={formik.values.photo}
-							setSelectedFile={setSelectedFile}
 						/>
 					</div>
 				</div>
@@ -177,9 +171,9 @@ export default function ProfileOrganizationForm({
 						<Input
 							id="profile_organize_firstname"
 							name="profile_organize_firstname"
-							label="Фамилия"
+							label="Имя"
 							type="text"
-							placeholder="Иванов"
+							placeholder="Пётр"
 							inputSize="small"
 							error={formik.errors.profile_organize_firstname}
 							touched={formik.touched.profile_organize_firstname}
@@ -192,13 +186,28 @@ export default function ProfileOrganizationForm({
 						<Input
 							id="profile_organize_secondname"
 							name="profile_organize_secondname"
-							label="Имя"
+							label="Отчество"
 							type="text"
-							placeholder="Пётр"
+							placeholder="Сергеевич"
 							inputSize="small"
 							error={formik.errors.profile_organize_secondname}
 							touched={formik.touched.profile_organize_secondname}
 							value={formik.values.profile_organize_secondname}
+							handleChange={formik.handleChange}
+							submitCount={formik.submitCount}
+							autoсomplete="off"
+							required
+						/>
+						<Input
+							id="profile_organize_lastname"
+							name="profile_organize_lastname"
+							label="Фамилия"
+							type="text"
+							placeholder="Иванов"
+							inputSize="small"
+							error={formik.errors.profile_organize_lastname}
+							touched={formik.touched.profile_organize_lastname}
+							value={formik.values.profile_organize_lastname}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"
@@ -214,21 +223,6 @@ export default function ProfileOrganizationForm({
 							error={formik.errors.profile_organize_phone}
 							touched={formik.touched.profile_organize_phone}
 							value={formik.values.profile_organize_phone}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
-							required
-						/>
-						<Input
-							id="profile_organize_thirdname"
-							name="profile_organize_thirdname"
-							label="Отчество"
-							type="text"
-							placeholder="Сергеевич"
-							inputSize="small"
-							error={formik.errors.profile_organize_thirdname}
-							touched={formik.touched.profile_organize_thirdname}
-							value={formik.values.profile_organize_thirdname}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
 							autoсomplete="off"

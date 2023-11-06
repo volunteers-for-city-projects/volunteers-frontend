@@ -28,7 +28,7 @@ export const VolunteerSignupFormSchema = Yup.object({
 			return !/\./.test(value);
 		})
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите имя кириллицей'),
-	secondname: Yup.string()
+	lastname: Yup.string()
 		.min(2, 'Длина поля от 2 до 40 символов')
 		.max(40, 'Длина поля от 2 до 40 символов')
 		.required('Поле обязательно для заполнения')
@@ -54,7 +54,7 @@ export const VolunteerSignupFormSchema = Yup.object({
 			return !/\./.test(value);
 		})
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите фамилию кириллицей'),
-	thirdname: Yup.string()
+	secondname: Yup.string()
 		.min(2, 'Длина поля от 2 до 40 символов')
 		.max(40, 'Длина поля от 2 до 40 символов')
 		.required('Поле обязательно для заполнения')
