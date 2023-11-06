@@ -14,7 +14,7 @@ function Modal({ modal, closeModal }) {
 		event.stopPropagation();
 	};
 
-	const { isOpen, type, state, title, onSubmit, errorArray } = modal;
+	const { isOpen, type, state, title, onSubmit, errorArray, emailprop } = modal;
 
 	const errorsData = useMemo(() => {
 		if (errorArray && Array.isArray(errorArray)) {
@@ -36,8 +36,7 @@ function Modal({ modal, closeModal }) {
 		},
 		password: {
 			info: {
-				title:
-					'На почту example@mail.ru отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.',
+				title: `На почту ${emailprop} отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -47,16 +46,14 @@ function Modal({ modal, closeModal }) {
 				image: modalSuccess,
 			},
 			error: {
-				title:
-					'Мы не смогли найти пользователя с почтой example@email.ru. Проверьте правильность адреса или обратитесь в техподдержку.',
+				title: `Мы не смогли найти пользователя с почтой ${emailprop}. Проверьте правильность адреса или обратитесь в техподдержку.`,
 				textButton: '',
 				image: modalSend,
 			},
 		},
 		email: {
 			info: {
-				title:
-					'На email examplemail.ru отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.',
+				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -226,6 +223,7 @@ Modal.propTypes = {
 		type: PropTypes.string,
 		state: PropTypes.string,
 		title: PropTypes.string,
+		emailprop: PropTypes.string,
 		onSubmit: PropTypes.func,
 		errorArray: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -238,6 +236,7 @@ Modal.propTypes = {
 
 Pushbutton.defaultProps = {
 	onSubmit: undefined,
+	emailprop: 'email',
 };
 
 export default Modal;
