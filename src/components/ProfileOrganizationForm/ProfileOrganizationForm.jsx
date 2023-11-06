@@ -69,7 +69,7 @@ export default function ProfileOrganizationForm({
 			profile_organize_city: city,
 			profile_organize_firstname: firstName,
 			profile_organize_secondname: secondName,
-			profile_organize_thirdname: lastName,
+			profile_organize_lastname: lastName,
 			profile_organize_phone: phone,
 			profile_organize_ogrn: ogrn,
 		},

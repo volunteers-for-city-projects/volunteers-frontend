@@ -72,7 +72,7 @@ export default function ProfileVolunteerForm({
 		initialValues: {
 			profile_volunteer_firstname: firstName,
 			profile_volunteer_secondname: secondName,
-			profile_volunteer_thirdname: lastName,
+			profile_volunteer_lastname: lastName,
 			profile_volunteer_phone: phone,
 			profile_volunteer_telegram: telegram,
 			profile_volunteer_photo: photo,
