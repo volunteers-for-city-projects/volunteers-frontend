@@ -54,8 +54,17 @@ function Login() {
 				});
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(setIsLoading(false));
 	};
@@ -79,8 +88,17 @@ function Login() {
 				});
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(() => {
 				setIsLoading(false);
