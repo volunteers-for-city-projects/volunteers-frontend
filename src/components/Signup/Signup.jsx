@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Signup.scss';
 
 // import PageMenu from '../PageMenu/PageMenu';
+import { useSearchParams } from 'react-router-dom';
 import VolunteerSignupForm from '../VolunteerSignupForm/VolunteerSignupForm';
 import OrganizerSignupForm from '../OrganizerSignupForm/OrganizerSignupForm';
 import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGroup';
@@ -9,7 +10,10 @@ import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGrou
 export default function Signup() {
 	const [isPageTitle, setIsPageTitle] = useState('');
 	const [isActiveForm, setIsActiveForm] = useState('');
-	const [isActiveButton, setIsActiveButton] = useState('volunteer');
+	const [searchParam] = useSearchParams();
+	const [isActiveButton, setIsActiveButton] = useState(
+		searchParam.get('role') || 'volunteer'
+	);
 
 	const handleToggle = (buttonName) => {
 		setIsActiveButton(buttonName);
