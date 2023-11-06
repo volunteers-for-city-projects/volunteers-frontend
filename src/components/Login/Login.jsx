@@ -50,9 +50,6 @@ function Login() {
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });
-						setModal({
-							isOpen: false,
-						});
 					},
 				});
 			})
@@ -94,6 +91,8 @@ function Login() {
 		<Outlet
 			context={{
 				isLoading,
+				setIsLoading,
+				setModal,
 				handleSignIn,
 				handlePasswordReset,
 				handleSaveChanges,

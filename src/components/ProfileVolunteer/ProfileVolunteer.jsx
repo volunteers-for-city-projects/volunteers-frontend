@@ -1,22 +1,22 @@
+import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
 import { useOutletContext } from 'react-router-dom';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import ProfileOrganization from '../ProfileOrganization/ProfileOrganization';
 import ProfileData from '../ProfileData/ProfileData';
 import dataVolunteer from '../../utils/dataVolunteer';
 import city from '../../images/city.png';
 
-function ProfileVolunteer() {
+function ProfileVolunteer({ handleIsForm }) {
 	const { currentUser, handleChangePassword } = useOutletContext();
+
 	const {
 		first_name: firstName,
 		last_name: lastName,
-		role,
 		second_name: secondName,
 	} = currentUser;
 
-	return role === 'volunteer' ? (
+	return (
 		<section className="profile">
 			<div className="profile__menu-container">
 				<ProfileMenu title="Личный кабинет волонтера" />
@@ -49,6 +49,7 @@ function ProfileVolunteer() {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={handleIsForm}
 						/>
 					</div>
 				</div>
@@ -65,9 +66,15 @@ function ProfileVolunteer() {
 				</div>
 			</div>
 		</section>
-	) : (
-		<ProfileOrganization handleChangePassword={handleChangePassword} />
 	);
 }
+
+ProfileVolunteer.propTypes = {
+	handleIsForm: PropTypes.func,
+};
+
+ProfileVolunteer.defaultProps = {
+	handleIsForm: () => {},
+};
 
 export default ProfileVolunteer;

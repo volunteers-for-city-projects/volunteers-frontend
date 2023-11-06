@@ -1,0 +1,25 @@
+.profile-organize-edit {
+	margin: 0 auto;
+	margin-bottom: 118px;
+	padding: 0 0 0 11px;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__menu-container {
+		margin: 28px auto 39px;
+	}
+
+	&__name {
+		margin: 0;
+
+		font-family: Fira Sans;
+		font-size: 56px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 100%; /* 56px */
+	}
+}

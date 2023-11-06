@@ -101,6 +101,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
+
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					onSubmit: (event) => {
+						event.preventDefault();
+						// ожидаем  api/auth/resend_activation
+					},
+				});
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({
@@ -237,7 +247,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="password"
 					name="password"
-					label="Введите пароль"
+					label="Пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
@@ -271,7 +281,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					inputSize="photo"
 					value={formik.values.confirm_password}
 					error={formik.errors.photo}
 					setFieldValue={formik.setFieldValue}
@@ -314,7 +323,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"
-					size="medium"
+					backgroundColor="#A6C94F"
+					border="1px solid #A6C94F"
+					minWidth="399px"
+					size="pre-large"
 					disabled={
 						!formik.isValid ||
 						!isCheckboxChecked ||

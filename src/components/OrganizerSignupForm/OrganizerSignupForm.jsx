@@ -5,9 +5,12 @@ import { useFormik } from 'formik';
 import './OrganizerSignupForm.scss';
 
 import { useOutletContext } from 'react-router-dom';
+
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
+import UploadFile from '../UploadFile/UploadFile';
+
 import SelectOption from '../SelectOption/SelectOption';
 import { OrganizerSignupFormSchema } from '../../utils/validationSchemas/OrganizerSignupFormSchema';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -16,6 +19,9 @@ import { createOrganization, getCities } from '../../utils/api/signupApi';
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
+
+	const [selectedFile, setSelectedFile] = React.useState(null);
+
 	const { setModal } = useOutletContext();
 
 	useEffect(() => {
@@ -43,7 +49,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		initialValues: {
 			organization: '',
 			about_organization: '',
-			organize_city: '',
+			organize_city: null,
 			organize_firstname: '',
 			organize_secondname: '',
 			organize_thirdname: '',
@@ -59,6 +65,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
 			const formattedPhone = `+${getDigitsOnly(values.organize_phone)}`;
 
+			const formData = new FormData();
+			formData.append('file', selectedFile);
+
 			try {
 				const organizationResponse = await createOrganization({
 					contact_person: {
@@ -70,9 +79,21 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					},
 					title: values.organization,
 					ogrn: values.organize_ogrn,
-					phone: formattedPhone,
+					phone:
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						formattedPhone,
 					about: values.about_organization || '' || undefined,
-					city: 1,
+					city: values.organize_city,
+				});
+
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					onSubmit: (event) => {
+						event.preventDefault();
+						// ожидаем  api/auth/resend_activation
+					},
 				});
 
 				console.log('Volunteer created:', organizationResponse);
@@ -110,7 +131,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="organization"
 					label="Название организации"
 					type="text"
-					placeholder=""
+					placeholder="ООО «Ромашка»"
 					inputSize="small"
 					error={formik.errors.organization}
 					touched={formik.touched.organization}
@@ -126,10 +147,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					placeholder="Выберите город"
 					width={400}
 					options={cities}
-					touched={formik.touched.city}
-					value={formik.values.city}
+					touched={formik.touched.organize_city}
+					value={formik.values.organize_city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('city', Number(selectedOption.value));
+						formik.setFieldValue('organize_city', Number(selectedOption.value));
 					}}
 					required
 				/>
@@ -138,7 +159,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="organize_ogrn"
 					label="ОГРН"
 					type="text"
-					placeholder=""
+					placeholder="1-02-66-05-60662-0"
 					inputSize="small"
 					error={formik.errors.organize_ogrn}
 					touched={formik.touched.organize_ogrn}
@@ -159,6 +180,17 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				handleChange={formik.handleChange}
 				submitCount={formik.submitCount}
 			/>
+			<InputGroup title="Фото">
+				<UploadFile
+					id="photo"
+					name="photo"
+					label=""
+					type="file"
+					value={formik.values.photo}
+					setSelectedFile={setSelectedFile}
+				/>
+			</InputGroup>
+
 			<InputGroup title="Контактные данные представителя компании">
 				<Input
 					id="organize_secondname"
@@ -203,19 +235,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<Input
-					id="organize_empty"
-					name="organize_empty"
-					label=""
-					type="text"
-					className="input_empty"
-					placeholder="example@mail.ru"
-					inputSize="small"
-					error={formik.errors.organize_email}
-					touched={formik.touched.organize_email}
-					value={formik.values.organize_email}
-					handleChange={formik.handleChange}
-				/>
-				<Input
 					id="organize_email"
 					name="organize_email"
 					label="E-mail"
@@ -247,7 +266,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="organize_password"
 					name="organize_password"
-					label="Введите пароль"
+					label="Пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
@@ -277,7 +296,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"
-					size="medium"
+					backgroundColor="#A6C94F"
+					border="1px solid #A6C94F"
+					minWidth="399px"
+					size="pre-large"
 					disabled={
 						!formik.isValid || !isCheckboxChecked || formik.values.city === null
 					}

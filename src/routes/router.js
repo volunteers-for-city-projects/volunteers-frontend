@@ -1,22 +1,30 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Link, createHashRouter } from 'react-router-dom';
 import Signup from '../components/Signup/Signup';
 import Main from '../components/Main/Main';
 import App from '../components/App/App';
-import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
+import Profile from '../components/Profile/Profile';
 import Login from '../components/Login/Login';
 import LoginSignIn from '../components/LoginSignIn/LoginSignIn';
 import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPasswordRecovery';
 import LoginPasswordReset from '../components/LoginPasswordReset/LoginPasswordReset';
 import NotFound from '../components/NotFound/NotFound';
 import {
-	ProtectedRouteElementForUnauthorized,
+	// ProtectedRouteElementForUnauthorized,
 	ProtectedRouteElementForAuthorized,
 } from './ProtectedRoute';
+import './router.scss';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <App />,
+		handle: {
+			crumb: () => (
+				<Link to="/" className="router__link">
+					Главная
+				</Link>
+			),
+		},
 		children: [
 			{
 				index: true,
@@ -32,12 +40,20 @@ const router = createBrowserRouter([
 				),
 			},
 			{
-				path: 'login/',
+				path: 'login',
 				element: (
 					<ProtectedRouteElementForAuthorized>
 						<Login />
 					</ProtectedRouteElementForAuthorized>
 				),
+				handle: {
+					crumb: () => (
+						<Link to="/login" className="router__link">
+							Вход
+						</Link>
+					),
+				},
+
 				children: [
 					{
 						index: true,
@@ -46,6 +62,17 @@ const router = createBrowserRouter([
 					{
 						path: 'password-recovery',
 						element: <LoginPasswordRecovery />,
+						handle: {
+							crumb: () => (
+								<Link to="/login/password-recovery" className="router__link">
+									Восстановление
+								</Link>
+							),
+						},
+					},
+					{
+						path: 'password-activate/:uid/:token',
+						element: <LoginSignIn />,
 					},
 					{
 						path: 'password-reset/:uid/:token',
@@ -60,9 +87,9 @@ const router = createBrowserRouter([
 			{
 				path: 'profile',
 				element: (
-					<ProtectedRouteElementForUnauthorized>
-						<ProfileVolunteer />
-					</ProtectedRouteElementForUnauthorized>
+					// <ProtectedRouteElementForUnauthorized>
+					<Profile />
+					// </ProtectedRouteElementForUnauthorized>
 				),
 			},
 			{
