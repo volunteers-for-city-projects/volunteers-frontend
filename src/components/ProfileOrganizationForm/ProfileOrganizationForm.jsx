@@ -37,6 +37,7 @@ export default function ProfileOrganizationForm({
 		photo,
 		ogrn,
 		title,
+		id,
 	} = currentUser;
 
 	const [cities, setCities] = useState([]);
@@ -77,10 +78,10 @@ export default function ProfileOrganizationForm({
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.profile_organize_phone)}`;
+			const formattedPhone = getDigitsOnly(values.profile_organize_phone);
 
 			try {
-				await updateOrganization(organizationId || 3, {
+				await updateOrganization(id, {
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.profile_organize_firstname,

@@ -35,6 +35,7 @@ export default function ProfileVolunteerForm({
 		userSkills,
 		photo,
 		telegram,
+		id,
 	} = currentUser;
 
 	const [cities, setCities] = useState([]);
@@ -86,7 +87,7 @@ export default function ProfileVolunteerForm({
 			const formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
 
 			try {
-				await updateVolunteer(volunteerId || 1, {
+				await updateVolunteer(id, {
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
