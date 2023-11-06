@@ -64,7 +64,6 @@ function SelectOption({
 
 	const changeOption = useCallback(
 		(option) => {
-			console.log('change');
 			handleChange(option); // Передать выбранный вариант в функцию handleChange
 		},
 		[handleChange]
