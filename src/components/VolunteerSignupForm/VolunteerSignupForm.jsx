@@ -80,7 +80,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.phone)}`;
+			const formattedPhone = getDigitsOnly(values.phone);
 
 			try {
 				await createVolunteer({

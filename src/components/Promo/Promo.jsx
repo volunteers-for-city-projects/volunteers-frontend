@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
-import { useOutletContext } from 'react-router-dom';
+import {
+	useNavigate,
+	useOutletContext,
+	useSearchParams,
+} from 'react-router-dom';
 import clsx from 'clsx';
 import './Promo.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -7,6 +11,8 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 function Promo({ plarformPromo }) {
 	const { projectCount, volunteersCount, organizersCount } = plarformPromo;
 	const { isLoggedIn } = useOutletContext();
+	const navigate = useNavigate();
+	const [searchParam, setSearchParam] = useSearchParams();
 
 	return (
 		<section className="promo">
@@ -24,6 +30,11 @@ function Promo({ plarformPromo }) {
 							border="none"
 							color="#FFF"
 							minWidth="286px"
+							onClick={() => {
+								navigate('/registration');
+								searchParam.set('role', 'organizer');
+								setSearchParam(searchParam);
+							}}
 						/>
 						<Pushbutton
 							label="Стать волонтёром"
@@ -32,6 +43,11 @@ function Promo({ plarformPromo }) {
 							border="1px solid #A6C94F"
 							color="#3F3F3F"
 							minWidth="286px"
+							onClick={() => {
+								navigate('/registration');
+								searchParam.set('role', 'volunteer');
+								setSearchParam(searchParam);
+							}}
 						/>
 					</div>
 				)}

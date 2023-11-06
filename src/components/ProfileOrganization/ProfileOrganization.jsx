@@ -1,20 +1,74 @@
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
 import { useOutletContext } from 'react-router-dom';
+import { getCities } from '../../utils/api/signupApi';
 
 import ProfileData from '../ProfileData/ProfileData';
-import dataOrganization from '../../utils/dataOrganization';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
-import city from '../../images/city.png';
+import cityImage from '../../images/city.png';
+import organizationImage from '../../images/fotoProfile.svg';
 
 function ProfileOrganization({ handleIsForm }) {
 	const { currentUser, handleChangePassword } = useOutletContext();
-	const { title: organizationTitle } = currentUser;
+	const {
+		firstName,
+		lastName,
+		secondName,
+		about,
+		email,
+		city,
+		phone,
+		photo,
+		title,
+	} = currentUser;
+	const [cityName, setCityName] = useState('');
+
+	const dataOrganization = [
+		{
+			id: 0,
+			title: 'Об организации',
+			subtitle: about,
+		},
+		{
+			id: 1,
+			title: 'Город:',
+			subtitle: cityName[0],
+		},
+		{
+			id: 2,
+			title: 'Представитель организации:',
+			subtitle: `${firstName} ${secondName} ${lastName}`,
+		},
+		{
+			id: 3,
+			title: 'Контактные данные:',
+			subtitle: [email, phone].filter((item) => item !== '').join(', '),
+		},
+	];
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const citiesResponse = await getCities();
+
+				const citiesData = citiesResponse
+					.filter((item) => city === item.id)
+					.map((item) => item.name);
+
+				setCityName(citiesData);
+			} catch (error) {
+				console.error('Ошибка при загрузке данных:', error);
+			}
+		};
+
+		fetchData();
+	}, [city]);
 
 	return (
 		<section className="profile">
@@ -24,9 +78,13 @@ function ProfileOrganization({ handleIsForm }) {
 			<div className="profile__wrapper">
 				<div className="profile__personal">
 					<div className="profile__personal-container">
-						<div className="profile__image" />
+						<img
+							className="profile__image"
+							src={photo || organizationImage}
+							alt="Логотип организатора"
+						/>
 						<div className="profile__name">
-							<h2 className="profile__name-surname">{organizationTitle}</h2>
+							<h2 className="profile__name-surname">{title}</h2>
 						</div>
 						<ProfileData dataArray={dataOrganization} />
 					</div>
@@ -69,7 +127,11 @@ function ProfileOrganization({ handleIsForm }) {
 								<p className="profile__blank-title">
 									Здесь будут отображаться ваши проекты
 								</p>
-								<img className="profile__blank-image" src={city} alt="город" />
+								<img
+									className="profile__blank-image"
+									src={cityImage}
+									alt="город"
+								/>
 							</div>
 						)}
 

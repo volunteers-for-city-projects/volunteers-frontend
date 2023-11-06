@@ -33,12 +33,7 @@ function Profile() {
 
 	if (role === 'organizer') {
 		if (isForm) {
-			return (
-				<ProfileOrganizationEdit
-					handleIsForm={handleIsForm}
-					organization="ООО «Организация»"
-				/>
-			);
+			return <ProfileOrganizationEdit handleIsForm={handleIsForm} />;
 		}
 		return (
 			<ProfileOrganization

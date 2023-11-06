@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useOutletContext } from 'react-router-dom';
 
 import './ProfileOrganizationForm.scss';
 
@@ -25,6 +26,20 @@ export default function ProfileOrganizationForm({
 	handleIsForm,
 	...restProps
 }) {
+	const { currentUser } = useOutletContext();
+	const {
+		firstName,
+		lastName,
+		secondName,
+		about,
+		city,
+		phone,
+		photo,
+		ogrn,
+		title,
+		id,
+	} = currentUser;
+
 	const [cities, setCities] = useState([]);
 
 	useEffect(() => {
@@ -50,23 +65,23 @@ export default function ProfileOrganizationForm({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			profile_organize_organization: '',
-			profile_organize_about_organization: '',
-			profile_organize_city: null,
-			profile_organize_firstname: '',
-			profile_organize_secondname: '',
-			profile_organize_thirdname: '',
-			profile_organize_phone: '',
-			profile_organize_ogrn: '',
+			profile_organize_organization: title,
+			profile_organize_about_organization: about,
+			profile_organize_city: city,
+			profile_organize_firstname: firstName,
+			profile_organize_secondname: secondName,
+			profile_organize_lastname: lastName,
+			profile_organize_phone: phone,
+			profile_organize_ogrn: ogrn,
 		},
 		validationSchema: ProfileOrganizationFormSchema,
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.profile_organize_phone)}`;
+			const formattedPhone = getDigitsOnly(values.profile_organize_phone);
 
 			try {
-				await updateOrganization(organizationId || 3, {
+				await updateOrganization(id, {
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.profile_organize_firstname,
@@ -104,7 +119,7 @@ export default function ProfileOrganizationForm({
 				<div className="profile-organize-form__photo-wrap">
 					<img
 						className="profile-organize-form__photo"
-						src={ProfilePhoto}
+						src={photo || ProfilePhoto}
 						alt="Фотография пользователя"
 					/>
 					<div className="profile-organize-form__text-wrap">

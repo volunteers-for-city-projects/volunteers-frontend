@@ -9,7 +9,7 @@ import LoginPasswordRecovery from '../components/LoginPasswordRecovery/LoginPass
 import LoginPasswordReset from '../components/LoginPasswordReset/LoginPasswordReset';
 import NotFound from '../components/NotFound/NotFound';
 import {
-	// ProtectedRouteElementForUnauthorized,
+	ProtectedRouteElementForUnauthorized,
 	ProtectedRouteElementForAuthorized,
 } from './ProtectedRoute';
 import './router.scss';
@@ -87,9 +87,9 @@ const router = createHashRouter([
 			{
 				path: 'profile',
 				element: (
-					// <ProtectedRouteElementForUnauthorized>
-					<Profile />
-					// </ProtectedRouteElementForUnauthorized>
+					<ProtectedRouteElementForUnauthorized>
+						<Profile />
+					</ProtectedRouteElementForUnauthorized>
 				),
 			},
 			{
