@@ -11,7 +11,7 @@
 
 	background-color: $--White;
 
-	border-radius: 10px;
+	border-radius: 5px;
 	border: 1px solid $--Black;
 
 	font-family: Fira Sans;
@@ -34,7 +34,7 @@
 
 		&-message {
 			// width: 580px;
-			height: 23px;
+			height: 20px;
 
 			display: block;
 
@@ -59,7 +59,7 @@
 }
 
 .textarea-label {
-	margin-bottom: 4px;
+	margin-bottom: 12px;
 	color: $--Text;
 
 	font-family: Fira Sans;
