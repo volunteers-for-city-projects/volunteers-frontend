@@ -20,8 +20,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [cities, setCities] = useState([]);
 
-	const [selectedFile, setSelectedFile] = React.useState(null);
-
 	const { setModal } = useOutletContext();
 
 	useEffect(() => {
@@ -63,10 +61,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		onSubmit: async (values) => {
 			// функция для конверсии номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `+${getDigitsOnly(values.organize_phone)}`;
-
-			const formData = new FormData();
-			formData.append('file', selectedFile);
+			const formattedPhone = getDigitsOnly(values.organize_phone);
 
 			try {
 				const organizationResponse = await createOrganization({
@@ -84,6 +79,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 						formattedPhone,
 					about: values.about_organization || '' || undefined,
 					city: values.organize_city,
+					photo: values.photo || '',
 				});
 
 				setModal({
@@ -186,8 +182,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					value={formik.values.photo}
-					setSelectedFile={setSelectedFile}
+					value={formik.values.confirm_password}
+					error={formik.errors.photo}
+					setFieldValue={formik.setFieldValue}
+					setFieldError={formik.setFieldError}
 				/>
 			</InputGroup>
 
