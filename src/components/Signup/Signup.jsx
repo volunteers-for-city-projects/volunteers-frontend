@@ -10,7 +10,7 @@ import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGrou
 export default function Signup() {
 	const [isPageTitle, setIsPageTitle] = useState('');
 	const [isActiveForm, setIsActiveForm] = useState('');
-	const [searchParam] = useSearchParams();
+	const [searchParam, setSearchParam] = useSearchParams();
 	const [isActiveButton, setIsActiveButton] = useState(
 		searchParam.get('role') || 'volunteer'
 	);
@@ -23,12 +23,16 @@ export default function Signup() {
 		if (isActiveButton.includes('volunteer')) {
 			setIsPageTitle('Регистрация волонтёра');
 			setIsActiveForm('volunteer');
+			searchParam.set('role', 'volunteer');
+			setSearchParam(searchParam);
 		}
 		if (isActiveButton.includes('organizer')) {
 			setIsActiveForm('organizer');
 			setIsPageTitle('Регистрация организатора');
+			searchParam.set('role', 'organizer');
+			setSearchParam(searchParam);
 		}
-	}, [setIsPageTitle, isActiveButton]);
+	}, [setIsPageTitle, isActiveButton, searchParam, setSearchParam]);
 
 	return (
 		<main className="content">
