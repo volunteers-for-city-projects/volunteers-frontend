@@ -6,6 +6,7 @@ import {
 	ENDPOINT_VOLUNTEERS,
 	ENDPOINT_ORGANIZATIONS,
 	ENDPOINT_MEDIA,
+	ENDPOINT_ACTIVATION_USER,
 } from './endpoints';
 
 const getCities = () => request(ENDPOINT_CITIES, 'GET');
@@ -32,6 +33,8 @@ const updateOrganization = (organizationId, updatedOrganizationData) =>
 
 const postPhoto = (formData) => request(ENDPOINT_MEDIA, 'POST', formData);
 
+const activateUser = (data) => request(ENDPOINT_ACTIVATION_USER, 'POST', data);
+
 export {
 	getCities,
 	getSkills,
@@ -41,4 +44,5 @@ export {
 	createOrganization,
 	updateOrganization,
 	postPhoto,
+	activateUser,
 };

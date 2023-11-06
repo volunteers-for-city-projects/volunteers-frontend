@@ -86,6 +86,16 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					city: values.organize_city,
 				});
 
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					onSubmit: (event) => {
+						event.preventDefault();
+						// ожидаем  api/auth/resend_activation
+					},
+				});
+
 				console.log('Volunteer created:', organizationResponse);
 			} catch (error) {
 				if (Array.isArray(error)) {
