@@ -16,7 +16,6 @@
 
 	&__label {
 		display: block;
-		width: 280px;
 		height: 18px;
 		color: $--Text;
 		font: {
@@ -32,9 +31,10 @@
 	}
 
 	&__error-message {
+		display: block;
+		height: 21px;
 		margin-top: 8px;
 		color: $--Wrong;
-		display: none;
 		font: {
 			family: 'Fira Sans', sans-serif;
 			size: 20px;
@@ -42,10 +42,5 @@
 			style: normal;
 		}
 		line-height: 23px; /* 115% */
-	}
-
-	&__error-message_show {
-		display: inline-block;
-		min-height: 24px;
 	}
 }

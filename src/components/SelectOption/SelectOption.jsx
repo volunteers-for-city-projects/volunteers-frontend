@@ -2,7 +2,6 @@ import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-import clsx from 'clsx';
 
 function SelectOption({
 	label,
@@ -99,12 +98,8 @@ function SelectOption({
 				})}
 				isMulti={isMulti}
 			/>
-			<span
-				className={clsx('select-option__error-message', {
-					'select-option__error-message_show': isFocused && error?.length > 0,
-				})}
-			>
-				{error}
+			<span className="select-option__error-message">
+				{isFocused && error?.length > 0 && error}
 			</span>
 		</div>
 	);
