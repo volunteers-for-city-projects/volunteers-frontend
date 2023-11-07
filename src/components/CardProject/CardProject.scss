@@ -55,7 +55,7 @@
 	}
 
 	&__name {
-		margin-top: 53px;
+		padding-top: 53px;
 		height: 47px;
 		display: flex;
 		align-items: center;
@@ -70,6 +70,8 @@
 		z-index: 2;
 		color: #3f3f3f;
 		align-self: last baseline;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	&__data {
 		display: flex;
@@ -99,6 +101,15 @@
 			font-weight: 300;
 			line-height: 20px;
 			z-index: 2;
+		}
+	}
+
+	@media screen and (max-width: 1919px) {
+		&__project {
+			width: 356px;
+		}
+		&__name-title {
+			font-size: 26px;
 		}
 	}
 }

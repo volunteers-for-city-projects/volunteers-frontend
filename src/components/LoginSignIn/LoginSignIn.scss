@@ -1,0 +1,12 @@
+.login-sign-in {
+	display: flex;
+	min-width: 1380px;
+	justify-content: space-between;
+	margin: 81px auto 36px auto;
+}
+
+@media (max-width: 1919px) {
+	.login-sign-in {
+		min-width: 1180px;
+	}
+}

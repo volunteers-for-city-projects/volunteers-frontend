@@ -1,39 +1,124 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
+import { getUserInformation, logOut } from '../../utils/api/login';
+import {
+	getVolunteerInformation,
+	getOrganizationInformation,
+} from '../../utils/api/profile';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
+import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
 
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [isLoggedIn, setIsLoggedIn] = useState(
+		Boolean(localStorage.getItem('token'))
+	);
 	const [modal, setModal] = useState({
 		isOpen: false,
 		type: 'init',
 		state: 'info',
 		title: 'init',
-		onSubmit: () => {},
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isCurrentUser, setIsCurrentUser] = useState({
-		first_name: '',
-		second_name: '',
-		last_name: '',
+	const [currentUser, setCurrentUser] = useState({
+		firstName: '',
+		secondName: '',
+		lastName: '',
 		role: '',
-		id: null,
+		userId: null,
 		email: '',
+		id: null,
+		city: null,
+		dateOfBirth: '',
+		phone: '',
+		photo: '',
+		userSkills: [],
+		telegram: '',
+		about: '',
+		ogrn: '',
+		title: '',
 	});
+	const [modalChangePassword, setModalChangePassword] = useState(false);
 
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		if (isLoggedIn) {
+			getUserInformation()
+				.then((user) => {
+					setIsLoggedIn(true);
+					if (user.role === 'volunteer') {
+						getVolunteerInformation(user.id_organizer_or_volunteer).then(
+							(volunteer) => {
+								setCurrentUser({
+									firstName: user.first_name,
+									secondName: user.second_name,
+									lastName: user.last_name,
+									role: user.role,
+									userId: user.id,
+									email: user.email,
+									id: user.id_organizer_or_volunteer,
+									city: volunteer.city,
+									dateOfBirth: volunteer.date_of_birth,
+									phone: volunteer.phone || '',
+									photo: volunteer.photo || '',
+									userSkills: volunteer.skills,
+									telegram: volunteer.telegram || '',
+								});
+							}
+						);
+					} else {
+						getOrganizationInformation(user.id_organizer_or_volunteer).then(
+							(organizer) => {
+								setCurrentUser({
+									firstName: user.first_name,
+									secondName: user.second_name,
+									lastName: user.last_name,
+									role: user.role,
+									userId: user.id,
+									email: user.email,
+									id: user.id_organizer_or_volunteer,
+									about: organizer.about || '',
+									city: organizer.city,
+									ogrn: organizer.ogrn,
+									phone: organizer.phone,
+									photo: organizer.photo || '',
+									title: organizer.title,
+								});
+							}
+						);
+					}
+				})
+				.catch((err) => {
+					setIsLoggedIn(false);
+					localStorage.removeItem('token');
+					console.error(err);
+				});
+		}
+	}, [isLoggedIn]);
+
+	const closeModal = () => {
+		setModal({
+			isOpen: false,
+			type: 'init',
+			state: 'info',
+			title: 'init',
+		});
+	};
+
 	const handleLogout = (event) => {
 		event.preventDefault();
-		setModal((prevModal) => ({
-			...prevModal,
-			isOpen: false,
-		}));
-		navigate('/');
-		setIsLoggedIn(false);
+		closeModal();
+		logOut()
+			.then(() => {
+				localStorage.removeItem('token');
+				navigate('/');
+				setIsLoggedIn(false);
+			})
+			.catch((err) => console.error(err));
 	};
 
 	const handleConfirmLogout = () => {
@@ -46,11 +131,16 @@ function App() {
 		});
 	};
 
-	const closeModal = () => {
-		setModal((prevModal) => ({
-			...prevModal,
-			isOpen: false,
-		}));
+	const handleChangePassword = () => {
+		setModalChangePassword(true);
+	};
+
+	const closeModalPassword = () => {
+		setModalChangePassword(false);
+	};
+
+	const handleChangePasswordSubmit = (e) => {
+		e.preventDefault();
 	};
 
 	return (
@@ -64,15 +154,26 @@ function App() {
 					setPlatformEmail,
 					isLoading,
 					setIsLoading,
-					isCurrentUser,
-					setIsCurrentUser,
+					currentUser,
+					setCurrentUser,
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
+					handleChangePassword,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />
-			<Modal modal={modal} closeModal={closeModal} />
+			{modal.isOpen &&
+				createPortal(
+					<Modal modal={modal} closeModal={closeModal} />,
+					document.body
+				)}
+
+			<ModalChangePassword
+				isOpen={modalChangePassword}
+				onClose={closeModalPassword}
+				onSubmit={handleChangePasswordSubmit}
+			/>
 		</>
 	);
 }

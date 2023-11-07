@@ -70,3 +70,19 @@
 		color: $--Primary;
 	}
 }
+@media screen and (max-width: 1919px) {
+	.about-project {
+		gap: 80px;
+		background-position:
+			top 306px right,
+			bottom -2px left;
+
+		&__container-about {
+			gap: 70px;
+			max-width: 1178px;
+		}
+		&__container {
+			max-width: 1178px;
+		}
+	}
+}

@@ -1,0 +1,58 @@
+@import '../../style/variables.scss';
+
+@keyframes appearance {
+	from {
+		transform: translate(0, -50px);
+		opacity: 0;
+	}
+	to {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+}
+
+.popup-window {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	padding: 25px 30px;
+	gap: 10px;
+	max-width: 515px;
+	border-radius: 5px;
+	opacity: 0;
+	transition:
+		visibility 2s,
+		opacity 2s linear;
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	right: 0;
+	animation: appearance 2s;
+
+	&_opened {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	&_type_success {
+		background-color: $--Secondary;
+	}
+
+	&_type_error {
+		background-color: $--Error;
+	}
+
+	&__icon {
+		width: 24px;
+		height: 24px;
+	}
+
+	&__text {
+		margin: 0;
+		font-size: 28px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 1.18;
+		color: $--White;
+	}
+}

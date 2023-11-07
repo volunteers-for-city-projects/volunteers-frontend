@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Signup.scss';
 
 // import PageMenu from '../PageMenu/PageMenu';
+import { useSearchParams } from 'react-router-dom';
 import VolunteerSignupForm from '../VolunteerSignupForm/VolunteerSignupForm';
 import OrganizerSignupForm from '../OrganizerSignupForm/OrganizerSignupForm';
 import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGroup';
@@ -9,7 +10,10 @@ import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGrou
 export default function Signup() {
 	const [isPageTitle, setIsPageTitle] = useState('');
 	const [isActiveForm, setIsActiveForm] = useState('');
-	const [isActiveButton, setIsActiveButton] = useState('volunteer');
+	const [searchParam, setSearchParam] = useSearchParams();
+	const [isActiveButton, setIsActiveButton] = useState(
+		searchParam.get('role') || 'volunteer'
+	);
 
 	const handleToggle = (buttonName) => {
 		setIsActiveButton(buttonName);
@@ -19,12 +23,16 @@ export default function Signup() {
 		if (isActiveButton.includes('volunteer')) {
 			setIsPageTitle('Регистрация волонтёра');
 			setIsActiveForm('volunteer');
+			searchParam.set('role', 'volunteer');
+			setSearchParam(searchParam);
 		}
 		if (isActiveButton.includes('organizer')) {
 			setIsActiveForm('organizer');
 			setIsPageTitle('Регистрация организатора');
+			searchParam.set('role', 'organizer');
+			setSearchParam(searchParam);
 		}
-	}, [setIsPageTitle, isActiveButton]);
+	}, [setIsPageTitle, isActiveButton, searchParam, setSearchParam]);
 
 	return (
 		<main className="content">

@@ -1,39 +1,16 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import './FormRequest.scss';
 import clsx from 'clsx';
+import RequestFormSchema from '../../utils/validationSchemas/RequestFormSchema';
 import InputRequest from '../InputRequest/InputRequest';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import PopupWindow from '../PopupWindow/PopupWindow';
 
-function FormRequest({ handleSendMessage }) {
+function FormRequest({ handleSendMessage, popup }) {
 	const [isFocus, setIsFocus] = useState(true);
-	const RequestSchema = Yup.object().shape({
-		message: Yup.string()
-			.min(10, 'Длина поля от 10 до 750 символов')
-			.max(750, 'Длина поля от 10 до 750 символов')
-			.required('Поле обязательно для заполнения'),
-		firstName: Yup.string()
-			.min(2, 'Длина поля от 2 до 40 символов')
-			.max(40, 'Длина поля от 2 до 40 символов')
-			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите имя кириллицей')
-			.required('Поле обязательно для заполнения'),
-		phone: Yup.string()
-			.matches(
-				/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-				'Введите корректный телефон'
-			)
-			.required('Поле обязательно для заполнения'),
-		email: Yup.string()
-			.min(5, 'Длина поля от 5 до 256 символов')
-			.max(256, 'Длина поля от 5 до 256 символов')
-			.matches(
-				/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-				'Проверьте правильность email адреса'
-			)
-			.required('Поле обязательно для заполнения'),
-	});
 
 	const handleSubmit = (values, { resetForm }) => {
 		const formattedPhone = values.phone
@@ -54,10 +31,12 @@ function FormRequest({ handleSendMessage }) {
 	};
 
 	return (
-		<section className="request" id="request">
+		<section className="request">
 			<div className="request__container">
 				<div className="request__container-title">
-					<h2 className="request__title">Связаться c нами</h2>
+					<h2 className="request__title" id="request">
+						Связаться c нами
+					</h2>
 					<p className="request__subtitle">
 						Если у вас остались вопросы, вы можете связаться с нами через форму
 						обратной связи и мы обязательно ответим вам в течении трех дней
@@ -70,7 +49,7 @@ function FormRequest({ handleSendMessage }) {
 						phone: '',
 						email: '',
 					}}
-					validationSchema={RequestSchema}
+					validationSchema={RequestFormSchema}
 					onSubmit={handleSubmit}
 				>
 					{({ handleChange, values, errors, touched, submitCount }) => (
@@ -130,7 +109,7 @@ function FormRequest({ handleSendMessage }) {
 										name="email"
 										type="text"
 										htmlFor="email"
-										label="Emai*"
+										label="Email*"
 										placeholder="Введите ваш email"
 										value={values.email}
 										error={errors.email}
@@ -146,11 +125,21 @@ function FormRequest({ handleSendMessage }) {
 									border="none"
 									color="#FFF"
 									type="submit"
+									disabled={popup.isOpen}
 								/>
 							</div>
 						</Form>
 					)}
 				</Formik>
+				{popup.isOpen &&
+					createPortal(
+						<PopupWindow
+							text={popup.text}
+							type={popup.type}
+							isOpen={popup.isOpen}
+						/>,
+						document.querySelector('.request__container')
+					)}
 			</div>
 		</section>
 	);
@@ -158,6 +147,11 @@ function FormRequest({ handleSendMessage }) {
 
 FormRequest.propTypes = {
 	handleSendMessage: PropTypes.func.isRequired,
+	popup: PropTypes.shape({
+		isOpen: PropTypes.bool.isRequired,
+		text: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 export default FormRequest;

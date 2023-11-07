@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useOutletContext } from 'react-router-dom';
 import moment from 'moment';
 
 import './VolunteerSignupForm.scss';
@@ -11,7 +12,6 @@ import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
 import {
-	// postPhoto,
 	createVolunteer,
 	getSkills,
 	getCities,
@@ -23,7 +23,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 
-	const [selectedFile, setSelectedFile] = React.useState(null);
+	const { setModal } = useOutletContext();
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
@@ -60,8 +60,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		validateOnChange: true,
 		initialValues: {
 			firstname: '',
+			lastname: '',
 			secondname: '',
-			thirdname: '',
 			birthday: '',
 			phone: '',
 			email: '',
@@ -80,23 +80,20 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = `${getDigitsOnly(values.phone)}`;
-			// функция для добавления файла
-			const formData = new FormData();
-			formData.append('file', selectedFile);
+			const formattedPhone = getDigitsOnly(values.phone);
 
 			try {
 				await createVolunteer({
 					user: {
 						first_name: values.firstname,
 						second_name: values.secondname,
-						last_name: values.thirdname,
+						last_name: values.lastname,
 						email: values.email,
 						password: values.password,
 						re_password: values.confirm_password,
 					},
 					telegram: values.telegram,
-					photo: values.photo || null || '' || undefined,
+					photo: values.photo || '',
 					date_of_birth: formattedDateOfBirth,
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
@@ -104,15 +101,30 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					skills: values.skills || [],
 					city: values.city || [] || null || '',
 				});
+
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					emailprop: values.email,
+					onSubmit: (event) => {
+						event.preventDefault();
+						// ожидаем  api/auth/resend_activation
+					},
+				});
 			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error('Failed to create user and/or volunteer:', error.message);
+				if (Array.isArray(error)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: error,
+					});
+				} else {
+					console.error(error);
+				}
 			}
-			// try {
-			// 	await postPhoto(formData);
-			// } catch (error) {
-			// 	console.error('Failed to create user and/or volunteer:', error.message);
-			// }
 		},
 	});
 
@@ -145,30 +157,30 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="secondname"
 					name="secondname"
-					label="Фамилия"
 					type="text"
-					placeholder="Иванов"
+					label="Отчество"
+					placeholder="Сергеевич"
 					inputSize="small"
 					error={formik.errors.secondname}
 					touched={formik.touched.secondname}
 					value={formik.values.secondname}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
+					autoсomplete="off"
 					required
 				/>
 				<Input
-					id="thirdname"
-					name="thirdname"
+					id="lastname"
+					name="lastname"
+					label="Фамилия"
 					type="text"
-					label="Отчество"
-					placeholder="Сергеевич"
+					placeholder="Иванов"
 					inputSize="small"
-					error={formik.errors.thirdname}
-					touched={formik.touched.thirdname}
-					value={formik.values.thirdname}
+					error={formik.errors.lastname}
+					touched={formik.touched.lastname}
+					value={formik.values.lastname}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					autoсomplete="off"
 					required
 				/>
 				<Input
@@ -236,7 +248,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Input
 					id="password"
 					name="password"
-					label="Введите пароль"
+					label="Пароль"
 					type="password"
 					placeholder="Пароль"
 					inputSize="small"
@@ -270,9 +282,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					inputSize="photo"
-					value={formik.values.confirm_password}
-					setSelectedFile={setSelectedFile}
+					setFieldValue={formik.setFieldValue}
+					setFieldError={formik.setFieldError}
 				/>
 			</InputGroup>
 			<InputGroup title="Дополнительная информация">
@@ -311,7 +322,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"
-					size="medium"
+					backgroundColor="#A6C94F"
+					border="1px solid #A6C94F"
+					minWidth="399px"
+					size="pre-large"
 					disabled={
 						!formik.isValid ||
 						!isCheckboxChecked ||

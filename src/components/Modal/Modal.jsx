@@ -1,17 +1,30 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { v4 as uuidv4 } from 'uuid';
 import './Modal.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import modalExit from '../../images/modals/exit.png';
 import modalSend from '../../images/modals/send.png';
 import modalSuccess from '../../images/modals/success.png';
+import modalError from '../../images/modals/error.png';
 
 function Modal({ modal, closeModal }) {
 	const stopPropagation = (event) => {
 		event.stopPropagation();
 	};
 
-	const { isOpen, type, state, title, onSubmit } = modal;
+	const { isOpen, type, state, title, onSubmit, errorArray, emailprop } = modal;
+
+	const errorsData = useMemo(() => {
+		if (errorArray && Array.isArray(errorArray)) {
+			return errorArray.map(({ textError }) => ({
+				textError,
+				id: uuidv4(),
+			}));
+		}
+		return [];
+	}, [errorArray]);
 
 	const contentText = {
 		confirm: {
@@ -23,8 +36,7 @@ function Modal({ modal, closeModal }) {
 		},
 		password: {
 			info: {
-				title:
-					'На почту example@mail.ru отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.',
+				title: `На почту ${emailprop} отправлено письмо со ссылкой. Перейдите по ссылке в письме для сброса пароля.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -34,16 +46,14 @@ function Modal({ modal, closeModal }) {
 				image: modalSuccess,
 			},
 			error: {
-				title:
-					'Мы не смогли найти пользователя с почтой example@email.ru. Проверьте правильность адреса или обратитесь в техподдержку.',
+				title: `Мы не смогли найти пользователя с почтой ${emailprop}. Проверьте правильность адреса или обратитесь в техподдержку.`,
 				textButton: '',
 				image: modalSend,
 			},
 		},
 		email: {
 			info: {
-				title:
-					'На email examplemail.ru отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.',
+				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -57,6 +67,13 @@ function Modal({ modal, closeModal }) {
 			info: {
 				title: 'Стартовое модальное окно',
 				textButton: '',
+			},
+		},
+		error: {
+			info: {
+				errorsArray: errorsData,
+				textButton: '',
+				image: modalError,
 			},
 		},
 	};
@@ -109,7 +126,6 @@ function Modal({ modal, closeModal }) {
 						color="#333"
 						backgroundColor="#A6C94F"
 						size="pre-large"
-						onClick={closeModal}
 						type="submit"
 						minWidth="399px"
 						border="none"
@@ -135,7 +151,6 @@ function Modal({ modal, closeModal }) {
 						color="#333"
 						backgroundColor="#A6C94F"
 						size="pre-large"
-						onClick={closeModal}
 						type="submit"
 						minWidth="399px"
 						border="none"
@@ -145,6 +160,18 @@ function Modal({ modal, closeModal }) {
 		},
 		init: {
 			info: <div>Стартовое модальное окно</div>,
+		},
+		error: {
+			info: (
+				<ul className="modal__list-errors">
+					{contentText[type][state].errorsArray &&
+						contentText[type][state].errorsArray.map((item) => (
+							<li key={item.id}>
+								<p className="modal__text">{item.textError}</p>
+							</li>
+						))}
+				</ul>
+			),
 		},
 	};
 
@@ -193,16 +220,23 @@ function Modal({ modal, closeModal }) {
 Modal.propTypes = {
 	modal: PropTypes.shape({
 		isOpen: PropTypes.bool.isRequired,
-		type: PropTypes.string.isRequired,
-		state: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
+		type: PropTypes.string,
+		state: PropTypes.string,
+		title: PropTypes.string,
+		emailprop: PropTypes.string,
 		onSubmit: PropTypes.func,
+		errorArray: PropTypes.arrayOf(
+			PropTypes.shape({
+				textError: PropTypes.string.isRequired,
+			})
+		),
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,
 };
 
 Pushbutton.defaultProps = {
 	onSubmit: undefined,
+	emailprop: 'email',
 };
 
 export default Modal;

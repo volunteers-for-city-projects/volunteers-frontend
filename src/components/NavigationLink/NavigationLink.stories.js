@@ -9,7 +9,7 @@ export default {
 	args: {
 		label: 'Link',
 		path: '#',
-		isAnchor: false,
+		anchor: '',
 	},
 	decorators: [withRouter],
 };

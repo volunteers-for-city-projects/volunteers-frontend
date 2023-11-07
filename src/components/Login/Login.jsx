@@ -1,70 +1,121 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import './Login.scss';
 import { apiLogin } from '../../utils/api/login-route';
+import { signIn, getUserInformation } from '../../utils/api/login';
 
 function Login() {
-	const { isLoading, setIsLoading, setIsCurrentUser, setIsLoggedIn, setModal } =
+	const { isLoading, setIsLoading, setCurrentUser, setIsLoggedIn, setModal } =
 		useOutletContext();
 
 	const navigate = useNavigate();
 
 	const handleSignIn = ({ password, email }) => {
 		setIsLoading(true);
-		apiLogin
-			.signIn({ password, email })
+		signIn({ password, email })
 			.then((data) => {
 				if (data.auth_token) {
 					localStorage.setItem('token', data.auth_token);
-					apiLogin.getUserInformation().then((user) => {
-						setIsCurrentUser(user);
+					getUserInformation().then((user) => {
+						setCurrentUser(user);
 						setIsLoggedIn(true);
 						navigate('/profile');
 					});
 				}
 			})
 			.catch((err) => {
-				// eslint-disable-next-line
-				alert(err.non_field_errors[0]);
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 			})
 			.finally(setIsLoading(false));
 	};
 
-	const handlePasswordReset = () => {
+	const handlePasswordReset = ({ email }) => {
 		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-			navigate('/login/password-reset');
-		}, 2000);
+		apiLogin
+			.resetPassword({ email })
+			.then(() => {
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					emailprop: email,
+					onSubmit: (event) => {
+						event.preventDefault();
+						handlePasswordReset({ email });
+					},
+				});
+			})
+			.catch((err) => {
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
+			})
+			.finally(setIsLoading(false));
 	};
 
-	const handleSaveChanges = () => {
+	const handleSaveChanges = ({ password, uid, token }) => {
 		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-			setModal({
-				isOpen: true,
-				type: 'password',
-				state: 'success',
-				title: 'Сброс пароля',
-				onSubmit: (event) => {
-					event.preventDefault();
-					navigate('/login');
-				},
+		apiLogin
+			.resetPasswordConfirm({ password, uid, token })
+			.then(() => {
+				setModal({
+					isOpen: true,
+					type: 'password',
+					state: 'success',
+					onSubmit: (event) => {
+						event.preventDefault();
+						navigate('/login');
+						setModal({
+							isOpen: false,
+						});
+					},
+				});
+			})
+			.catch((err) => {
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
-		}, 2000);
 	};
 
 	return (
-		<main className="login">
-			<Outlet
-				context={{
-					isLoading,
-					handleSignIn,
-					handlePasswordReset,
-					handleSaveChanges,
-				}}
-			/>
-		</main>
+		<Outlet
+			context={{
+				isLoading,
+				setIsLoading,
+				setModal,
+				handleSignIn,
+				handlePasswordReset,
+				handleSaveChanges,
+			}}
+		/>
 	);
 }
 

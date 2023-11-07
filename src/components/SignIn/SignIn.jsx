@@ -12,7 +12,9 @@ import {
 	ERROR_MESSAGE_EMAIL,
 	ERROR_MESSAGE_PASSWORD_MIN,
 	ERROR_MESSAGE_PASSWORD_MAX,
-	ERROR_MESSAGE_EMAIL_REG_EX,
+	ERROR_MESSAGE_EMAIL_MIN_MAX,
+	REG_EX_PASSWORD,
+	ERROR_MESSAGE_PASSWORD_REG_EX,
 } from '../../utils/constants';
 import telegram from '../../images/icon-tg.svg';
 import vkontakte from '../../images/icon-vk.svg';
@@ -30,11 +32,14 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 		validationSchema: Yup.object({
 			userEmail: Yup.string()
 				.email(ERROR_MESSAGE_EMAIL)
-				.matches(REG_EX_EMAIL, ERROR_MESSAGE_EMAIL_REG_EX)
+				.min(5, ERROR_MESSAGE_EMAIL_MIN_MAX)
+				.max(256, ERROR_MESSAGE_EMAIL_MIN_MAX)
+				.matches(REG_EX_EMAIL, ERROR_MESSAGE_EMAIL)
 				.required(ERROR_MESSAGE_REQUIRED),
 			userPassword: Yup.string()
-				.min(5, ERROR_MESSAGE_PASSWORD_MIN)
+				.min(8, ERROR_MESSAGE_PASSWORD_MIN)
 				.max(20, ERROR_MESSAGE_PASSWORD_MAX)
+				.matches(REG_EX_PASSWORD, ERROR_MESSAGE_PASSWORD_REG_EX)
 				.required(ERROR_MESSAGE_REQUIRED),
 		}),
 		onSubmit: (values) => {
@@ -80,7 +85,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 							name="userEmail"
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							value={formik.values.userEmail}
+							value={formik.values.userEmail ?? ''}
 							disabled={isLoading}
 							required
 						/>
@@ -101,7 +106,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 							name="userPassword"
 							minLength="5"
 							maxLength="20"
-							value={formik.values.userPassword}
+							value={formik.values.userPassword ?? ''}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled={isLoading}
@@ -133,7 +138,6 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 				border="1px solid #a6c94f"
 				size="entrance"
 				minWidth="100%"
-				disabled={!formik.isValid || isLoading}
 				type="button"
 				onClick={onClickRegestration}
 			/>

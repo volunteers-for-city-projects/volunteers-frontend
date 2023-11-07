@@ -1,8 +1,6 @@
 @import '../../style/variables.scss';
 
 .label {
-	// margin-top: px;
-
 	display: block;
 	width: 280px;
 	height: 18px;
@@ -13,20 +11,19 @@
 	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 23px; /* 147.883% */
+	line-height: 23px;
 
 	word-wrap: break-word;
 
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	// overflow: hidden;
 
 	&_type-large {
 		font-family: Fira Sans;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 700;
-		line-height: 20px; /* 142.857% */
+		line-height: 20px;
 	}
 
 	&_type-photo {
@@ -54,6 +51,13 @@
 	font-style: normal;
 	font-weight: 400;
 	line-height: 23px; /* 147.883% */
+
+	&_type-mini {
+		width: 280px;
+		height: 50px;
+
+		padding: 18px 16px;
+	}
 
 	&_type-small {
 		width: 400px;
@@ -148,6 +152,11 @@
 	text-overflow: ellipsis;
 	white-space: pre-wrap;
 	// overflow: hidden;
+
+	&_type-mini {
+		width: 280px;
+		height: 14px;
+	}
 
 	&_type-small {
 		width: 400px;
