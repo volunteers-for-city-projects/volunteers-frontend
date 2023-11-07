@@ -1,11 +1,11 @@
-$error-color: #f78254;
+@import '../../style/variables.scss';
 
 .label {
 	display: block;
 	width: 280px;
 	height: 18px;
 
-	color: #3f3f3f;
+	color: $--Text;
 
 	font-family: Fira Sans;
 	font-size: 20px;
@@ -43,7 +43,7 @@ $error-color: #f78254;
 	box-sizing: border-box;
 
 	border-radius: 5px;
-	border: 1px solid #000;
+	border: 1px solid $--Text;
 
 	background-color: transparent;
 
@@ -82,6 +82,13 @@ $error-color: #f78254;
 		padding: 0 10px;
 	}
 
+	&_type-extra-large {
+		width: 760px;
+		height: 50px;
+
+		padding: 18px 16px;
+	}
+
 	&_type-photo {
 		width: 24px;
 		height: 24px;
@@ -111,11 +118,11 @@ $error-color: #f78254;
 	}
 
 	&_error {
-		border: 1px solid $error-color;
+		border: 1px solid $--Wrong;
 	}
 
 	&::placeholder {
-		color: #959595;
+		color: $--Dark-grey;
 		font-family: Fira Sans;
 		font-size: 20px;
 		font-style: normal;
@@ -130,14 +137,15 @@ $error-color: #f78254;
 .error-message {
 	display: block;
 
-	margin-top: 6px;
-
-	color: $error-color;
-	font-family: Fira Sans;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 130%;
+	margin-top: 8px;
+	color: $--Wrong;
+	font: {
+		family: 'Fira Sans', sans-serif;
+		size: 20px;
+		weight: 400;
+		style: normal;
+	}
+	line-height: 23px; /* 115% */
 
 	word-wrap: break-word;
 
@@ -152,7 +160,6 @@ $error-color: #f78254;
 
 	&_type-small {
 		width: 400px;
-		height: 14px;
 	}
 
 	&_type-medium {
@@ -166,7 +173,14 @@ $error-color: #f78254;
 
 	&_type-large {
 		width: 540px;
-		max-height: 16px;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	&_type-extra-large {
+		width: 760px;
 
 		text-overflow: ellipsis;
 		white-space: nowrap;

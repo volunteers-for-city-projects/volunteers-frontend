@@ -1,9 +1,6 @@
-$error-color: #f78254;
+@import '../../style/variables.scss';
 
 .text-area {
-	margin-top: 11px;
-
-	min-width: 580px;
 	max-width: 580px;
 	min-height: 60px;
 	height: 175px;
@@ -12,10 +9,10 @@ $error-color: #f78254;
 
 	padding: 16px;
 
-	background-color: #fff;
+	background-color: $--White;
 
-	border-radius: 10px;
-	border: 1px solid #000;
+	border-radius: 5px;
+	border: 1px solid $--Black;
 
 	font-family: Fira Sans;
 	font-size: 20px;
@@ -24,7 +21,7 @@ $error-color: #f78254;
 	line-height: 23px;
 
 	&::placeholder {
-		color: #959595;
+		color: $--Dark-grey;
 		font-family: Fira Sans;
 		font-size: 20px;
 		font-style: normal;
@@ -33,21 +30,24 @@ $error-color: #f78254;
 	}
 
 	&_error {
-		border: 1px solid $error-color;
+		border: 1px solid $--Wrong;
 
 		&-message {
-			height: 14px;
+			// width: 580px;
+			height: 20px;
 
 			display: block;
 
-			margin-top: 6px;
+			margin-top: 8px;
 
-			color: $error-color;
-			font-family: Fira Sans;
-			font-size: 14px;
-			font-style: normal;
-			font-weight: 400;
-			line-height: 130%;
+			color: $--Wrong;
+			font: {
+				family: 'Fira Sans', sans-serif;
+				size: 20px;
+				weight: 400;
+				style: normal;
+			}
+			line-height: 23px; /* 115% */
 
 			word-wrap: break-word;
 
@@ -59,14 +59,8 @@ $error-color: #f78254;
 }
 
 .textarea-label {
-	display: block;
-
-	width: 280px;
-	height: 18px;
-
-	margin-top: 11px;
-
-	color: #3f3f3f;
+	margin-bottom: 12px;
+	color: $--Text;
 
 	font-family: Fira Sans;
 	font-size: 20px;
@@ -79,4 +73,9 @@ $error-color: #f78254;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	// overflow: hidden;
+}
+
+.text-area__container {
+	display: flex;
+	flex-direction: column;
 }

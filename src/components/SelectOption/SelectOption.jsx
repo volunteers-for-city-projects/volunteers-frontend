@@ -1,8 +1,7 @@
 import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-import clsx from 'clsx';
+import { useCallback, useState } from 'react';
 
 function SelectOption({
 	label,
@@ -10,12 +9,11 @@ function SelectOption({
 	placeholder,
 	options,
 	handleChange,
-	errorMessage,
+	error,
 	isMulti,
 	required,
 }) {
-	// const [selectedOption, setSelectedOption] = useState(null);
-
+	const [isFocused, setIsFocused] = useState(false);
 	const customStyles = {
 		control: (baseStyles) => ({
 			...baseStyles,
@@ -25,9 +23,9 @@ function SelectOption({
 			fontWeight: '400',
 			lineHeight: '23px',
 			borderRadius: '5px',
-			borderColor: '#3f3f3f',
+			borderColor: isFocused && error?.length > 0 ? '#f78254' : '#3f3f3f',
 			borderWidth: '1px',
-			minHeight: '48px',
+			minHeight: '50px',
 			padding: '2px 5px',
 			'&:hover': {
 				borderColor: '#3f3f3f',
@@ -36,8 +34,6 @@ function SelectOption({
 		dropdownIndicator: (baseStyles) => ({
 			...baseStyles,
 			padding: '11px 12px',
-			// width: '5px',
-			// height: '5px',
 			color: '#3f3f3f',
 			'&:hover': {
 				color: '#3f3f3f',
@@ -83,6 +79,9 @@ function SelectOption({
 				placeholder={placeholder}
 				options={options}
 				onChange={changeOption}
+				onBlur={() => {
+					setIsFocused(true);
+				}}
 				components={{
 					IndicatorSeparator: () => null,
 				}}
@@ -98,12 +97,8 @@ function SelectOption({
 				})}
 				isMulti={isMulti}
 			/>
-			<span
-				className={clsx('select-option__error-message', {
-					'select-option__error-message_show': errorMessage?.length > 0,
-				})}
-			>
-				{errorMessage}
+			<span className="select-option__error-message">
+				{isFocused && error?.length > 0 && error}
 			</span>
 		</div>
 	);
@@ -120,7 +115,7 @@ SelectOption.propTypes = {
 		})
 	),
 	handleChange: PropTypes.func,
-	errorMessage: PropTypes.string,
+	error: PropTypes.string,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
 };
@@ -141,7 +136,7 @@ SelectOption.defaultProps = {
 	],
 	handleChange: (selectedOption) =>
 		console.log(`Option selected: `, selectedOption),
-	errorMessage: undefined,
+	error: undefined,
 	isMulti: false,
 	required: false,
 };

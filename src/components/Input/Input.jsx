@@ -39,6 +39,10 @@ export default function Input({
 		inputClass = 'large';
 		labelClass = 'large';
 		errorClass = 'large';
+	} else if (inputSize === 'extra-large') {
+		inputClass = 'extra-large';
+		labelClass = 'extra-large';
+		errorClass = 'extra-large';
 	}
 
 	// маски
@@ -58,9 +62,11 @@ export default function Input({
 
 	return (
 		<div>
-			<label htmlFor={name} className={`label label_type-${labelClass}`}>
-				{required ? `${label}*` : label}
-			</label>
+			{label.length > 0 && (
+				<label htmlFor={name} className={`label label_type-${labelClass}`}>
+					{required ? `${label}*` : label}
+				</label>
+			)}
 
 			<input
 				ref={type !== 'text' ? inputRef : null}
@@ -73,6 +79,7 @@ export default function Input({
 						? 'input_error'
 						: ''
 				}`}
+				style={{ marginTop: label?.length === 0 && '0' }}
 				required={required}
 				onChange={(e) => {
 					setIsFocus(true);

@@ -1,0 +1,210 @@
+@import '../../style/variables.scss';
+
+.add-project {
+	margin: 0 auto;
+	&__name-container {
+		max-width: 540px;
+		box-sizing: border-box;
+		margin: 54px 0 15px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		grid-area: name;
+	}
+	&__input-name {
+		display: block;
+		min-width: 540px;
+		min-height: 34px;
+		margin: 0;
+		padding: 10px;
+		border-radius: 10px;
+		border: 1px solid $--Primary;
+		color: $--Text;
+		font: {
+			family: $--Font-Primary;
+			size: 20px;
+			style: normal;
+			weight: 400;
+		}
+		line-height: 23px; /* 115% */
+		&:focus {
+			outline-width: 0;
+		}
+		&::placeholder {
+			color: $--Dark-grey;
+		}
+	}
+	&__button {
+		background-color: transparent;
+		background-position: 50%;
+		background-repeat: no-repeat;
+		border: none;
+		box-sizing: border-box;
+		cursor: pointer;
+	}
+	&__image {
+		width: 398px;
+		height: 540px;
+		border-radius: 10px;
+		object-fit: cover;
+		&-wrapper {
+			max-width: 398px;
+			display: flex;
+			flex-direction: column;
+			grid-area: image;
+		}
+	}
+	&__upload-image {
+		&-container {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		&-label {
+			color: $--Text;
+			font: {
+				family: $--Font-Primary;
+				size: 23px;
+				style: normal;
+				weight: 500;
+			}
+			line-height: 130%; /* 29.9px */
+		}
+		&-button {
+			order: none;
+			border-radius: 0;
+			width: 40px;
+			height: 40px;
+			position: relative;
+			visibility: hidden;
+
+			&::after {
+				content: url(../../images/upload-project-image.svg);
+				position: absolute;
+				top: 0;
+				left: 0;
+				visibility: visible;
+			}
+		}
+	}
+	&__form {
+		display: grid;
+		grid-template:
+			'name name'
+			'image contnt';
+		column-gap: 20px;
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			grid-area: contnt;
+		}
+		&-buttons {
+			margin: 20px 0 0;
+			display: grid;
+			grid-template-columns: repeat(2, 400px);
+			gap: 20px;
+		}
+	}
+	&__general-group {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(400px, 580px));
+		column-gap: 20px;
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+	}
+	&__place-group {
+		display: grid;
+		grid-template-columns: min-content 1fr;
+		gap: 20px;
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+		}
+	}
+	&__dates-group {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 400px);
+		gap: 14px 20px;
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+	}
+	&__additional-group {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 400px);
+		gap: 20px;
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+	}
+	&__caption-group {
+		margin: 0;
+		color: $--Text;
+		font: {
+			family: $--Font-Primary;
+			size: 23px;
+			style: normal;
+			weight: 500;
+		}
+		line-height: 130%; /* 29.9px */
+	}
+	@media screen and (max-width: 1366px) {
+		&__form {
+			display: grid;
+			grid-template:
+				'name image'
+				'contnt contnt';
+			grid-template-columns: 1fr 1fr;
+		}
+		&__name-container {
+			max-width: none;
+			margin: 0;
+			display: flex;
+			align-items: flex-end;
+			gap: 12px;
+			grid-area: name;
+		}
+		&__image {
+			width: 463px;
+			height: 463px;
+			&-wrapper {
+				max-width: 463px;
+				row-gap: 16px;
+				justify-self: center;
+			}
+		}
+	}
+}
+@media screen and (max-width: 1660px) {
+	.add-project {
+		padding: 0 30px;
+	}
+}
+@media screen and (max-width: 1366px) {
+	.add-project {
+		max-width: 1180px;
+	}
+}
+.error {
+	&-message {
+		display: block;
+		height: 21px;
+		margin: 0;
+		color: $--Wrong;
+		font: {
+			family: $--Font-Primary;
+			size: 20px;
+			weight: 400;
+			style: normal;
+		}
+		line-height: 23px; /* 115% */
+	}
+}

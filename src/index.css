@@ -28,3 +28,8 @@ code {
 	display: flex;
 	flex-direction: column;
 }
+
+*::selection {
+	background-color: #abc94f;
+	color: #252d1f;
+}
