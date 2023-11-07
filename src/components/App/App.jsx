@@ -10,6 +10,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
+import { apiChangePassword } from '../../utils/api/change-password';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -139,8 +140,22 @@ function App() {
 		setModalChangePassword(false);
 	};
 
-	const handleChangePasswordSubmit = (e) => {
-		e.preventDefault();
+	const handleChangeNewPassword = ({ newPassword, currentPassword }) => {
+		apiChangePassword
+			.changePasswordProfile({ newPassword, currentPassword })
+			.then(() => {
+				console.log('Пароль изменен');
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
+	const handleChangeCurrentPassword = ({ newPassword, currentPassword }) => {
+		handleChangeNewPassword({
+			newPassword,
+			currentPassword,
+		});
 	};
 
 	return (
@@ -172,7 +187,7 @@ function App() {
 			<ModalChangePassword
 				isOpen={modalChangePassword}
 				onClose={closeModalPassword}
-				onSubmit={handleChangePasswordSubmit}
+				onChangePassword={handleChangeCurrentPassword}
 			/>
 		</>
 	);
