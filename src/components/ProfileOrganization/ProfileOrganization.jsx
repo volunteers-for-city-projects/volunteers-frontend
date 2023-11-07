@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './ProfileOrganization.scss';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { getCities } from '../../utils/api/signupApi';
 
 import ProfileData from '../ProfileData/ProfileData';
@@ -28,6 +28,7 @@ function ProfileOrganization({ handleIsForm }) {
 		title,
 	} = currentUser;
 	const [cityName, setCityName] = useState('');
+	const navigate = useNavigate();
 
 	const dataOrganization = [
 		{
@@ -145,6 +146,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="283px"
 							backgroundColor="#A6C94F"
 							border="none"
+							onClick={() => navigate('/project')}
 						/>
 					</div>
 				</div>
