@@ -109,7 +109,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										name="email"
 										type="text"
 										htmlFor="email"
-										label="Emai*"
+										label="Email*"
 										placeholder="Введите ваш email"
 										value={values.email}
 										error={errors.email}
