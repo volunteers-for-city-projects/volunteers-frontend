@@ -7,6 +7,7 @@ import {
 import clsx from 'clsx';
 import './Promo.scss';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
+import nounsDeclension from '../../utils/declension';
 
 function Promo({ plarformPromo }) {
 	const { projectCount, volunteersCount, organizersCount } = plarformPromo;
@@ -58,15 +59,29 @@ function Promo({ plarformPromo }) {
 				>
 					<li className="promo__item">
 						<h2 className="promo__item-title">{projectCount}</h2>
-						<p className="promo__item-subtitle">проекта</p>
+						<p className="promo__item-subtitle">
+							{nounsDeclension(projectCount, ['проект', 'проекта', 'проектов'])}
+						</p>
 					</li>
 					<li className="promo__item">
 						<h2 className="promo__item-title">{volunteersCount}</h2>
-						<p className="promo__item-subtitle">волонтеров</p>
+						<p className="promo__item-subtitle">
+							{nounsDeclension(volunteersCount, [
+								'волонтер',
+								'волонтера',
+								'волонтеров',
+							])}
+						</p>
 					</li>
 					<li className="promo__item">
 						<h2 className="promo__item-title">{organizersCount}</h2>
-						<p className="promo__item-subtitle">организации</p>
+						<p className="promo__item-subtitle">
+							{nounsDeclension(organizersCount, [
+								'организация',
+								'организации',
+								'организаций',
+							])}
+						</p>
 					</li>
 				</ul>
 			</div>
