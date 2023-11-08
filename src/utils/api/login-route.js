@@ -15,6 +15,9 @@ class LoginApi {
 
 	request(endPoint, options) {
 		return fetch(`${this.baseUrl}${endPoint}`, options).then((res) => {
+			if (res.statusText === 'No Content') {
+				return res;
+			}
 			if (res.ok) {
 				return res.json();
 			}

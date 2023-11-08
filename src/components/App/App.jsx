@@ -11,6 +11,7 @@ import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
 import { apiLogin } from '../../utils/api/login-route';
+import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -43,6 +44,7 @@ function App() {
 		title: '',
 	});
 	const [modalChangePassword, setModalChangePassword] = useState(false);
+	const [popupChangePasswor, setPopupChangePassword] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -136,29 +138,44 @@ function App() {
 	const handleChangePasswordModal = () => {
 		setModalChangePassword(true);
 	};
+	const handleChangePopupPassword = () => {
+		setPopupChangePassword(true);
+	};
 
 	// закрыть модалку
 	const closeModalPassword = () => {
 		setModalChangePassword(false);
+	};
+	const closePopupPassword = () => {
+		setPopupChangePassword(false);
 	};
 
 	const handleChangePassword = ({ newPassword, currentPassword }) => {
 		apiLogin
 			.changePasswordProfile({ newPassword, currentPassword })
 			.then(() => {
-				console.log('Пароль изменен');
+				closeModalPassword();
+				handleChangePopupPassword();
 			})
 			.catch((err) => {
-				console.error(err, 'ОШИБКА');
+				console.log(err);
 			});
 	};
 
 	// обработчик формы изменения пароля
-	const handleChangeCurrentPassword = ({ newPassword, currentPassword }) => {
-		handleChangePassword({
-			newPassword,
-			currentPassword,
-		});
+	const handleChangeCurrentPassword = (
+		{ newPassword, currentPassword },
+		{ resetForm }
+	) => {
+		handleChangePassword(
+			{
+				newPassword,
+				currentPassword,
+			},
+			setTimeout(() => {
+				resetForm();
+			}, 2000)
+		);
 	};
 
 	return (
@@ -191,6 +208,10 @@ function App() {
 				isOpen={modalChangePassword}
 				onClose={closeModalPassword}
 				onChangePassword={handleChangeCurrentPassword}
+			/>
+			<PopupChangePasswordSuccess
+				isOpen={popupChangePasswor}
+				onClose={closePopupPassword}
 			/>
 		</>
 	);

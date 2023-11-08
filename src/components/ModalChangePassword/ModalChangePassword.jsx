@@ -6,12 +6,14 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ModalChangePasswordSchema from '../../utils/validationSchemas/ModalChangePasswordSchema';
 
 function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
-	const handleSubmit = (values) => {
-		onChangePassword({
-			newPassword: values.newPassword,
-			currentPassword: values.currentPassword,
-			// repeatNewPassword: values.repeatNewPassword,
-		});
+	const handleSubmit = (values, { resetForm }) => {
+		onChangePassword(
+			{
+				newPassword: values.newPassword,
+				currentPassword: values.currentPassword,
+			},
+			{ resetForm }
+		);
 	};
 
 	return (
@@ -25,7 +27,7 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 				validationSchema={ModalChangePasswordSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ handleChange, values, errors, touched }) => (
+				{({ handleChange, values, errors, touched, isValid }) => (
 					<Form className="popup__container" noValidate>
 						<button className="popup__close" type="button" onClick={onClose}>
 							{' '}
@@ -82,6 +84,7 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 							backgroundColor="#A6C94F"
 							border="none"
 							type="submit"
+							disabled={!isValid}
 						/>
 					</Form>
 				)}
