@@ -64,13 +64,13 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 			const formattedPhone = getDigitsOnly(values.organize_phone);
 
 			try {
-				const organizationResponse = await createOrganization({
+				await createOrganization({
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.organize_firstname,
-						last_name: values.organize_secondname,
+						last_name: values.organize_lastname,
 						password: values.organize_password,
-						second_name: values.organize_lastname,
+						second_name: values.organize_secondname,
 					},
 					title: values.organization,
 					ogrn: values.organize_ogrn,
@@ -92,8 +92,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 						// ожидаем  api/auth/resend_activation
 					},
 				});
-
-				console.log('Volunteer created:', organizationResponse);
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({
