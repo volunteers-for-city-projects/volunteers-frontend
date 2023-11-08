@@ -10,7 +10,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
-import { apiChangePassword } from '../../utils/api/change-password';
+import { apiLogin } from '../../utils/api/login-route';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -132,27 +132,30 @@ function App() {
 		});
 	};
 
-	const handleChangePassword = () => {
+	// изменение состояния модального окна пароля(открыть)
+	const handleChangePasswordModal = () => {
 		setModalChangePassword(true);
 	};
 
+	// закрыть модалку
 	const closeModalPassword = () => {
 		setModalChangePassword(false);
 	};
 
-	const handleChangeNewPassword = ({ newPassword, currentPassword }) => {
-		apiChangePassword
+	const handleChangePassword = ({ newPassword, currentPassword }) => {
+		apiLogin
 			.changePasswordProfile({ newPassword, currentPassword })
 			.then(() => {
 				console.log('Пароль изменен');
 			})
 			.catch((err) => {
-				console.error(err);
+				console.error(err, 'ОШИБКА');
 			});
 	};
 
+	// обработчик формы изменения пароля
 	const handleChangeCurrentPassword = ({ newPassword, currentPassword }) => {
-		handleChangeNewPassword({
+		handleChangePassword({
 			newPassword,
 			currentPassword,
 		});
@@ -174,7 +177,7 @@ function App() {
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
-					handleChangePassword,
+					handleChangePasswordModal,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />

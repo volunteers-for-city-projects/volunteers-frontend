@@ -10,7 +10,6 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 		onChangePassword({
 			newPassword: values.newPassword,
 			currentPassword: values.currentPassword,
-
 			// repeatNewPassword: values.repeatNewPassword,
 		});
 	};
