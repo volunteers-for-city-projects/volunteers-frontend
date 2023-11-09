@@ -52,7 +52,14 @@ function FormRequest({ handleSendMessage, popup }) {
 					validationSchema={RequestFormSchema}
 					onSubmit={handleSubmit}
 				>
-					{({ handleChange, values, errors, touched, submitCount }) => (
+					{({
+						handleChange,
+						values,
+						errors,
+						touched,
+						submitCount,
+						setFieldValue,
+					}) => (
 						<Form className="form-request" name="form-request">
 							<div className="form-request__container-textarea">
 								<p className="form-request__textarea-label">Сообщение*</p>
@@ -68,6 +75,7 @@ function FormRequest({ handleSendMessage, popup }) {
 									onChange={handleChange}
 									onBlur={() => {
 										setIsFocus(false);
+										setFieldValue('message', values.message.trim());
 									}}
 								>
 									{values.message}
@@ -91,6 +99,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										handleChange={handleChange}
 										touched={touched.firstName}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 									<InputRequest
 										name="phone"
@@ -104,6 +113,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										isMask
 										touched={touched.phone}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 									<InputRequest
 										name="email"
@@ -116,6 +126,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										handleChange={handleChange}
 										touched={touched.email}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 								</div>
 								<Pushbutton

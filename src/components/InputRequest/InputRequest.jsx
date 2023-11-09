@@ -15,6 +15,7 @@ function InputRequest({
 	handleChange,
 	isMask,
 	submitCount,
+	setFieldValue,
 }) {
 	const [isFocus, setIsFocus] = useState(true);
 
@@ -47,7 +48,10 @@ function InputRequest({
 					placeholder={placeholder}
 					value={value}
 					onChange={handleChange}
-					onBlur={() => setIsFocus(false)}
+					onBlur={() => {
+						setIsFocus(false);
+						setFieldValue(name, value.trim());
+					}}
 				/>
 			)}
 			<span className="input-request__error">
@@ -68,6 +72,7 @@ InputRequest.propTypes = {
 	handleChange: PropTypes.func.isRequired,
 	isMask: PropTypes.bool,
 	submitCount: PropTypes.number.isRequired,
+	setFieldValue: PropTypes.func.isRequired,
 };
 
 InputRequest.defaultProps = {
