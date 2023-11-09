@@ -8,9 +8,15 @@ import RequestFormSchema from '../../utils/validationSchemas/RequestFormSchema';
 import InputRequest from '../InputRequest/InputRequest';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import PopupWindow from '../PopupWindow/PopupWindow';
+import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 function FormRequest({ handleSendMessage, popup }) {
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [isFocus, setIsFocus] = useState(true);
+
+	const handleCheckboxClick = () => {
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
 
 	const handleSubmit = (values, { resetForm }) => {
 		const formattedPhone = values.phone
@@ -59,6 +65,7 @@ function FormRequest({ handleSendMessage, popup }) {
 						touched,
 						submitCount,
 						setFieldValue,
+						isValid,
 					}) => (
 						<Form className="form-request" name="form-request">
 							<div className="form-request__container-textarea">
@@ -136,7 +143,12 @@ function FormRequest({ handleSendMessage, popup }) {
 									border="none"
 									color="#FFF"
 									type="submit"
-									disabled={popup.isOpen}
+									disabled={popup.isOpen || !isValid || !isCheckboxChecked}
+								/>
+								<CheckboxConfirm
+									onClick={handleCheckboxClick}
+									name="checkbox-confirm"
+									htmlFor="checkbox-confirm"
 								/>
 							</div>
 						</Form>

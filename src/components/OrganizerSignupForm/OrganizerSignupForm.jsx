@@ -15,6 +15,7 @@ import SelectOption from '../SelectOption/SelectOption';
 import { OrganizerSignupFormSchema } from '../../utils/validationSchemas/OrganizerSignupFormSchema';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { createOrganization } from '../../utils/api/signupApi';
+import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -94,6 +95,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
 	};
+
 	return (
 		<form
 			action="#"
@@ -272,7 +274,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 			</InputGroup>
-			<div className=" organizer-signup-form__text-content">
+			<div className="organizer-signup-form__text-content">
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"
@@ -285,23 +287,11 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					}
 					type="submit"
 				/>
-				<p className="organizer-signup-form__text">
-					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
-					18 лет, и соглашаюсь с Политикой конфиденциальности
-				</p>
-				<label
+				<CheckboxConfirm
+					onClick={handleCheckboxClick}
+					name="organizer-signup-form"
 					htmlFor="organizer-signup-form-checkbox"
-					className="organizer-signup-form__text"
-				>
-					<input
-						id="organizer-signup-form-checkbox"
-						name="organizer-signup-form"
-						type="checkbox"
-						className="organizer-signup-form__checkbox"
-						onClick={handleCheckboxClick}
-					/>
-					Даю согласие на обработку моих персональных данных
-				</label>
+				/>
 			</div>
 		</form>
 	);

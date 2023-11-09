@@ -13,6 +13,7 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
 import { createVolunteer } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
+import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -303,23 +304,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					}
 					type="submit"
 				/>
-				<p className="volunteer-signup-form__text">
-					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
-					18 лет, и соглашаюсь с Политикой конфиденциальности
-				</p>
-				<label
+				<CheckboxConfirm
+					onClick={handleCheckboxClick}
+					name="volunteer-signup-form"
 					htmlFor="volunteer-signup-form-checkbox"
-					className="volunteer-signup-form__text"
-				>
-					<input
-						id="volunteer-signup-form-checkbox"
-						name="volunteer-signup-form"
-						type="checkbox"
-						className="volunteer-signup-form__checkbox"
-						onClick={handleCheckboxClick}
-					/>
-					Даю согласие на обработку моих персональных данных
-				</label>
+				/>
 			</div>
 		</form>
 	);
