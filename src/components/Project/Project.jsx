@@ -1,21 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import './Project.scss';
+import { useOutletContext } from 'react-router-dom';
 import CustomInput from '../CustomInput/CustomInput';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { getSkills, getCities } from '../../utils/api/signupApi';
-import { getProjectCategories, createProject } from '../../utils/api/organizer';
+import { createProject } from '../../utils/api/organizer';
 
 function Project({ organizationId }) {
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
-	const [projectCategories, setProjectCategories] = useState([]);
+	const { cities, skills, projectCategories } = useOutletContext();
 	const [image, setImage] = useState('');
 
 	const projectValues = {
@@ -207,32 +205,6 @@ function Project({ organizationId }) {
 			}
 		}
 	};
-
-	useEffect(() => {
-		Promise.all([getSkills(), getCities(), getProjectCategories()])
-			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
-				const skillsArray = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const citiesArray = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const projectCategoriesArray = projectCategoriesResponse.map(
-					(item) => ({
-						label: item.name,
-						value: item.id.toString(),
-					})
-				);
-				setSkills(skillsArray);
-				setCities(citiesArray);
-				setProjectCategories(projectCategoriesArray);
-			})
-			.catch((err) => {
-				console.log(`Ошибка: ${err}`);
-			});
-	}, []);
 
 	return (
 		<section className="add-project">

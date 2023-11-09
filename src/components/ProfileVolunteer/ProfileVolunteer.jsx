@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
 import { useOutletContext } from 'react-router-dom';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
-import { getCities } from '../../utils/api/signupApi';
 import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
 
 function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser, handleChangePassword } = useOutletContext();
+	const { currentUser, handleChangePassword, cities } = useOutletContext();
 
 	const {
 		firstName,
@@ -23,13 +21,14 @@ function ProfileVolunteer({ handleIsForm }) {
 		photo,
 		telegram,
 	} = currentUser;
-	const [cityName, setCityName] = useState('');
 
 	const dataVolunteer = [
 		{
 			id: 0,
 			title: 'Город:',
-			subtitle: cityName[0],
+			subtitle: cities
+				.filter((item) => city === Number(item.value))
+				.map((item) => item.label)[0],
 		},
 		{
 			id: 1,
@@ -46,24 +45,6 @@ function ProfileVolunteer({ handleIsForm }) {
 				: [],
 		},
 	];
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-
-				const citiesData = citiesResponse
-					.filter((item) => city === item.id)
-					.map((item) => item.name);
-
-				setCityName(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, [city]);
 
 	return (
 		<section className="profile">

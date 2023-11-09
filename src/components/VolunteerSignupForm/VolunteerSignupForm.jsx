@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
@@ -11,49 +11,17 @@ import UploadFile from '../UploadFile/UploadFile';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
-import {
-	createVolunteer,
-	getSkills,
-	getCities,
-} from '../../utils/api/signupApi';
+import { createVolunteer } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
 
-	const { setModal } = useOutletContext();
+	const { setModal, cities, skills } = useOutletContext();
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
 	};
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-				const skillsResponse = await getSkills();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				const skillsData = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-				setSkills(skillsData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -106,6 +74,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					title: 'Подтверждение E-mail',
 					emailprop: values.email,
 					onSubmit: (event) => {
 						event.preventDefault();

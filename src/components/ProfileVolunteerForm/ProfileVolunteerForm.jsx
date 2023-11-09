@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
@@ -12,11 +12,7 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
-import {
-	updateVolunteer,
-	getSkills,
-	getCities,
-} from '../../utils/api/signupApi';
+import { updateVolunteer } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
 export default function ProfileVolunteerForm({
@@ -25,7 +21,7 @@ export default function ProfileVolunteerForm({
 	handleIsForm,
 	...restProps
 }) {
-	const { currentUser } = useOutletContext();
+	const { currentUser, cities, skills } = useOutletContext();
 	const {
 		firstName,
 		lastName,
@@ -37,35 +33,6 @@ export default function ProfileVolunteerForm({
 		telegram,
 		id,
 	} = currentUser;
-
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-				const skillsResponse = await getSkills();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				const skillsData = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-				setSkills(skillsData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	const formik = useFormik({
 		validateOnMount: true,

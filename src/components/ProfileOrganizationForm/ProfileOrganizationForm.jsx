@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
@@ -13,11 +13,7 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/ProfileOrganizationFormSchema';
-import {
-	// postPhoto,
-	getCities,
-	updateOrganization,
-} from '../../utils/api/signupApi';
+import { updateOrganization } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
 export default function ProfileOrganizationForm({
@@ -26,7 +22,7 @@ export default function ProfileOrganizationForm({
 	handleIsForm,
 	...restProps
 }) {
-	const { currentUser } = useOutletContext();
+	const { currentUser, cities } = useOutletContext();
 	const {
 		firstName,
 		lastName,
@@ -39,27 +35,6 @@ export default function ProfileOrganizationForm({
 		title,
 		id,
 	} = currentUser;
-
-	const [cities, setCities] = useState([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	const formik = useFormik({
 		validateOnMount: true,

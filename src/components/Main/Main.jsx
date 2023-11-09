@@ -1,10 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {
-	getNews,
-	getPlatformAbout,
-	sendMessage,
-} from '../../utils/api/main-page';
+import { sendMessage } from '../../utils/api/main-page';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import News from '../News/News';
@@ -12,33 +8,12 @@ import JoinButtons from '../JoinButtons/JoinButtons';
 import FormRequest from '../FormRequest/FormRequest';
 
 function Main() {
-	const [news, setNews] = useState([]);
-	const [plarformAbout, setPlatformAbout] = useState({});
-	const [plarformPromo, setPlatformPromo] = useState({});
-	const { setPlatformEmail } = useOutletContext();
+	const { plarformAbout, plarformPromo, news } = useOutletContext();
 	const [popup, setPopup] = useState({
 		isOpen: false,
 		text: '',
 		type: 'success',
 	});
-
-	useEffect(() => {
-		Promise.all([getNews(), getPlatformAbout()])
-			.then(([dataNews, dataPlatformAbout]) => {
-				setNews(dataNews.results);
-				const { about_us: aboutUs, valuations } = dataPlatformAbout;
-				const { platform_email: email } = dataPlatformAbout;
-				const {
-					projects_count: projectCount,
-					volunteers_count: volunteersCount,
-					organizers_count: organizersCount,
-				} = dataPlatformAbout;
-				setPlatformAbout({ aboutUs, valuations });
-				setPlatformEmail(email);
-				setPlatformPromo({ projectCount, volunteersCount, organizersCount });
-			})
-			.catch((err) => console.error(err));
-	}, [setPlatformEmail]);
 
 	const closePopup = () => {
 		setTimeout(() => {
