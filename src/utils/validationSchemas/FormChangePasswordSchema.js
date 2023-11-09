@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const ModalChangePasswordSchema = Yup.object().shape({
+const FormChangePasswordSchema = Yup.object().shape({
 	currentPassword: Yup.string()
 		.required('Поле обязательно для заполнения')
 		.min(8, 'Длина поля от 8 до 20 символов')
@@ -22,4 +22,4 @@ const ModalChangePasswordSchema = Yup.object().shape({
 		.oneOf([Yup.ref('newPassword'), null], 'Пароли не совпадают'),
 });
 
-export default ModalChangePasswordSchema;
+export default FormChangePasswordSchema;

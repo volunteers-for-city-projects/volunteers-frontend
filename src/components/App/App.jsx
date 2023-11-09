@@ -9,7 +9,7 @@ import {
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
-import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
+import FormChangePassword from '../FormChangePassword/FormChangePassword';
 import { apiLogin } from '../../utils/api/login-route';
 import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
 
@@ -43,7 +43,7 @@ function App() {
 		ogrn: '',
 		title: '',
 	});
-	const [modalChangePassword, setModalChangePassword] = useState(false);
+	const [formChangePassword, setFormChangePassword] = useState(false);
 	const [popupChangePasswor, setPopupChangePassword] = useState(false);
 
 	const navigate = useNavigate();
@@ -134,19 +134,15 @@ function App() {
 		});
 	};
 
-	// изменение состояния модального окна пароля(открыть)
-	const handleChangePasswordModal = () => {
-		setModalChangePassword(true);
+	const handleChangePasswordForm = () => {
+		setFormChangePassword(true);
 	};
 	const handleChangePopupPassword = () => {
 		setPopupChangePassword(true);
 	};
 
-	// закрыть модалку
 	const closeModalPassword = () => {
-		setModalChangePassword(false);
-	};
-	const closePopupPassword = () => {
+		setFormChangePassword(false);
 		setPopupChangePassword(false);
 	};
 
@@ -158,11 +154,17 @@ function App() {
 				handleChangePopupPassword();
 			})
 			.catch((err) => {
-				console.log(err);
+				closeModalPassword();
+				setModal({
+					isOpen: true,
+					type: 'error',
+					state: 'info',
+					title: 'Неправильный пароль',
+					errorArray: err,
+				});
 			});
 	};
 
-	// обработчик формы изменения пароля
 	const handleChangeCurrentPassword = (
 		{ newPassword, currentPassword },
 		{ resetForm }
@@ -194,7 +196,7 @@ function App() {
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
-					handleChangePasswordModal,
+					handleChangePasswordForm,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />
@@ -204,14 +206,14 @@ function App() {
 					document.body
 				)}
 
-			<ModalChangePassword
-				isOpen={modalChangePassword}
+			<FormChangePassword
+				isOpen={formChangePassword}
 				onClose={closeModalPassword}
 				onChangePassword={handleChangeCurrentPassword}
 			/>
 			<PopupChangePasswordSuccess
 				isOpen={popupChangePasswor}
-				onClose={closePopupPassword}
+				onClose={closeModalPassword}
 			/>
 		</>
 	);

@@ -15,7 +15,7 @@ import cityImage from '../../images/city.png';
 import organizationImage from '../../images/fotoProfile.svg';
 
 function ProfileOrganization({ handleIsForm }) {
-	const { currentUser, handleChangePasswordModal } = useOutletContext();
+	const { currentUser, handleChangePasswordForm } = useOutletContext();
 	const {
 		firstName,
 		lastName,
@@ -96,7 +96,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleChangePasswordModal}
+							onClick={handleChangePasswordForm}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"

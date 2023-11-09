@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import './ModalChangePassword.scss';
+import './FormChangePassword.scss';
 import Input from '../Input/Input';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import ModalChangePasswordSchema from '../../utils/validationSchemas/ModalChangePasswordSchema';
+import FormChangePasswordSchema from '../../utils/validationSchemas/FormChangePasswordSchema';
 
-function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
+function FormChangePassword({ isOpen, onClose, onChangePassword }) {
 	const handleSubmit = (values, { resetForm }) => {
 		onChangePassword(
 			{
@@ -17,26 +17,30 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 	};
 
 	return (
-		<div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
+		<div className={`form-password ${isOpen ? 'form-password_opened' : ''}`}>
 			<Formik
 				initialValues={{
 					currentPassword: '',
 					newPassword: '',
 					repeatNewPassword: '',
 				}}
-				validationSchema={ModalChangePasswordSchema}
+				validationSchema={FormChangePasswordSchema}
 				onSubmit={handleSubmit}
 			>
 				{({ handleChange, values, errors, touched, isValid }) => (
-					<Form className="popup__container" noValidate>
-						<button className="popup__close" type="button" onClick={onClose}>
+					<Form className="form-password__container" noValidate>
+						<button
+							className="form-password__close"
+							type="button"
+							onClick={onClose}
+						>
 							{' '}
 						</button>
-						<div className="popup__title-container">
-							<h2 className="popup__title">Изменение пароля</h2>
+						<div className="form-password__title-container">
+							<h2 className="form-password__title">Изменение пароля</h2>
 						</div>
 
-						<div className="popup__inputs">
+						<div className="form-password__inputs">
 							<Input
 								id="currentPassword"
 								name="currentPassword"
@@ -49,7 +53,7 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 								handleChange={handleChange}
 								touched={touched.currentPassword}
 							/>
-							<div className="popup__inputs-group">
+							<div className="form-password__inputs-group">
 								<Input
 									id="newPassword"
 									name="newPassword"
@@ -93,9 +97,9 @@ function ModalChangePassword({ isOpen, onClose, onChangePassword }) {
 	);
 }
 
-export default ModalChangePassword;
+export default FormChangePassword;
 
-ModalChangePassword.propTypes = {
+FormChangePassword.propTypes = {
 	isOpen: PropTypes.bool.isRequired,
 	onChangePassword: PropTypes.func.isRequired,
 	onClose: PropTypes.func.isRequired,

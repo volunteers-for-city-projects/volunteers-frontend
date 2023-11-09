@@ -17,9 +17,8 @@ function PopupChangePasswordSuccess({ isOpen, onClose }) {
 					{' '}
 				</button>
 				<div className="popup-success__title-container">
-					<h2 className="popup-success__title">Изменение пароля</h2>
+					<h2 className="popup-success__title">Пароль успешно изменён</h2>
 				</div>
-
 				<img className="popup-success__image" src={keyImage} alt="ключ" />
 				<Pushbutton
 					label="Вернуться в личный кабинет"
@@ -29,6 +28,7 @@ function PopupChangePasswordSuccess({ isOpen, onClose }) {
 					backgroundColor="#A6C94F"
 					border="none"
 					onClick={onClose}
+					// onClick={() => navigate('/profile')}
 				/>
 			</div>
 		</div>
