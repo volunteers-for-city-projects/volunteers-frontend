@@ -11,6 +11,9 @@
 		gap: 12px;
 		grid-area: name;
 	}
+	&__menu-container {
+		margin: 28px auto 0;
+	}
 	&__input-name {
 		display: block;
 		min-width: 540px;

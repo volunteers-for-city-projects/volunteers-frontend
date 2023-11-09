@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import './Project.scss';
 import { useOutletContext } from 'react-router-dom';
 import CustomInput from '../CustomInput/CustomInput';
@@ -11,9 +10,11 @@ import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
 import { createProject } from '../../utils/api/organizer';
+import { Crumbs } from '../Crumbs/Crumbs';
 
-function Project({ organizationId }) {
-	const { cities, skills, projectCategories } = useOutletContext();
+function Project() {
+	const { cities, skills, projectCategories, currentUser } = useOutletContext();
+	const { id } = currentUser;
 	const [image, setImage] = useState('');
 
 	const projectValues = {
@@ -170,7 +171,7 @@ function Project({ organizationId }) {
 					project_tasks: values.tasks,
 					project_events: values.events,
 					organizer_provides: values.provide,
-					organization: organizationId,
+					organization: id,
 					city: values.city,
 					categories: values.categoryProject,
 					participants: null,
@@ -208,6 +209,9 @@ function Project({ organizationId }) {
 
 	return (
 		<section className="add-project">
+			<div className="add-project__menu-container">
+				<Crumbs />
+			</div>
 			<form
 				name="add-project-form"
 				className="add-project__form"
@@ -431,13 +435,5 @@ function Project({ organizationId }) {
 		</section>
 	);
 }
-
-Project.defaultProps = {
-	organizationId: 54,
-};
-
-Project.propTypes = {
-	organizationId: PropTypes.number,
-};
 
 export default Project;
