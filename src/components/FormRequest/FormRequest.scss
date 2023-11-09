@@ -133,6 +133,14 @@
 	}
 }
 
+.recaptcha {
+	visibility: hidden;
+	align-self: flex-end;
+	&_active {
+		visibility: visible;
+	}
+}
+
 @media screen and (max-width: 1919px) {
 	.request {
 		background-image: none;
