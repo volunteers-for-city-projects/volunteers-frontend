@@ -25,9 +25,4 @@ const logOut = () => {
 	return request(ENDPOINT_LOGOUT, 'POST', null, token);
 };
 
-//  const changePassword = ({ newPassword, currentPassword }) => {
-//	const token = localStorage.getItem('token');
-//	return request(ENDPOINT_CHANGE_PASSWORD, 'POST', {newPassword, currentPassword}, token);
-// }
-
-export { getUserInformation, signIn, keyAuthentication, resetPassword, logOut }; // changePassword
+export { getUserInformation, signIn, keyAuthentication, resetPassword, logOut };

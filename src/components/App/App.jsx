@@ -44,7 +44,7 @@ function App() {
 		title: '',
 	});
 	const [formChangePassword, setFormChangePassword] = useState(false);
-	const [popupChangePasswor, setPopupChangePassword] = useState(false);
+	const [popupChangePassword, setPopupChangePassword] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -212,7 +212,7 @@ function App() {
 				onChangePassword={handleChangeCurrentPassword}
 			/>
 			<PopupChangePasswordSuccess
-				isOpen={popupChangePasswor}
+				isOpen={popupChangePassword}
 				onClose={closeModalPassword}
 			/>
 		</>
