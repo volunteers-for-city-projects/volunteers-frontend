@@ -59,7 +59,7 @@ function Modal({ modal, closeModal }) {
 			},
 			success: {
 				title: 'Ура! Адрес электронной почты подтвержден!',
-				textButton: 'Войти в личный кабинет',
+				textButton: 'Войти',
 				image: modalSuccess,
 			},
 		},
@@ -97,7 +97,7 @@ function Modal({ modal, closeModal }) {
 						/>
 						<Pushbutton
 							label="Нет"
-							color="#FFF"
+							color="#fff"
 							backgroundColor="#A6C94F"
 							size="pre-large"
 							onClick={closeModal}
@@ -123,7 +123,7 @@ function Modal({ modal, closeModal }) {
 					<p className="modal__text">{contentText[type][state].title}</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
-						color="#333"
+						color="#fff"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						type="submit"
@@ -148,7 +148,7 @@ function Modal({ modal, closeModal }) {
 					<p className="modal__text">{contentText[type][state].title}</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
-						color="#333"
+						color="#fff"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						type="submit"
