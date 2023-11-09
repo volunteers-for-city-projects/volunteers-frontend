@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 
 import './ProfileOrganizationForm.scss';
 
@@ -16,12 +16,8 @@ import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/Pro
 import { updateOrganization } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function ProfileOrganizationForm({
-	organizationId,
-	onSubmit,
-	handleIsForm,
-	...restProps
-}) {
+export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
+	const navigate = useNavigate();
 	const { currentUser, cities } = useOutletContext();
 	const {
 		firstName,
@@ -263,7 +259,7 @@ export default function ProfileOrganizationForm({
 								onClick={() => {
 									formik.handleReset();
 									formik.resetForm({});
-									handleIsForm();
+									navigate('..');
 								}}
 							/>
 						</div>
@@ -275,12 +271,9 @@ export default function ProfileOrganizationForm({
 }
 
 ProfileOrganizationForm.propTypes = {
-	organizationId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
-	handleIsForm: PropTypes.func,
 };
 
 ProfileOrganizationForm.defaultProps = {
 	onSubmit: () => {},
-	handleIsForm: () => {},
 };

@@ -1,14 +1,27 @@
-import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
-import { useOutletContext } from 'react-router-dom';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import {
+	useNavigate,
+	useOutletContext,
+	Outlet,
+	useLocation,
+} from 'react-router-dom';
+import { useEffect } from 'react';
+import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
 import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
 
-function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser, handleChangePassword, cities } = useOutletContext();
+function ProfileVolunteer() {
+	const {
+		currentUser,
+		handleChangePassword,
+		cities,
+		skills,
+		projectCategories,
+	} = useOutletContext();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const {
 		firstName,
@@ -46,10 +59,15 @@ function ProfileVolunteer({ handleIsForm }) {
 		},
 	];
 
-	return (
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
+
+	return location.pathname === '/profile/volunteer' ||
+		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
 			<div className="profile__menu-container">
-				<ProfileMenu title="Личный кабинет волонтера" />
+				<Crumbs />
 			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -85,7 +103,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleIsForm}
+							onClick={() => navigate('edit-profile')}
 						/>
 					</div>
 				</div>
@@ -106,15 +124,17 @@ function ProfileVolunteer({ handleIsForm }) {
 				</div>
 			</div>
 		</section>
+	) : (
+		<Outlet
+			context={{
+				currentUser,
+				handleChangePassword,
+				cities,
+				skills,
+				projectCategories,
+			}}
+		/>
 	);
 }
-
-ProfileVolunteer.propTypes = {
-	handleIsForm: PropTypes.func,
-};
-
-ProfileVolunteer.defaultProps = {
-	handleIsForm: () => {},
-};
 
 export default ProfileVolunteer;

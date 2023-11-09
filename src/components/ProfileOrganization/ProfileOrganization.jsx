@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import './ProfileOrganization.scss';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import {
+	useNavigate,
+	useOutletContext,
+	useLocation,
+	Outlet,
+} from 'react-router-dom';
 import ProfileData from '../ProfileData/ProfileData';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
@@ -11,8 +16,17 @@ import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import cityImage from '../../images/city.png';
 import organizationImage from '../../images/fotoProfile.svg';
 
-function ProfileOrganization({ handleIsForm }) {
-	const { currentUser, handleChangePassword, cities } = useOutletContext();
+function ProfileOrganization() {
+	const {
+		currentUser,
+		handleChangePassword,
+		cities,
+		skills,
+		projectCategories,
+	} = useOutletContext();
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	const {
 		firstName,
 		lastName,
@@ -24,7 +38,6 @@ function ProfileOrganization({ handleIsForm }) {
 		photo,
 		title,
 	} = currentUser;
-	const navigate = useNavigate();
 
 	const dataOrganization = [
 		{
@@ -51,10 +64,15 @@ function ProfileOrganization({ handleIsForm }) {
 		},
 	];
 
-	return (
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
+
+	return location.pathname === '/profile/organizer' ||
+		location.pathname === '/profile/organizer/' ? (
 		<section className="profile">
 			<div className="profile__menu-container">
-				<ProfileMenu title="Личный кабинет организатора" />
+				<Crumbs />
 			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -86,7 +104,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleIsForm}
+							onClick={() => navigate('edit-profile')}
 						/>
 					</div>
 				</div>
@@ -126,21 +144,23 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="283px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={() => navigate('/project')}
+							onClick={() => navigate('/profile/organizer/create-project')}
 						/>
 					</div>
 				</div>
 			</div>
 		</section>
+	) : (
+		<Outlet
+			context={{
+				currentUser,
+				handleChangePassword,
+				cities,
+				skills,
+				projectCategories,
+			}}
+		/>
 	);
 }
-
-ProfileOrganization.propTypes = {
-	handleIsForm: PropTypes.func,
-};
-
-ProfileOrganization.defaultProps = {
-	handleIsForm: () => {},
-};
 
 export default ProfileOrganization;

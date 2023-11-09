@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 
 import './ProfileVolunteerForm.scss';
 
@@ -15,12 +15,8 @@ import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/Profil
 import { updateVolunteer } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function ProfileVolunteerForm({
-	volunteerId,
-	onSubmit,
-	handleIsForm,
-	...restProps
-}) {
+export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
+	const navigate = useNavigate();
 	const { currentUser, cities, skills } = useOutletContext();
 	const {
 		firstName,
@@ -255,7 +251,7 @@ export default function ProfileVolunteerForm({
 								onClick={() => {
 									formik.handleReset();
 									formik.resetForm({});
-									handleIsForm();
+									navigate('..');
 								}}
 							/>
 						</div>
@@ -267,12 +263,9 @@ export default function ProfileVolunteerForm({
 }
 
 ProfileVolunteerForm.propTypes = {
-	volunteerId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
-	handleIsForm: PropTypes.func,
 };
 
 ProfileVolunteerForm.defaultProps = {
 	onSubmit: () => {},
-	handleIsForm: () => {},
 };

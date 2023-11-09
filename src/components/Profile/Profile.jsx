@@ -1,47 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 import './Profile.scss';
 
-import { useOutletContext } from 'react-router-dom';
-
-import ProfileVolunteer from '../ProfileVolunteer/ProfileVolunteer';
-import ProfileVolunteerEdit from '../ProfileVolunteerEdit/ProfileVolunteerEdit';
-import ProfileOrganization from '../ProfileOrganization/ProfileOrganization';
-import ProfileOrganizationEdit from '../ProfileOrganizationEdit/ProfileOrganizationEdit';
+import {
+	useOutletContext,
+	useLocation,
+	useNavigate,
+	Outlet,
+} from 'react-router-dom';
 
 function Profile() {
-	const { currentUser } = useOutletContext();
+	const {
+		currentUser,
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+		handleChangePassword,
+	} = useOutletContext();
 	const { role } = currentUser;
+	const location = useLocation();
+	const navigate = useNavigate();
 
-	const [isForm, setIsForm] = useState(false);
-
-	const handleIsForm = () => {
-		setIsForm((prev) => !prev);
-	};
-
-	if (role === 'volunteer') {
-		if (isForm) {
-			return <ProfileVolunteerEdit handleIsForm={handleIsForm} />;
+	useEffect(() => {
+		if (location.pathname === '/profile' || location.pathname === '/profile/') {
+			if (role === 'volunteer') {
+				navigate('/profile/volunteer');
+			}
+			if (role === 'organizer') {
+				navigate('/profile/organizer');
+			}
 		}
-		return (
-			<ProfileVolunteer
-				title="Личный кабинет волонтера"
-				handleIsForm={handleIsForm}
-			/>
-		);
-	}
+	}, [location.pathname, navigate, role]);
 
-	if (role === 'organizer') {
-		if (isForm) {
-			return <ProfileOrganizationEdit handleIsForm={handleIsForm} />;
-		}
-		return (
-			<ProfileOrganization
-				title="Личный кабинет организатора"
-				handleIsForm={handleIsForm}
-			/>
-		);
-	}
+	return (
+		<Outlet
+			context={{
+				currentUser,
+				cities,
+				skills,
+				projectCategories,
+				setModal,
+				handleChangePassword,
+			}}
+		/>
+	);
 }
 
 export default Profile;
