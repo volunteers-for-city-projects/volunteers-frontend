@@ -5,18 +5,15 @@
 		margin: 0 auto 100px;
 		padding: 50px 0;
 		max-width: 1920px;
-		background:
-			linear-gradient(
-				to right,
-				rgba(255, 255, 255, 0.1) 20%,
-				rgba(166, 201, 79, 0.16) 50%,
-				rgba(255, 255, 255, 0.21) 80%
-			);
+		background: linear-gradient(
+			to right,
+			rgba(255, 255, 255, 0.1) 20%,
+			rgba(166, 201, 79, 0.16) 50%,
+			rgba(255, 255, 255, 0.21) 80%
+		);
 		background-repeat: no-repeat;
-		background-position:
-			bottom;
-		background-size:
-			100% 100%;
+		background-position: bottom;
+		background-size: 100% 100%;
 	}
 
 	&__cards {

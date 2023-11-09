@@ -1,41 +1,39 @@
 .content-main__container {
-  background-image:
-    url('../../images/main-page/city.png'),
+	background-image: url('../../images/main-page/city.png'),
 		url('../../images/main-page/plants.png'),
-    url('../../images/main-page/cloud-right.png'),
-    url('../../images/main-page/cloud-left.png'),
-    url('../../images/main-page/cloud.png');
+		url('../../images/main-page/cloud-right.png'),
+		url('../../images/main-page/cloud-left.png'),
+		url('../../images/main-page/cloud.png');
 	background-position:
-    top 40px left,
+		top 40px left,
 		top right,
-    top 1145px right,
+		top 1145px right,
 		top 1815px left,
-    right bottom 550px;
+		right bottom 550px;
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 	background-size:
 		589px 792px,
 		481px 828px,
-    424px 206px,
+		424px 206px,
 		633px 308px,
-    641px 332px;
+		641px 332px;
 	max-width: 1920px;
 	margin: 0 auto;
 }
 
 @media screen and (max-width: 1919px) {
 	.content-main__container {
-		background-image:
-    url('../../images/main-page/city.png'),
-		url('../../images/main-page/plants.png'),
-    url('../../images/main-page/cloud-left.png');
-    background-position:
-      top left,
-      top right,
-      top 1915px left;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-size:
-      390px 578px,
-      300px 578px,
-      633px 308px;
+		background-image: url('../../images/main-page/city.png'),
+			url('../../images/main-page/plants.png'),
+			url('../../images/main-page/cloud-left.png');
+		background-position:
+			top left,
+			top right,
+			top 1915px left;
+		background-repeat: no-repeat, no-repeat, no-repeat;
+		background-size:
+			390px 578px,
+			300px 578px,
+			633px 308px;
 	}
 }
