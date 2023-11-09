@@ -12,9 +12,12 @@ function Contacts({ type, platformEmail }) {
 					<p className={`contacts__subtitle contacts__subtitle_type_${type}`}>
 						Почта тех. поддержки
 					</p>
-					<p className={`contacts__info contacts__info_type_${type}`}>
+					<a
+						className={`contacts__info contacts__info_type_${type}`}
+						href={`mailto:${platformEmail}`}
+					>
 						{platformEmail}
-					</p>
+					</a>
 				</li>
 				<li className="contacts__item">
 					<p className={`contacts__subtitle contacts__subtitle_type_${type}`}>
