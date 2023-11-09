@@ -1,3 +1,4 @@
+import './Main.scss';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { sendMessage } from '../../utils/api/main-page';
@@ -48,11 +49,13 @@ function Main() {
 
 	return (
 		<main className="content-main">
-			<Promo plarformPromo={plarformPromo} />
-			<AboutProject plarformAbout={plarformAbout} />
-			{news.length > 0 && <News news={news} />}
-			<JoinButtons />
-			<FormRequest handleSendMessage={handleSendMessage} popup={popup} />
+			<div className="content-main__container">
+				<Promo plarformPromo={plarformPromo} />
+				<AboutProject plarformAbout={plarformAbout} />
+				{news.length > 0 && <News news={news} />}
+				<JoinButtons />
+				<FormRequest handleSendMessage={handleSendMessage} popup={popup} />
+			</div>
 		</main>
 	);
 }

@@ -1,18 +1,6 @@
 @import '../../style/variables.scss';
 
 .promo {
-	background-image: url('../../images/main-page/city.png'),
-		url('../../images/main-page/plants.png');
-	background-position:
-		bottom left,
-		bottom right;
-	background-repeat: no-repeat, no-repeat;
-	background-size:
-		589.384px 792px,
-		481.363px 828px;
-	max-width: 1920px;
-	margin: 0 auto;
-
 	&__container {
 		display: flex;
 		align-items: center;
@@ -20,7 +8,7 @@
 		border-radius: 0 0 10px 10px;
 		padding: 150px 0 113px;
 		max-width: 1660px;
-		margin: 0 auto;
+		margin: 0 auto 100px;
 	}
 
 	&__title {
@@ -91,13 +79,6 @@
 		}
 	}
 	@media screen and (max-width: 1919px) {
-		background-size:
-			390.384px 578px,
-			300px 578px;
-		background-position:
-			top left,
-			top right;
-
 		&__title {
 			font-size: 100px;
 		}
@@ -106,6 +87,7 @@
 		}
 		&__container {
 			padding: 130px 0 80px;
+			margin: 0 auto;
 		}
 		&__buttons {
 			margin-top: 80px;
