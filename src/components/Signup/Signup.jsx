@@ -1,43 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.scss';
-
-// import PageMenu from '../PageMenu/PageMenu';
-import { useSearchParams } from 'react-router-dom';
-import VolunteerSignupForm from '../VolunteerSignupForm/VolunteerSignupForm';
-import OrganizerSignupForm from '../OrganizerSignupForm/OrganizerSignupForm';
+import {
+	Outlet,
+	useNavigate,
+	useOutletContext,
+	useLocation,
+} from 'react-router-dom';
 import FormToggleButtonGroup from '../FormToggleButtonGroup/FormToggleButtonGroup';
 
 export default function Signup() {
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [isPageTitle, setIsPageTitle] = useState('');
 	const [isActiveForm, setIsActiveForm] = useState('');
-	const [searchParam, setSearchParam] = useSearchParams();
 	const [isActiveButton, setIsActiveButton] = useState(
-		searchParam.get('role') || 'volunteer'
+		location.pathname === '/registration/volunteer' ||
+			location.pathname === '/registration'
+			? 'volunteer'
+			: 'organizer'
 	);
+	const { setModal, cities, skills } = useOutletContext();
 
 	const handleToggle = (buttonName) => {
+		if (buttonName === 'volunteer') {
+			navigate('/registration/volunteer');
+		}
+		if (buttonName === 'organizer') {
+			navigate('/registration/organizer');
+		}
 		setIsActiveButton(buttonName);
 	};
 
 	useEffect(() => {
-		if (isActiveButton.includes('volunteer')) {
-			setIsPageTitle('Регистрация волонтёра');
+		if (
+			location.pathname === '/registration/volunteer' ||
+			location.pathname === '/registration/volunteer/' ||
+			location.pathname === '/registration'
+		) {
 			setIsActiveForm('volunteer');
-			searchParam.set('role', 'volunteer');
-			setSearchParam(searchParam);
+			setIsPageTitle('Регистрация волонтёра');
+			navigate('/registration/volunteer');
 		}
-		if (isActiveButton.includes('organizer')) {
+		if (
+			location.pathname === '/registration/organizer' ||
+			location.pathname === '/registration/organizer/'
+		) {
 			setIsActiveForm('organizer');
 			setIsPageTitle('Регистрация организатора');
-			searchParam.set('role', 'organizer');
-			setSearchParam(searchParam);
+			navigate('/registration/organizer');
 		}
-	}, [setIsPageTitle, isActiveButton, searchParam, setSearchParam]);
+	}, [isActiveButton, navigate, location.pathname]);
 
 	return (
 		<main className="content">
 			<section className="signup">
-				{/* <PageMenu title={isPageTitle} isProjectPage={false} projectTitle="" /> */}
 				<div className="signup__wrap">
 					<div
 						className={`signup__image
@@ -50,9 +66,13 @@ export default function Signup() {
 							isActiveButton={isActiveButton}
 							handleToggle={handleToggle}
 						/>
-
-						{isActiveForm === 'volunteer' && <VolunteerSignupForm />}
-						{isActiveForm === 'organizer' && <OrganizerSignupForm />}
+						<Outlet
+							context={{
+								setModal,
+								cities,
+								skills,
+							}}
+						/>
 					</div>
 				</div>
 			</section>
