@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
+import { InputMask } from '@react-input/mask';
 
 import './ProfileVolunteerForm.scss';
 
@@ -67,6 +68,29 @@ export default function ProfileVolunteerForm({
 		fetchData();
 	}, []);
 
+	const getPhoneNumberMask = (phoneNumber) =>
+		phoneNumber &&
+		phoneNumber.startsWith('+7') &&
+		phoneNumber.length === 12 &&
+		phoneNumber.replace(
+			/(\+\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/,
+			'+7 ($2) $3-$4-$5'
+		);
+
+	const phoneNumberMask = getPhoneNumberMask(phone);
+
+	const modify = (input) => {
+		let mask;
+		if (input[0] === '9') {
+			mask = '+7 (___) ___-__-__';
+		} else if (input[0] === '8') {
+			mask = '_ (___) ___-__-__';
+		} else {
+			mask = '+_ (___) ___-__-__';
+		}
+		return { mask };
+	};
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -74,7 +98,7 @@ export default function ProfileVolunteerForm({
 			profile_volunteer_firstname: firstName,
 			profile_volunteer_secondname: secondName,
 			profile_volunteer_lastname: lastName,
-			profile_volunteer_phone: phone,
+			profile_volunteer_phone: phoneNumberMask,
 			profile_volunteer_telegram: telegram,
 			profile_volunteer_photo: photo,
 			profile_volunteer_skills: userSkills,
@@ -189,19 +213,21 @@ export default function ProfileVolunteerForm({
 						/>
 					</InputGroup>
 					<InputGroup title="Контактные данные">
-						<Input
+						<InputMask
+							component={Input}
+							mask="+_ (___) ___-__-__"
+							replacement={{ _: /\d/ }}
+							modify={modify}
+							value={formik.values.profile_volunteer_phone}
+							onChange={formik.handleChange}
 							id="profile_volunteer_phone"
 							name="profile_volunteer_phone"
 							label="Телефон"
-							type="phone"
+							type="text"
 							placeholder="+7 977 000-00-00"
 							inputSize="small"
 							error={formik.errors.profile_volunteer_phone}
 							touched={formik.touched.profile_volunteer_phone}
-							value={formik.values.profile_volunteer_phone}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
 						/>
 						<Input
 							id="profile_volunteer_telegram"
