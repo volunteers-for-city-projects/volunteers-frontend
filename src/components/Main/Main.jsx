@@ -9,7 +9,7 @@ import JoinButtons from '../JoinButtons/JoinButtons';
 import FormRequest from '../FormRequest/FormRequest';
 
 function Main() {
-	const { plarformAbout, plarformPromo, news } = useOutletContext();
+	const { plarformAbout, plarformPromo, news, isLoggedIn } = useOutletContext();
 	const [popup, setPopup] = useState({
 		isOpen: false,
 		text: '',
@@ -53,7 +53,7 @@ function Main() {
 				<Promo plarformPromo={plarformPromo} />
 				<AboutProject plarformAbout={plarformAbout} />
 				{news.length > 0 && <News news={news} />}
-				<JoinButtons />
+				{!isLoggedIn && <JoinButtons />}
 				<FormRequest handleSendMessage={handleSendMessage} popup={popup} />
 			</div>
 		</main>
