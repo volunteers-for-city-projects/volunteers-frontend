@@ -1,7 +1,7 @@
 import './CheckboxConfirm.scss';
 import PropTypes from 'prop-types';
 
-function CheckboxConfirm({ onClick, htmlFor, name }) {
+function CheckboxConfirm({ onClick, htmlFor, name, checked }) {
 	return (
 		<>
 			<p className="checkbox-confirm__text">
@@ -15,6 +15,7 @@ function CheckboxConfirm({ onClick, htmlFor, name }) {
 					type="checkbox"
 					className="checkbox-confirm__checkbox"
 					onClick={onClick}
+					checked={checked}
 				/>
 				Даю согласие на обработку моих персональных данных
 			</label>
@@ -26,6 +27,7 @@ CheckboxConfirm.propTypes = {
 	onClick: PropTypes.func.isRequired,
 	name: PropTypes.string.isRequired,
 	htmlFor: PropTypes.string.isRequired,
+	checked: PropTypes.bool.isRequired,
 };
 
 export default CheckboxConfirm;

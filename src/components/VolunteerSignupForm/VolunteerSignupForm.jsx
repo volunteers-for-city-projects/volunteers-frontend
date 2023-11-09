@@ -308,6 +308,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					onClick={handleCheckboxClick}
 					name="volunteer-signup-form"
 					htmlFor="volunteer-signup-form-checkbox"
+					checked={isCheckboxChecked}
 				/>
 			</div>
 		</form>

@@ -291,6 +291,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					onClick={handleCheckboxClick}
 					name="organizer-signup-form"
 					htmlFor="organizer-signup-form-checkbox"
+					checked={isCheckboxChecked}
 				/>
 			</div>
 		</form>
