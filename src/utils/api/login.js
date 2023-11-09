@@ -5,6 +5,7 @@ import {
 	ENDPOINT_RESET_PASSWORD,
 	ENDPOINT_LOGOUT,
 	ENDPOINT_RESET_PASSWORD_CONFIRM,
+	ENDPOINT_CHANGE_PASSWORD,
 } from './endpoints';
 
 const getUserInformation = () => {
@@ -32,6 +33,19 @@ const logOut = () => {
 	return request(ENDPOINT_LOGOUT, 'POST', null, token);
 };
 
+const changePasswordProfile = ({ newPassword, currentPassword }) => {
+	const token = localStorage.getItem('token');
+	return request(
+		ENDPOINT_CHANGE_PASSWORD,
+		'POST',
+		{
+			new_password: newPassword,
+			current_password: currentPassword,
+		},
+		token
+	);
+};
+
 export {
 	getUserInformation,
 	signIn,
@@ -39,4 +53,5 @@ export {
 	resetPassword,
 	resetPasswordConfirm,
 	logOut,
+	changePasswordProfile,
 };
