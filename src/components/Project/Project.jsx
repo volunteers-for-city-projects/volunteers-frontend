@@ -195,8 +195,17 @@ function Project() {
 					},
 				});
 			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error(error.message);
+				if (Array.isArray(error)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: error,
+					});
+				} else {
+					console.error(error);
+				}
 			}
 		},
 	});
