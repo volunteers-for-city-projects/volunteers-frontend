@@ -14,8 +14,8 @@ function CheckboxConfirm({ onClick, htmlFor, name, checked }) {
 					name={name}
 					type="checkbox"
 					className="checkbox-confirm__checkbox"
-					onClick={onClick}
 					checked={checked}
+					onChange={onClick}
 				/>
 				Даю согласие на обработку моих персональных данных
 			</label>
