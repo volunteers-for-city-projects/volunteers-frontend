@@ -27,7 +27,7 @@ function FormChangePassword({ isOpen, onClose, onChangePassword }) {
 				validationSchema={FormChangePasswordSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ handleChange, values, errors, touched, isValid }) => (
+				{({ handleChange, values, errors, isValid }) => (
 					<Form className="form-password__container" noValidate>
 						<button
 							className="form-password__close"
@@ -51,7 +51,6 @@ function FormChangePassword({ isOpen, onClose, onChangePassword }) {
 								value={values.currentPassword}
 								error={errors.currentPassword}
 								handleChange={handleChange}
-								touched={touched.currentPassword}
 							/>
 							<div className="form-password__inputs-group">
 								<Input
@@ -64,7 +63,6 @@ function FormChangePassword({ isOpen, onClose, onChangePassword }) {
 									value={values.newPassword}
 									error={errors.newPassword}
 									handleChange={handleChange}
-									touched={touched.newPassword}
 								/>
 								<Input
 									id="repeatNewPassword"
@@ -76,7 +74,6 @@ function FormChangePassword({ isOpen, onClose, onChangePassword }) {
 									value={values.repeatNewPassword}
 									error={errors.repeatNewPassword}
 									handleChange={handleChange}
-									touched={touched.repeatNewPassword}
 								/>
 							</div>
 						</div>
