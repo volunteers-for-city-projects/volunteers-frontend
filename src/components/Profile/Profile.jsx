@@ -16,7 +16,7 @@ function Profile() {
 		skills,
 		projectCategories,
 		setModal,
-		handleChangePassword,
+		handleChangePasswordForm,
 	} = useOutletContext();
 	const { role } = currentUser;
 	const location = useLocation();
@@ -41,7 +41,7 @@ function Profile() {
 				skills,
 				projectCategories,
 				setModal,
-				handleChangePassword,
+				handleChangePasswordForm,
 			}}
 		/>
 	);

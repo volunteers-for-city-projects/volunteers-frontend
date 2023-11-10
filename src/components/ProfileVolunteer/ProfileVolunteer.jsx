@@ -15,10 +15,11 @@ import volunteerImage from '../../images/fotoProfile.svg';
 function ProfileVolunteer() {
 	const {
 		currentUser,
-		handleChangePassword,
+		handleChangePasswordForm,
 		cities,
 		skills,
 		projectCategories,
+		setModal,
 	} = useOutletContext();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -94,7 +95,7 @@ function ProfileVolunteer() {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleChangePassword}
+							onClick={handleChangePasswordForm}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"
@@ -128,10 +129,11 @@ function ProfileVolunteer() {
 		<Outlet
 			context={{
 				currentUser,
-				handleChangePassword,
+				handleChangePasswordForm,
 				cities,
 				skills,
 				projectCategories,
+				setModal,
 			}}
 		/>
 	);

@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { getUserInformation, logOut } from '../../utils/api/login';
+import {
+	getUserInformation,
+	logOut,
+	changePasswordProfile,
+} from '../../utils/api/login';
 import {
 	getVolunteerInformation,
 	getOrganizationInformation,
@@ -9,10 +13,11 @@ import {
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
-import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
+import FormChangePassword from '../FormChangePassword/FormChangePassword';
 import { getNews, getPlatformAbout } from '../../utils/api/main-page';
 import { getSkills, getCities } from '../../utils/api/signupApi';
 import { getProjectCategories } from '../../utils/api/organizer';
+import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -44,7 +49,8 @@ function App() {
 		ogrn: '',
 		title: '',
 	});
-	const [modalChangePassword, setModalChangePassword] = useState(false);
+	const [formChangePassword, setFormChangePassword] = useState(false);
+	const [popupChangePassword, setPopupChangePassword] = useState(false);
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 	const [projectCategories, setProjectCategories] = useState([]);
@@ -184,16 +190,49 @@ function App() {
 		});
 	};
 
-	const handleChangePassword = () => {
-		setModalChangePassword(true);
+	const handleChangePasswordForm = () => {
+		setFormChangePassword(true);
+	};
+	const handleChangePopupPassword = () => {
+		setPopupChangePassword(true);
 	};
 
 	const closeModalPassword = () => {
-		setModalChangePassword(false);
+		setFormChangePassword(false);
+		setPopupChangePassword(false);
 	};
 
-	const handleChangePasswordSubmit = (e) => {
-		e.preventDefault();
+	const handleChangePassword = ({ newPassword, currentPassword }) => {
+		changePasswordProfile({ newPassword, currentPassword })
+			.then(() => {
+				closeModalPassword();
+				handleChangePopupPassword();
+			})
+			.catch((err) => {
+				closeModalPassword();
+				setModal({
+					isOpen: true,
+					type: 'error',
+					state: 'info',
+					title: 'Неправильный пароль',
+					errorArray: err,
+				});
+			});
+	};
+
+	const handleChangeCurrentPassword = (
+		{ newPassword, currentPassword },
+		{ resetForm }
+	) => {
+		handleChangePassword(
+			{
+				newPassword,
+				currentPassword,
+			},
+			setTimeout(() => {
+				resetForm();
+			}, 2000)
+		);
 	};
 
 	return (
@@ -211,7 +250,7 @@ function App() {
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
-					handleChangePassword,
+					handleChangePasswordForm,
 					cities,
 					skills,
 					projectCategories,
@@ -227,10 +266,14 @@ function App() {
 					document.body
 				)}
 
-			<ModalChangePassword
-				isOpen={modalChangePassword}
+			<FormChangePassword
+				isOpen={formChangePassword}
 				onClose={closeModalPassword}
-				onSubmit={handleChangePasswordSubmit}
+				onChangePassword={handleChangeCurrentPassword}
+			/>
+			<PopupChangePasswordSuccess
+				isOpen={popupChangePassword}
+				onClose={closeModalPassword}
 			/>
 		</>
 	);

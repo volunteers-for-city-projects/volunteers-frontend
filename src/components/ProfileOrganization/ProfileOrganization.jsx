@@ -19,10 +19,11 @@ import organizationImage from '../../images/fotoProfile.svg';
 function ProfileOrganization() {
 	const {
 		currentUser,
-		handleChangePassword,
+		handleChangePasswordForm,
 		cities,
 		skills,
 		projectCategories,
+		setModal,
 	} = useOutletContext();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -95,7 +96,7 @@ function ProfileOrganization() {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleChangePassword}
+							onClick={() => handleChangePasswordForm()}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"
@@ -154,10 +155,11 @@ function ProfileOrganization() {
 		<Outlet
 			context={{
 				currentUser,
-				handleChangePassword,
+				handleChangePasswordForm,
 				cities,
 				skills,
 				projectCategories,
+				setModal,
 			}}
 		/>
 	);
