@@ -4,7 +4,7 @@ import {
 	ENDPOINT_ABOUT_ME,
 	ENDPOINT_RESET_PASSWORD,
 	ENDPOINT_LOGOUT,
-	// ENDPOINT_CHANGE_PASSWORD,
+	//	ENDPOINT_CHANGE_PASSWORD,
 } from './endpoints';
 
 const getUserInformation = () => {

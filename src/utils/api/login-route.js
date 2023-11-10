@@ -3,6 +3,7 @@ import {
 	ENDPOINT_ABOUT_ME,
 	ENDPOINT_RESET_PASSWORD,
 	ENDPOINT_RESET_PASSWORD_CONFIRM,
+	ENDPOINT_CHANGE_PASSWORD,
 	URL,
 } from '../endpoints';
 
@@ -14,6 +15,9 @@ class LoginApi {
 
 	request(endPoint, options) {
 		return fetch(`${this.baseUrl}${endPoint}`, options).then((res) => {
+			if (res.statusText === 'No Content') {
+				return res;
+			}
 			if (res.ok) {
 				return res.json();
 			}
@@ -78,6 +82,20 @@ class LoginApi {
 				uid,
 				token,
 				new_password: password,
+			}),
+		});
+	}
+
+	changePasswordProfile({ newPassword, currentPassword }) {
+		const token = localStorage.getItem('token');
+		return this.request(ENDPOINT_CHANGE_PASSWORD, {
+			method: 'POST',
+			headers: Object.assign(this.headers, {
+				Authorization: `Token ${token}`,
+			}),
+			body: JSON.stringify({
+				new_password: newPassword,
+				current_password: currentPassword,
 			}),
 		});
 	}
