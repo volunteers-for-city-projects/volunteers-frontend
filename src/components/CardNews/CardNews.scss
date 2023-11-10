@@ -20,6 +20,15 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		position: relative;
+	}
+
+	&__card-image::before {
+		content: "";
+		background-color: rgba(211, 211, 211, 0.5);
+		position: absolute;
+		inset: 0;
+		z-index: 1;
 	}
 
 	&__card-button {
@@ -35,6 +44,8 @@
 		font-family: $--Font-Primary;
 		line-height: 1.13;
 		transition: opacity 100ms ease-in;
+		position: relative;
+		z-index: 2;
 	}
 
 	&__card-button:hover {
