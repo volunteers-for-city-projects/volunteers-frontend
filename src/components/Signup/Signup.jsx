@@ -32,6 +32,7 @@ export default function Signup() {
 	};
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		if (
 			location.pathname === '/registration/volunteer' ||
 			location.pathname === '/registration/volunteer/' ||
