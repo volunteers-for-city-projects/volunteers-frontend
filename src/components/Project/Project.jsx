@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -9,16 +9,14 @@ import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { getSkills, getCities } from '../../utils/api/signupApi';
-import { getProjectCategories, createProject } from '../../utils/api/organizer';
+import { createProject } from '../../utils/api/organizer';
+import { Crumbs } from '../Crumbs/Crumbs';
 
 function Project() {
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
-	const [projectCategories, setProjectCategories] = useState([]);
+	const { cities, skills, projectCategories, setModal, currentUser } =
+		useOutletContext();
 	const [image, setImage] = useState('');
 	const [isFocused, setIsFocused] = useState(false);
-	const { currentUser, setModal } = useOutletContext();
 	const navigate = useNavigate();
 
 	const projectValues = {
@@ -230,34 +228,11 @@ function Project() {
 		}
 	};
 
-	useEffect(() => {
-		Promise.all([getSkills(), getCities(), getProjectCategories()])
-			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
-				const skillsArray = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const citiesArray = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const projectCategoriesArray = projectCategoriesResponse.map(
-					(item) => ({
-						label: item.name,
-						value: item.id.toString(),
-					})
-				);
-				setSkills(skillsArray);
-				setCities(citiesArray);
-				setProjectCategories(projectCategoriesArray);
-			})
-			.catch((err) => {
-				console.log(`Ошибка: ${err}`);
-			});
-	}, []);
-
 	return (
 		<section className="add-project">
+			<div className="add-project__menu-container">
+				<Crumbs />
+			</div>
 			<form
 				name="add-project-form"
 				className="add-project__form"

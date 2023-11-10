@@ -1,16 +1,28 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
-import { useOutletContext } from 'react-router-dom';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import {
+	useNavigate,
+	useOutletContext,
+	Outlet,
+	useLocation,
+} from 'react-router-dom';
+import { useEffect } from 'react';
+import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
-import { getCities } from '../../utils/api/signupApi';
 import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
 
-function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser, handleChangePasswordForm } = useOutletContext();
+function ProfileVolunteer() {
+	const {
+		currentUser,
+		handleChangePasswordForm,
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+	} = useOutletContext();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const {
 		firstName,
@@ -23,13 +35,14 @@ function ProfileVolunteer({ handleIsForm }) {
 		photo,
 		telegram,
 	} = currentUser;
-	const [cityName, setCityName] = useState('');
 
 	const dataVolunteer = [
 		{
 			id: 0,
 			title: 'Город:',
-			subtitle: cityName[0],
+			subtitle: cities
+				.filter((item) => city === Number(item.value))
+				.map((item) => item.label)[0],
 		},
 		{
 			id: 1,
@@ -48,27 +61,14 @@ function ProfileVolunteer({ handleIsForm }) {
 	];
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
 
-				const citiesData = citiesResponse
-					.filter((item) => city === item.id)
-					.map((item) => item.name);
-
-				setCityName(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, [city]);
-
-	return (
+	return location.pathname === '/profile/volunteer' ||
+		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
 			<div className="profile__menu-container">
-				<ProfileMenu title="Личный кабинет волонтера" />
+				<Crumbs />
 			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -104,7 +104,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleIsForm}
+							onClick={() => navigate('edit-profile')}
 						/>
 					</div>
 				</div>
@@ -125,15 +125,18 @@ function ProfileVolunteer({ handleIsForm }) {
 				</div>
 			</div>
 		</section>
+	) : (
+		<Outlet
+			context={{
+				currentUser,
+				handleChangePasswordForm,
+				cities,
+				skills,
+				projectCategories,
+				setModal,
+			}}
+		/>
 	);
 }
-
-ProfileVolunteer.propTypes = {
-	handleIsForm: PropTypes.func,
-};
-
-ProfileVolunteer.defaultProps = {
-	handleIsForm: () => {},
-};
 
 export default ProfileVolunteer;

@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import './ProfileOrganization.scss';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import { getCities } from '../../utils/api/signupApi';
-
+import {
+	useNavigate,
+	useOutletContext,
+	useLocation,
+	Outlet,
+} from 'react-router-dom';
 import ProfileData from '../ProfileData/ProfileData';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
@@ -14,8 +16,18 @@ import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import cityImage from '../../images/city.png';
 import organizationImage from '../../images/fotoProfile.svg';
 
-function ProfileOrganization({ handleIsForm }) {
-	const { currentUser, handleChangePasswordForm } = useOutletContext();
+function ProfileOrganization() {
+	const {
+		currentUser,
+		handleChangePasswordForm,
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+	} = useOutletContext();
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	const {
 		firstName,
 		lastName,
@@ -27,8 +39,6 @@ function ProfileOrganization({ handleIsForm }) {
 		photo,
 		title,
 	} = currentUser;
-	const [cityName, setCityName] = useState('');
-	const navigate = useNavigate();
 
 	const dataOrganization = [
 		{
@@ -39,7 +49,9 @@ function ProfileOrganization({ handleIsForm }) {
 		{
 			id: 1,
 			title: 'Город:',
-			subtitle: cityName[0],
+			subtitle: cities
+				.filter((item) => city === Number(item.value))
+				.map((item) => item.label)[0],
 		},
 		{
 			id: 2,
@@ -54,27 +66,14 @@ function ProfileOrganization({ handleIsForm }) {
 	];
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
 
-				const citiesData = citiesResponse
-					.filter((item) => city === item.id)
-					.map((item) => item.name);
-
-				setCityName(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, [city]);
-
-	return (
+	return location.pathname === '/profile/organizer' ||
+		location.pathname === '/profile/organizer/' ? (
 		<section className="profile">
 			<div className="profile__menu-container">
-				<ProfileMenu title="Личный кабинет организатора" />
+				<Crumbs />
 			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -97,7 +96,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleChangePasswordForm}
+							onClick={() => handleChangePasswordForm()}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"
@@ -106,7 +105,7 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleIsForm}
+							onClick={() => navigate('edit-profile')}
 						/>
 					</div>
 				</div>
@@ -146,21 +145,24 @@ function ProfileOrganization({ handleIsForm }) {
 							minWidth="283px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={() => navigate('/project')}
+							onClick={() => navigate('/profile/organizer/create-project')}
 						/>
 					</div>
 				</div>
 			</div>
 		</section>
+	) : (
+		<Outlet
+			context={{
+				currentUser,
+				handleChangePasswordForm,
+				cities,
+				skills,
+				projectCategories,
+				setModal,
+			}}
+		/>
 	);
 }
-
-ProfileOrganization.propTypes = {
-	handleIsForm: PropTypes.func,
-};
-
-ProfileOrganization.defaultProps = {
-	handleIsForm: () => {},
-};
 
 export default ProfileOrganization;

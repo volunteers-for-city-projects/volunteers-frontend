@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 
 import './ProfileOrganizationForm.scss';
 
@@ -13,20 +13,12 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/ProfileOrganizationFormSchema';
-import {
-	// postPhoto,
-	getCities,
-	updateOrganization,
-} from '../../utils/api/signupApi';
+import { updateOrganization } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function ProfileOrganizationForm({
-	organizationId,
-	onSubmit,
-	handleIsForm,
-	...restProps
-}) {
-	const { currentUser } = useOutletContext();
+export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
+	const navigate = useNavigate();
+	const { currentUser, cities } = useOutletContext();
 	const {
 		firstName,
 		lastName,
@@ -39,27 +31,6 @@ export default function ProfileOrganizationForm({
 		title,
 		id,
 	} = currentUser;
-
-	const [cities, setCities] = useState([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -288,7 +259,7 @@ export default function ProfileOrganizationForm({
 								onClick={() => {
 									formik.handleReset();
 									formik.resetForm({});
-									handleIsForm();
+									navigate('..');
 								}}
 							/>
 						</div>
@@ -300,12 +271,9 @@ export default function ProfileOrganizationForm({
 }
 
 ProfileOrganizationForm.propTypes = {
-	organizationId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
-	handleIsForm: PropTypes.func,
 };
 
 ProfileOrganizationForm.defaultProps = {
 	onSubmit: () => {},
-	handleIsForm: () => {},
 };

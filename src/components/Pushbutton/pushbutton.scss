@@ -87,9 +87,9 @@
 	}
 
 	&:disabled {
-		color: #606060;
+		color: $--White;
 		cursor: default;
-		background: #cbcbcb;
+		background-color: rgb(166, 201, 79);
 		opacity: 0.5;
 	}
 }

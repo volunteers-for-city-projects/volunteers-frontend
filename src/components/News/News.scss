@@ -2,22 +2,18 @@
 
 .news {
 	&__container {
-		margin: 0 auto;
+		margin: 0 auto 100px;
+		padding: 50px 0;
 		max-width: 1920px;
-		background: url('../../images/main-page/cloud-left.png'),
-			linear-gradient(
-				to right,
-				rgba(255, 255, 255) 0%,
-				rgba(166, 201, 79, 0.16) 50%,
-				rgba(255, 255, 255, 0.21) 100%
-			);
+		background: linear-gradient(
+			to right,
+			rgba(255, 255, 255, 0.1) 20%,
+			rgba(166, 201, 79, 0.16) 50%,
+			rgba(255, 255, 255, 0.21) 80%
+		);
 		background-repeat: no-repeat;
-		background-position:
-			top -105px left,
-			bottom;
-		background-size:
-			633px 308px,
-			100% 570px;
+		background-position: bottom;
+		background-size: 100% 100%;
 	}
 
 	&__cards {
@@ -34,7 +30,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 43px;
-		padding: 145px 0 30px;
 	}
 
 	&__wrapper {
@@ -78,20 +73,8 @@
 	}
 
 	@media screen and (max-width: 1919px) {
-		&__container {
-			background: linear-gradient(
-				to right,
-				rgb(255, 255, 255) 20%,
-				rgba(166, 201, 79, 0.16) 50%,
-				rgba(255, 255, 255, 0.21) 80%
-			);
-			background-repeat: no-repeat;
-			background-position: bottom;
-			background-size: 100% 570px;
-		}
 		&__container-block {
 			max-width: 1178px;
-			padding: 170px 0 30px;
 		}
 	}
 }

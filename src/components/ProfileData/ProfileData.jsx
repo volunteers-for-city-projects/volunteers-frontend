@@ -22,9 +22,9 @@ export default ProfileData;
 ProfileData.propTypes = {
 	dataArray: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			subtitle: PropTypes.string.isRequired,
+			id: PropTypes.number,
+			title: PropTypes.string,
+			subtitle: PropTypes.string,
 		})
 	).isRequired,
 };

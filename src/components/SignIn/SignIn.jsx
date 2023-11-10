@@ -76,7 +76,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 						E-mail
 						<input
 							type="email"
-							placeholder="Email"
+							placeholder="Введите E-mail"
 							className={clsx('sign-in__input', {
 								'sign-in__input_type-error':
 									formik.touched.userEmail && formik.errors.userEmail,
@@ -100,7 +100,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 						Пароль
 						<input
 							type="password"
-							placeholder="Пароль"
+							placeholder="Введите пароль"
 							className="sign-in__input"
 							id="userPassword"
 							name="userPassword"

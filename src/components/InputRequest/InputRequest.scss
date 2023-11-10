@@ -7,7 +7,6 @@
 	font-weight: 400;
 	line-height: 1.15;
 	color: $--Text;
-	margin-top: 4px;
 
 	&__input {
 		box-sizing: border-box;
@@ -38,11 +37,11 @@
 
 	&__error {
 		margin-top: 2px;
-		font-size: 10px;
+		font-size: 20px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 1;
 		color: $--Error;
-		height: 10px;
+		height: 20px;
 	}
 }
