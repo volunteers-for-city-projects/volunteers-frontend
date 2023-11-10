@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://better-together.acceleratorpracticum.ru/api';
+export const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
 
 const flattenObject = (obj) =>
 	Object.keys(obj).reduce((result, key) => {

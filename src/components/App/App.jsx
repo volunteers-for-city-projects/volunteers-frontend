@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { getUserInformation, logOut } from '../../utils/api/login'; // , changePassword
+import { getUserInformation, logOut } from '../../utils/api/login';
 import {
 	getVolunteerInformation,
 	getOrganizationInformation,
@@ -149,7 +149,6 @@ function App() {
 	const handleChangePassword = ({ newPassword, currentPassword }) => {
 		apiLogin
 			.changePasswordProfile({ newPassword, currentPassword })
-			//	changePassword({newPassword, currentPassword})
 			.then(() => {
 				closeModalPassword();
 				handleChangePopupPassword();
