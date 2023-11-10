@@ -78,6 +78,8 @@ function FormRequest({ handleSendMessage, popup }) {
 						phone: '',
 						email: '',
 					}}
+					validateOnMount
+					validateOnChange
 					validationSchema={RequestFormSchema}
 					onSubmit={handleSubmit}
 				>
