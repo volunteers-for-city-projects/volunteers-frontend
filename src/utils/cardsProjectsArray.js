@@ -1,9 +1,9 @@
-// import city from '../images/city.png';
-// import nature from '../images/nature.png';
-// import window from '../images/window.png';
+import city from '../images/city.png';
+import nature from '../images/nature.png';
+import window from '../images/window.png';
 
 const cardsProjectsArray = [
-	/* {
+	{
 		id: 0,
 		status: '23 заявки',
 		nameProject: 'Проект с длинным названием про экологию',
@@ -40,7 +40,7 @@ const cardsProjectsArray = [
 		time: '10:00 - 16:00',
 		image: nature,
 	},
-	{
+	/* {
 		id: 4,
 		status: 'Проект на модерации',
 		nameProject: 'Проект с длинным названием про экологию',

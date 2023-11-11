@@ -4,7 +4,7 @@ function ProfileButtonsTabs() {
 	return (
 		<>
 			<Pushbutton
-				label="Статус1"
+				label="Активен"
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
@@ -12,7 +12,7 @@ function ProfileButtonsTabs() {
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
-				label="Статус2"
+				label="Черновик"
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
@@ -20,7 +20,7 @@ function ProfileButtonsTabs() {
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
-				label="Статус3"
+				label="На модерации"
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"
@@ -28,7 +28,15 @@ function ProfileButtonsTabs() {
 				border="1px solid #A6C94F"
 			/>
 			<Pushbutton
-				label="Статус4"
+				label="Завершен"
+				color="black"
+				size="mini"
+				backgroundColor="#FDFDFD"
+				minWidth="149px"
+				border="1px solid #A6C94F"
+			/>
+			<Pushbutton
+				label="В архиве"
 				color="black"
 				size="mini"
 				backgroundColor="#FDFDFD"

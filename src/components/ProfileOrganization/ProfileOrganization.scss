@@ -24,6 +24,19 @@
 			display: flex;
 			flex-direction: column;
 		}
+
+		&-label {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+
+		&-btn {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
 	}
 	&__image {
 		width: 180px;
@@ -44,18 +57,12 @@
 			color: $--Text;
 		}
 	}
-	&__button {
-		display: flex;
-		gap: 20px;
-		z-index: 1;
-	}
 
 	&__wrapper {
 		display: flex;
 		gap: 25px;
-		padding: 0 120px 98px;
+		padding: 0 120px 0;
 		box-sizing: border-box;
-		position: relative;
 	}
 	&__projects {
 		width: 960px;
@@ -63,6 +70,12 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+
+		&-label {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
 
 		&-title {
 			margin: 0;
@@ -80,17 +93,14 @@
 		&-container {
 			display: flex;
 			flex-direction: column;
+			gap: 32px;
 		}
 		&-cards {
 			display: flex;
-			margin-top: 20px;
 			flex-wrap: wrap;
 			gap: 18px;
 		}
 	}
-
-	/*&-button {
-		}*/
 
 	&__blank {
 		display: flex;
@@ -132,15 +142,7 @@
 
 		&__wrapper {
 			gap: 90px;
-			padding: 0 73px 98px;
-		}
-
-		&__projects-tabs {
-			margin-top: 30px;
-		}
-
-		&__projects-cards {
-			margin-top: 30px;
+			padding: 0 73px 0;
 		}
 
 		&__projects-button {
@@ -149,5 +151,9 @@
 		&__blank-image {
 			margin-left: 152px;
 		}
+		&__projects-container {
+			gap: 20px;
+		}
 	}
 }
+
