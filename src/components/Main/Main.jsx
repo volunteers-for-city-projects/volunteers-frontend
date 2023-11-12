@@ -18,10 +18,9 @@ function Main() {
 
 	const closePopup = () => {
 		setTimeout(() => {
-			setPopup((prevPopup) => ({
-				...prevPopup,
+			setPopup({
 				isOpen: false,
-			}));
+			});
 		}, 3000);
 	};
 
