@@ -24,6 +24,20 @@
 			display: flex;
 			flex-direction: column;
 		}
+
+		&-label {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+
+		&-btn {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
 	}
 	&__image {
 		width: 180px;
@@ -44,18 +58,12 @@
 			color: $--Text;
 		}
 	}
-	&__button {
-		display: flex;
-		gap: 20px;
-		z-index: 1;
-	}
 
 	&__wrapper {
 		display: flex;
 		gap: 25px;
-		padding: 0 120px 98px;
+		padding: 0 120px 0;
 		box-sizing: border-box;
-		position: relative;
 	}
 
 	&__projects {
@@ -104,16 +112,13 @@
 			width: 377px;
 			padding: 16px 0 16px 60px;
 		}
-		&__button {
-			margin-top: 50px;
-			margin-left: 35px;
-		}
+
 		&__projects {
 			width: 732px;
 		}
 		&__wrapper {
 			gap: 90px;
-			padding: 0 73px 98px;
+			padding: 0 73px 0;
 		}
 		&__blank-image {
 			margin-left: 172px;
