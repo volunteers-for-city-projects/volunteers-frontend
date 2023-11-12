@@ -23,5 +23,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          build-args: 'SECRET_KEY: ${{ secrets.REACT_APP_SECRET_KEY_RECAPTCHA }}'
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/volunteers_frontend:latest
