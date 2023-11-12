@@ -36,7 +36,8 @@ export default function Signup() {
 		if (
 			location.pathname === '/registration/volunteer' ||
 			location.pathname === '/registration/volunteer/' ||
-			location.pathname === '/registration'
+			location.pathname === '/registration' ||
+			location.pathname === '/registration/'
 		) {
 			setIsActiveForm('volunteer');
 			setIsPageTitle('Регистрация волонтёра');
