@@ -115,20 +115,21 @@ function ProfileOrganization() {
 					<div className="profile__projects-container">
 						<div className="profile__projects-label">
 							<h2 className="profile__projects-title">Ваши проекты</h2>
-							<Pushbutton
-								label="Добавить проект"
-								color="white"
-								size="pre-large"
-								minWidth="283px"
-								backgroundColor="#A6C94F"
-								border="none"
-								onClick={() => navigate('/profile/organizer/create-project')}
-							/>
+							<div className="profile__projects-btn">
+								<Pushbutton
+									label="Добавить проект"
+									color="white"
+									size="pre-large"
+									minWidth="283px"
+									backgroundColor="#A6C94F"
+									border="none"
+									onClick={() => navigate('/profile/organizer/create-project')}
+								/>
+							</div>
 						</div>
 
-						<div className="profile__projects-tabs">
-							{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
-						</div>
+						{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
+
 						{cardsProjectsArray.length > 0 ? (
 							<div className="profile__projects-cards">
 								{cardsProjectsArray.map((item) => (
