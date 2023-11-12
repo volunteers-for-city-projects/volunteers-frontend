@@ -1,5 +1,3 @@
-export const URL = 'http://better-together.acceleratorpracticum.ru/api/';
-
 export const ENDPOINT_MAIN_PAGE_NEWS = 'news/';
 export const ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT = 'platform_about/';
 export const ENDPOINT_MAIN_PAGE_FEEDBACK = 'feedback/';
@@ -23,6 +21,7 @@ export const ENDPOINT_PROFILE_VOLUNTEER = 'volunteers/';
 export const ENDPOINT_PROFILE_ORGANIZATION = 'organizations/';
 
 export const ENDPOINT_ACTIVATION_USER = 'auth/activation/';
+export const ENDPOINT_RESEND_ACTIVATION_USER = 'auth/resend_activation/';
 
 export const ENDPOINT_ORGANIZER_PROJECT_CATEGORIES = 'project_categories/';
 export const ENDPOINT_ORGANIZER_PROJECTS = 'projects/';
