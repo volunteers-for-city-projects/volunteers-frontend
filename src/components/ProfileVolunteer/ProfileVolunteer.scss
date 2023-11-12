@@ -18,7 +18,7 @@
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
-		padding: 40px 40px 0 40px;
+		padding: 20px 40px 0 40px;
 		box-sizing: border-box;
 		&-container {
 			display: flex;
@@ -68,7 +68,7 @@
 
 	&__projects {
 		width: 960px;
-		margin-top: 40px;
+		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -94,7 +94,7 @@
 			font-style: normal;
 			font-weight: 500;
 			line-height: 130%;
-			margin-top: 40px;
+			margin: 10px 0 0;
 		}
 		&-image {
 			width: 570px;
