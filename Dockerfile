@@ -6,6 +6,9 @@ COPY package.json /app
 
 COPY package-lock.json /app
 
+ARG SECRET_KEY
+ENV REACT_APP_SECRET_KEY_RECAPTCHA=$SECRET_KEY
+
 RUN npm install react-scripts -g
 
 RUN npm install
@@ -19,14 +22,6 @@ RUN npm run build
 
 FROM node:18.18-slim
 
-ARG SECRET_KEY
-RUN export REACT_APP_SECRET_KEY_RECAPTCHA=SECRET_KEY
-
-ARG REACT_APP_SECRET_KEY_RECAPTCHA
-ENV REACT_APP_SECRET_KEY_RECAPTCHA $REACT_APP_SECRET_KEY_RECAPTCHA
-
 WORKDIR /app
 
 COPY --from=builder /app/build .
-
-
