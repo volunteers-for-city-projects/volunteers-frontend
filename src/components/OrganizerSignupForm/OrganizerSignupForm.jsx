@@ -6,6 +6,10 @@ import './OrganizerSignupForm.scss';
 
 import { useOutletContext } from 'react-router-dom';
 
+import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
+import { ogrnMask } from '../../utils/inputsMasks/ogrnMask';
+
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
@@ -149,7 +153,11 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					}}
 					required
 				/>
-				<Input
+				<InputMask
+					component={Input}
+					mask="_-__-__-__-_____-_"
+					replacement={{ _: /\d/ }}
+					modify={ogrnMask}
 					id="organize_ogrn"
 					name="organize_ogrn"
 					label="ОГРН"
@@ -161,7 +169,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					value={formik.values.organize_ogrn}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					required
 				/>
 			</InputGroup>
 			<InputTextArea
@@ -244,19 +251,22 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={formik.handleChange}
 					required
 				/>
-				<Input
+				<InputMask
+					component={Input}
+					mask="+_ (___) ___-__-__"
+					replacement={{ _: /\d/ }}
+					modify={phoneMask}
 					id="organize_phone"
 					name="organize_phone"
 					label="Телефон"
-					type="organize_phone"
-					placeholder="+7 977 000-00-00"
+					type="text"
+					placeholder="+7 789 000-00-00"
 					inputSize="small"
 					error={formik.errors.organize_phone}
 					touched={formik.touched.organize_phone}
 					value={formik.values.organize_phone}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					required
 				/>
 			</InputGroup>
 			<InputGroup title="Пароль">
@@ -289,7 +299,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 			</InputGroup>
-			<div className=" organizer-signup-form__text-content">
+			<div className="organizer-signup-form__text-content">
 				<Pushbutton
 					label="Зарегистрироваться"
 					color="white"

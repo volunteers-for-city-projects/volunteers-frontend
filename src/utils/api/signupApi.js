@@ -18,18 +18,28 @@ const createUser = (userData) => request(ENDPOINT_USERS, 'POST', userData);
 const createVolunteer = (volunteerData) =>
 	request(ENDPOINT_VOLUNTEERS, 'POST', volunteerData);
 
-const updateVolunteer = (volunteerId, updatedVolunteerData) =>
-	request(`${ENDPOINT_VOLUNTEERS}${volunteerId}/`, 'PUT', updatedVolunteerData);
+const updateVolunteer = (volunteerId, updatedVolunteerData) => {
+	const token = localStorage.getItem('token');
+	request(
+		`${ENDPOINT_VOLUNTEERS}${volunteerId}/`,
+		'PUT',
+		updatedVolunteerData,
+		token
+	);
+};
 
 const createOrganization = (organizationData) =>
 	request(ENDPOINT_ORGANIZATIONS, 'POST', organizationData);
 
-const updateOrganization = (organizationId, updatedOrganizationData) =>
+const updateOrganization = (organizationId, updatedOrganizationData) => {
+	const token = localStorage.getItem('token');
 	request(
 		`${ENDPOINT_ORGANIZATIONS}${organizationId}/`,
 		'PUT',
-		updatedOrganizationData
+		updatedOrganizationData,
+		token
 	);
+};
 
 const postPhoto = (formData) => request(ENDPOINT_MEDIA, 'POST', formData);
 

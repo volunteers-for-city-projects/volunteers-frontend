@@ -5,7 +5,7 @@
 
 .signup {
 	margin: 30px auto 70px;
-	padding: 0 177px 0 56px;
+	padding: 0 177px 0 832px;
 
 	display: flex;
 	flex-direction: column;
@@ -14,6 +14,7 @@
 		display: flex;
 		// align-items: center;
 		gap: 80px;
+		position: relative;
 	}
 
 	&__image {
@@ -30,15 +31,23 @@
 		background-color: transparent;
 
 		&_organizer {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 640px;
+			height: 715px;
+
 			background-image: url(../../images/signup_background_image_organize.svg);
-			background-size: 640px 715px;
-			translate: 50px -118px;
+			translate: 113px 53px;
 		}
 		&_volunteer {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 695px;
+			height: 967px;
 			background-image: url(../../images/signup_background_image.svg);
-			background-size: 722px 625px;
-
-			translate: 5px -112px;
+			translate: 68px 60px;
 		}
 	}
 	&__content-wrap {

@@ -9,8 +9,13 @@ import { getCities } from '../../utils/api/signupApi';
 import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
 
+import { getUserInformation } from '../../utils/api/login';
+
+import { getVolunteerInformation } from '../../utils/api/profile';
+
 function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser, handleChangePassword } = useOutletContext();
+	const { currentUser, handleChangePassword, setCurrentUser } =
+		useOutletContext();
 
 	const {
 		firstName,
@@ -64,6 +69,33 @@ function ProfileVolunteer({ handleIsForm }) {
 
 		fetchData();
 	}, [city]);
+
+	useEffect(() => {
+		getUserInformation().then((user) => {
+			if (user.role === 'volunteer') {
+				getVolunteerInformation(user.id_organizer_or_volunteer).then(
+					(volunteer) => {
+						setCurrentUser({
+							firstName: user.first_name,
+							secondName: user.second_name,
+							lastName: user.last_name,
+							role: user.role,
+							userId: user.id,
+							email: user.email,
+							id: user.id_organizer_or_volunteer,
+							dateOfBirth: volunteer.date_of_birth,
+							phone: volunteer.phone || '',
+							photo: volunteer.photo || '',
+							city: volunteer.city,
+							userSkills: volunteer.skills,
+							telegram: volunteer.telegram || '',
+						});
+					}
+				);
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<section className="profile">

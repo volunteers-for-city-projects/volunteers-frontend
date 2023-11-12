@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
 import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 
 import './ProfileVolunteerForm.scss';
 
@@ -79,17 +80,17 @@ export default function ProfileVolunteerForm({
 
 	const phoneNumberMask = getPhoneNumberMask(phone);
 
-	const modify = (input) => {
-		let mask;
-		if (input[0] === '9') {
-			mask = '+7 (___) ___-__-__';
-		} else if (input[0] === '8') {
-			mask = '_ (___) ___-__-__';
-		} else {
-			mask = '+_ (___) ___-__-__';
-		}
-		return { mask };
-	};
+	// const modify = (input) => {
+	// 	let mask;
+	// 	if (input[0] === '9') {
+	// 		mask = '+7 (___) ___-__-__';
+	// 	} else if (input[0] === '8') {
+	// 		mask = '_ (___) ___-__-__';
+	// 	} else {
+	// 		mask = '+_ (___) ___-__-__';
+	// 	}
+	// 	return { mask };
+	// };
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -118,7 +119,7 @@ export default function ProfileVolunteerForm({
 						last_name: values.profile_volunteer_lastname,
 					},
 					telegram: values.profile_volunteer_telegram,
-					// photo: values.profile_volunteer_photo || null || '' || undefined,
+					date_of_birth: '1900-01-01',
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
@@ -126,6 +127,7 @@ export default function ProfileVolunteerForm({
 					skills: values.profile_volunteer_skills || [],
 					city: values.profile_volunteer_city,
 				});
+				await handleIsForm();
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Ошибка в обновлении данных волонтера:', error.message);
@@ -217,7 +219,7 @@ export default function ProfileVolunteerForm({
 							component={Input}
 							mask="+_ (___) ___-__-__"
 							replacement={{ _: /\d/ }}
-							modify={modify}
+							modify={phoneMask}
 							value={formik.values.profile_volunteer_phone}
 							onChange={formik.handleChange}
 							id="profile_volunteer_phone"
