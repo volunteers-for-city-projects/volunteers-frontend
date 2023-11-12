@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import successIcon from '../../images/popup-window/success.svg';
 import errorIcon from '../../images/popup-window/error.svg';
 
-export default function PopupWindow({ text, type, isOpen }) {
+export default function PopupWindow({ text, type, isOpen, styleType }) {
 	const mapContent = {
 		success: successIcon,
 		error: errorIcon,
@@ -14,6 +14,7 @@ export default function PopupWindow({ text, type, isOpen }) {
 	return (
 		<div
 			className={clsx(`popup-window popup-window_type_${type}`, {
+				'popup-window_type_modal': styleType === 'modal',
 				'popup-window_opened': isOpen,
 			})}
 		>
@@ -24,7 +25,14 @@ export default function PopupWindow({ text, type, isOpen }) {
 }
 
 PopupWindow.propTypes = {
-	text: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
+	text: PropTypes.string,
+	type: PropTypes.string,
+	styleType: PropTypes.string,
 	isOpen: PropTypes.bool.isRequired,
+};
+
+PopupWindow.defaultProps = {
+	text: '',
+	type: '',
+	styleType: '',
 };
