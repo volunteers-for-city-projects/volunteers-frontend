@@ -37,6 +37,11 @@
 		border-radius: 10px;
 		border: 1px solid $--Primary;
 		cursor: default;
+		position: relative;
+
+		&_type_change-password {
+			width: 640px;
+		}
 	}
 
 	&__title-container {
@@ -91,6 +96,11 @@
 	&__image_type_project {
 		width: 362px;
 		height: 132px;
+	}
+
+	&__image_type_change-password {
+		width: 346px;
+		height: 154px;
 	}
 
 	&__text {
