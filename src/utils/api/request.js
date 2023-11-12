@@ -1,7 +1,25 @@
-export const BASE_URL = 'http://better-together.acceleratorpracticum.ru/api';
+export const BASE_URL = 'https://better-together.acceleratorpracticum.ru/api';
 
 const flattenObject = (obj) =>
 	Object.keys(obj).reduce((result, key) => {
+		if (Object.prototype.hasOwnProperty.call(obj, 'password')) {
+			return result.concat({ password: 'Неверный логин или пароль.' });
+		}
+
+		if (Object.prototype.hasOwnProperty.call(obj, 'email')) {
+			return result.concat({
+				notExistEmail:
+					'Пользователь с данным адресом электронной почты не существует.',
+			});
+		}
+
+		if (Object.prototype.hasOwnProperty.call(obj, 'not_active')) {
+			return result.concat({
+				notActiveEmail:
+					'Пользователь с данным адресом электронной почты не активирован.',
+			});
+		}
+
 		if (typeof obj[key] === 'object') {
 			return result.concat(flattenObject(obj[key]));
 		}
