@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 import './PopupChangePasswordSuccess.scss';
-import keyImage from '../../images/key-image.png';
+import keyImage from '../../images/modals/key-image.png';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function PopupChangePasswordSuccess({ isOpen, onClose }) {
