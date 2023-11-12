@@ -12,6 +12,8 @@ import Project from '../components/Project/Project';
 import {
 	ProtectedRouteElementForUnauthorized,
 	ProtectedRouteElementForAuthorized,
+	ProtectedRouteElementForAuthorizedVolunteer,
+	ProtectedRouteElementForAuthorizedOrganizer,
 } from './ProtectedRoute';
 import './router.scss';
 import VolunteerSignupForm from '../components/VolunteerSignupForm/VolunteerSignupForm';
@@ -19,6 +21,7 @@ import OrganizerSignupForm from '../components/OrganizerSignupForm/OrganizerSign
 import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
 import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
+import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolunteerEdit';
 
 const router = createHashRouter([
 	{
@@ -122,7 +125,11 @@ const router = createHashRouter([
 				children: [
 					{
 						path: 'volunteer',
-						element: <ProfileVolunteer />,
+						element: (
+							<ProtectedRouteElementForAuthorizedVolunteer>
+								<ProfileVolunteer />
+							</ProtectedRouteElementForAuthorizedVolunteer>
+						),
 						handle: {
 							crumb: () => (
 								<Link to="/profile/volunteer" className="router__link">
@@ -133,7 +140,7 @@ const router = createHashRouter([
 						children: [
 							{
 								path: 'edit-profile',
-								element: <ProfileOrganizationEdit />,
+								element: <ProfileVolunteerEdit />,
 								handle: {
 									crumb: () => (
 										<Link
@@ -149,7 +156,11 @@ const router = createHashRouter([
 					},
 					{
 						path: 'organizer',
-						element: <ProfileOrganization />,
+						element: (
+							<ProtectedRouteElementForAuthorizedOrganizer>
+								<ProfileOrganization />
+							</ProtectedRouteElementForAuthorizedOrganizer>
+						),
 						handle: {
 							crumb: () => (
 								<Link to="/profile/organizer" className="router__link">
