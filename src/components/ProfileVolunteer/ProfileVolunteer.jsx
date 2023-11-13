@@ -10,7 +10,7 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
 import cityImage from '../../images/city.png';
-import volunteerImage from '../../images/fotoProfile.svg';
+import volunteerImage from '../../images/avatar.png';
 
 function ProfileVolunteer() {
 	const {
@@ -83,7 +83,7 @@ function ProfileVolunteer() {
 								<Pushbutton
 									label="Изменить пароль"
 									color="#3F3F3F"
-									size="pre-large"
+									size="large-var"
 									minWidth="280px"
 									backgroundColor="transparent"
 									border="1px solid #A6C94F"
@@ -92,7 +92,7 @@ function ProfileVolunteer() {
 								<Pushbutton
 									label="Редактировать профиль"
 									color="#3F3F3F"
-									size="pre-large"
+									size="large-var"
 									minWidth="280px"
 									backgroundColor="transparent"
 									border="1px solid #A6C94F"

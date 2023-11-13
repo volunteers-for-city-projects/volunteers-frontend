@@ -14,7 +14,7 @@ import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import cityImage from '../../images/city.png';
-import organizationImage from '../../images/fotoProfile.svg';
+import organizationImage from '../../images/avatar.png';
 
 function ProfileOrganization() {
 	const {
@@ -88,7 +88,7 @@ function ProfileOrganization() {
 								<Pushbutton
 									label="Изменить пароль"
 									color="#3F3F3F"
-									size="pre-large"
+									size="large-var"
 									minWidth="280px"
 									backgroundColor="transparent"
 									border="1px solid #A6C94F"
@@ -97,7 +97,7 @@ function ProfileOrganization() {
 								<Pushbutton
 									label="Редактировать профиль"
 									color="#3F3F3F"
-									size="pre-large"
+									size="large-var"
 									minWidth="280px"
 									backgroundColor="transparent"
 									border="1px solid #A6C94F"
@@ -119,7 +119,7 @@ function ProfileOrganization() {
 								<Pushbutton
 									label="Добавить проект"
 									color="white"
-									size="pre-large"
+									size="large-var"
 									minWidth="283px"
 									backgroundColor="#A6C94F"
 									border="none"

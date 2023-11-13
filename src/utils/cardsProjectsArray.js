@@ -3,7 +3,7 @@
 // import window from '../images/window.png';
 
 const cardsProjectsArray = [
-	/* {
+	/*	 {
 		id: 0,
 		status: '23 заявки',
 		nameProject: 'Проект с длинным названием про экологию',
