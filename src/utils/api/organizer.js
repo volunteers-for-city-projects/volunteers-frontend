@@ -17,4 +17,9 @@ const getProjectById = (id) => {
 	return request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null, token);
 };
 
-export { getProjectCategories, createProject, getProjectById };
+const getAllProjects = () => {
+	const token = localStorage.getItem('token');
+	return request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null, token);
+};
+
+export { getProjectCategories, createProject, getProjectById, getAllProjects };

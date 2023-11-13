@@ -1,5 +1,5 @@
 import './Projects.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
@@ -8,7 +8,12 @@ import CardProject from '../CardProject/CardProject';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 
 function Projects() {
+	const { projects } = useOutletContext();
+
+	const dataProjects = projects;
+
 	const navigate = useNavigate();
+
 	return (
 		<section className="projects">
 			<div className="projects__container">
@@ -69,9 +74,10 @@ function Projects() {
 				</div>
 
 				<div className="projects__cards">
-					{cardsProjectsPreview.map((item) => (
-						<CardProject cardProject={item} key={item.id} />
-					))}
+					{dataProjects.length > 0 &&
+						dataProjects.map((item) => (
+							<CardProject cardProject={item} key={item.id} />
+						))}
 				</div>
 
 				<div>
@@ -81,5 +87,9 @@ function Projects() {
 		</section>
 	);
 }
+
+Projects.defaultProps = {
+	projects: cardsProjectsPreview,
+};
 
 export default Projects;
