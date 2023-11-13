@@ -10,7 +10,7 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
 import cityImage from '../../images/city.png';
-import volunteerImage from '../../images/fotoProfile.svg';
+import volunteerImage from '../../images/avatar.png';
 
 function ProfileVolunteer() {
 	const {
@@ -73,11 +73,33 @@ function ProfileVolunteer() {
 			<div className="profile__wrapper">
 				<div className="profile__personal">
 					<div className="profile__personal-container">
-						<img
-							className="profile__image"
-							src={photo || volunteerImage}
-							alt="Фото волонтера"
-						/>
+						<div className="profile__personal-label">
+							<img
+								className="profile__image"
+								src={photo || volunteerImage}
+								alt="Логотип организатора"
+							/>
+							<div className="profile__personal-btn">
+								<Pushbutton
+									label="Изменить пароль"
+									color="#3F3F3F"
+									size="large-var"
+									minWidth="280px"
+									backgroundColor="transparent"
+									border="1px solid #A6C94F"
+									onClick={() => handleChangePasswordForm()}
+								/>
+								<Pushbutton
+									label="Редактировать профиль"
+									color="#3F3F3F"
+									size="large-var"
+									minWidth="280px"
+									backgroundColor="transparent"
+									border="1px solid #A6C94F"
+									onClick={() => navigate('edit-profile')}
+								/>
+							</div>
+						</div>
 						<div className="profile__name">
 							<h2 className="profile__name-surname">
 								{`${firstName} ${secondName} ${lastName}`}
@@ -86,26 +108,6 @@ function ProfileVolunteer() {
 						{dataVolunteer.length > 0 && (
 							<ProfileData dataArray={dataVolunteer} />
 						)}
-					</div>
-					<div className="profile__button">
-						<Pushbutton
-							label="Изменить пароль"
-							color="white"
-							size="pre-large"
-							minWidth="280px"
-							backgroundColor="#A6C94F"
-							border="none"
-							onClick={handleChangePasswordForm}
-						/>
-						<Pushbutton
-							label="Редактировать профиль"
-							color="white"
-							size="pre-large"
-							minWidth="280px"
-							backgroundColor="#A6C94F"
-							border="none"
-							onClick={() => navigate('edit-profile')}
-						/>
 					</div>
 				</div>
 				<div className="profile__projects">

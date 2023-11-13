@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import './CardProject.scss';
-import pensil from '../../images/pensil.svg';
+import basket from '../../images/basket.svg';
 
 function CardProject({ cardProject }) {
 	const { status, nameProject, city, day, time, isModeration, image } =
@@ -21,7 +21,7 @@ function CardProject({ cardProject }) {
 				<div className="card__overlay" />
 				<li className="card__status">
 					<p className={statusClassName}>{status}</p>
-					<img className="card__status-icon" src={pensil} alt="редактировать" />
+					<img className="card__status-icon" src={basket} alt="редактировать" />
 				</li>
 				<li className="card__name">
 					<p className="card__name-title">{nameProject}</p>

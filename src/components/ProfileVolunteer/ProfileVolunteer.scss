@@ -18,12 +18,26 @@
 		background: $--White;
 		border-radius: 10px;
 		width: 676px;
-		padding: 40px 40px 0 40px;
+		padding: 20px 40px 0 40px;
 		box-sizing: border-box;
 		&-container {
 			display: flex;
 			flex-direction: column;
 		}
+
+		&-label {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+
+		&-btn {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
 	}
 	&__image {
 		width: 180px;
@@ -44,23 +58,17 @@
 			color: $--Text;
 		}
 	}
-	&__button {
-		display: flex;
-		gap: 20px;
-		z-index: 1;
-	}
 
 	&__wrapper {
 		display: flex;
 		gap: 25px;
-		padding: 0 120px 98px;
+		padding: 0 120px 0;
 		box-sizing: border-box;
-		position: relative;
 	}
 
 	&__projects {
 		width: 960px;
-		margin-top: 40px;
+		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -86,13 +94,15 @@
 			font-style: normal;
 			font-weight: 500;
 			line-height: 130%;
-			margin-top: 40px;
+			margin: 10px 0 0;
+			color: $--Text;
 		}
 		&-image {
 			width: 570px;
 			height: 568px;
-			margin-top: 150px;
+			margin-top: 10px;
 			margin-left: 500px;
+			margin-bottom: 50px;
 		}
 	}
 
@@ -104,16 +114,13 @@
 			width: 377px;
 			padding: 16px 0 16px 60px;
 		}
-		&__button {
-			margin-top: 50px;
-			margin-left: 35px;
-		}
+
 		&__projects {
 			width: 732px;
 		}
 		&__wrapper {
 			gap: 90px;
-			padding: 0 73px 98px;
+			padding: 0 73px 0;
 		}
 		&__blank-image {
 			margin-left: 172px;
