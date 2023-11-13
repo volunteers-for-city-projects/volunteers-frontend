@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import './CardProject.scss';
 import basket from '../../images/basket.svg';
 
 function CardProject({ cardProject }) {
+	const location = useLocation();
+	const pageProfile = location.pathname === '/profile/organizer';
+
 	const {
 		status,
 		name: nameProject,
@@ -28,7 +32,13 @@ function CardProject({ cardProject }) {
 				<div className="card__overlay" />
 				<li className="card__status">
 					<p className={statusClassName}>{status}</p>
-					<img className="card__status-icon" src={basket} alt="редактировать" />
+					{pageProfile ? (
+						<img
+							className="card__status-icon"
+							src={basket}
+							alt="редактировать"
+						/>
+					) : null}
 				</li>
 				<li className="card__name">
 					<p className="card__name-title">{nameProject}</p>
