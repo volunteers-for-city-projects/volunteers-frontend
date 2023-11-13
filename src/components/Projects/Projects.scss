@@ -1,0 +1,39 @@
+@import '../../style/variables.scss';
+.projects {
+	margin: 0 auto;
+	&__container {
+		margin: 40px 130px 24px 130px;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 1660px;
+	}
+
+	&__label {
+		display: flex;
+		justify-content: space-between;
+		&-title {
+			margin: 0;
+			color: $--Text;
+			font-size: 56px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 100%;
+		}
+		&-btn {
+			display: flex;
+			align-items: center;
+			width: 400px;
+		}
+	}
+
+	&__selects {
+		display: flex;
+		gap: 20px;
+	}
+	&__cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+		gap: 20px;
+	}
+}

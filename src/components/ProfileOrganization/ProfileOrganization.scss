@@ -98,9 +98,9 @@
 			gap: 32px;
 		}
 		&-cards {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 18px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(468px, 1fr));
+			gap: 20px;
 		}
 	}
 
@@ -146,6 +146,11 @@
 			margin-left: 152px;
 		}
 		&__projects-container {
+			gap: 20px;
+		}
+		&__projects-cards {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(356px, 1fr));
 			gap: 20px;
 		}
 	}
