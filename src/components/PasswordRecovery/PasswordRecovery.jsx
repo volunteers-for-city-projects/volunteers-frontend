@@ -63,7 +63,7 @@ function PasswordRecovery({
 					E-mail
 					<input
 						type="email"
-						placeholder="Email"
+						placeholder="Введите E-mail"
 						className={clsx('password-recovery__input', {
 							'password-recovery__input_type-error':
 								formik.touched.userEmail && formik.errors.userEmail,

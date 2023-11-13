@@ -100,7 +100,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 						Пароль
 						<input
 							type="password"
-							placeholder="Пароль"
+							placeholder="Введите пароль"
 							className="sign-in__input"
 							id="userPassword"
 							name="userPassword"

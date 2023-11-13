@@ -21,6 +21,7 @@ function LoginSignIn() {
 					isOpen: true,
 					type: 'email',
 					state: 'success',
+					title: 'E-mail подтвержден',
 					onSubmit: (event) => {
 						event.preventDefault();
 						setModal({

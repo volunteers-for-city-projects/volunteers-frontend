@@ -59,7 +59,7 @@ function Modal({ modal, closeModal }) {
 			},
 			success: {
 				title: 'Ура! Адрес электронной почты подтвержден!',
-				textButton: 'Войти в личный кабинет',
+				textButton: 'Войти',
 				image: modalSuccess,
 			},
 		},
