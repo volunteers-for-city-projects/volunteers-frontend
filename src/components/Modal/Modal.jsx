@@ -8,6 +8,7 @@ import modalExit from '../../images/modals/exit.png';
 import modalSend from '../../images/modals/send.png';
 import modalSuccess from '../../images/modals/success.png';
 import modalError from '../../images/modals/error.png';
+import modalCity from '../../images/modals/city.png';
 
 function Modal({ modal, closeModal }) {
 	const stopPropagation = (event) => {
@@ -59,7 +60,7 @@ function Modal({ modal, closeModal }) {
 			},
 			success: {
 				title: 'Ура! Адрес электронной почты подтвержден!',
-				textButton: 'Войти в личный кабинет',
+				textButton: 'Войти',
 				image: modalSuccess,
 			},
 		},
@@ -74,6 +75,14 @@ function Modal({ modal, closeModal }) {
 				errorsArray: errorsData,
 				textButton: '',
 				image: modalError,
+			},
+		},
+		project: {
+			success: {
+				title:
+					'Проект отправлен на модерацию администратору. Он будет отображен в личном кабинете после одобрения или отклонения',
+				textButton: 'Перейти в личный кабинет',
+				image: modalCity,
 			},
 		},
 	};
@@ -97,7 +106,7 @@ function Modal({ modal, closeModal }) {
 						/>
 						<Pushbutton
 							label="Нет"
-							color="#FFF"
+							color="#fff"
 							backgroundColor="#A6C94F"
 							size="pre-large"
 							onClick={closeModal}
@@ -123,7 +132,7 @@ function Modal({ modal, closeModal }) {
 					<p className="modal__text">{contentText[type][state].title}</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
-						color="#333"
+						color="#fff"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						type="submit"
@@ -148,7 +157,7 @@ function Modal({ modal, closeModal }) {
 					<p className="modal__text">{contentText[type][state].title}</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
-						color="#333"
+						color="#fff"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						type="submit"
@@ -171,6 +180,22 @@ function Modal({ modal, closeModal }) {
 							</li>
 						))}
 				</ul>
+			),
+		},
+		project: {
+			success: (
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
+					<Pushbutton
+						label={contentText[type][state].textButton}
+						color="#333"
+						backgroundColor="#A6C94F"
+						size="pre-large"
+						type="submit"
+						minWidth="399px"
+						border="none"
+					/>
+				</>
 			),
 		},
 	};
@@ -205,6 +230,7 @@ function Modal({ modal, closeModal }) {
 							className={clsx('modal__image', {
 								modal__image_type_confirm: type === 'confirm',
 								modal__image_type_success: state === 'success',
+								modal__image_type_project: type === 'project',
 							})}
 							src={contentText[type][state].image}
 							alt={`${type} ${state}`}

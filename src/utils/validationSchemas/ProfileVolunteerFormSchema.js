@@ -84,7 +84,7 @@ export const ProfileVolunteerFormSchema = Yup.object({
 		})
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите отчество кириллицей'),
 	profile_volunteer_phone: Yup.string().matches(
-		/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+		/^\+7|8 \([1-9]{1}\d{2}\) \d{3}-\d{2}-\d{2}$/,
 		'Введите корректный телефон'
 	),
 	profile_volunteer_telegram: Yup.string()

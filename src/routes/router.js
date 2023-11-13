@@ -14,6 +14,12 @@ import {
 	ProtectedRouteElementForAuthorized,
 } from './ProtectedRoute';
 import './router.scss';
+import VolunteerSignupForm from '../components/VolunteerSignupForm/VolunteerSignupForm';
+import OrganizerSignupForm from '../components/OrganizerSignupForm/OrganizerSignupForm';
+import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
+import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolunteerEdit';
+import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
+import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
 
 const router = createHashRouter([
 	{
@@ -31,7 +37,6 @@ const router = createHashRouter([
 				index: true,
 				element: <Main />,
 			},
-
 			{
 				path: 'registration',
 				element: (
@@ -39,6 +44,30 @@ const router = createHashRouter([
 						<Signup />
 					</ProtectedRouteElementForAuthorized>
 				),
+				children: [
+					{
+						path: 'volunteer',
+						element: <VolunteerSignupForm />,
+						handle: {
+							crumb: () => (
+								<Link to="/registration/volunteer" className="router__link">
+									Регистрация волонтёра
+								</Link>
+							),
+						},
+					},
+					{
+						path: 'organizer',
+						element: <OrganizerSignupForm />,
+						handle: {
+							crumb: () => (
+								<Link to="/registration/organizer" className="router__link">
+									Регистрация организатора
+								</Link>
+							),
+						},
+					},
+				],
 			},
 			{
 				path: 'login',
@@ -54,7 +83,6 @@ const router = createHashRouter([
 						</Link>
 					),
 				},
-
 				children: [
 					{
 						index: true,
@@ -92,12 +120,77 @@ const router = createHashRouter([
 						<Profile />
 					</ProtectedRouteElementForUnauthorized>
 				),
+				children: [
+					{
+						path: 'volunteer',
+						element: <ProfileVolunteer />,
+						handle: {
+							crumb: () => (
+								<Link to="/profile/volunteer" className="router__link">
+									Личный кабинет волонтёра
+								</Link>
+							),
+						},
+						children: [
+							{
+								path: 'edit-profile',
+								element: <ProfileVolunteerEdit />,
+								handle: {
+									crumb: () => (
+										<Link
+											to="/profile/volunteer/edit-profile"
+											className="router__link"
+										>
+											Редактирование профиля
+										</Link>
+									),
+								},
+							},
+						],
+					},
+					{
+						path: 'organizer',
+						element: <ProfileOrganization />,
+						handle: {
+							crumb: () => (
+								<Link to="/profile/organizer" className="router__link">
+									Личный кабинет организатора
+								</Link>
+							),
+						},
+						children: [
+							{
+								path: 'edit-profile',
+								element: <ProfileOrganizationEdit />,
+								handle: {
+									crumb: () => (
+										<Link
+											to="/profile/organizer/edit-profile"
+											className="router__link"
+										>
+											Редактирование профиля
+										</Link>
+									),
+								},
+							},
+							{
+								path: 'create-project',
+								element: <Project />,
+								handle: {
+									crumb: () => (
+										<Link
+											to="/profile/organizer/create-project"
+											className="router__link"
+										>
+											Новый проект
+										</Link>
+									),
+								},
+							},
+						],
+					},
+				],
 			},
-			{
-				path: 'project',
-				element: <Project />,
-			},
-
 			{
 				path: '*',
 				element: <NotFound />,

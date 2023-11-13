@@ -1,14 +1,9 @@
 import './JoinButtons.scss';
-import {
-	useNavigate,
-	useSearchParams,
-	useOutletContext,
-} from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
 function JoinButtons() {
 	const navigate = useNavigate();
-	const [searchParam, setSearchParam] = useSearchParams();
 	const { isLoggedIn } = useOutletContext();
 
 	return (
@@ -32,11 +27,7 @@ function JoinButtons() {
 							minWidth="280px"
 							alignSelf="flex-end"
 							disabled={isLoggedIn}
-							onClick={() => {
-								navigate('/registration');
-								searchParam.set('role', 'volunteer');
-								setSearchParam(searchParam);
-							}}
+							onClick={() => navigate('/registration/volunteer')}
 						/>
 					</div>
 					<div className="join__item join__item_organizer">
@@ -53,11 +44,7 @@ function JoinButtons() {
 							minWidth="280px"
 							alignSelf="flex-end"
 							disabled={isLoggedIn}
-							onClick={() => {
-								navigate('/registration');
-								searchParam.set('role', 'organizer');
-								setSearchParam(searchParam);
-							}}
+							onClick={() => navigate('/registration/organizer')}
 						/>
 					</div>
 				</div>

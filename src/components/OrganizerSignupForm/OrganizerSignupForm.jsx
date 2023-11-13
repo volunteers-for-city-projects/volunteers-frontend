@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 
@@ -18,32 +18,13 @@ import UploadFile from '../UploadFile/UploadFile';
 import SelectOption from '../SelectOption/SelectOption';
 import { OrganizerSignupFormSchema } from '../../utils/validationSchemas/OrganizerSignupFormSchema';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import { createOrganization, getCities } from '../../utils/api/signupApi';
+import { createOrganization } from '../../utils/api/signupApi';
+import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-	const [cities, setCities] = useState([]);
 
-	const { setModal } = useOutletContext();
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
+	const { setModal, cities } = useOutletContext();
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -90,6 +71,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					title: 'Подтверждение E-mail',
 					emailprop: values.organize_email,
 					onSubmit: (event) => {
 						event.preventDefault();
@@ -115,6 +97,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
 	};
+
 	return (
 		<form
 			action="#"
@@ -274,7 +257,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_password"
 					name="organize_password"
 					label="Пароль"
-					type="password"
+					type="text"
 					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.organize_password}
@@ -288,7 +271,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_confirm_password"
 					name="organize_confirm_password"
 					label="Повторный пароль"
-					type="password"
+					type="text"
 					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.organize_confirm_password}
@@ -312,23 +295,12 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					}
 					type="submit"
 				/>
-				<p className="organizer-signup-form__text">
-					Нажимая кнопку «Отправить данные», я подтверждаю, что мне исполнилось
-					18 лет, и соглашаюсь с Политикой конфиденциальности
-				</p>
-				<label
+				<CheckboxConfirm
+					onClick={handleCheckboxClick}
+					name="organizer-signup-form"
 					htmlFor="organizer-signup-form-checkbox"
-					className="organizer-signup-form__text"
-				>
-					<input
-						id="organizer-signup-form-checkbox"
-						name="organizer-signup-form"
-						type="checkbox"
-						className="organizer-signup-form__checkbox"
-						onClick={handleCheckboxClick}
-					/>
-					Даю согласие на обработку моих персональных данных
-				</label>
+					checked={isCheckboxChecked}
+				/>
 			</div>
 		</form>
 	);

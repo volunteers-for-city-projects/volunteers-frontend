@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { getUserInformation, logOut } from '../../utils/api/login';
+import {
+	getUserInformation,
+	logOut,
+	changePasswordProfile,
+} from '../../utils/api/login';
 import {
 	getVolunteerInformation,
 	getOrganizationInformation,
@@ -9,7 +13,11 @@ import {
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
-import ModalChangePassword from '../ModalChangePassword/ModalChangePassword';
+import FormChangePassword from '../FormChangePassword/FormChangePassword';
+import { getNews, getPlatformAbout } from '../../utils/api/main-page';
+import { getSkills, getCities } from '../../utils/api/signupApi';
+import { getProjectCategories } from '../../utils/api/organizer';
+import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -41,7 +49,14 @@ function App() {
 		ogrn: '',
 		title: '',
 	});
-	const [modalChangePassword, setModalChangePassword] = useState(false);
+	const [formChangePassword, setFormChangePassword] = useState(false);
+	const [popupChangePassword, setPopupChangePassword] = useState(false);
+	const [cities, setCities] = useState([]);
+	const [skills, setSkills] = useState([]);
+	const [projectCategories, setProjectCategories] = useState([]);
+	const [plarformAbout, setPlatformAbout] = useState({});
+	const [plarformPromo, setPlatformPromo] = useState({});
+	const [news, setNews] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -51,8 +66,8 @@ function App() {
 				.then((user) => {
 					setIsLoggedIn(true);
 					if (user.role === 'volunteer') {
-						getVolunteerInformation(user.id_organizer_or_volunteer).then(
-							(volunteer) => {
+						getVolunteerInformation(user.id_organizer_or_volunteer)
+							.then((volunteer) => {
 								setCurrentUser({
 									firstName: user.first_name,
 									secondName: user.second_name,
@@ -68,11 +83,11 @@ function App() {
 									userSkills: volunteer.skills,
 									telegram: volunteer.telegram || '',
 								});
-							}
-						);
+							})
+							.catch((err) => console.error(err));
 					} else {
-						getOrganizationInformation(user.id_organizer_or_volunteer).then(
-							(organizer) => {
+						getOrganizationInformation(user.id_organizer_or_volunteer)
+							.then((organizer) => {
 								setCurrentUser({
 									firstName: user.first_name,
 									secondName: user.second_name,
@@ -88,8 +103,8 @@ function App() {
 									photo: organizer.photo || '',
 									title: organizer.title,
 								});
-							}
-						);
+							})
+							.catch((err) => console.error(err));
 					}
 				})
 				.catch((err) => {
@@ -99,6 +114,50 @@ function App() {
 				});
 		}
 	}, [isLoggedIn]);
+
+	useEffect(() => {
+		Promise.all([getNews(), getPlatformAbout()])
+			.then(([dataNews, dataPlatformAbout]) => {
+				setNews(dataNews.results);
+				const { about_us: aboutUs, valuations } = dataPlatformAbout;
+				const { platform_email: email } = dataPlatformAbout;
+				const {
+					projects_count: projectCount,
+					volunteers_count: volunteersCount,
+					organizers_count: organizersCount,
+				} = dataPlatformAbout;
+				setPlatformAbout({ aboutUs, valuations });
+				setPlatformEmail(email);
+				setPlatformPromo({ projectCount, volunteersCount, organizersCount });
+			})
+			.catch((err) => console.error(err));
+	}, []);
+
+	useEffect(() => {
+		Promise.all([getSkills(), getCities(), getProjectCategories()])
+			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
+				const skillsArray = skillsResponse.map((item) => ({
+					label: item.name,
+					value: item.id.toString(),
+				}));
+				const citiesArray = citiesResponse.map((item) => ({
+					label: item.name,
+					value: item.id.toString(),
+				}));
+				const projectCategoriesArray = projectCategoriesResponse.map(
+					(item) => ({
+						label: item.name,
+						value: item.id.toString(),
+					})
+				);
+				setSkills(skillsArray);
+				setCities(citiesArray);
+				setProjectCategories(projectCategoriesArray);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, []);
 
 	const closeModal = () => {
 		setModal({
@@ -131,16 +190,49 @@ function App() {
 		});
 	};
 
-	const handleChangePassword = () => {
-		setModalChangePassword(true);
+	const handleChangePasswordForm = () => {
+		setFormChangePassword(true);
+	};
+	const handleChangePopupPassword = () => {
+		setPopupChangePassword(true);
 	};
 
 	const closeModalPassword = () => {
-		setModalChangePassword(false);
+		setFormChangePassword(false);
+		setPopupChangePassword(false);
 	};
 
-	const handleChangePasswordSubmit = (e) => {
-		e.preventDefault();
+	const handleChangePassword = ({ newPassword, currentPassword }) => {
+		changePasswordProfile({ newPassword, currentPassword })
+			.then(() => {
+				closeModalPassword();
+				handleChangePopupPassword();
+			})
+			.catch((err) => {
+				closeModalPassword();
+				setModal({
+					isOpen: true,
+					type: 'error',
+					state: 'info',
+					title: 'Неправильный пароль',
+					errorArray: err,
+				});
+			});
+	};
+
+	const handleChangeCurrentPassword = (
+		{ newPassword, currentPassword },
+		{ resetForm }
+	) => {
+		handleChangePassword(
+			{
+				newPassword,
+				currentPassword,
+			},
+			setTimeout(() => {
+				resetForm();
+			}, 2000)
+		);
 	};
 
 	return (
@@ -151,7 +243,6 @@ function App() {
 			/>
 			<Outlet
 				context={{
-					setPlatformEmail,
 					isLoading,
 					setIsLoading,
 					currentUser,
@@ -159,7 +250,13 @@ function App() {
 					isLoggedIn,
 					setIsLoggedIn,
 					setModal,
-					handleChangePassword,
+					handleChangePasswordForm,
+					cities,
+					skills,
+					projectCategories,
+					plarformAbout,
+					plarformPromo,
+					news,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />
@@ -169,10 +266,14 @@ function App() {
 					document.body
 				)}
 
-			<ModalChangePassword
-				isOpen={modalChangePassword}
+			<FormChangePassword
+				isOpen={formChangePassword}
 				onClose={closeModalPassword}
-				onSubmit={handleChangePasswordSubmit}
+				onChangePassword={handleChangeCurrentPassword}
+			/>
+			<PopupChangePasswordSuccess
+				isOpen={popupChangePassword}
+				onClose={closeModalPassword}
 			/>
 		</>
 	);

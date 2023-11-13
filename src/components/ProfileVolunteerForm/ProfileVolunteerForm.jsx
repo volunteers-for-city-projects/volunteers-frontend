@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { useOutletContext } from 'react-router-dom';
 import { InputMask } from '@react-input/mask';
 import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 
@@ -14,20 +14,12 @@ import ProfilePhoto from '../../images/fotoProfile.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
-import {
-	updateVolunteer,
-	getSkills,
-	getCities,
-} from '../../utils/api/signupApi';
+import { updateVolunteer } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 
-export default function ProfileVolunteerForm({
-	volunteerId,
-	onSubmit,
-	handleIsForm,
-	...restProps
-}) {
-	const { currentUser } = useOutletContext();
+export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
+	const navigate = useNavigate();
+	const { currentUser, cities, skills } = useOutletContext();
 	const {
 		firstName,
 		lastName,
@@ -40,35 +32,6 @@ export default function ProfileVolunteerForm({
 		id,
 	} = currentUser;
 
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
-				const skillsResponse = await getSkills();
-
-				const citiesData = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				const skillsData = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-
-				setCities(citiesData);
-				setSkills(skillsData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
 	const getPhoneNumberMask = (phoneNumber) =>
 		phoneNumber &&
 		phoneNumber.startsWith('+7') &&
@@ -79,18 +42,6 @@ export default function ProfileVolunteerForm({
 		);
 
 	const phoneNumberMask = getPhoneNumberMask(phone);
-
-	// const modify = (input) => {
-	// 	let mask;
-	// 	if (input[0] === '9') {
-	// 		mask = '+7 (___) ___-__-__';
-	// 	} else if (input[0] === '8') {
-	// 		mask = '_ (___) ___-__-__';
-	// 	} else {
-	// 		mask = '+_ (___) ___-__-__';
-	// 	}
-	// 	return { mask };
-	// };
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -127,7 +78,7 @@ export default function ProfileVolunteerForm({
 					skills: values.profile_volunteer_skills || [],
 					city: values.profile_volunteer_city,
 				});
-				await handleIsForm();
+				// await handleIsForm();
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Ошибка в обновлении данных волонтера:', error.message);
@@ -221,7 +172,7 @@ export default function ProfileVolunteerForm({
 							replacement={{ _: /\d/ }}
 							modify={phoneMask}
 							value={formik.values.profile_volunteer_phone}
-							onChange={formik.handleChange}
+							handleChange={formik.handleChange}
 							id="profile_volunteer_phone"
 							name="profile_volunteer_phone"
 							label="Телефон"
@@ -316,7 +267,7 @@ export default function ProfileVolunteerForm({
 								onClick={() => {
 									formik.handleReset();
 									formik.resetForm({});
-									handleIsForm();
+									navigate('..');
 								}}
 							/>
 						</div>
@@ -328,12 +279,9 @@ export default function ProfileVolunteerForm({
 }
 
 ProfileVolunteerForm.propTypes = {
-	volunteerId: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func,
-	handleIsForm: PropTypes.func,
 };
 
 ProfileVolunteerForm.defaultProps = {
 	onSubmit: () => {},
-	handleIsForm: () => {},
 };

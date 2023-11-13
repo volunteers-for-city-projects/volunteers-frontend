@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import PropTypes from 'prop-types';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { getSkills, getCities } from '../../utils/api/signupApi';
-import { getProjectCategories, createProject } from '../../utils/api/organizer';
+import { createProject } from '../../utils/api/organizer';
+import { Crumbs } from '../Crumbs/Crumbs';
 
-function Project({ organizationId }) {
-	const [cities, setCities] = useState([]);
-	const [skills, setSkills] = useState([]);
-	const [projectCategories, setProjectCategories] = useState([]);
+function Project() {
+	const { cities, skills, projectCategories, setModal, currentUser } =
+		useOutletContext();
 	const [image, setImage] = useState('');
+	const [isFocused, setIsFocused] = useState(false);
+	const navigate = useNavigate();
 
 	const projectValues = {
 		name: '',
@@ -39,7 +40,7 @@ function Project({ organizationId }) {
 		name: Yup.string()
 			.min(2, 'Длина поля от 2 до 100 символов')
 			.max(100, 'Длина поля от 2 до 100 символов')
-			.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите название кириллицей')
+			.matches(/^[А-Яа-яЁё0-9\s-]+$/, 'Введите название кириллицей')
 			.required('Поле обязательно для заполнения'),
 		description: Yup.string()
 			.min(10, 'Количество символов от 10 до 750')
@@ -52,7 +53,8 @@ function Project({ organizationId }) {
 			.required('Поле обязательно для заполнения'),
 		events: Yup.string()
 			.min(10, 'Количество символов от 10 до 750')
-			.max(750, 'Количество символов от 10 до 750'),
+			.max(750, 'Количество символов от 10 до 750')
+			.required('Поле обязательно для заполнения'),
 		tasks: Yup.string()
 			.min(2, 'Количество символов от 2 до 750')
 			.max(750, 'Количество символов от 2 до 750')
@@ -166,26 +168,45 @@ function Project({ organizationId }) {
 						address_line: values.address,
 						street: 'street',
 						house: 'house',
-						block: 'block',
-						building: 'building',
+						block: '',
+						building: '',
 					},
 					project_tasks: values.tasks,
 					project_events: values.events,
 					organizer_provides: values.provide,
-					organization: organizationId,
+					organization: currentUser.id,
 					city: values.city,
 					categories: values.categoryProject,
-					participants: null,
 					skills: values.skills,
 				});
+				setModal({
+					isOpen: true,
+					title: 'Проект отправлен на модерацию',
+					type: 'project',
+					state: 'success',
+					onSubmit: (event) => {
+						event.preventDefault();
+						navigate('/profile');
+						setModal({
+							isOpen: false,
+						});
+					},
+				});
 			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error(error.message);
+				if (Array.isArray(error)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: error,
+					});
+				} else {
+					console.error(error);
+				}
 			}
 		},
 	});
-
-	const [isFocused, setIsFocused] = useState(false);
 
 	const handleImageChange = (event) => {
 		const file = event.target.files[0];
@@ -198,7 +219,6 @@ function Project({ organizationId }) {
 			} else {
 				reader.onload = function handleFileLoad() {
 					const base64Data = reader.result;
-					console.log(base64Data);
 					formik.setFieldValue('image', base64Data);
 					setImage(base64Data);
 				};
@@ -208,34 +228,11 @@ function Project({ organizationId }) {
 		}
 	};
 
-	useEffect(() => {
-		Promise.all([getSkills(), getCities(), getProjectCategories()])
-			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
-				const skillsArray = skillsResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const citiesArray = citiesResponse.map((item) => ({
-					label: item.name,
-					value: item.id.toString(),
-				}));
-				const projectCategoriesArray = projectCategoriesResponse.map(
-					(item) => ({
-						label: item.name,
-						value: item.id.toString(),
-					})
-				);
-				setSkills(skillsArray);
-				setCities(citiesArray);
-				setProjectCategories(projectCategoriesArray);
-			})
-			.catch((err) => {
-				console.log(`Ошибка: ${err}`);
-			});
-	}, []);
-
 	return (
 		<section className="add-project">
+			<div className="add-project__menu-container">
+				<Crumbs />
+			</div>
 			<form
 				name="add-project-form"
 				className="add-project__form"
@@ -314,6 +311,7 @@ function Project({ organizationId }) {
 								value={formik.values.events}
 								handleChange={formik.handleChange}
 								submitCount={formik.submitCount}
+								required
 							/>
 							<InputTextArea
 								name="tasks"
@@ -413,7 +411,10 @@ function Project({ organizationId }) {
 								error={formik.errors.categoryProject}
 								value={formik.values.categoryProject}
 								handleChange={(selectedOption) => {
-									formik.setFieldValue('categoryProject', selectedOption);
+									const selectedValues = selectedOption.map(
+										(option) => option.value
+									);
+									formik.setFieldValue('categoryProject', selectedValues);
 								}}
 								isMulti
 								required
@@ -426,7 +427,10 @@ function Project({ organizationId }) {
 								error={formik.errors.skills}
 								value={formik.values.skills}
 								handleChange={(selectedOption) => {
-									formik.setFieldValue('skills', selectedOption);
+									const selectedValues = selectedOption.map(
+										(option) => option.value
+									);
+									formik.setFieldValue('skills', selectedValues);
 								}}
 								isMulti
 								required
@@ -459,13 +463,5 @@ function Project({ organizationId }) {
 		</section>
 	);
 }
-
-Project.defaultProps = {
-	organizationId: 54,
-};
-
-Project.propTypes = {
-	organizationId: PropTypes.number,
-};
 
 export default Project;

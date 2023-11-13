@@ -1,21 +1,31 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './ProfileVolunteer.scss';
-import { useOutletContext } from 'react-router-dom';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
+import {
+	useNavigate,
+	useOutletContext,
+	Outlet,
+	useLocation,
+} from 'react-router-dom';
+import { useEffect } from 'react';
+import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
-import { getCities } from '../../utils/api/signupApi';
 import cityImage from '../../images/city.png';
 import volunteerImage from '../../images/fotoProfile.svg';
+// import { getUserInformation } from '../../utils/api/login';
+// import { getVolunteerInformation } from '../../utils/api/profile';
 
-import { getUserInformation } from '../../utils/api/login';
-
-import { getVolunteerInformation } from '../../utils/api/profile';
-
-function ProfileVolunteer({ handleIsForm }) {
-	const { currentUser, handleChangePassword, setCurrentUser } =
-		useOutletContext();
+function ProfileVolunteer() {
+	const {
+		currentUser,
+		// setCurrentUser,
+		handleChangePasswordForm,
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+	} = useOutletContext();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const {
 		firstName,
@@ -28,13 +38,14 @@ function ProfileVolunteer({ handleIsForm }) {
 		photo,
 		telegram,
 	} = currentUser;
-	const [cityName, setCityName] = useState('');
 
 	const dataVolunteer = [
 		{
 			id: 0,
 			title: 'Город:',
-			subtitle: cityName[0],
+			subtitle: cities
+				.filter((item) => city === Number(item.value))
+				.map((item) => item.label)[0],
 		},
 		{
 			id: 1,
@@ -53,54 +64,44 @@ function ProfileVolunteer({ handleIsForm }) {
 	];
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const citiesResponse = await getCities();
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
 
-				const citiesData = citiesResponse
-					.filter((item) => city === item.id)
-					.map((item) => item.name);
+	// 	fetchData();
+	// }, [city];
 
-				setCityName(citiesData);
-			} catch (error) {
-				console.error('Ошибка при загрузке данных:', error);
-			}
-		};
+	// useEffect(() => {
+	// 	getUserInformation().then((user) => {
+	// 		if (user.role === 'volunteer') {
+	// 			getVolunteerInformation(user.id_organizer_or_volunteer).then(
+	// 				(volunteer) => {
+	// 					setCurrentUser({
+	// 						firstName: user.first_name,
+	// 						secondName: user.second_name,
+	// 						lastName: user.last_name,
+	// 						role: user.role,
+	// 						userId: user.id,
+	// 						email: user.email,
+	// 						id: user.id_organizer_or_volunteer,
+	// 						dateOfBirth: volunteer.date_of_birth,
+	// 						phone: volunteer.phone || '',
+	// 						photo: volunteer.photo || '',
+	// 						city: volunteer.city,
+	// 						userSkills: volunteer.skills,
+	// 						telegram: volunteer.telegram || '',
+	// 					});
+	// 				}
+	// 			);
+	// 		}
+	// 	});
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 
-		fetchData();
-	}, [city]);
-
-	useEffect(() => {
-		getUserInformation().then((user) => {
-			if (user.role === 'volunteer') {
-				getVolunteerInformation(user.id_organizer_or_volunteer).then(
-					(volunteer) => {
-						setCurrentUser({
-							firstName: user.first_name,
-							secondName: user.second_name,
-							lastName: user.last_name,
-							role: user.role,
-							userId: user.id,
-							email: user.email,
-							id: user.id_organizer_or_volunteer,
-							dateOfBirth: volunteer.date_of_birth,
-							phone: volunteer.phone || '',
-							photo: volunteer.photo || '',
-							city: volunteer.city,
-							userSkills: volunteer.skills,
-							telegram: volunteer.telegram || '',
-						});
-					}
-				);
-			}
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	return (
+	return location.pathname === '/profile/volunteer' ||
+		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
 			<div className="profile__menu-container">
-				<ProfileMenu title="Личный кабинет волонтера" />
+				<Crumbs />
 			</div>
 			<div className="profile__wrapper">
 				<div className="profile__personal">
@@ -127,7 +128,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleChangePassword}
+							onClick={handleChangePasswordForm}
 						/>
 						<Pushbutton
 							label="Редактировать профиль"
@@ -136,7 +137,7 @@ function ProfileVolunteer({ handleIsForm }) {
 							minWidth="280px"
 							backgroundColor="#A6C94F"
 							border="none"
-							onClick={handleIsForm}
+							onClick={() => navigate('edit-profile')}
 						/>
 					</div>
 				</div>
@@ -157,15 +158,18 @@ function ProfileVolunteer({ handleIsForm }) {
 				</div>
 			</div>
 		</section>
+	) : (
+		<Outlet
+			context={{
+				currentUser,
+				handleChangePasswordForm,
+				cities,
+				skills,
+				projectCategories,
+				setModal,
+			}}
+		/>
 	);
 }
-
-ProfileVolunteer.propTypes = {
-	handleIsForm: PropTypes.func,
-};
-
-ProfileVolunteer.defaultProps = {
-	handleIsForm: () => {},
-};
 
 export default ProfileVolunteer;

@@ -1,6 +1,10 @@
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
-import { apiLogin } from '../../utils/api/login-route';
-import { signIn, getUserInformation } from '../../utils/api/login';
+import {
+	signIn,
+	getUserInformation,
+	resetPassword,
+	resetPasswordConfirm,
+} from '../../utils/api/login';
 
 function Login() {
 	const { isLoading, setIsLoading, setCurrentUser, setIsLoggedIn, setModal } =
@@ -39,8 +43,7 @@ function Login() {
 
 	const handlePasswordReset = ({ email }) => {
 		setIsLoading(true);
-		apiLogin
-			.resetPassword({ email })
+		resetPassword({ email })
 			.then(() => {
 				setModal({
 					isOpen: true,
@@ -71,8 +74,7 @@ function Login() {
 
 	const handleSaveChanges = ({ password, uid, token }) => {
 		setIsLoading(true);
-		apiLogin
-			.resetPasswordConfirm({ password, uid, token })
+		resetPasswordConfirm({ password, uid, token })
 			.then(() => {
 				setModal({
 					isOpen: true,

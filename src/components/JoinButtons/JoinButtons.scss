@@ -2,17 +2,12 @@
 
 .join {
 	box-sizing: border-box;
-	background-image: url('../../images/main-page/cloud.png');
-	background-repeat: no-repeat;
-	background-size: 641px 332px;
-	background-position: right bottom -204px;
 	max-width: 1920px;
 	margin: 0 auto;
 
 	&__container {
 		max-width: 1660px;
-		margin: 0 auto;
-		padding: 128px 0 94px;
+		margin: 0 auto 100px;
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
@@ -94,7 +89,6 @@
 		background-image: none;
 		&__container {
 			max-width: 1178px;
-			padding: 110px 0 94px;
 		}
 		&__item {
 			width: 580px;

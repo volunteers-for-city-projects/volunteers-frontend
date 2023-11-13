@@ -31,7 +31,10 @@ export const ProfileOrganizationFormSchema = Yup.object({
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите отчество кириллицей')
 		.required('Поле обязательно для заполнения'),
 	profile_organize_phone: Yup.string()
-		.matches(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, 'Введите корректный телефон')
+		.matches(
+			/^\+7|8 \([1-9]{1}\d{2}\) \d{3}-\d{2}-\d{2}$/,
+			'Введите корректный телефон'
+		)
 		.required('Поле обязательно для заполнения'),
 	profile_organize_ogrn: Yup.string()
 		.trim()

@@ -11,6 +11,9 @@
 		gap: 12px;
 		grid-area: name;
 	}
+	&__menu-container {
+		margin: 28px auto 0;
+	}
 	&__input-name {
 		display: block;
 		min-width: 540px;
@@ -97,6 +100,7 @@
 			display: flex;
 			flex-direction: column;
 			grid-area: contnt;
+			row-gap: 29px;
 		}
 		&-buttons {
 			margin: 20px 0 0;
@@ -108,7 +112,7 @@
 	&__general-group {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(400px, 580px));
-		column-gap: 20px;
+		gap: 34px 20px;
 		&-wrapper {
 			display: flex;
 			flex-direction: column;
@@ -128,11 +132,11 @@
 	&__dates-group {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, 400px);
-		gap: 14px 20px;
+		gap: 20px;
 		&-wrapper {
 			display: flex;
 			flex-direction: column;
-			gap: 20px;
+			gap: 24px;
 		}
 	}
 	&__additional-group {
@@ -142,7 +146,7 @@
 		&-wrapper {
 			display: flex;
 			flex-direction: column;
-			gap: 20px;
+			gap: 24px;
 		}
 	}
 	&__caption-group {

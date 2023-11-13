@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
@@ -8,26 +9,54 @@ import RequestFormSchema from '../../utils/validationSchemas/RequestFormSchema';
 import InputRequest from '../InputRequest/InputRequest';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import PopupWindow from '../PopupWindow/PopupWindow';
+import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 function FormRequest({ handleSendMessage, popup }) {
+	const apiKey = process.env.REACT_APP_SECRET_KEY_RECAPTCHA;
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+	const [isReCaptchaChecked, setIsReCaptchaChecked] = useState(false);
+	const [isReCaptchaOpen, setIsReCaptchaOpen] = useState(false);
+	const recaptchaRef = useRef(null);
 	const [isFocus, setIsFocus] = useState(true);
 
-	const handleSubmit = (values, { resetForm }) => {
-		const formattedPhone = values.phone
-			.replaceAll('-', '')
-			.replaceAll(' ', '')
-			.replaceAll('(', '')
-			.replaceAll(')', '');
+	const handleCheckboxClick = () => {
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
 
-		handleSendMessage(
-			{
-				name: values.firstName,
-				phone: formattedPhone,
-				email: values.email,
-				text: values.message,
-			},
-			{ resetForm }
-		);
+	const handleResetRecaptcha = () => {
+		if (recaptchaRef.current) {
+			recaptchaRef.current.reset();
+		}
+	};
+
+	const handleReCaptchaClick = () => {
+		setIsReCaptchaChecked(true);
+	};
+
+	const handleSubmit = (values, { resetForm }) => {
+		if (isReCaptchaChecked) {
+			const formattedPhone = values.phone
+				.replaceAll('-', '')
+				.replaceAll(' ', '')
+				.replaceAll('(', '')
+				.replaceAll(')', '');
+
+			handleSendMessage(
+				{
+					name: values.firstName,
+					phone: formattedPhone,
+					email: values.email,
+					text: values.message,
+				},
+				{ resetForm }
+			);
+			handleResetRecaptcha();
+			setIsReCaptchaChecked(false);
+			setIsCheckboxChecked(false);
+			setIsReCaptchaOpen(false);
+		} else {
+			setIsReCaptchaOpen(true);
+		}
 	};
 
 	return (
@@ -49,10 +78,20 @@ function FormRequest({ handleSendMessage, popup }) {
 						phone: '',
 						email: '',
 					}}
+					validateOnMount
+					validateOnChange
 					validationSchema={RequestFormSchema}
 					onSubmit={handleSubmit}
 				>
-					{({ handleChange, values, errors, touched, submitCount }) => (
+					{({
+						handleChange,
+						values,
+						errors,
+						touched,
+						submitCount,
+						setFieldValue,
+						isValid,
+					}) => (
 						<Form className="form-request" name="form-request">
 							<div className="form-request__container-textarea">
 								<p className="form-request__textarea-label">Сообщение*</p>
@@ -68,6 +107,7 @@ function FormRequest({ handleSendMessage, popup }) {
 									onChange={handleChange}
 									onBlur={() => {
 										setIsFocus(false);
+										setFieldValue('message', values.message.trim());
 									}}
 								>
 									{values.message}
@@ -77,6 +117,14 @@ function FormRequest({ handleSendMessage, popup }) {
 										(submitCount >= 1 && errors.message)) &&
 										errors.message}
 								</p>
+								<ReCAPTCHA
+									sitekey={apiKey}
+									ref={recaptchaRef}
+									onChange={handleReCaptchaClick}
+									className={clsx('recaptcha', {
+										recaptcha_active: isReCaptchaOpen,
+									})}
+								/>
 							</div>
 							<div className="form-request__inputs">
 								<div className="form-request__inputs-fields">
@@ -91,6 +139,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										handleChange={handleChange}
 										touched={touched.firstName}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 									<InputRequest
 										name="phone"
@@ -104,6 +153,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										isMask
 										touched={touched.phone}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 									<InputRequest
 										name="email"
@@ -116,6 +166,7 @@ function FormRequest({ handleSendMessage, popup }) {
 										handleChange={handleChange}
 										touched={touched.email}
 										submitCount={submitCount}
+										setFieldValue={setFieldValue}
 									/>
 								</div>
 								<Pushbutton
@@ -125,7 +176,18 @@ function FormRequest({ handleSendMessage, popup }) {
 									border="none"
 									color="#FFF"
 									type="submit"
-									disabled={popup.isOpen}
+									disabled={
+										popup.isOpen ||
+										!isValid ||
+										!isCheckboxChecked ||
+										(isReCaptchaOpen && !isReCaptchaChecked)
+									}
+								/>
+								<CheckboxConfirm
+									onClick={handleCheckboxClick}
+									checked={isCheckboxChecked}
+									name="checkbox-confirm"
+									htmlFor="checkbox-confirm"
 								/>
 							</div>
 						</Form>

@@ -73,8 +73,10 @@ const Input = forwardRef(
 						setIsFocus(true);
 						handleChange(e);
 					}}
-					onBlur={() => {
+					onBlur={(e) => {
 						setIsFocus(false);
+						const trimmedValue = e.target.value.trim();
+						handleChange(e.target.name)(trimmedValue);
 					}}
 					{...restProps}
 				/>
