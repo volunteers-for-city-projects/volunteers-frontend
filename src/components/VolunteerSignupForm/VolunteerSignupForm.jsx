@@ -276,7 +276,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
-					width={400}
 					options={skills}
 					isMulti
 					value={formik.values.skills}
@@ -292,7 +291,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={400}
 					options={cities}
 					touched={formik.touched.city}
 					value={formik.values.city}
@@ -308,7 +306,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					color="white"
 					backgroundColor="#A6C94F"
 					border="1px solid #A6C94F"
-					minWidth="399px"
+					minWidth="280px"
 					size="pre-large"
 					disabled={
 						!formik.isValid ||

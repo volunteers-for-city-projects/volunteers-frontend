@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react';
 
 function SelectOption({
 	label,
-	width,
 	placeholder,
 	options,
 	handleChange,
@@ -70,7 +69,7 @@ function SelectOption({
 	);
 
 	return (
-		<div className="select-option__container" style={{ width }}>
+		<div className="select-option__container">
 			<label className="select-option__label" htmlFor="select-option">
 				{required ? `${label}*` : label}
 			</label>
@@ -106,7 +105,6 @@ function SelectOption({
 
 SelectOption.propTypes = {
 	label: PropTypes.string,
-	width: PropTypes.number,
 	placeholder: PropTypes.string,
 	options: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -122,7 +120,6 @@ SelectOption.propTypes = {
 
 SelectOption.defaultProps = {
 	label: 'Город',
-	width: 280,
 	placeholder: 'Выберите город',
 	options: [
 		{ label: 'Москва', value: 'moscow' },

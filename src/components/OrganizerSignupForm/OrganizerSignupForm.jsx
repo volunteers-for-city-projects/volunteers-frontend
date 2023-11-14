@@ -127,7 +127,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={400}
 					options={cities}
 					touched={formik.touched.organize_city}
 					value={formik.values.organize_city}
@@ -288,7 +287,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					color="white"
 					backgroundColor="#A6C94F"
 					border="1px solid #A6C94F"
-					minWidth="399px"
 					size="pre-large"
 					disabled={
 						!formik.isValid || !isCheckboxChecked || formik.values.city === null
