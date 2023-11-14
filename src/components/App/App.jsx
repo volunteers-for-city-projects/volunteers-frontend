@@ -168,7 +168,6 @@ function App() {
 		getAllProjects()
 			.then((dataProjects) => {
 				setProjects(dataProjects.results);
-				console.log(dataProjects.results);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -274,6 +273,7 @@ function App() {
 					plarformPromo,
 					news,
 					projects,
+					setProjects,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />

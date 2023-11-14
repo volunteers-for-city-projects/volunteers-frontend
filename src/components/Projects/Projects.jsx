@@ -5,14 +5,16 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-import ProfilePagination from '../ProfilePagination/ProfilePagination';
+// import { getAllProjects } from '../../utils/api/organizer';
 
 function Projects() {
-	const { projects } = useOutletContext();
+	const { projects, skills, cities, projectCategories } = useOutletContext(); // setProjects,
 
 	const dataProjects = projects;
 
 	const navigate = useNavigate();
+
+	const handleClickButtonMore = () => {};
 
 	return (
 		<section className="projects">
@@ -51,7 +53,7 @@ function Projects() {
 						label="Город"
 						placeholder="Выберите город"
 						width={400}
-						options={[]}
+						options={cities}
 					/>
 
 					<SelectOption
@@ -60,7 +62,7 @@ function Projects() {
 						label="Категории"
 						placeholder="Выберите категории"
 						width={400}
-						options={[]}
+						options={projectCategories}
 					/>
 
 					<SelectOption
@@ -69,7 +71,7 @@ function Projects() {
 						label="Выберите навыки"
 						placeholder="Введите имя"
 						width={400}
-						options={[]}
+						options={skills}
 					/>
 				</div>
 
@@ -80,8 +82,16 @@ function Projects() {
 						))}
 				</div>
 
-				<div>
-					<ProfilePagination />
+				<div className="projects__button">
+					<Pushbutton
+						label="Показать еще"
+						color="white"
+						size="large-var"
+						minWidth="400px"
+						backgroundColor="#A6C94F"
+						border="none"
+						onClick={() => handleClickButtonMore()}
+					/>
 				</div>
 			</div>
 		</section>

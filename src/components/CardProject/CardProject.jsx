@@ -16,6 +16,7 @@ function CardProject({ cardProject }) {
 		isModeration,
 		picture: image,
 	} = cardProject;
+
 	const baseStatusClassName = 'card__status-count';
 	const moderStatusClassName = 'card__status-count_moder';
 
