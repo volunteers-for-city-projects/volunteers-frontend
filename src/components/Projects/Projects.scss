@@ -8,6 +8,7 @@
 		flex-direction: column;
 		gap: 20px;
 		width: 1660px;
+		position: relative;
 	}
 
 	&__label {
@@ -31,10 +32,16 @@
 	&__selects {
 		display: flex;
 		gap: 20px;
+		z-index: 3;
 	}
 	&__cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
 		gap: 20px;
+	}
+	&__button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }

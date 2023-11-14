@@ -5,10 +5,11 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
+
 import { getNextPrev } from '../../utils/api/organizer';
 
 function Projects() {
-	const { projects, setProjects, setIsLoading } = useOutletContext();
+	const { projects, setProjects, setIsLoading, skills, cities, projectCategories } = useOutletContext();
 
 	const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ function Projects() {
 	function handleClickPrev() {
 		getNewBatchProjects(projects.previous);
 	}
+
 
 	return (
 		<section className="projects">
@@ -72,7 +74,7 @@ function Projects() {
 						label="Город"
 						placeholder="Выберите город"
 						width={400}
-						options={[]}
+						options={cities}
 					/>
 
 					<SelectOption
@@ -81,7 +83,7 @@ function Projects() {
 						label="Категории"
 						placeholder="Выберите категории"
 						width={400}
-						options={[]}
+						options={projectCategories}
 					/>
 
 					<SelectOption
@@ -90,7 +92,7 @@ function Projects() {
 						label="Выберите навыки"
 						placeholder="Введите имя"
 						width={400}
-						options={[]}
+						options={skills}
 					/>
 				</div>
 
@@ -109,7 +111,8 @@ function Projects() {
 					<button className="profile__pagination-btn" onClick={handleClickNext}>
 						Вперед
 					</button>
-				</div>
+
+        </div>
 			</div>
 		</section>
 	);
