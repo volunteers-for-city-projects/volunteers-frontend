@@ -59,14 +59,6 @@ function Login() {
 								});
 							},
 						});
-					} else if (Object.prototype.hasOwnProperty.call(err[0], 'password')) {
-						setModal({
-							isOpen: true,
-							type: 'error',
-							state: 'password',
-							title: 'Произошла ошибка',
-							errorArray: err,
-						});
 					} else {
 						setModal({
 							isOpen: true,
@@ -91,6 +83,7 @@ function Login() {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
+					title: 'Восстановление пароля',
 					emailprop: email,
 					onSubmit: (event) => {
 						event.preventDefault();
