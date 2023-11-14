@@ -200,7 +200,9 @@ function Modal({ modal, closeModal }) {
 					{contentText[type][state].errorsArray &&
 						contentText[type][state].errorsArray.map((item) => (
 							<li key={item.id}>
-								<p className="modal__text">{item.textError}</p>
+								<p className="modal__text modal__text_error">
+									{item.textError}
+								</p>
 							</li>
 						))}
 				</ul>
