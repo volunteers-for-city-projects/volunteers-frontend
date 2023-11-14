@@ -211,7 +211,7 @@ function App() {
 					closePopup={closePopup}
 				/>
 			),
-			typeChildren: 'change-password',
+			typeStyle: 'change-password',
 		});
 	};
 
@@ -253,6 +253,7 @@ function App() {
 						type={popup.type}
 						isOpen={popup.isOpen}
 						styleType={popup.styleType}
+						errorArray={popup.errorArray}
 					/>,
 					document.querySelector('.modal__container')
 				)}

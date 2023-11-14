@@ -20,7 +20,7 @@ function FormChangePassword({ popup, setModal, setPopup, closePopup }) {
 				setModal({
 					isOpen: true,
 					type: 'changePassword',
-					typeChildren: 'change-password',
+					typeStyle: 'change-password',
 					state: 'success',
 					title: 'Пароль успешно изменён',
 					onSubmit: (event) => {
@@ -33,12 +33,16 @@ function FormChangePassword({ popup, setModal, setPopup, closePopup }) {
 				resetForm();
 			})
 			.catch((err) => {
-				setPopup({
-					isOpen: true,
-					type: 'error',
-					styleType: 'modal',
-					text: err[0].textError,
-				});
+				if (Array.isArray(err)) {
+					setPopup({
+						isOpen: true,
+						type: 'error',
+						styleType: 'modal',
+						errorArray: err,
+					});
+				} else {
+					console.error(err);
+				}
 				closePopup();
 			})
 			.finally(() => {
