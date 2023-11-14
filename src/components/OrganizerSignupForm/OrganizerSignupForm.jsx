@@ -69,7 +69,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					state: 'info',
 					title: 'Подтверждение E-mail',
 					emailprop: values.organize_email,
-					title: 'Подтверждение E-mai',
 					onSubmit: (event) => {
 						event.preventDefault();
 						// ожидаем  api/auth/resend_activation
