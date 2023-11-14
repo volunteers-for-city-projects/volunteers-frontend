@@ -5,16 +5,37 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-// import { getAllProjects } from '../../utils/api/organizer';
+
+import { getNextPrev } from '../../utils/api/organizer';
 
 function Projects() {
-	const { projects, skills, cities, projectCategories } = useOutletContext(); // setProjects,
-
-	const dataProjects = projects;
+	const { projects, setProjects, setIsLoading, skills, cities, projectCategories } = useOutletContext();
 
 	const navigate = useNavigate();
 
-	const handleClickButtonMore = () => {};
+	function getNewBatchProjects(url) {
+		if (url) {
+			setIsLoading(true);
+			getNextPrev(url)
+				.then((data) => {
+					setProjects(data);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+					// здесь можно подключить модалку
+				})
+				.finally(setIsLoading(false));
+		}
+	}
+
+	function handleClickNext() {
+		getNewBatchProjects(projects.next);
+	}
+
+	function handleClickPrev() {
+		getNewBatchProjects(projects.previous);
+	}
+
 
 	return (
 		<section className="projects">
@@ -76,23 +97,22 @@ function Projects() {
 				</div>
 
 				<div className="projects__cards">
-					{dataProjects.length > 0 &&
-						dataProjects.map((item) => (
+					{projects &&
+						projects.results.length > 0 &&
+						projects.results.map((item) => (
 							<CardProject cardProject={item} key={item.id} />
 						))}
 				</div>
 
-				<div className="projects__button">
-					<Pushbutton
-						label="Показать еще"
-						color="white"
-						size="large-var"
-						minWidth="400px"
-						backgroundColor="#A6C94F"
-						border="none"
-						onClick={() => handleClickButtonMore()}
-					/>
-				</div>
+				<div>
+					<button className="profile__pagination-btn" onClick={handleClickPrev}>
+						Назад
+					</button>
+					<button className="profile__pagination-btn" onClick={handleClickNext}>
+						Вперед
+					</button>
+
+        </div>
 			</div>
 		</section>
 	);
