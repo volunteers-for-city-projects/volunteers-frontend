@@ -44,9 +44,6 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 			value: item.value,
 		}));
 
-	// console.log(cities);
-	console.log(selectOptionsCity);
-
 	const getPhoneNumberMask = (phoneNumber) =>
 		phoneNumber &&
 		phoneNumber.startsWith('+7') &&

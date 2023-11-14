@@ -58,12 +58,12 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 						second_name: values.organize_secondname,
 					},
 					title: values.organization,
-					ogrn: values.organize_ogrn,
+					ogrn: values.organize_ogrn.replace(/-/g, ''),
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
 					about: values.about_organization || '' || undefined,
-					city: values.organize_city,
+					city: values.organize_city[0].value,
 					photo: values.photo || '',
 				});
 
@@ -123,15 +123,20 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<SelectOption
-					id="city"
-					name="city"
+					id="organize_city"
+					name="organize_city"
 					label="Город"
 					placeholder="Выберите город"
 					options={cities}
 					touched={formik.touched.organize_city}
 					value={formik.values.organize_city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('organize_city', Number(selectedOption.value));
+						formik.setFieldValue('organize_city', [
+							{
+								label: selectedOption.label,
+								value: selectedOption.value,
+							},
+						]);
 					}}
 					required
 				/>
@@ -140,12 +145,12 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					mask="_-__-__-__-_____-_"
 					replacement={{ _: /\d/ }}
 					modify={ogrnMask}
-					id="organize_ogrn"
-					name="organize_ogrn"
 					label="ОГРН"
 					type="text"
 					placeholder="1-02-66-05-60662-0"
 					inputSize="small"
+					id="organize_ogrn"
+					name="organize_ogrn"
 					error={formik.errors.organize_ogrn}
 					touched={formik.touched.organize_ogrn}
 					value={formik.values.organize_ogrn}

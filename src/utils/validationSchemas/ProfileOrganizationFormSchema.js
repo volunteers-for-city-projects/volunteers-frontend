@@ -38,12 +38,14 @@ export const ProfileOrganizationFormSchema = Yup.object({
 		.required('Поле обязательно для заполнения'),
 	profile_organize_ogrn: Yup.string()
 		.trim()
-		.matches(/^\d{13}$/, {
-			message: 'ОГРН должен состоять из 13 символов',
+		.min(18, 'ОГРН должен состоять из 13 символов')
+		.max(18, 'ОГРН должен состоять из 13 символов')
+		.matches(/^[0-9.-]+$/, {
+			message: 'ОГРН должен состоять только из цифр',
 			excludeEmptyString: true,
 		})
-		.matches(/^[0-9]+$/, {
-			message: 'ОГРН должен состоять только из цифр',
+		.matches(/^[1-9]{1}/, {
+			message: 'ОГРН не должен начинаться с 0',
 			excludeEmptyString: true,
 		})
 		.required('Поле обязательно для заполнения'),

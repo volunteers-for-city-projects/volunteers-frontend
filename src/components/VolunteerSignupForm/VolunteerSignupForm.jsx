@@ -281,8 +281,13 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					value={formik.values.skills}
 					touched={formik.touched.skills}
 					handleChange={(selectedOption) => {
-						const selectedValues = selectedOption.map((option) => option.value);
-						formik.setFieldValue('skills', selectedValues);
+						formik.setFieldValue(
+							'skills',
+							selectedOption.map((option) => ({
+								label: option.label,
+								value: option.value,
+							}))
+						);
 					}}
 					required
 				/>
@@ -295,7 +300,12 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					touched={formik.touched.city}
 					value={formik.values.city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('city', Number(selectedOption.value));
+						formik.setFieldValue('city', [
+							{
+								label: selectedOption.label,
+								value: selectedOption.value,
+							},
+						]);
 					}}
 					required
 				/>
