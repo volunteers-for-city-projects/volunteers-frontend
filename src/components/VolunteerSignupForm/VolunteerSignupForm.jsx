@@ -77,6 +77,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					state: 'info',
 					title: 'Подтверждение E-mail',
 					emailprop: values.email,
+					title: 'Подтверждение E-mai',
 					onSubmit: (event) => {
 						event.preventDefault();
 						// ожидаем  api/auth/resend_activation

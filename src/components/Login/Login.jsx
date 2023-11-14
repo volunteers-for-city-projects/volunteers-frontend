@@ -50,6 +50,7 @@ function Login() {
 					type: 'email',
 					state: 'info',
 					emailprop: email,
+					title: 'Восстановление пароля',
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });
