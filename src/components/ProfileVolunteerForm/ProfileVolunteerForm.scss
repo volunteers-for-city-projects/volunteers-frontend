@@ -56,7 +56,10 @@
 
 	&__button {
 		max-width: 401px;
+		width: 100%;
 		border: none;
+		display: flex;
+		justify-content: center;
 	}
 
 	&__upload-file {
@@ -146,10 +149,13 @@
 
 			display: flex;
 			gap: 20px;
+			width: 580px;
+			display: flex;
 		}
 
 		&__button {
-			width: 280px;
+			max-width: 280px;
+			width: 100%;
 			border: none;
 		}
 

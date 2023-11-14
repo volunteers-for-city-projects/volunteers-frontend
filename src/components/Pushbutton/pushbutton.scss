@@ -9,7 +9,6 @@
 	font-weight: 400;
 	display: inline-block;
 	text-align: center;
-	width: 400px;
 
 	&__type {
 		&_primary {
@@ -92,11 +91,5 @@
 		cursor: default;
 		background-color: rgb(166, 201, 79);
 		opacity: 0.5;
-	}
-}
-
-@media screen and (max-width: 1919px) {
-	.pushbutton {
-		width: 280px;
 	}
 }

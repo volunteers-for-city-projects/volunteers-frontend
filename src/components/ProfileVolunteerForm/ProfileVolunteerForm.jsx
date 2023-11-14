@@ -260,7 +260,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth="280px"
+								minWidth="100%"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -276,7 +276,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth="280px"
+								minWidth="100%"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {
