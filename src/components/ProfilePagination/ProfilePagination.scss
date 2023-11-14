@@ -1,17 +1,17 @@
 @import '../../style/variables.scss';
 
 .profile__pagination {
-	margin-top: 20px;
+	// margin-top: 20px;
 	display: flex;
 	gap: 16px;
 	padding: 10px;
-	justify-content: flex-end;
+	justify-content: center;
 	&-btn {
-		width: 24px;
-		height: 24px;
+		width: 34px;
+		height: 34px;
 		background-color: $--White;
 		color: #959595;
-		border: 1px solid #959595;
+		border: 1px solid $--Dark-grey;
 		border-radius: 6px;
 		font-size: 15px;
 		font-weight: 400;

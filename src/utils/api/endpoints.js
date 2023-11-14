@@ -1,4 +1,4 @@
-export const URL = 'http://better-together.acceleratorpracticum.ru/api/';
+export const URL = 'https://better-together.acceleratorpracticum.ru/api/';
 
 export const ENDPOINT_MAIN_PAGE_NEWS = 'news/';
 export const ENDPOINT_MAIN_PAGE_PLATFORM_ABOUT = 'platform_about/';

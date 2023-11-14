@@ -1,15 +1,16 @@
 .card {
 	&__project {
 		box-sizing: border-box;
-		width: 468px;
+		width: 100%;
 		border-radius: 10px;
-		height: 208px;
+		height: 100%;
 		border: 1px solid #9bc1f9;
 		padding: 18px 14px;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
 		position: relative;
+		cursor: pointer;
 	}
 
 	&__overlay {
@@ -105,9 +106,6 @@
 	}
 
 	@media screen and (max-width: 1919px) {
-		&__project {
-			width: 356px;
-		}
 		&__name-title {
 			font-size: 26px;
 		}
