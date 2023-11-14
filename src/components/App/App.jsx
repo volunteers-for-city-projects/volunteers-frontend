@@ -60,7 +60,7 @@ function App() {
 	const [plarformAbout, setPlatformAbout] = useState({});
 	const [plarformPromo, setPlatformPromo] = useState({});
 	const [news, setNews] = useState([]);
-	const [projects, setProjects] = useState([]);
+	const [projects, setProjects] = useState({});
 
 	const navigate = useNavigate();
 
@@ -167,8 +167,8 @@ function App() {
 	useEffect(() => {
 		getAllProjects()
 			.then((dataProjects) => {
-				setProjects(dataProjects.results);
-				console.log(dataProjects.results);
+				setProjects(dataProjects);
+				console.log(dataProjects);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -274,6 +274,7 @@ function App() {
 					plarformPromo,
 					news,
 					projects,
+					setProjects,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />

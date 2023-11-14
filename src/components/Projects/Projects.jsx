@@ -5,14 +5,35 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-import ProfilePagination from '../ProfilePagination/ProfilePagination';
+import { getNextPrev } from '../../utils/api/organizer';
 
 function Projects() {
-	const { projects } = useOutletContext();
-
-	const dataProjects = projects;
+	const { projects, setProjects, setIsLoading } = useOutletContext();
 
 	const navigate = useNavigate();
+
+	function getNewBatchProjects(url) {
+		if (url) {
+			setIsLoading(true);
+			getNextPrev(url)
+				.then((data) => {
+					setProjects(data);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+					// здесь можно подключить модалку
+				})
+				.finally(setIsLoading(false));
+		}
+	}
+
+	function handleClickNext() {
+		getNewBatchProjects(projects.next);
+	}
+
+	function handleClickPrev() {
+		getNewBatchProjects(projects.previous);
+	}
 
 	return (
 		<section className="projects">
@@ -74,14 +95,20 @@ function Projects() {
 				</div>
 
 				<div className="projects__cards">
-					{dataProjects.length > 0 &&
-						dataProjects.map((item) => (
+					{projects &&
+						projects.results.length > 0 &&
+						projects.results.map((item) => (
 							<CardProject cardProject={item} key={item.id} />
 						))}
 				</div>
 
 				<div>
-					<ProfilePagination />
+					<button className="profile__pagination-btn" onClick={handleClickPrev}>
+						Назад
+					</button>
+					<button className="profile__pagination-btn" onClick={handleClickNext}>
+						Вперед
+					</button>
 				</div>
 			</div>
 		</section>
