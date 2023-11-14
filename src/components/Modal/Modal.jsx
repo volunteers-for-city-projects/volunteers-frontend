@@ -12,10 +12,6 @@ import modalCity from '../../images/modals/city.png';
 import modalPasswordSuccess from '../../images/modals/key-image.png';
 
 function Modal({ modal, closeModal }) {
-	const stopPropagation = (event) => {
-		event.stopPropagation();
-	};
-
 	const {
 		isOpen,
 		type,
@@ -270,52 +266,38 @@ function Modal({ modal, closeModal }) {
 	};
 
 	return (
-		<div
-			className={clsx('modal', { modal_opened: isOpen })}
-			onClick={closeModal}
-			onKeyDown={closeModal}
-			role="button"
-			tabIndex="0"
-		>
+		<div className={clsx('modal', { modal_opened: isOpen })}>
 			<div
-				onClick={stopPropagation}
-				onKeyDown={stopPropagation}
-				role="button"
-				tabIndex="0"
+				className={clsx('modal__container', {
+					'modal__container_type_change-password':
+						typeStyle === 'change-password',
+				})}
 			>
-				<div
-					className={clsx('modal__container', {
-						'modal__container_type_change-password':
-							typeStyle === 'change-password',
-					})}
-				>
-					<div className="modal__title-container">
-						<h2 className="modal__title">{title}</h2>
-						<button className="modal__exit" type="button" onClick={closeModal}>
-							⠀
-						</button>
-					</div>
-					{children || (
-						<form
-							className="modal__form"
-							name={`${type}-${state}`}
-							onSubmit={onSubmit}
-						>
-							<img
-								className={clsx('modal__image', {
-									modal__image_type_confirm: type === 'confirm',
-									modal__image_type_success: state === 'success',
-									modal__image_type_project: type === 'project',
-									'modal__image_type_change-password':
-										type === 'changePassword',
-								})}
-								src={contentText[type][state].image}
-								alt={`${type} ${state}`}
-							/>
-							{contentMap[type][state]}
-						</form>
-					)}
+				<div className="modal__title-container">
+					<h2 className="modal__title">{title}</h2>
+					<button className="modal__exit" type="button" onClick={closeModal}>
+						⠀
+					</button>
 				</div>
+				{children || (
+					<form
+						className="modal__form"
+						name={`${type}-${state}`}
+						onSubmit={onSubmit}
+					>
+						<img
+							className={clsx('modal__image', {
+								modal__image_type_confirm: type === 'confirm',
+								modal__image_type_success: state === 'success',
+								modal__image_type_project: type === 'project',
+								'modal__image_type_change-password': type === 'changePassword',
+							})}
+							src={contentText[type][state].image}
+							alt={`${type} ${state}`}
+						/>
+						{contentMap[type][state]}
+					</form>
+				)}
 			</div>
 		</div>
 	);
