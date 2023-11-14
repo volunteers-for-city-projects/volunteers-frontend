@@ -52,7 +52,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.phone);
+			let formattedPhone = getDigitsOnly(values.phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				await createVolunteer({
@@ -70,8 +73,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					skills: values.skills || [],
-					city: values.city || [] || null || '',
+					skills: values.skills.map((skill) => skill.value),
+					city: values.city[0].value,
 				});
 
 				setModal({

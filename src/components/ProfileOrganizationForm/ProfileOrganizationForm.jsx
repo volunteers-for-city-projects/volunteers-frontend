@@ -80,7 +80,10 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.profile_organize_phone);
+			let formattedPhone = getDigitsOnly(values.profile_organize_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				await updateOrganization(id, {
@@ -279,7 +282,7 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth="399px"
+								minWidth="100%"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -294,7 +297,7 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth="399px"
+								minWidth="100%"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {

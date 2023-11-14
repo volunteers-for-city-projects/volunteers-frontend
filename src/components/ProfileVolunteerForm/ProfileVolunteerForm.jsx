@@ -72,7 +72,10 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
+			let formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				updateVolunteer(id, {

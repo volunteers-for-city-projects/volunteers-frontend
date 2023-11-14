@@ -46,7 +46,10 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		onSubmit: async (values) => {
 			// функция для конверсии номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.organize_phone);
+			let formattedPhone = getDigitsOnly(values.organize_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				await createOrganization({
