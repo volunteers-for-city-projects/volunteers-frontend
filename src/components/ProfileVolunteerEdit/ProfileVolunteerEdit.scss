@@ -23,3 +23,31 @@
 		line-height: 100%; /* 56px */
 	}
 }
+
+@media screen and (max-width: 1919px) {
+	.profile-volunteer-edit {
+		margin: 0 95px 0;
+		margin-bottom: 118px;
+		padding: 0 0 0 8px;
+
+		&__wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		&__menu-container {
+			margin: 29px auto 6px;
+		}
+
+		&__name {
+			margin: 0;
+
+			font-family: Fira Sans;
+			font-size: 56px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 100%; /* 56px */
+		}
+	}
+}

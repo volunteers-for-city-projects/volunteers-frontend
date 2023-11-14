@@ -9,6 +9,7 @@
 	font-weight: 400;
 	display: inline-block;
 	text-align: center;
+	width: 400px;
 
 	&__type {
 		&_primary {
@@ -95,4 +96,7 @@
 }
 
 @media screen and (max-width: 1919px) {
+	.pushbutton {
+		width: 280px;
+	}
 }

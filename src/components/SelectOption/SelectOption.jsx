@@ -9,6 +9,7 @@ function SelectOption({
 	options,
 	handleChange,
 	error,
+	value,
 	isMulti,
 	required,
 }) {
@@ -85,6 +86,7 @@ function SelectOption({
 					IndicatorSeparator: () => null,
 				}}
 				styles={customStyles}
+				value={value}
 				theme={(theme) => ({
 					...theme,
 					borderRadius: 5,
@@ -116,6 +118,12 @@ SelectOption.propTypes = {
 	error: PropTypes.string,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
+	value: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
 };
 
 SelectOption.defaultProps = {
@@ -136,6 +144,7 @@ SelectOption.defaultProps = {
 	error: undefined,
 	isMulti: false,
 	required: false,
+	value: [],
 };
 
 export default SelectOption;

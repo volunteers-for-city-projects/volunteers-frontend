@@ -10,7 +10,7 @@ import './ProfileVolunteerForm.scss';
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import UploadFile from '../UploadFile/UploadFile';
-import ProfilePhoto from '../../images/fotoProfile.svg';
+import ProfilePhoto from '../../images/fotoProfile_2.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
@@ -31,6 +31,21 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 		telegram,
 		id,
 	} = currentUser;
+
+	const selectOptionsSkills = userSkills.map((item) => ({
+		label: item.name,
+		value: item.id,
+	}));
+
+	const selectOptionsCity = cities
+		.filter((item) => item.value === `${city}`)
+		.map((item) => ({
+			label: item.label,
+			value: item.value,
+		}));
+
+	// console.log(cities);
+	console.log(selectOptionsCity);
 
 	const getPhoneNumberMask = (phoneNumber) =>
 		phoneNumber &&
@@ -53,8 +68,8 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 			profile_volunteer_phone: phoneNumberMask,
 			profile_volunteer_telegram: telegram,
 			profile_volunteer_photo: photo,
-			profile_volunteer_skills: userSkills,
-			profile_volunteer_city: city,
+			profile_volunteer_skills: selectOptionsSkills,
+			profile_volunteer_city: selectOptionsCity,
 		},
 		validationSchema: ProfileVolunteerFormSchema,
 		onSubmit: async (values) => {
@@ -63,7 +78,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 			const formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
 
 			try {
-				await updateVolunteer(id, {
+				updateVolunteer(id, {
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
@@ -74,10 +89,11 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					photo: '',
-					skills: values.profile_volunteer_skills || [],
-					city: values.profile_volunteer_city,
+					photo: values.photo,
+					skills: values.profile_volunteer_skills.map((skill) => skill.value),
+					city: values.profile_volunteer_city[0].value,
 				});
+				navigate('..');
 				// await handleIsForm();
 			} catch (error) {
 				// eslint-disable-next-line no-console
@@ -85,7 +101,6 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 			}
 		},
 	});
-
 	return (
 		<form
 			action="#"
@@ -203,18 +218,17 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 							name="profile_volunteer_skills"
 							label="Навыки"
 							placeholder="Выберите навыки"
-							width={400}
 							options={skills}
 							isMulti
 							value={formik.values.profile_volunteer_skills}
 							touched={formik.touched.profile_volunteer_skills}
 							handleChange={(selectedOption) => {
-								const selectedValues = selectedOption.map(
-									(option) => option.value
-								);
 								formik.setFieldValue(
 									'profile_volunteer_skills',
-									selectedValues
+									selectedOption.map((option) => ({
+										label: option.label,
+										value: option.value,
+									}))
 								);
 							}}
 							required
@@ -224,15 +238,16 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 							name="profile_volunteer_city"
 							label="Город"
 							placeholder="Выберите город"
-							width={400}
 							options={cities}
 							touched={formik.touched.profile_volunteer_city}
 							value={formik.values.profile_volunteer_city}
 							handleChange={(selectedOption) => {
-								formik.setFieldValue(
-									'profile_volunteer_city',
-									Number(selectedOption.value)
-								);
+								formik.setFieldValue('profile_volunteer_city', [
+									{
+										label: selectedOption.label,
+										value: selectedOption.value,
+									},
+								]);
 							}}
 							required
 						/>
@@ -245,7 +260,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth="399px"
+								minWidth="280px"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -261,7 +276,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth="399px"
+								minWidth="280px"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {
