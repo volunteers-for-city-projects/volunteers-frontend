@@ -16,7 +16,10 @@ import Modal from '../Modal/Modal';
 import FormChangePassword from '../FormChangePassword/FormChangePassword';
 import { getNews, getPlatformAbout } from '../../utils/api/main-page';
 import { getSkills, getCities } from '../../utils/api/signupApi';
-import { getProjectCategories } from '../../utils/api/organizer';
+import {
+	getProjectCategories,
+	getAllProjects,
+} from '../../utils/api/organizer';
 import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
 
 function App() {
@@ -57,6 +60,7 @@ function App() {
 	const [plarformAbout, setPlatformAbout] = useState({});
 	const [plarformPromo, setPlatformPromo] = useState({});
 	const [news, setNews] = useState([]);
+	const [projects, setProjects] = useState({});
 
 	const navigate = useNavigate();
 
@@ -150,9 +154,21 @@ function App() {
 						value: item.id.toString(),
 					})
 				);
+
 				setSkills(skillsArray);
 				setCities(citiesArray);
 				setProjectCategories(projectCategoriesArray);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, []);
+
+	useEffect(() => {
+		getAllProjects()
+			.then((dataProjects) => {
+				setProjects(dataProjects);
+				console.log(dataProjects);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -257,6 +273,8 @@ function App() {
 					plarformAbout,
 					plarformPromo,
 					news,
+					projects,
+					setProjects,
 				}}
 			/>
 			<Footer platformEmail={platformEmail} />
