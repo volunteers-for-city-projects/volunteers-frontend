@@ -25,7 +25,7 @@ function Modal({ modal, closeModal }) {
 		errorArray,
 		emailprop,
 		children,
-		typeChildren,
+		typeStyle,
 	} = modal;
 
 	const errorsData = useMemo(() => {
@@ -65,7 +65,7 @@ function Modal({ modal, closeModal }) {
 		},
 		email: {
 			info: {
-				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.`,
+				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения email.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -95,11 +95,6 @@ function Modal({ modal, closeModal }) {
 			notExistEmail: {
 				errorsArray: errorArray,
 				textButton: 'Зарегистрироваться',
-				image: modalError,
-			},
-			password: {
-				errorsArray: errorArray,
-				textButton: '',
 				image: modalError,
 			},
 		},
@@ -242,12 +237,6 @@ function Modal({ modal, closeModal }) {
 					/>
 				</>
 			),
-			password: (
-				<p className="modal__text">
-					{contentText[type][state].errorsArray &&
-						contentText[type][state].errorsArray[0].password}
-				</p>
-			),
 		},
 		project: {
 			success: (
@@ -297,7 +286,7 @@ function Modal({ modal, closeModal }) {
 				<div
 					className={clsx('modal__container', {
 						'modal__container_type_change-password':
-							typeChildren === 'change-password',
+							typeStyle === 'change-password',
 					})}
 				>
 					<div className="modal__title-container">
@@ -348,7 +337,7 @@ Modal.propTypes = {
 			})
 		),
 		children: PropTypes.node,
-		typeChildren: PropTypes.string,
+		typeStyle: PropTypes.string,
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,
 };
