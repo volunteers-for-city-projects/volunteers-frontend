@@ -9,7 +9,14 @@ import CardProject from '../CardProject/CardProject';
 import { getNextPrev } from '../../utils/api/organizer';
 
 function Projects() {
-	const { projects, setProjects, setIsLoading, skills, cities, projectCategories } = useOutletContext();
+	const {
+		projects,
+		setProjects,
+		setIsLoading,
+		skills,
+		cities,
+		projectCategories,
+	} = useOutletContext();
 
 	const navigate = useNavigate();
 
@@ -35,7 +42,6 @@ function Projects() {
 	function handleClickPrev() {
 		getNewBatchProjects(projects.previous);
 	}
-
 
 	return (
 		<section className="projects">
@@ -104,15 +110,14 @@ function Projects() {
 						))}
 				</div>
 
-				<div>
+				<div className="projects__button">
 					<button className="profile__pagination-btn" onClick={handleClickPrev}>
-						Назад
+						&#60;
 					</button>
 					<button className="profile__pagination-btn" onClick={handleClickNext}>
-						Вперед
+						&#62;
 					</button>
-
-        </div>
+				</div>
 			</div>
 		</section>
 	);
