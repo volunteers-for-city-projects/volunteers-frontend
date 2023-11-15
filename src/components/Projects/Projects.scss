@@ -42,6 +42,18 @@
 	&__button {
 		display: flex;
 		justify-content: flex-end;
-		align-items: center;	
+		align-items: center;
+	}
+}
+
+@media screen and (max-width: 1919px) {
+	.projects {
+		&__container {
+			width: 1180px;
+		}
+		&__cards {
+			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+		}
+		
 	}
 }

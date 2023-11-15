@@ -16,9 +16,11 @@ function Projects() {
 		skills,
 		cities,
 		projectCategories,
+		currentUser,
 	} = useOutletContext();
 
 	const navigate = useNavigate();
+	const { role } = currentUser;
 
 	function getNewBatchProjects(url) {
 		if (url) {
@@ -52,15 +54,19 @@ function Projects() {
 				<div className="projects__label">
 					<h2 className="projects__label-title">Проекты</h2>
 					<div className="projects__label-btn">
-						<Pushbutton
-							label="Создать новый проект"
-							color="white"
-							size="large-var"
-							minWidth="400px"
-							backgroundColor="#A6C94F"
-							border="none"
-							onClick={() => navigate('/profile/organizer/create-project')}
-						/>
+						{role === 'organizer' ? (
+							<Pushbutton
+								label="Создать новый проект"
+								color="white"
+								size="large-var"
+								minWidth="400px"
+								backgroundColor="#A6C94F"
+								border="none"
+								onClick={() => navigate('/profile/organizer/create-project')}
+							/>
+						) : (
+							''
+						)}
 					</div>
 				</div>
 
