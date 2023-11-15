@@ -125,6 +125,13 @@
 		}
 	}
 
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-bottom: 22px;	
+	}
+
 	@media screen and (max-width: 1919px) {
 		&__menu-container {
 			margin-left: 100px;

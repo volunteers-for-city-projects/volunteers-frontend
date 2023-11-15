@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useOutletContext, useLocation } from 'react-router-dom'; //
 import './CardProject.scss';
-import basket from '../../images/basket.svg';
+// import basket from '../../images/basket.svg';
+import like from '../../images/like.svg';
 
 function CardProject({ cardProject }) {
+	const { isLoggedIn } = useOutletContext();
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
 
@@ -33,11 +35,12 @@ function CardProject({ cardProject }) {
 				<div className="card__overlay" />
 				<li className="card__status">
 					<p className={statusClassName}>{status}</p>
-					{pageProfile ? (
+
+					{isLoggedIn || pageProfile ? (
 						<img
 							className="card__status-icon"
-							src={basket}
-							alt="редактировать"
+							src={like}
+							alt="знак лайк карточки"
 						/>
 					) : null}
 				</li>

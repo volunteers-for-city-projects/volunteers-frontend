@@ -12,9 +12,9 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
 import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
-import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import cityImage from '../../images/city.png';
 import organizationImage from '../../images/avatar.png';
+import Button from '../Button/Button';
 
 function ProfileOrganization() {
 	const {
@@ -149,7 +149,11 @@ function ProfileOrganization() {
 							</div>
 						)}
 
-						{cardsProjectsArray.length >= 4 && <ProfilePagination />}
+						{cardsProjectsArray.length >= 6 && (
+							<div className="profile__button">
+								<Button size="s">Показать еще</Button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
