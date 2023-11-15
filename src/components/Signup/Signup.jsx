@@ -29,6 +29,7 @@ export default function Signup() {
 			navigate('/registration/organizer');
 		}
 		setIsActiveButton(buttonName);
+		setIsActiveForm(buttonName);
 	};
 
 	useEffect(() => {
@@ -36,9 +37,11 @@ export default function Signup() {
 		if (
 			location.pathname === '/registration/volunteer' ||
 			location.pathname === '/registration/volunteer/' ||
-			location.pathname === '/registration'
+			location.pathname === '/registration' ||
+			location.pathname === '/registration/'
 		) {
 			setIsActiveForm('volunteer');
+			setIsActiveButton('volunteer');
 			setIsPageTitle('Регистрация волонтёра');
 			navigate('/registration/volunteer');
 		}
@@ -47,6 +50,7 @@ export default function Signup() {
 			location.pathname === '/registration/organizer/'
 		) {
 			setIsActiveForm('organizer');
+			setIsActiveButton('organizer');
 			setIsPageTitle('Регистрация организатора');
 			navigate('/registration/organizer');
 		}

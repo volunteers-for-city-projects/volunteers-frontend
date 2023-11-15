@@ -15,7 +15,6 @@
 	z-index: 999;
 	opacity: 0;
 	visibility: hidden;
-	cursor: pointer;
 	transition:
 		visibility 0.2s,
 		opacity 0.2s linear;
@@ -37,6 +36,11 @@
 		border-radius: 10px;
 		border: 1px solid $--Primary;
 		cursor: default;
+		position: relative;
+
+		&_type_change-password {
+			width: 640px;
+		}
 	}
 
 	&__title-container {
@@ -93,6 +97,11 @@
 		height: 132px;
 	}
 
+	&__image_type_change-password {
+		width: 346px;
+		height: 154px;
+	}
+
 	&__text {
 		margin: 0;
 		font-size: 23px;
@@ -100,6 +109,10 @@
 		font-weight: 400;
 		line-height: 1;
 		text-align: center;
+	}
+
+	&__text_error {
+		text-align: left;
 	}
 
 	&__text_type_confirm {

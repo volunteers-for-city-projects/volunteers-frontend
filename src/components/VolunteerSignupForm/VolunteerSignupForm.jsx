@@ -14,7 +14,7 @@ import UploadFile from '../UploadFile/UploadFile';
 import InputGroup from '../InputGroup/InputGroup';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { VolunteerSignupFormSchema } from '../../utils/validationSchemas/VolunteerSignupFormSchema';
-import { createVolunteer } from '../../utils/api/signupApi';
+import { createVolunteer, resendActivateUser } from '../../utils/api/signupApi';
 import SelectOption from '../SelectOption/SelectOption';
 import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
@@ -85,7 +85,9 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					emailprop: values.email,
 					onSubmit: (event) => {
 						event.preventDefault();
-						// ожидаем  api/auth/resend_activation
+						resendActivateUser({ email: values.email }).catch((err) =>
+							console.error(err)
+						);
 					},
 				});
 			} catch (error) {

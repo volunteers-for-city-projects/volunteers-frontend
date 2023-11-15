@@ -2,7 +2,6 @@ import request from './request';
 import {
 	ENDPOINT_ORGANIZER_PROJECT_CATEGORIES,
 	ENDPOINT_ORGANIZER_PROJECTS,
-	URL,
 } from './endpoints';
 
 const getProjectCategories = () =>

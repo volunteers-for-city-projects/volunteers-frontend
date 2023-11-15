@@ -18,7 +18,10 @@ import UploadFile from '../UploadFile/UploadFile';
 import SelectOption from '../SelectOption/SelectOption';
 import { OrganizerSignupFormSchema } from '../../utils/validationSchemas/OrganizerSignupFormSchema';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import { createOrganization } from '../../utils/api/signupApi';
+import {
+	createOrganization,
+	resendActivateUser,
+} from '../../utils/api/signupApi';
 import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
@@ -78,7 +81,9 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					emailprop: values.organize_email,
 					onSubmit: (event) => {
 						event.preventDefault();
-						// ожидаем  api/auth/resend_activation
+						resendActivateUser({ email: values.email }).catch((err) =>
+							console.error(err)
+						);
 					},
 				});
 			} catch (error) {
@@ -159,6 +164,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					value={formik.values.organize_ogrn}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
+					required
 				/>
 			</InputGroup>
 			<InputTextArea

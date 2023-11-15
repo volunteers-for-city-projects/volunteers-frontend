@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, Outlet } from 'react-router-dom';
-import {
-	getUserInformation,
-	logOut,
-	changePasswordProfile,
-} from '../../utils/api/login';
+import { getUserInformation, logOut } from '../../utils/api/login';
 import {
 	getVolunteerInformation,
 	getOrganizationInformation,
@@ -20,7 +16,7 @@ import {
 	getProjectCategories,
 	getAllProjects,
 } from '../../utils/api/organizer';
-import PopupChangePasswordSuccess from '../PopupChangePasswordSuccess/PopupChangePasswordSuccess';
+import PopupWindow from '../PopupWindow/PopupWindow';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -31,6 +27,11 @@ function App() {
 		type: 'init',
 		state: 'info',
 		title: 'init',
+	});
+	const [popup, setPopup] = useState({
+		isOpen: false,
+		text: '',
+		type: 'success',
 	});
 	const [platformEmail, setPlatformEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +53,6 @@ function App() {
 		ogrn: '',
 		title: '',
 	});
-	const [formChangePassword, setFormChangePassword] = useState(false);
-	const [popupChangePassword, setPopupChangePassword] = useState(false);
 	const [cities, setCities] = useState([]);
 	const [skills, setSkills] = useState([]);
 	const [projectCategories, setProjectCategories] = useState([]);
@@ -184,6 +183,14 @@ function App() {
 		});
 	};
 
+	const closePopup = () => {
+		setTimeout(() => {
+			setPopup({
+				isOpen: false,
+			});
+		}, 3000);
+	};
+
 	const handleLogout = (event) => {
 		event.preventDefault();
 		closeModal();
@@ -207,48 +214,21 @@ function App() {
 	};
 
 	const handleChangePasswordForm = () => {
-		setFormChangePassword(true);
-	};
-	const handleChangePopupPassword = () => {
-		setPopupChangePassword(true);
-	};
-
-	const closeModalPassword = () => {
-		setFormChangePassword(false);
-		setPopupChangePassword(false);
-	};
-
-	const handleChangePassword = ({ newPassword, currentPassword }) => {
-		changePasswordProfile({ newPassword, currentPassword })
-			.then(() => {
-				closeModalPassword();
-				handleChangePopupPassword();
-			})
-			.catch((err) => {
-				closeModalPassword();
-				setModal({
-					isOpen: true,
-					type: 'error',
-					state: 'info',
-					title: 'Неправильный пароль',
-					errorArray: err,
-				});
-			});
-	};
-
-	const handleChangeCurrentPassword = (
-		{ newPassword, currentPassword },
-		{ resetForm }
-	) => {
-		handleChangePassword(
-			{
-				newPassword,
-				currentPassword,
-			},
-			setTimeout(() => {
-				resetForm();
-			}, 2000)
-		);
+		setModal({
+			isOpen: true,
+			type: 'init',
+			state: 'info',
+			title: 'Изменение пароля',
+			children: (
+				<FormChangePassword
+					popup={popup}
+					setPopup={setPopup}
+					setModal={setModal}
+					closePopup={closePopup}
+				/>
+			),
+			typeStyle: 'change-password',
+		});
 	};
 
 	return (
@@ -273,6 +253,7 @@ function App() {
 					plarformAbout,
 					plarformPromo,
 					news,
+					popup,
 					projects,
 					setProjects,
 				}}
@@ -283,16 +264,17 @@ function App() {
 					<Modal modal={modal} closeModal={closeModal} />,
 					document.body
 				)}
-
-			<FormChangePassword
-				isOpen={formChangePassword}
-				onClose={closeModalPassword}
-				onChangePassword={handleChangeCurrentPassword}
-			/>
-			<PopupChangePasswordSuccess
-				isOpen={popupChangePassword}
-				onClose={closeModalPassword}
-			/>
+			{popup.isOpen &&
+				createPortal(
+					<PopupWindow
+						text={popup.text}
+						type={popup.type}
+						isOpen={popup.isOpen}
+						styleType={popup.styleType}
+						errorArray={popup.errorArray}
+					/>,
+					document.querySelector('.modal__container')
+				)}
 		</>
 	);
 }
