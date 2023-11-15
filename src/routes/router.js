@@ -19,9 +19,10 @@ import './router.scss';
 import VolunteerSignupForm from '../components/VolunteerSignupForm/VolunteerSignupForm';
 import OrganizerSignupForm from '../components/OrganizerSignupForm/OrganizerSignupForm';
 import ProfileVolunteer from '../components/ProfileVolunteer/ProfileVolunteer';
+import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolunteerEdit';
 import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
-import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolunteerEdit';
+import Projects from '../components/Projects/Projects';
 
 const router = createHashRouter([
 	{
@@ -113,7 +114,14 @@ const router = createHashRouter([
 			},
 			{
 				path: 'projects',
-				// element: <Projects />,
+				element: <Projects />,
+				handle: {
+					crumb: () => (
+						<Link to="/projects" className="router__link">
+							Проекты
+						</Link>
+					),
+				},
 			},
 			{
 				path: 'profile',

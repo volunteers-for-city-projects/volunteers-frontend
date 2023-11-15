@@ -6,6 +6,10 @@ import './OrganizerSignupForm.scss';
 
 import { useOutletContext } from 'react-router-dom';
 
+import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
+import { ogrnMask } from '../../utils/inputsMasks/ogrnMask';
+
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import InputTextArea from '../InputTextArea/InputTextArea';
@@ -45,24 +49,27 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		onSubmit: async (values) => {
 			// функция для конверсии номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.organize_phone);
+			let formattedPhone = getDigitsOnly(values.organize_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
-				const organizationResponse = await createOrganization({
+				await createOrganization({
 					contact_person: {
 						email: values.organize_email,
 						first_name: values.organize_firstname,
-						last_name: values.organize_secondname,
+						last_name: values.organize_lastname,
 						password: values.organize_password,
-						second_name: values.organize_lastname,
+						second_name: values.organize_secondname,
 					},
 					title: values.organization,
-					ogrn: values.organize_ogrn,
+					ogrn: values.organize_ogrn.replace(/-/g, ''),
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
 					about: values.about_organization || '' || undefined,
-					city: values.organize_city,
+					city: values.organize_city[0].value,
 					photo: values.photo || '',
 				});
 
@@ -79,8 +86,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 						);
 					},
 				});
-
-				console.log('Volunteer created:', organizationResponse);
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({
@@ -126,32 +131,39 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					required
 				/>
 				<SelectOption
-					id="city"
-					name="city"
+					id="organize_city"
+					name="organize_city"
 					label="Город"
 					placeholder="Выберите город"
-					width={400}
 					options={cities}
 					touched={formik.touched.organize_city}
 					value={formik.values.organize_city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('organize_city', Number(selectedOption.value));
+						formik.setFieldValue('organize_city', [
+							{
+								label: selectedOption.label,
+								value: selectedOption.value,
+							},
+						]);
 					}}
 					required
 				/>
-				<Input
-					id="organize_ogrn"
-					name="organize_ogrn"
+				<InputMask
+					component={Input}
+					mask="_-__-__-__-_____-_"
+					replacement={{ _: /\d/ }}
+					modify={ogrnMask}
 					label="ОГРН"
 					type="text"
 					placeholder="1-02-66-05-60662-0"
 					inputSize="small"
+					id="organize_ogrn"
+					name="organize_ogrn"
 					error={formik.errors.organize_ogrn}
 					touched={formik.touched.organize_ogrn}
 					value={formik.values.organize_ogrn}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					required
 				/>
 			</InputGroup>
 			<InputTextArea
@@ -234,19 +246,22 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					handleChange={formik.handleChange}
 					required
 				/>
-				<Input
+				<InputMask
+					component={Input}
+					mask="+_ (___) ___-__-__"
+					replacement={{ _: /\d/ }}
+					modify={phoneMask}
 					id="organize_phone"
 					name="organize_phone"
 					label="Телефон"
-					type="organize_phone"
-					placeholder="+7 977 000-00-00"
+					type="text"
+					placeholder="+7 789 000-00-00"
 					inputSize="small"
 					error={formik.errors.organize_phone}
 					touched={formik.touched.organize_phone}
 					value={formik.values.organize_phone}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
-					required
 				/>
 			</InputGroup>
 			<InputGroup title="Пароль">
@@ -254,7 +269,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_password"
 					name="organize_password"
 					label="Пароль"
-					type="password"
+					type="text"
 					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.organize_password}
@@ -268,7 +283,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_confirm_password"
 					name="organize_confirm_password"
 					label="Повторный пароль"
-					type="password"
+					type="text"
 					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.organize_confirm_password}
@@ -285,7 +300,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					color="white"
 					backgroundColor="#A6C94F"
 					border="1px solid #A6C94F"
-					minWidth="399px"
 					size="pre-large"
 					disabled={
 						!formik.isValid || !isCheckboxChecked || formik.values.city === null

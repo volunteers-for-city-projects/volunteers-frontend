@@ -1,0 +1,56 @@
+@import '../../style/variables.scss';
+.button {
+    margin: 0;
+	font-family: $--Font-Primary;
+	border: 1px solid $--Button_primary;
+	border-radius: 5px;
+	font-style: normal;
+	font-weight: 400;
+	display: inline-block;
+	text-align: center;
+    box-sizing: border-box;
+    color: $--White;
+    
+    font-size: 20px;
+    line-height: 1.15;
+    padding: 5px 16px;
+
+    &_theme_default {
+        background-color: $--Button_primary;        
+    }
+    &_theme_opposite {
+        background-color: $--Error;
+        border-color: $--Error;
+    }
+    &_theme_neutral {
+        background-color: $--White;
+        color: $--Text
+    }    
+    &_size_l {
+        height: 48px;
+        width: 410px;
+    }
+    &_size_m {
+        height: 48px;
+        width: 360px;        
+    }
+    &_size_s {
+        height: 48px;
+        width: 240px;
+    }
+    &_size_xs {
+        height: 40px;
+        width: 118px;
+    }
+
+	&:hover {
+		opacity: 0.8;
+		transition: opacity 100ms ease-in;
+		cursor: pointer;
+	}
+
+	&:disabled {		
+		cursor: default;		
+		opacity: 0.5;
+	}
+}

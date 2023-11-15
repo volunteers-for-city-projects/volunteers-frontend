@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFormik } from 'formik';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 
 import './ProfileVolunteerForm.scss';
 
 import Input from '../Input/Input';
 import InputGroup from '../InputGroup/InputGroup';
 import UploadFile from '../UploadFile/UploadFile';
-import ProfilePhoto from '../../images/fotoProfile.svg';
+import ProfilePhoto from '../../images/fotoProfile_2.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileVolunteerFormSchema } from '../../utils/validationSchemas/ProfileVolunteerFormSchema';
@@ -30,6 +32,29 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 		id,
 	} = currentUser;
 
+	const selectOptionsSkills = userSkills.map((item) => ({
+		label: item.name,
+		value: item.id,
+	}));
+
+	const selectOptionsCity = cities
+		.filter((item) => item.value === `${city}`)
+		.map((item) => ({
+			label: item.label,
+			value: item.value,
+		}));
+
+	const getPhoneNumberMask = (phoneNumber) =>
+		phoneNumber &&
+		phoneNumber.startsWith('+7') &&
+		phoneNumber.length === 12 &&
+		phoneNumber.replace(
+			/(\+\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/,
+			'+7 ($2) $3-$4-$5'
+		);
+
+	const phoneNumberMask = getPhoneNumberMask(phone);
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -37,41 +62,45 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 			profile_volunteer_firstname: firstName,
 			profile_volunteer_secondname: secondName,
 			profile_volunteer_lastname: lastName,
-			profile_volunteer_phone: phone,
+			profile_volunteer_phone: phoneNumberMask,
 			profile_volunteer_telegram: telegram,
 			profile_volunteer_photo: photo,
-			profile_volunteer_skills: userSkills,
-			profile_volunteer_city: city,
+			profile_volunteer_skills: selectOptionsSkills,
+			profile_volunteer_city: selectOptionsCity,
 		},
 		validationSchema: ProfileVolunteerFormSchema,
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
+			let formattedPhone = getDigitsOnly(values.profile_volunteer_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
-				await updateVolunteer(id, {
+				updateVolunteer(id, {
 					user: {
 						first_name: values.profile_volunteer_firstname,
 						second_name: values.profile_volunteer_secondname,
 						last_name: values.profile_volunteer_lastname,
 					},
 					telegram: values.profile_volunteer_telegram,
-					// photo: values.profile_volunteer_photo || null || '' || undefined,
+					date_of_birth: '1900-01-01',
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					photo: '',
-					skills: values.profile_volunteer_skills || [],
-					city: values.profile_volunteer_city,
+					photo: values.photo,
+					skills: values.profile_volunteer_skills.map((skill) => skill.value),
+					city: values.profile_volunteer_city[0].value,
 				});
+				navigate('..');
+				// await handleIsForm();
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Ошибка в обновлении данных волонтера:', error.message);
 			}
 		},
 	});
-
 	return (
 		<form
 			action="#"
@@ -152,19 +181,21 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 						/>
 					</InputGroup>
 					<InputGroup title="Контактные данные">
-						<Input
+						<InputMask
+							component={Input}
+							mask="+_ (___) ___-__-__"
+							replacement={{ _: /\d/ }}
+							modify={phoneMask}
+							value={formik.values.profile_volunteer_phone}
+							handleChange={formik.handleChange}
 							id="profile_volunteer_phone"
 							name="profile_volunteer_phone"
 							label="Телефон"
-							type="phone"
+							type="text"
 							placeholder="+7 977 000-00-00"
 							inputSize="small"
 							error={formik.errors.profile_volunteer_phone}
 							touched={formik.touched.profile_volunteer_phone}
-							value={formik.values.profile_volunteer_phone}
-							handleChange={formik.handleChange}
-							submitCount={formik.submitCount}
-							autoсomplete="off"
 						/>
 						<Input
 							id="profile_volunteer_telegram"
@@ -187,18 +218,17 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 							name="profile_volunteer_skills"
 							label="Навыки"
 							placeholder="Выберите навыки"
-							width={400}
 							options={skills}
 							isMulti
 							value={formik.values.profile_volunteer_skills}
 							touched={formik.touched.profile_volunteer_skills}
 							handleChange={(selectedOption) => {
-								const selectedValues = selectedOption.map(
-									(option) => option.value
-								);
 								formik.setFieldValue(
 									'profile_volunteer_skills',
-									selectedValues
+									selectedOption.map((option) => ({
+										label: option.label,
+										value: option.value,
+									}))
 								);
 							}}
 							required
@@ -208,15 +238,16 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 							name="profile_volunteer_city"
 							label="Город"
 							placeholder="Выберите город"
-							width={400}
 							options={cities}
 							touched={formik.touched.profile_volunteer_city}
 							value={formik.values.profile_volunteer_city}
 							handleChange={(selectedOption) => {
-								formik.setFieldValue(
-									'profile_volunteer_city',
-									Number(selectedOption.value)
-								);
+								formik.setFieldValue('profile_volunteer_city', [
+									{
+										label: selectedOption.label,
+										value: selectedOption.value,
+									},
+								]);
 							}}
 							required
 						/>
@@ -229,7 +260,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth="399px"
+								minWidth="100%"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -245,7 +276,7 @@ export default function ProfileVolunteerForm({ onSubmit, ...restProps }) {
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth="399px"
+								minWidth="100%"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {

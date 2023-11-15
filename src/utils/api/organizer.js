@@ -17,4 +17,24 @@ const getProjectById = (id) => {
 	return request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null, token);
 };
 
-export { getProjectCategories, createProject, getProjectById };
+/* const getAllProjects = () => {
+	const token = localStorage.getItem('token');
+	return request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null);
+}; */
+
+const getAllProjects = () => request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null);
+
+/* const getNextPrev = (url) => {
+	const token = localStorage.getItem('token');
+	return request(url, 'GET', null);
+}; */
+
+const getNextPrev = (url) => request(url.slice(URL.length - 1), 'GET', null);
+
+export {
+	getProjectCategories,
+	createProject,
+	getProjectById,
+	getAllProjects,
+	getNextPrev,
+};
