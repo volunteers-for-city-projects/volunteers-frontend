@@ -12,6 +12,7 @@ import {
 function Profile() {
 	const {
 		currentUser,
+		setCurrentUser,
 		cities,
 		skills,
 		projectCategories,
@@ -37,6 +38,7 @@ function Profile() {
 		<Outlet
 			context={{
 				currentUser,
+				setCurrentUser,
 				cities,
 				skills,
 				projectCategories,

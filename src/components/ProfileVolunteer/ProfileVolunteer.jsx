@@ -10,11 +10,14 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
 import cityImage from '../../images/city.png';
+import { getUserInformation } from '../../utils/api/login';
+import { getVolunteerInformation } from '../../utils/api/profile';
 import volunteerImage from '../../images/avatar.png';
 
 function ProfileVolunteer() {
 	const {
 		currentUser,
+		setCurrentUser,
 		handleChangePasswordForm,
 		cities,
 		skills,
@@ -63,6 +66,36 @@ function ProfileVolunteer() {
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, [location.pathname]);
+
+	// 	fetchData();
+	// }, [city];
+
+	useEffect(() => {
+		getUserInformation().then((user) => {
+			if (user.role === 'volunteer') {
+				getVolunteerInformation(user.id_organizer_or_volunteer).then(
+					(volunteer) => {
+						setCurrentUser({
+							firstName: user.first_name,
+							secondName: user.second_name,
+							lastName: user.last_name,
+							role: user.role,
+							userId: user.id,
+							email: user.email,
+							id: user.id_organizer_or_volunteer,
+							dateOfBirth: volunteer.date_of_birth,
+							phone: volunteer.phone || '',
+							photo: volunteer.photo || '',
+							city: volunteer.city || 0,
+							userSkills: volunteer.skills || null,
+							telegram: volunteer.telegram || '',
+						});
+					}
+				);
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [location]);
 
 	return location.pathname === '/profile/volunteer' ||
 		location.pathname === '/profile/volunteer/' ? (

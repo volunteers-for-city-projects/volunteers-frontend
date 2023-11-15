@@ -56,7 +56,10 @@
 
 	&__button {
 		max-width: 401px;
+		width: 100%;
 		border: none;
+		display: flex;
+		justify-content: center;
 	}
 
 	&__upload-file {
@@ -85,5 +88,103 @@
 		visibility: visible;
 
 		cursor: pointer;
+	}
+}
+
+@media screen and (max-width: 1919px) {
+	.profile-volunteer-form {
+		margin: 0 auto;
+
+		&__form-wrap {
+			gap: 20px;
+			display: flex;
+		}
+
+		&__inputs-wrap {
+			width: 592px;
+
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 0 0 0 10px;
+
+			translate: -22px 0;
+		}
+
+		&__photo-wrap {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			max-width: 401px;
+
+			position: relative;
+			translate: 0 7px;
+		}
+
+		&__photo {
+			width: 280px;
+			height: 280px;
+			object-fit: cover;
+			border-radius: 5px;
+		}
+
+		&__text-wrap {
+			display: flex;
+			justify-content: space-around;
+			gap: 20px;
+		}
+
+		&__text {
+			margin: 0;
+
+			font-family: Fira Sans;
+			font-size: 23px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 130%; /* 29.9px */
+		}
+
+		&__buttons {
+			margin-top: 15px;
+
+			display: flex;
+			gap: 20px;
+			width: 580px;
+			display: flex;
+		}
+
+		&__button {
+			max-width: 280px;
+			width: 100%;
+			border: none;
+		}
+
+		&__upload-file {
+			width: 40px;
+			height: 40px;
+
+			position: relative;
+
+			border: none;
+			border-radius: 0;
+
+			visibility: hidden;
+		}
+
+		&__upload-file::after {
+			content: url('../../images/icon__profile-photo-upload.svg');
+
+			width: 40px;
+			height: 40px;
+
+			position: absolute;
+			top: -5px;
+			left: 0;
+
+			background-repeat: no-repeat;
+			visibility: visible;
+
+			cursor: pointer;
+		}
 	}
 }

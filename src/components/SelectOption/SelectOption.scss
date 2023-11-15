@@ -4,6 +4,7 @@
 	margin: 16px 0 0;
 
 	&__container {
+		width: 400px;
 		color: $--Black;
 		font: {
 			family: 'Fira Sans', sans-serif;
@@ -15,6 +16,7 @@
 	}
 
 	&__label {
+		width: 400px;
 		display: block;
 		height: 18px;
 		color: $--Text;
@@ -42,5 +44,49 @@
 			style: normal;
 		}
 		line-height: 23px; /* 115% */
+	}
+
+	@media screen and (max-width: 1919px) {
+		&__container {
+			width: 280px;
+			color: $--Black;
+			font: {
+				family: 'Fira Sans', sans-serif;
+				size: 17px;
+				weight: 400;
+				style: normal;
+			}
+			line-height: 20px;
+		}
+
+		&__label {
+			display: block;
+			height: 18px;
+			color: $--Text;
+			font: {
+				family: 'Fira Sans', sans-serif;
+				size: 20px;
+				weight: 400;
+				style: normal;
+			}
+			line-height: 23px;
+			word-wrap: break-word;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		&__error-message {
+			display: block;
+			height: 21px;
+			margin-top: 8px;
+			color: $--Wrong;
+			font: {
+				family: 'Fira Sans', sans-serif;
+				size: 20px;
+				weight: 400;
+				style: normal;
+			}
+			line-height: 23px; /* 115% */
+		}
 	}
 }

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
 import moment from 'moment';
+import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
+import { birthdayMask } from '../../utils/inputsMasks/birthdayMask';
 
 import './VolunteerSignupForm.scss';
 
@@ -49,7 +52,10 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 			);
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.phone);
+			let formattedPhone = getDigitsOnly(values.phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				await createVolunteer({
@@ -67,8 +73,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
-					skills: values.skills || [],
-					city: values.city || [] || null || '',
+					skills: values.skills.map((skill) => skill.value),
+					city: values.city[0].value,
 				});
 
 				setModal({
@@ -153,11 +159,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					submitCount={formik.submitCount}
 					required
 				/>
-				<Input
+				<InputMask
+					component={Input}
+					mask="__.__.____"
+					replacement={{ _: /\d/ }}
+					modify={birthdayMask}
+					onChange={formik.handleChange}
 					id="birthday"
 					name="birthday"
 					label="Дата рождения"
-					type="text-date"
+					type="text"
 					placeholder="01.02.2010"
 					inputSize="small"
 					error={formik.errors.birthday}
@@ -170,19 +181,21 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 				/>
 			</InputGroup>
 			<InputGroup title="Контактные данные">
-				<Input
+				<InputMask
+					component={Input}
+					mask="+7 (___) ___-__-__"
+					replacement={{ _: /\d/ }}
+					modify={phoneMask}
 					id="phone"
 					name="phone"
 					label="Телефон"
-					type="phone"
+					type="text"
 					placeholder="+7 977 000-00-00"
 					inputSize="small"
-					error={formik.errors.phone}
-					touched={formik.touched.phone}
 					value={formik.values.phone}
 					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
+					error={formik.errors.phone}
+					touched={formik.touched.phone}
 				/>
 				<Input
 					id="email"
@@ -208,7 +221,11 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					inputSize="small"
 					error={formik.errors.telegram}
 					touched={formik.touched.telegram}
-					value={formik.values.telegram}
+					value={
+						formik.values.telegram && !formik.values.telegram.startsWith('@')
+							? `@${formik.values.telegram}`
+							: formik.values.telegram
+					}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
 					autoсomplete="off"
@@ -262,14 +279,18 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="skills"
 					label="Навыки"
 					placeholder="Выберите навыки"
-					width={400}
 					options={skills}
 					isMulti
 					value={formik.values.skills}
 					touched={formik.touched.skills}
 					handleChange={(selectedOption) => {
-						const selectedValues = selectedOption.map((option) => option.value);
-						formik.setFieldValue('skills', selectedValues);
+						formik.setFieldValue(
+							'skills',
+							selectedOption.map((option) => ({
+								label: option.label,
+								value: option.value,
+							}))
+						);
 					}}
 					required
 				/>
@@ -278,12 +299,16 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="city"
 					label="Город"
 					placeholder="Выберите город"
-					width={400}
 					options={cities}
 					touched={formik.touched.city}
 					value={formik.values.city}
 					handleChange={(selectedOption) => {
-						formik.setFieldValue('city', Number(selectedOption.value));
+						formik.setFieldValue('city', [
+							{
+								label: selectedOption.label,
+								value: selectedOption.value,
+							},
+						]);
 					}}
 					required
 				/>
@@ -294,7 +319,7 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					color="white"
 					backgroundColor="#A6C94F"
 					border="1px solid #A6C94F"
-					minWidth="399px"
+					minWidth="280px"
 					size="pre-large"
 					disabled={
 						!formik.isValid ||

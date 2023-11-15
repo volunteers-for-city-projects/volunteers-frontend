@@ -15,10 +15,13 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import ProfilePagination from '../ProfilePagination/ProfilePagination';
 import cityImage from '../../images/city.png';
 import organizationImage from '../../images/avatar.png';
+import { getUserInformation } from '../../utils/api/login';
+import { getOrganizationInformation } from '../../utils/api/profile';
 
 function ProfileOrganization() {
 	const {
 		currentUser,
+		setCurrentUser,
 		handleChangePasswordForm,
 		cities,
 		skills,
@@ -68,6 +71,33 @@ function ProfileOrganization() {
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, [location.pathname]);
+
+	useEffect(() => {
+		getUserInformation().then((user) => {
+			if (user.role === 'organizer') {
+				getOrganizationInformation(user.id_organizer_or_volunteer)
+					.then((organizer) => {
+						setCurrentUser({
+							firstName: user.first_name,
+							secondName: user.second_name,
+							lastName: user.last_name,
+							role: user.role,
+							userId: user.id,
+							email: user.email,
+							id: user.id_organizer_or_volunteer,
+							about: organizer.about || '',
+							city: organizer.city,
+							ogrn: organizer.ogrn,
+							phone: organizer.phone,
+							photo: organizer.photo || '',
+							title: organizer.title,
+						});
+					})
+					.catch((err) => console.error(err));
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [location]);
 
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
@@ -158,6 +188,7 @@ function ProfileOrganization() {
 		<Outlet
 			context={{
 				currentUser,
+				setCurrentUser,
 				handleChangePasswordForm,
 				cities,
 				skills,
