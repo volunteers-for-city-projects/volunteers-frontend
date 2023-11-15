@@ -5,7 +5,7 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-
+import Button from '../Button/Button';
 import { getNextPrev } from '../../utils/api/organizer';
 
 function Projects() {
@@ -39,9 +39,9 @@ function Projects() {
 		getNewBatchProjects(projects.next);
 	}
 
-	function handleClickPrev() {
-		getNewBatchProjects(projects.previous);
-	}
+	// function handleClickPrev() {
+	//	getNewBatchProjects(projects.previous);
+	// }
 
 	return (
 		<section className="projects">
@@ -111,12 +111,9 @@ function Projects() {
 				</div>
 
 				<div className="projects__button">
-					<button className="profile__pagination-btn" onClick={handleClickPrev}>
-						&#60;
-					</button>
-					<button className="profile__pagination-btn" onClick={handleClickNext}>
-						&#62;
-					</button>
+					<Button size="s" onClick={() => handleClickNext()}>
+						Показать еще
+					</Button>
 				</div>
 			</div>
 		</section>

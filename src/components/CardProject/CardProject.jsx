@@ -12,7 +12,7 @@ function CardProject({ cardProject }) {
 		name: nameProject,
 		city,
 		start_datetime: day,
-		//	end_datetime: time,
+		end_datetime: time,
 		isModeration,
 		picture: image,
 	} = cardProject;
@@ -47,7 +47,7 @@ function CardProject({ cardProject }) {
 				<li className="card__data">
 					<p className="card__data-city">{city}</p>
 					<p className="card__data-day">{day}</p>
-					<p className="card__data-time">{/* time */}</p>
+					<p className="card__data-time">{time}</p>
 				</li>
 			</ul>
 		</article>
