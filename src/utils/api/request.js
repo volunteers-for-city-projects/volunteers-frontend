@@ -1,6 +1,6 @@
 import errorFields from '../errorFields';
 
-export const BASE_URL = 'httpss://better-together.acceleratorpracticum.ru/api';
+export const BASE_URL = 'https://better-together.acceleratorpracticum.ru/api';
 
 const processErrors = (errorObject) => {
 	// Обработка ошибок для страницы авторизации

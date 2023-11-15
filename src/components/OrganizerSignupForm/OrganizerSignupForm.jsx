@@ -164,6 +164,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					value={formik.values.organize_ogrn}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
+					required
 				/>
 			</InputGroup>
 			<InputTextArea
