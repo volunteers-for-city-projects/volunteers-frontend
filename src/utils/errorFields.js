@@ -11,7 +11,8 @@ const errorsFields = {
 	phone: 'Телефон',
 	ogrn: 'ОГРН',
 	about: 'Об организации',
-	title: 'Название',
+	title: 'Название организации',
+	password: 'Пароль',
 };
 
 export default errorsFields;

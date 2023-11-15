@@ -24,11 +24,6 @@ const processErrors = (errorObject) => {
 					},
 				];
 			}
-			return [
-				{
-					textError: objLogin.email,
-				},
-			];
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'not_active')) {
@@ -48,11 +43,6 @@ const processErrors = (errorObject) => {
 					},
 				];
 			}
-			return [
-				{
-					textError: objLogin.password,
-				},
-			];
 		}
 	}
 
@@ -77,11 +67,6 @@ const processErrors = (errorObject) => {
 					},
 				];
 			}
-			return [
-				{
-					textError: objRegister.email,
-				},
-			];
 		}
 	}
 
@@ -106,11 +91,6 @@ const processErrors = (errorObject) => {
 					},
 				];
 			}
-			return [
-				{
-					textError: objRegister.email,
-				},
-			];
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'ogrn')) {
@@ -121,11 +101,6 @@ const processErrors = (errorObject) => {
 					},
 				];
 			}
-			return [
-				{
-					textError: objRegister.ogrn,
-				},
-			];
 		}
 	}
 
@@ -142,7 +117,7 @@ const processErrors = (errorObject) => {
 										.map((item) => item)
 										.join(', ')
 										.toLowerCase()
-								: error[1]
+								: error[1].toLowerCase()
 						}`,
 					};
 				}
