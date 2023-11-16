@@ -121,7 +121,7 @@
 	}
 	&__place-group {
 		display: grid;
-		grid-template-columns: min-content 1fr;
+		grid-template-columns: 400px 1fr;
 		gap: 20px;
 		&-wrapper {
 			display: flex;

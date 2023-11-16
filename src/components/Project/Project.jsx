@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -62,7 +62,9 @@ function Project() {
 		provide: Yup.string()
 			.min(2, 'Количество символов от 2 до 750')
 			.max(750, 'Количество символов от 2 до 750'),
-		city: Yup.number().required('Поле обязательно для заполнения'),
+		city: Yup.array()
+			.of(Yup.object({ label: Yup.string(), value: Yup.number() }))
+			.required('Поле обязательно для заполнения'),
 		address: Yup.string()
 			.matches(
 				/^[А-Яа-яЁёa-zA-Z0-9.,\s-]+$/,
@@ -136,53 +138,94 @@ function Project() {
 		const formatPattern = 'YYYY-MM-DDTHH:mm:ss.000Z';
 		return moment(`${date} ${time}`, parsePattern).format(formatPattern);
 	};
+
+	const handleSubmit = async (values) => {
+		try {
+			await createProject({
+				name: values.name,
+				description: values.description,
+				picture: image,
+				start_datetime: dateTimeFormatter(
+					values.date.split('-')[0].trim(),
+					values.timeRange.split('-')[0].trim()
+				),
+				end_datetime: dateTimeFormatter(
+					values.date.split('-')[1].trim(),
+					values.timeRange.split('-')[1].trim()
+				),
+				start_date_application: dateTimeFormatter(
+					values.submissionDate.split('-')[0].trim(),
+					'00:00'
+				),
+				end_date_application: dateTimeFormatter(
+					values.submissionDate.split('-')[1].trim(),
+					'23:59'
+				),
+				event_purpose: values.goal,
+				event_address: {
+					address_line: values.address,
+					street: 'street',
+					house: 'house',
+					block: '',
+					building: '',
+				},
+				project_tasks: values.tasks,
+				project_events: values.events,
+				organizer_provides: values.provide,
+				organization: currentUser.id,
+				city: values.city,
+				categories: values.categoryProject,
+				skills: values.skills,
+			});
+			setModal({
+				isOpen: true,
+				title: 'Проект отправлен на модерацию',
+				type: 'project',
+				state: 'success',
+				onSubmit: (event) => {
+					event.preventDefault();
+					navigate('/profile');
+					setModal({
+						isOpen: false,
+					});
+				},
+			});
+		} catch (error) {
+			if (Array.isArray(error)) {
+				setModal({
+					isOpen: true,
+					type: 'error',
+					state: 'info',
+					title: 'Произошла ошибка',
+					errorArray: error,
+				});
+			} else {
+				console.error(error);
+			}
+		}
+	};
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: projectValues,
 		validationSchema,
-		onSubmit: async (values) => {
-			try {
-				await createProject({
-					name: values.name,
-					description: values.description,
-					picture: image,
-					start_datetime: dateTimeFormatter(
-						values.date.split('-')[0].trim(),
-						values.timeRange.split('-')[0].trim()
-					),
-					end_datetime: dateTimeFormatter(
-						values.date.split('-')[1].trim(),
-						values.timeRange.split('-')[1].trim()
-					),
-					start_date_application: dateTimeFormatter(
-						values.submissionDate.split('-')[0].trim(),
-						'00:00'
-					),
-					end_date_application: dateTimeFormatter(
-						values.submissionDate.split('-')[1].trim(),
-						'23:59'
-					),
-					event_purpose: values.goal,
-					event_address: {
-						address_line: values.address,
-						street: 'street',
-						house: 'house',
-						block: '',
-						building: '',
-					},
-					project_tasks: values.tasks,
-					project_events: values.events,
-					organizer_provides: values.provide,
-					organization: currentUser.id,
-					city: values.city,
-					categories: values.categoryProject,
-					skills: values.skills,
-				});
+		onSubmit: handleSubmit,
+	});
+
+	const nameRef = useRef(null);
+
+	const handleDraftSaveClick = (values, errors) => {
+		try {
+			console.info(values);
+			console.info(errors);
+			if (errors?.name) {
+				nameRef.current.focus();
+			} else {
 				setModal({
 					isOpen: true,
-					title: 'Проект отправлен на модерацию',
-					type: 'project',
+					title: 'Черновик проекта успешно сохранён',
+					type: 'draft',
 					state: 'success',
 					onSubmit: (event) => {
 						event.preventDefault();
@@ -192,21 +235,24 @@ function Project() {
 						});
 					},
 				});
-			} catch (error) {
-				if (Array.isArray(error)) {
-					setModal({
-						isOpen: true,
-						type: 'error',
-						state: 'info',
-						title: 'Произошла ошибка',
-						errorArray: error,
-					});
-				} else {
-					console.error(error);
-				}
 			}
-		},
-	});
+		} catch (error) {
+			console.error(error);
+			setModal({
+				isOpen: true,
+				title: 'Черновик не сохранён',
+				type: 'draft',
+				state: 'info',
+				onSubmit: (event) => {
+					event.preventDefault();
+					navigate('/profile');
+					setModal({
+						isOpen: false,
+					});
+				},
+			});
+		}
+	};
 
 	const handleImageChange = (event) => {
 		const file = event.target.files[0];
@@ -242,6 +288,7 @@ function Project() {
 			>
 				<div className="add-project__name-container">
 					<CustomInput
+						inputRef={nameRef}
 						name="name"
 						type="text"
 						label=""
@@ -271,6 +318,7 @@ function Project() {
 						<input
 							name="image"
 							type="file"
+							tabIndex={0}
 							className="add-project__button add-project__upload-image-button"
 							accept="image/png, image/jpeg"
 							onChange={handleImageChange}
@@ -346,7 +394,13 @@ function Project() {
 								error={formik.errors.city}
 								value={formik.values.city}
 								handleChange={(selectedOption) => {
-									formik.setFieldValue('city', selectedOption.value);
+									console.log(selectedOption);
+									formik.setFieldValue('city', [
+										{
+											label: selectedOption.label,
+											value: selectedOption.value,
+										},
+									]);
 								}}
 								submitCount={formik.submitCount}
 								required
@@ -411,9 +465,11 @@ function Project() {
 								error={formik.errors.categoryProject}
 								value={formik.values.categoryProject}
 								handleChange={(selectedOption) => {
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
+									console.log(selectedOption);
+									const selectedValues = selectedOption.map((option) => ({
+										label: option.label,
+										value: option.value,
+									}));
 									formik.setFieldValue('categoryProject', selectedValues);
 								}}
 								isMulti
@@ -427,9 +483,11 @@ function Project() {
 								error={formik.errors.skills}
 								value={formik.values.skills}
 								handleChange={(selectedOption) => {
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
+									console.log(selectedOption);
+									const selectedValues = selectedOption.map((option) => ({
+										label: option.label,
+										value: option.value,
+									}));
 									formik.setFieldValue('skills', selectedValues);
 								}}
 								isMulti
@@ -446,7 +504,6 @@ function Project() {
 							backgroundColor="#A6C94F"
 							border="1px solid #A6C94F"
 							disabled={!formik.isValid}
-							type="submit"
 						/>
 						<Pushbutton
 							label="Сохранить как черновик"
@@ -455,7 +512,7 @@ function Project() {
 							color="#333"
 							backgroundColor="#FDFDFD"
 							border="1px solid #A6C94F"
-							type="save"
+							onClick={() => handleDraftSaveClick(formik.values, formik.errors)}
 						/>
 					</div>
 				</div>
