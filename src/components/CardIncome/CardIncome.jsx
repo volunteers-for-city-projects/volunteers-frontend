@@ -72,7 +72,6 @@ function CardIncome({ income }) {
 			className={bem('#__action')}
 			onClick={handleReject}
 		>
-			{' '}
 			Отклонить заявку
 		</Button>
 	);
@@ -83,7 +82,7 @@ function CardIncome({ income }) {
 			className={bem('#__action')}
 			onClick={handleAccept}
 		>
-			Принять заявку{' '}
+			Принять заявку
 		</Button>
 	);
 	const about = (
@@ -151,7 +150,7 @@ function CardIncome({ income }) {
 			className={`${baseClass}__button`}
 			onClick={handleOpenQuestionnaire}
 		>
-			Анкета{' '}
+			Анкета
 		</Button>
 	);
 

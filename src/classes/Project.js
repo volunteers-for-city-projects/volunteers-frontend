@@ -1,13 +1,12 @@
 import ProjectEventAddress from './ProjectEventAddress';
 import ProjectIncome from './ProjectIncome';
 import AbstractEntity from './AbstarctEntity';
+import { getProject } from '../utils/api/project';
 /**
  * @class
  * @extends AbstractEntity<Project>
  */
 class Project extends AbstractEntity {
-	static ENDPOINT = '/projects/';
-
 	static DATE_FIELDS = [
 		'startDatetime',
 		'endDatetime',
@@ -62,9 +61,7 @@ class Project extends AbstractEntity {
 	 * @returns {Promise<Project>}
 	 */
 	static async loadOne(id) {
-		return this.apiRequest(id, 'GET', '').then((data) =>
-			this.createByData(data)
-		);
+		return getProject(id).then((data) => this.createByData(data));
 	}
 
 	/** @returns {Project} */
