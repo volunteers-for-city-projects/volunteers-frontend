@@ -1,0 +1,39 @@
+@import '../../style/variables.scss';
+.card-income {
+	display: grid;
+	&__photo {
+		background-color: red;
+		justify-self: center;
+	}
+	&_layout_default {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: repeat(5, auto);
+		row-gap: 20px;
+		column-gap: 28px;
+		> .card-income__title {
+			grid-column: 1/3;
+		}
+		> .card-income__photo {
+			grid-row: 2/5;
+		}
+	}
+	&_layout_popup {
+		grid-template-columns: 2fr 1fr 1fr;
+		grid-template-rows: repeat(3, auto);
+		row-gap: 20px;
+		column-gap: 28px;
+		> .card-income__letter {
+			grid-column: 2/4;
+		}				
+		> .card-income__title {
+			grid-column: 1/4;
+		}
+		> .card-income__about{
+			display: flex;
+			flex-direction: column;
+		}
+		> .card-income__action {
+			align-self: end;
+		}
+	}
+}

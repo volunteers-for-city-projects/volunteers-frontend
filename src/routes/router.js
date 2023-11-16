@@ -23,6 +23,7 @@ import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolu
 import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
 import Projects from '../components/Projects/Projects';
+import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectIncomes';
 
 const router = createHashRouter([
 	{
@@ -122,6 +123,10 @@ const router = createHashRouter([
 						</Link>
 					),
 				},
+			},
+			{
+				path: 'project/:projectId/incomes',
+				element: <PageProjectIncomes />,
 			},
 			{
 				path: 'profile',
