@@ -4,12 +4,14 @@ import './CustomInput.scss';
 import clsx from 'clsx';
 
 export default function CustomInput({
+	name,
 	label,
 	placeholder,
 	type,
 	handleChange,
 	error,
 	required,
+	inputRef,
 	...props
 }) {
 	const [isFocused, setIsFocused] = React.useState(false);
@@ -29,6 +31,8 @@ export default function CustomInput({
 				</label>
 			)}
 			<input
+				ref={inputRef}
+				name={name}
 				type={type}
 				placeholder={placeholder}
 				className={clsx('input__field', {
@@ -49,17 +53,26 @@ export default function CustomInput({
 }
 
 CustomInput.propTypes = {
+	name: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
 	type: PropTypes.string.isRequired,
 	handleChange: PropTypes.func,
 	error: PropTypes.string,
 	required: PropTypes.bool,
+	inputRef: PropTypes.oneOfType([
+		// Either a function
+		PropTypes.func,
+		// Or the instance of a DOM native element (see the note about SSR)
+		PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+	]),
 };
 
 CustomInput.defaultProps = {
+	name: '',
 	placeholder: '',
 	required: false,
 	error: '',
 	handleChange: () => {},
+	inputRef: undefined,
 };
