@@ -126,7 +126,11 @@ const router = createHashRouter([
 			},
 			{
 				path: 'project/:projectId/incomes',
-				element: <PageProjectIncomes />,
+				element: <PageProjectIncomes status="application_submitted" />,
+			},
+			{
+				path: 'project/:projectId/participants',
+				element: <PageProjectIncomes status="accepted" />,
 			},
 			{
 				path: 'profile',

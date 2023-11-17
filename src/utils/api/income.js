@@ -1,6 +1,6 @@
 import request from './request';
 
-const ENDPOINT = '/incomes/';
+const ENDPOINT = 'incomes/';
 const token = () => localStorage.getItem('token');
 
 export const getIncomes = () => request(ENDPOINT, 'GET', '', token());

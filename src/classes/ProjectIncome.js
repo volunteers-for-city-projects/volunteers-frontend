@@ -10,9 +10,10 @@ import {
 	getIncome,
 } from '../utils/api/income';
 
-const STATUS_SUBBMITED = 'application_submitted';
-const STATUS_REJECTED = 'rejected';
-const STATUS_ACCEPTED = 'accepted';
+export const STATUS_SUBBMITED = 'application_submitted';
+export const STATUS_REJECTED = 'rejected';
+export const STATUS_ACCEPTED = 'accepted';
+
 const STATUS_MESSAGES = {
 	[STATUS_ACCEPTED]: 'Подтврждена',
 	[STATUS_REJECTED]: 'Отклонена',

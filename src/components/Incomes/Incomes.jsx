@@ -17,7 +17,11 @@ function Incomes({ incomes, className }) {
 	return (
 		<div className={clsx('incomes', className)}>
 			{incomes.map((income) => (
-				<CardIncome income={income} key={income.id} />
+				<CardIncome
+					income={income}
+					key={income.id}
+					layout={income.statusIncomes}
+				/>
 			))}
 		</div>
 	);

@@ -2,6 +2,7 @@ import ProjectEventAddress from './ProjectEventAddress';
 import ProjectIncome from './ProjectIncome';
 import AbstractEntity from './AbstarctEntity';
 import { getProject } from '../utils/api/project';
+
 /**
  * @class
  * @extends AbstractEntity<Project>
@@ -39,12 +40,16 @@ class Project extends AbstractEntity {
 	#incomes = [];
 
 	/**
+	 * status - константы STATUS_* из модуля ProjectIncome
+	 * @param {String} status
 	 * @returns {Promise<ProjectIncome[]>}
 	 */
-	loadIncomes() {
+	loadIncomes(status = '') {
 		return ProjectIncome.load().then((items) => {
 			items.forEach((item) => item.setProject(this));
-			this.#incomes = items;
+			this.#incomes = status
+				? items.filter((item) => item.statusIncomes === status)
+				: items;
 			return this.#incomes;
 		});
 	}
