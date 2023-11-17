@@ -5,11 +5,11 @@ import { useCallback, useState } from 'react';
 
 function SelectOption({
 	label,
-	width,
 	placeholder,
 	options,
 	handleChange,
 	error,
+	value,
 	isMulti,
 	required,
 }) {
@@ -64,13 +64,13 @@ function SelectOption({
 
 	const changeOption = useCallback(
 		(option) => {
-			handleChange(option); // Передать выбранный вариант в функцию handleChange
+			handleChange(option);
 		},
 		[handleChange]
 	);
 
 	return (
-		<div className="select-option__container" style={{ width }}>
+		<div className="select-option__container">
 			<label className="select-option__label" htmlFor="select-option">
 				{required ? `${label}*` : label}
 			</label>
@@ -86,6 +86,7 @@ function SelectOption({
 					IndicatorSeparator: () => null,
 				}}
 				styles={customStyles}
+				value={value}
 				theme={(theme) => ({
 					...theme,
 					borderRadius: 5,
@@ -106,7 +107,6 @@ function SelectOption({
 
 SelectOption.propTypes = {
 	label: PropTypes.string,
-	width: PropTypes.number,
 	placeholder: PropTypes.string,
 	options: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -118,11 +118,16 @@ SelectOption.propTypes = {
 	error: PropTypes.string,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
+	value: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
 };
 
 SelectOption.defaultProps = {
 	label: 'Город',
-	width: 280,
 	placeholder: 'Выберите город',
 	options: [
 		{ label: 'Москва', value: 'moscow' },
@@ -139,6 +144,7 @@ SelectOption.defaultProps = {
 	error: undefined,
 	isMulti: false,
 	required: false,
+	value: [],
 };
 
 export default SelectOption;

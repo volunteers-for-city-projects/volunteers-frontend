@@ -1,8 +1,19 @@
 @import '../../style/variables.scss';
 
-@keyframes appearance {
+@keyframes appearance-main {
 	from {
 		transform: translate(0, -50px);
+		opacity: 0;
+	}
+	to {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+}
+
+@keyframes appearance-modal {
+	from {
+		transform: translate(-50px, 0);
 		opacity: 0;
 	}
 	to {
@@ -27,7 +38,7 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	animation: appearance 2s;
+	animation: appearance-main 2s;
 
 	&_opened {
 		visibility: visible;
@@ -42,6 +53,12 @@
 		background-color: $--Error;
 	}
 
+	&_type_modal {
+		top: 443px;
+		right: 0;
+		animation: appearance-modal 2s;
+	}
+
 	&__icon {
 		width: 24px;
 		height: 24px;
@@ -54,5 +71,15 @@
 		font-weight: 500;
 		line-height: 1.18;
 		color: $--White;
+	}
+
+	&__list-errors {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
 	}
 }

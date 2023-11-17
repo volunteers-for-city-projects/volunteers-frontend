@@ -31,7 +31,10 @@ export const OrganizerSignupFormSchema = Yup.object({
 		.matches(/^[А-Яа-яЁё\s-]+$/, 'Введите отчество кириллицей')
 		.required('Поле обязательно для заполнения'),
 	organize_phone: Yup.string()
-		.matches(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, 'Введите корректный телефон')
+		.matches(
+			/^\+7|8 \([1-9]{1}\d{2}\) \d{3}-\d{2}-\d{2}$/,
+			'Введите корректный телефон'
+		)
 		.required('Поле обязательно для заполнения'),
 	organize_email: Yup.string()
 		.required('Поле обязательно для заполнения')
@@ -43,12 +46,14 @@ export const OrganizerSignupFormSchema = Yup.object({
 		),
 	organize_ogrn: Yup.string()
 		.trim()
-		.matches(/^\d{13}$/, {
-			message: 'ОГРН должен состоять из 13 символов',
+		.min(18, 'ОГРН должен состоять из 13 символов')
+		.max(18, 'ОГРН должен состоять из 13 символов')
+		.matches(/^[0-9.-]+$/, {
+			message: 'ОГРН должен состоять только из цифр',
 			excludeEmptyString: true,
 		})
-		.matches(/^[0-9]+$/, {
-			message: 'ОГРН должен состоять только из цифр',
+		.matches(/^[1-9]{1}/, {
+			message: 'ОГРН не должен начинаться с 0',
 			excludeEmptyString: true,
 		})
 		.required('Поле обязательно для заполнения'),
@@ -57,11 +62,19 @@ export const OrganizerSignupFormSchema = Yup.object({
 		.min(8, 'Длина поля от 8 до 20 символов')
 		.max(20, 'Длина поля от 8 до 20 символов')
 		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
+		.matches(
+			/^[a-zA-Zа-яА-Я0-9!@#$%^&*()_+{}|:"<>?~]+$/,
+			'Недопустимые символы в пароле'
+		)
 		.oneOf([Yup.ref('organize_confirm_password'), null], 'Пароли не совпадают'),
 	organize_confirm_password: Yup.string()
 		.required('Поле обязательно для заполнения')
 		.min(8, 'Длина поля от 8 до 20 символов')
 		.max(20, 'Длина поля от 8 до 20 символов')
 		.matches(/^\S*$/, 'Пароль не должен содержать пробелы')
+		.matches(
+			/^[a-zA-Zа-яА-Я0-9!@#$%^&*()_+{}|:"<>?~]+$/,
+			'Недопустимые символы в пароле'
+		)
 		.oneOf([Yup.ref('organize_password'), null], 'Пароли не совпадают'),
 });

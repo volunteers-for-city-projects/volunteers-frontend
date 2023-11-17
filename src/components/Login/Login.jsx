@@ -5,6 +5,7 @@ import {
 	resetPassword,
 	resetPasswordConfirm,
 } from '../../utils/api/login';
+import { resendActivateUser } from '../../utils/api/signupApi';
 
 function Login() {
 	const { isLoading, setIsLoading, setCurrentUser, setIsLoggedIn, setModal } =
@@ -27,13 +28,46 @@ function Login() {
 			})
 			.catch((err) => {
 				if (Array.isArray(err)) {
-					setModal({
-						isOpen: true,
-						type: 'error',
-						state: 'info',
-						title: 'Произошла ошибка',
-						errorArray: err,
-					});
+					if (Object.prototype.hasOwnProperty.call(err[0], 'notActiveEmail')) {
+						setModal({
+							isOpen: true,
+							type: 'error',
+							state: 'notActiveEmail',
+							title: 'Произошла ошибка',
+							errorArray: err,
+							onSubmit: (event) => {
+								event.preventDefault();
+								resendActivateUser({ email }).catch((error) =>
+									console.error(error)
+								);
+							},
+						});
+					} else if (
+						Object.prototype.hasOwnProperty.call(err[0], 'notExistEmail')
+					) {
+						setModal({
+							isOpen: true,
+							type: 'error',
+							state: 'notExistEmail',
+							title: 'Произошла ошибка',
+							errorArray: err,
+							onSubmit: (event) => {
+								event.preventDefault();
+								navigate('/registration');
+								setModal({
+									isOpen: false,
+								});
+							},
+						});
+					} else {
+						setModal({
+							isOpen: true,
+							type: 'error',
+							state: 'info',
+							title: 'Произошла ошибка',
+							errorArray: err,
+						});
+					}
 				} else {
 					console.error(err);
 				}
@@ -49,8 +83,8 @@ function Login() {
 					isOpen: true,
 					type: 'email',
 					state: 'info',
-					emailprop: email,
 					title: 'Восстановление пароля',
+					emailprop: email,
 					onSubmit: (event) => {
 						event.preventDefault();
 						handlePasswordReset({ email });

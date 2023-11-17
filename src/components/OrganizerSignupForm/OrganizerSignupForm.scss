@@ -85,3 +85,39 @@
 		}
 	}
 }
+@media screen and (max-width: 1919px) {
+	.organizer-signup-form {
+		width: 632px;
+
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		&__text {
+			position: relative;
+			&-content {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+
+				width: 280px;
+
+				margin-top: 8px;
+			}
+
+			margin: 0;
+
+			width: 381px;
+			color: #000;
+
+			font-family: Fira Sans;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 130%; /* 18.2px */
+
+			display: flex;
+			align-items: center;
+		}
+	}
+}
