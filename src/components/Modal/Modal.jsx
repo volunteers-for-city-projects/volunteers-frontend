@@ -285,17 +285,17 @@ function Modal({ modal, closeModal }) {
 							color="#000"
 							backgroundColor="transparent"
 							size="pre-large"
-							type="submit"
+							type="button"
 							minWidth="198px"
 							border="1px solid #A6C94F"
+							onClick={closeModal}
 						/>
 						<Pushbutton
 							label="Перейти в личный кабинет"
 							color="#fff"
 							backgroundColor="#A6C94F"
 							size="pre-large"
-							onClick={closeModal}
-							type="button"
+							type="submit"
 							minWidth="198px"
 							border="none"
 						/>
