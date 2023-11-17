@@ -7,7 +7,6 @@ export default function CustomTextarea({
 	name,
 	label,
 	placeholder,
-	type,
 	handleChange,
 	error,
 	required,
@@ -30,7 +29,6 @@ export default function CustomTextarea({
 			)}
 			<textarea
 				name={name}
-				type={type}
 				placeholder={placeholder}
 				className={clsx('textarea__field', {
 					'textarea__field-error': error,
@@ -48,7 +46,6 @@ CustomTextarea.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
-	type: PropTypes.string.isRequired,
 	handleChange: PropTypes.func,
 	error: PropTypes.bool,
 	required: PropTypes.bool,
