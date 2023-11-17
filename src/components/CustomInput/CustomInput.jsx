@@ -12,10 +12,9 @@ export default function CustomInput({
 	error,
 	required,
 	inputRef,
+	helperText,
 	...props
 }) {
-	const [isFocused, setIsFocused] = React.useState(false);
-
 	const changeName = useCallback(
 		(value) => {
 			handleChange(value);
@@ -24,10 +23,10 @@ export default function CustomInput({
 	);
 
 	return (
-		<div className="input__container">
+		<div className="custom-input">
 			{label.length > 0 && (
-				<label htmlFor="input" className="input__label">
-					{`${label}${required && '*'}`}
+				<label htmlFor="custom-input__field" className="custom-input__label">
+					{`${label}${required ? '*' : ''}`}
 				</label>
 			)}
 			<input
@@ -35,19 +34,14 @@ export default function CustomInput({
 				name={name}
 				type={type}
 				placeholder={placeholder}
-				className={clsx('input__field', {
-					'input__field-error': isFocused && error?.length > 0,
+				className={clsx('custom-input__field', {
+					'custom-input__field-error': error,
 				})}
 				required={required}
 				onChange={changeName}
-				onBlur={() => {
-					setIsFocused(true);
-				}}
 				{...props}
 			/>
-			<span className="input__error-message">
-				{isFocused && error?.length > 0 && error}
-			</span>
+			<span className="custom-input__error-message">{error && helperText}</span>
 		</div>
 	);
 }
@@ -58,7 +52,7 @@ CustomInput.propTypes = {
 	placeholder: PropTypes.string,
 	type: PropTypes.string.isRequired,
 	handleChange: PropTypes.func,
-	error: PropTypes.string,
+	error: PropTypes.bool,
 	required: PropTypes.bool,
 	inputRef: PropTypes.oneOfType([
 		// Either a function
@@ -66,13 +60,15 @@ CustomInput.propTypes = {
 		// Or the instance of a DOM native element (see the note about SSR)
 		PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 	]),
+	helperText: PropTypes.string,
 };
 
 CustomInput.defaultProps = {
 	name: '',
 	placeholder: '',
 	required: false,
-	error: '',
+	error: false,
 	handleChange: () => {},
 	inputRef: undefined,
+	helperText: '',
 };
