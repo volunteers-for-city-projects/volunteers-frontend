@@ -2,11 +2,10 @@
 .projects {
 	margin: 0 auto;
 	&__container {
-		// margin: 40px 130px 24px 130px;
 		margin: 40px auto 24px;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 15px;
 		width: 1660px;
 		position: relative;
 	}

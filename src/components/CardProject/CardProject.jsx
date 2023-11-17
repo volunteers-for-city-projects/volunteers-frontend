@@ -31,28 +31,32 @@ function CardProject({ cardProject }) {
 			className="card__project"
 			style={{ backgroundImage: `url(${image})` }}
 		>
-			<ul className="card__info">
+			<div className="card__container">
 				<div className="card__overlay" />
-				<li className="card__status">
-					<p className={statusClassName}>{status}</p>
+				<div className="card__info">
+					<div className="card__status">
+						<p className={statusClassName}>{status}</p>
 
-					{isLoggedIn || pageProfile ? (
-						<img
-							className="card__status-icon"
-							src={like}
-							alt="знак лайк карточки"
-						/>
-					) : null}
-				</li>
-				<li className="card__name">
-					<p className="card__name-title">{nameProject}</p>
-				</li>
-				<li className="card__data">
-					<p className="card__data-city">{`г. ${city}`}</p>
-					<p className="card__data-day">{day}</p>
-					<p className="card__data-time">{time}</p>
-				</li>
-			</ul>
+						{isLoggedIn || pageProfile ? (
+							<img
+								className="card__status-icon"
+								src={like}
+								alt="знак лайк карточки"
+							/>
+						) : null}
+					</div>
+					<div className="card__description">
+						<div className="card__name">
+							<p className="card__name-title">{nameProject}</p>
+						</div>
+						<div className="card__data">
+							<p className="card__data-city">{`г. ${city}`}</p>
+							<p className="card__data-day">{day}</p>
+							<p className="card__data-time">{time}</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</article>
 	);
 }
