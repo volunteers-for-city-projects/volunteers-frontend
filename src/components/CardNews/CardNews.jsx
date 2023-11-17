@@ -18,7 +18,7 @@ function CardNews({ card }) {
 
 	return (
 		<article className="news__cards-item">
-			<ul
+			<div
 				className="news__card-image"
 				style={{ backgroundImage: `url(${picture})` }}
 			>
@@ -30,7 +30,7 @@ function CardNews({ card }) {
 							</button>
 						</li>
 					))}
-			</ul>
+			</div>
 			<div className="news__card-container">
 				<h3 className="news__card-description">{title}</h3>
 				<p className="news__card-date">{date.split(' ')[0]}</p>
