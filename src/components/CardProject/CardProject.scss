@@ -40,7 +40,7 @@
 
 		&-count {
 			margin: 0;
-			font-size: 20px;
+			font-size: 14px;
 			font-weight: 700;
 			line-height: 32px;
 			color: #3f3f3f;
@@ -56,7 +56,7 @@
 	}
 
 	&__name {
-		padding-top: 53px;
+		padding-top: 30px;
 		height: 47px;
 		display: flex;
 		align-items: center;
@@ -76,7 +76,7 @@
 	}
 	&__data {
 		display: flex;
-		margin-top: 22px;
+		margin-top: 15px;
 		gap: 10px;
 		z-index: 2;
 

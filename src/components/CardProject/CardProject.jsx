@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useOutletContext, useLocation } from 'react-router-dom'; //
 import './CardProject.scss';
-// import basket from '../../images/basket.svg';
+// import basket from '../../images/basket.svg'; // иконка корзинки
 import like from '../../images/like.svg';
 
 function CardProject({ cardProject }) {
@@ -48,7 +48,7 @@ function CardProject({ cardProject }) {
 					<p className="card__name-title">{nameProject}</p>
 				</li>
 				<li className="card__data">
-					<p className="card__data-city">{city}</p>
+					<p className="card__data-city">{`г. ${city}`}</p>
 					<p className="card__data-day">{day}</p>
 					<p className="card__data-time">{time}</p>
 				</li>
