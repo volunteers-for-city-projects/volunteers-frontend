@@ -1,5 +1,5 @@
 import './Projects.scss';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
@@ -104,9 +104,12 @@ function Projects() {
 
 				<div className="projects__cards">
 					{projects &&
+						projects.results &&
 						projects.results.length > 0 &&
 						projects.results.map((item) => (
-							<CardProject cardProject={item} key={item.id} />
+							<Link className="projects__link" to={`/projects/${item.id}`}>
+								<CardProject cardProject={item} key={item.id} />
+							</Link>
 						))}
 				</div>
 
