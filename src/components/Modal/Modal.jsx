@@ -273,6 +273,7 @@ function Modal({ modal, closeModal }) {
 				className={clsx('modal__container', {
 					'modal__container_type_change-password':
 						typeStyle === 'change-password',
+					'modal__container_type_enlarge-image': typeStyle === 'enlarge-image',
 				})}
 			>
 				<div className="modal__title-container">
