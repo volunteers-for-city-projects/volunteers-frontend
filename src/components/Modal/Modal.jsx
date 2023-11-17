@@ -9,13 +9,20 @@ import modalSend from '../../images/modals/send.png';
 import modalSuccess from '../../images/modals/success.png';
 import modalError from '../../images/modals/error.png';
 import modalCity from '../../images/modals/city.png';
+import modalPasswordSuccess from '../../images/modals/key-image.png';
 
 function Modal({ modal, closeModal }) {
-	const stopPropagation = (event) => {
-		event.stopPropagation();
-	};
-
-	const { isOpen, type, state, title, onSubmit, errorArray, emailprop } = modal;
+	const {
+		isOpen,
+		type,
+		state,
+		title,
+		onSubmit,
+		errorArray,
+		emailprop,
+		children,
+		typeStyle,
+	} = modal;
 
 	const errorsData = useMemo(() => {
 		if (errorArray && Array.isArray(errorArray)) {
@@ -54,7 +61,7 @@ function Modal({ modal, closeModal }) {
 		},
 		email: {
 			info: {
-				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения всего email.`,
+				title: `На ${emailprop} отправлено письмо. Перейдите по ссылке в письме для подтверждения email.`,
 				textButton: 'Письмо не пришло, отправить еще раз',
 				image: modalSend,
 			},
@@ -76,6 +83,16 @@ function Modal({ modal, closeModal }) {
 				textButton: '',
 				image: modalError,
 			},
+			notActiveEmail: {
+				errorsArray: errorArray,
+				textButton: 'Отправить ссылку на активацию повторно',
+				image: modalError,
+			},
+			notExistEmail: {
+				errorsArray: errorArray,
+				textButton: 'Зарегистрироваться',
+				image: modalError,
+			},
 		},
 		project: {
 			success: {
@@ -83,6 +100,13 @@ function Modal({ modal, closeModal }) {
 					'Проект отправлен на модерацию администратору. Он будет отображен в личном кабинете после одобрения или отклонения',
 				textButton: 'Перейти в личный кабинет',
 				image: modalCity,
+			},
+		},
+		changePassword: {
+			success: {
+				title: '',
+				textButton: 'Вернуться в личный кабинет',
+				image: modalPasswordSuccess,
 			},
 		},
 	};
@@ -176,19 +200,33 @@ function Modal({ modal, closeModal }) {
 					{contentText[type][state].errorsArray &&
 						contentText[type][state].errorsArray.map((item) => (
 							<li key={item.id}>
-								<p className="modal__text">{item.textError}</p>
+								<p className="modal__text modal__text_error">
+									{item.textError}
+								</p>
 							</li>
 						))}
 				</ul>
 			),
-		},
-		project: {
-			success: (
+			notActiveEmail: (
 				<>
-					<p className="modal__text">{contentText[type][state].title}</p>
+					<p className="modal__text">
+						{contentText[type][state].errorsArray &&
+							contentText[type][state].errorsArray[0].notActiveEmail}
+					</p>
+					<button className="modal__button-resend" type="submit">
+						{contentText[type][state].textButton}
+					</button>
+				</>
+			),
+			notExistEmail: (
+				<>
+					<p className="modal__text">
+						{contentText[type][state].errorsArray &&
+							contentText[type][state].errorsArray[0].notExistEmail}
+					</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
-						color="#333"
+						color="#fff"
 						backgroundColor="#A6C94F"
 						size="pre-large"
 						type="submit"
@@ -198,29 +236,52 @@ function Modal({ modal, closeModal }) {
 				</>
 			),
 		},
+		project: {
+			success: (
+				<>
+					<p className="modal__text">{contentText[type][state].title}</p>
+					<Pushbutton
+						label={contentText[type][state].textButton}
+						color="#fff"
+						backgroundColor="#A6C94F"
+						size="pre-large"
+						type="submit"
+						minWidth="399px"
+						border="none"
+					/>
+				</>
+			),
+		},
+		changePassword: {
+			success: (
+				<Pushbutton
+					label={contentText[type][state].textButton}
+					color="#fff"
+					backgroundColor="#A6C94F"
+					size="pre-large"
+					type="submit"
+					minWidth="399px"
+					border="none"
+				/>
+			),
+		},
 	};
 
 	return (
-		<div
-			className={clsx('modal', { modal_opened: isOpen })}
-			onClick={closeModal}
-			onKeyDown={closeModal}
-			role="button"
-			tabIndex="0"
-		>
+		<div className={clsx('modal', { modal_opened: isOpen })}>
 			<div
-				onClick={stopPropagation}
-				onKeyDown={stopPropagation}
-				role="button"
-				tabIndex="0"
+				className={clsx('modal__container', {
+					'modal__container_type_change-password':
+						typeStyle === 'change-password',
+				})}
 			>
-				<div className="modal__container">
-					<div className="modal__title-container">
-						<h2 className="modal__title">{title}</h2>
-						<button className="modal__exit" type="button" onClick={closeModal}>
-							⠀
-						</button>
-					</div>
+				<div className="modal__title-container">
+					<h2 className="modal__title">{title}</h2>
+					<button className="modal__exit" type="button" onClick={closeModal}>
+						⠀
+					</button>
+				</div>
+				{children || (
 					<form
 						className="modal__form"
 						name={`${type}-${state}`}
@@ -231,13 +292,14 @@ function Modal({ modal, closeModal }) {
 								modal__image_type_confirm: type === 'confirm',
 								modal__image_type_success: state === 'success',
 								modal__image_type_project: type === 'project',
+								'modal__image_type_change-password': type === 'changePassword',
 							})}
 							src={contentText[type][state].image}
 							alt={`${type} ${state}`}
 						/>
 						{contentMap[type][state]}
 					</form>
-				</div>
+				)}
 			</div>
 		</div>
 	);
@@ -253,16 +315,15 @@ Modal.propTypes = {
 		onSubmit: PropTypes.func,
 		errorArray: PropTypes.arrayOf(
 			PropTypes.shape({
-				textError: PropTypes.string.isRequired,
+				textError: PropTypes.string,
+				notActiveEmail: PropTypes.string,
+				notExistEmail: PropTypes.string,
 			})
 		),
+		children: PropTypes.node,
+		typeStyle: PropTypes.string,
 	}).isRequired,
 	closeModal: PropTypes.func.isRequired,
-};
-
-Pushbutton.defaultProps = {
-	onSubmit: undefined,
-	emailprop: 'email',
 };
 
 export default Modal;

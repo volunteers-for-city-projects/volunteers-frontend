@@ -149,9 +149,10 @@ export const VolunteerSignupFormSchema = Yup.object({
 			return true;
 		}),
 	phone: Yup.string().matches(
-		/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+		/^\+7\s?|8\s\([1-9]{1}\d{2}\)\s\d{3}-\d{2}-\d{2}$/,
 		'Введите корректный телефон'
 	),
+
 	photo: Yup.string(),
 	email: Yup.string()
 		.required('Поле обязательно для заполнения')

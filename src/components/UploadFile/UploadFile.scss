@@ -110,3 +110,116 @@
 		overflow: hidden;
 	}
 }
+
+@media screen and (max-width: 1919px) {
+	.label-file {
+		display: block;
+		width: 50px;
+		height: 50px;
+
+		color: #949494;
+
+		font-family: Fira Sans;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 17.746px;
+
+		word-wrap: break-word;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		&_type-photo {
+			width: 24px;
+			height: 24px;
+			border: none;
+
+			display: none;
+		}
+	}
+
+	.input-file {
+		margin-top: 4px;
+
+		display: block;
+		box-sizing: border-box;
+
+		border-radius: 10px;
+		border: 1.613px solid $--Black;
+
+		background-color: transparent;
+
+		color: $--Black;
+		font-family: Fira Sans;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+
+		&__image {
+			width: 153px;
+			height: 177px;
+			border-radius: 5px;
+			object-fit: cover;
+			object-position: center;
+			margin-bottom: 20px;
+		}
+
+		&_type-photo {
+			width: 24px;
+			height: 40px;
+
+			position: relative;
+
+			border: none;
+			border-radius: 0;
+
+			visibility: hidden;
+		}
+
+		&_type-photo::after {
+			content: url('../../images/icon__signup-photo-download.svg');
+
+			width: 24px;
+			height: 24px;
+
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			background-repeat: no-repeat;
+			visibility: visible;
+
+			cursor: pointer;
+		}
+	}
+
+	.error-message {
+		display: block;
+
+		margin-top: 6px;
+
+		color: $--Error;
+		font-family: Fira Sans;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 130%;
+
+		word-wrap: break-word;
+
+		text-overflow: ellipsis;
+		white-space: pre-wrap;
+
+		&_type-photo {
+			width: 14px;
+			height: 14px;
+
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+}

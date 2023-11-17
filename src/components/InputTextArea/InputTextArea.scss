@@ -79,3 +79,85 @@
 	display: flex;
 	flex-direction: column;
 }
+
+@media screen and (max-width: 1919px) {
+	.text-area {
+		max-width: 580px;
+		min-height: 60px;
+		height: 175px;
+
+		box-sizing: border-box;
+
+		padding: 16px;
+
+		background-color: $--White;
+
+		border-radius: 5px;
+		border: 1px solid $--Black;
+
+		font-family: Fira Sans;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 23px;
+
+		&::placeholder {
+			color: $--Dark-grey;
+			font-family: Fira Sans;
+			font-size: 20px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 23px;
+		}
+
+		&_error {
+			border: 1px solid $--Wrong;
+
+			&-message {
+				// width: 580px;
+				height: 20px;
+
+				display: block;
+
+				margin-top: 8px;
+
+				color: $--Wrong;
+				font: {
+					family: 'Fira Sans', sans-serif;
+					size: 20px;
+					weight: 400;
+					style: normal;
+				}
+				line-height: 23px; /* 115% */
+
+				word-wrap: break-word;
+
+				text-overflow: ellipsis;
+				white-space: pre-wrap;
+				// overflow: hidden;
+			}
+		}
+	}
+
+	.textarea-label {
+		margin-bottom: 12px;
+		color: $--Text;
+
+		font-family: Fira Sans;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 23px;
+
+		word-wrap: break-word;
+
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		// overflow: hidden;
+	}
+
+	.text-area__container {
+		display: flex;
+		flex-direction: column;
+	}
+}

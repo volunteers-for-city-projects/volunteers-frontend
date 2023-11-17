@@ -66,7 +66,7 @@ Pushbutton.propTypes = {
 Pushbutton.defaultProps = {
 	color: '#000000',
 	backgroundColor: null,
-	minWidth: 'auto',
+	minWidth: '100%',
 	primary: false,
 	size: 'large',
 	disabled: false,

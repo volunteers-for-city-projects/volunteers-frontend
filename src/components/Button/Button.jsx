@@ -31,9 +31,10 @@ function Button({ theme, size, className, children, onClick, disabled, type }) {
 	);
 }
 Button.propTypes = {
-	children: PropTypes.element.isRequired,
+	children: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+		.isRequired,
 	theme: PropTypes.oneOf(['default', 'opposite', 'neutral']),
-	size: PropTypes.oneOf(['xs', 's', 'm', 'l']),
+	size: PropTypes.oneOf(['xs', 's', 'm', 'l', '']),
 	className: PropTypes.string,
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,

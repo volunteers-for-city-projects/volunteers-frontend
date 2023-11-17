@@ -1,11 +1,12 @@
 .content {
 	margin: 0 auto;
 	max-width: 1920px;
+	position: relative;
 }
 
 .signup {
 	margin: 30px auto 70px;
-	padding: 0 177px 0 56px;
+	// padding: 0 177px 0 832px;
 
 	display: flex;
 	flex-direction: column;
@@ -13,32 +14,35 @@
 	&__wrap {
 		display: flex;
 		// align-items: center;
-		gap: 80px;
+		// gap: 80px;
+		position: relative;
 	}
 
 	&__image {
 		padding-bottom: 10px;
-
-		border-radius: 50px;
-
-		min-width: 695px;
-		min-height: 967px;
-		max-height: 1000px;
 
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-color: transparent;
 
 		&_organizer {
+			position: sticky;
+			top: 0;
+			left: 0;
+			width: 695px;
+			height: 1000px;
+
 			background-image: url(../../images/signup_background_image_organize.svg);
-			background-size: 640px 715px;
-			translate: 50px -118px;
+			translate: -64px -13px;
 		}
 		&_volunteer {
+			position: sticky;
+			top: 0;
+			left: 0;
+			width: 695px;
+			height: 624px;
+			translate: -108px 118px;
 			background-image: url(../../images/signup_background_image.svg);
-			background-size: 722px 625px;
-
-			translate: 5px -112px;
 		}
 	}
 	&__content-wrap {
@@ -52,7 +56,66 @@
 		font-family: Fira Sans;
 		font-size: 56px;
 		font-style: normal;
-		font-weight: 500;
+		font-weight: 400;
 		line-height: 100%; /* 56px */
+	}
+}
+
+@media screen and (max-width: 1919px) {
+	.signup {
+		// padding: 0 75px 0 640px;
+
+		display: flex;
+		flex-direction: column;
+		position: relative;
+
+		&__wrap {
+			display: flex;
+			// align-items: center;
+			// gap: 80px;
+			position: relative;
+		}
+
+		&__image {
+			margin-bottom: 50px;
+
+			border-radius: 50px;
+
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-color: transparent;
+
+			&_volunteer {
+				position: sticky;
+				top: 0;
+				left: 0;
+				width: 508px;
+				height: 438px;
+				background-image: url(../../images/signup_background_image_1366.svg);
+				translate: -12px 105px;
+			}
+			&_organizer {
+				position: sticky;
+				top: 0;
+				left: 0;
+				width: 508px;
+				height: 438px;
+
+				background-image: url(../../images/signup_background_image_organize_1366.svg);
+				translate: -12px 120px;
+			}
+		}
+		&__content-wrap {
+			display: flex;
+			flex-direction: column;
+			// gap: 27px;
+		}
+		&__title {
+			margin: 6px 0 20px 0;
+
+			font-size: 34px;
+			font-weight: 500;
+			line-height: 130%; /* 44.2px */
+		}
 	}
 }

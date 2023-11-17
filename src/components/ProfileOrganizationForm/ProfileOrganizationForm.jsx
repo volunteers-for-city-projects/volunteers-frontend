@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 
+import { InputMask } from '@react-input/mask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
+import { ogrnMask } from '../../utils/inputsMasks/ogrnMask';
+
 import './ProfileOrganizationForm.scss';
 
 import Input from '../Input/Input';
 import InputTextArea from '../InputTextArea/InputTextArea';
 import InputGroup from '../InputGroup/InputGroup';
 import UploadFile from '../UploadFile/UploadFile';
-import ProfilePhoto from '../../images/fotoProfile.svg';
+import ProfilePhoto from '../../images/fotoProfile_2.svg';
 
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import { ProfileOrganizationFormSchema } from '../../utils/validationSchemas/ProfileOrganizationFormSchema';
@@ -32,24 +36,54 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 		id,
 	} = currentUser;
 
+	const selectOptionsCity = cities
+		.filter((item) => item.value === `${city}`)
+		.map((item) => ({
+			label: item.label,
+			value: item.value,
+		}));
+
+	const getPhoneNumberMask = (phoneNumber) =>
+		phoneNumber &&
+		phoneNumber.startsWith('+7') &&
+		phoneNumber.length === 12 &&
+		phoneNumber.replace(
+			/(\+\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/,
+			'+7 ($2) $3-$4-$5'
+		);
+
+	const getOgrnMask = (ogrnNumber) =>
+		ogrnNumber &&
+		ogrnNumber.replace(
+			/(\d{1})(\d{2})(\d{2})(\d{2})(\d{5})(\d{1})/,
+			'$1-$2-$3-$4-$5-$6'
+		);
+
+	const phoneNumberMask = getPhoneNumberMask(phone);
+	const getterOgrnMask = getOgrnMask(ogrn);
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
 			profile_organize_organization: title,
 			profile_organize_about_organization: about,
-			profile_organize_city: city,
+			profile_organize_city: selectOptionsCity,
 			profile_organize_firstname: firstName,
 			profile_organize_secondname: secondName,
 			profile_organize_lastname: lastName,
-			profile_organize_phone: phone,
-			profile_organize_ogrn: ogrn,
+			profile_organize_phone: phoneNumberMask,
+			profile_organize_ogrn: getterOgrnMask,
+			profile_organize_photo: photo,
 		},
 		validationSchema: ProfileOrganizationFormSchema,
 		onSubmit: async (values) => {
 			// конверсия номера телефона из инпута в формат телефона на сервере
 			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			const formattedPhone = getDigitsOnly(values.profile_organize_phone);
+			let formattedPhone = getDigitsOnly(values.profile_organize_phone);
+			if (formattedPhone.startsWith('8')) {
+				formattedPhone = `7${formattedPhone.slice(1)}`;
+			}
 
 			try {
 				await updateOrganization(id, {
@@ -61,14 +95,15 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 						second_name: values.profile_organize_secondname,
 					},
 					title: values.profile_organize_organization,
-					ogrn: values.profile_organize_ogrn,
+					ogrn: values.profile_organize_ogrn.replace(/-/g, ''),
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
 						formattedPhone,
 					about: values.profile_organize_about_organization || '' || undefined,
-					photo: '',
-					city: values.profile_organize_city,
+					photo: values.photo,
+					city: values.profile_organize_city[0].value,
 				});
+				navigate('..');
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to create user and/or organize:', error.message);
@@ -103,6 +138,8 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 							label=""
 							className="profile-organize-form__upload-file"
 							type="file"
+							value={formik.values.profile_organize_photo}
+							setFieldValue={formik.setFieldValue}
 						/>
 					</div>
 				</div>
@@ -132,11 +169,12 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 							touched={formik.touched.profile_organize_city}
 							value={formik.values.profile_organize_city}
 							handleChange={(selectedOption) => {
-								formik.setFieldValue(
-									'profile_organize_city',
-									Number(selectedOption.value)
-								);
-								console.log(selectedOption.value);
+								formik.setFieldValue('profile_organize_city', [
+									{
+										label: selectedOption.label,
+										value: selectedOption.value,
+									},
+								]);
 							}}
 							required
 						/>
@@ -199,30 +237,36 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 							autoсomplete="off"
 							required
 						/>
-						<Input
-							id="profile_organize_phone"
-							name="profile_organize_phone"
+						<InputMask
+							component={Input}
+							mask="+_ (___) ___-__-__"
+							replacement={{ _: /\d/ }}
+							modify={phoneMask}
 							label="Телефон"
-							type="phone"
+							type="text"
 							placeholder="+7 977 000-00-00"
 							inputSize="small"
+							id="profile_organize_phone"
+							name="profile_organize_phone"
 							error={formik.errors.profile_organize_phone}
 							touched={formik.touched.profile_organize_phone}
 							value={formik.values.profile_organize_phone}
 							handleChange={formik.handleChange}
 							submitCount={formik.submitCount}
-							autoсomplete="off"
-							required
 						/>
 					</InputGroup>
 					<InputGroup title="Дополнительная информация">
-						<Input
-							id="profile_organize_ogrn"
-							name="profile_organize_ogrn"
+						<InputMask
+							component={Input}
+							mask="_-__-__-__-_____-_"
+							replacement={{ _: /\d/ }}
+							modify={ogrnMask}
 							label="ОГРН"
 							type="text"
 							placeholder="1-02-66-05-60662-0"
 							inputSize="small"
+							id="profile_organize_ogrn"
+							name="profile_organize_ogrn"
 							error={formik.errors.profile_organize_ogrn}
 							touched={formik.touched.profile_organize_ogrn}
 							value={formik.values.profile_organize_ogrn}
@@ -238,7 +282,7 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 								color="white"
 								backgroundColor="#A6C94F"
 								border="1px solid #A6C94F"
-								minWidth="399px"
+								minWidth="100%"
 								size="pre-large"
 								disabled={
 									!formik.isValid ||
@@ -253,7 +297,7 @@ export default function ProfileOrganizationForm({ onSubmit, ...restProps }) {
 								color="#333333"
 								label="Отменить изменения"
 								size="pre-large"
-								minWidth="399px"
+								minWidth="100%"
 								border="1px solid #A6C94F"
 								type="button"
 								onClick={() => {

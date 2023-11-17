@@ -11,7 +11,6 @@ export default {
 export const SelectCity = {
 	args: {
 		label: 'Город',
-		width: 280,
 		placeholder: 'Выберите город',
 		options: citiesArray,
 		handleChange: (selectedOption) =>
@@ -24,7 +23,6 @@ export const SelectCity = {
 export const SelectSkills = {
 	args: {
 		label: 'Навыки',
-		width: 280,
 		placeholder: 'Выберите навыки',
 		options: skillsArray,
 		handleChange: (selectedOption) =>

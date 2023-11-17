@@ -20,3 +20,28 @@
 	font-weight: 500;
 	line-height: 130%; /* 29.9px */
 }
+
+@media screen and (max-width: 1919px) {
+	.form-fieldset {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0px 20px;
+
+		padding: 0;
+		margin: 0;
+
+		border: none;
+	}
+	.form-legend {
+		margin: 0 0 12px 0;
+		padding: 0;
+
+		color: #000;
+
+		font-family: Fira Sans;
+		font-size: 23px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 130%; /* 29.9px */
+	}
+}
