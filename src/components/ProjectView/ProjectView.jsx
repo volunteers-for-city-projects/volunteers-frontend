@@ -225,6 +225,7 @@ function ProjectView() {
 								theme="default"
 								size="l"
 								onClick={() =>
+									// eslint-disable-next-line no-alert
 									alert(
 										'открывается модалка для того чтобы войти в аккаунт или зарегистрироваться'
 									)
@@ -239,6 +240,7 @@ function ProjectView() {
 								theme="default"
 								size="l"
 								onClick={() =>
+									// eslint-disable-next-line no-alert
 									alert('открывается модалка для заполнения заявки')
 								}
 								type="button"
@@ -253,6 +255,7 @@ function ProjectView() {
 									<Button
 										theme="default"
 										size="l"
+										// eslint-disable-next-line no-alert
 										onClick={() => alert('открывается страничка с участниками')}
 										type="button"
 									>
@@ -261,6 +264,7 @@ function ProjectView() {
 									<Button
 										theme="default"
 										size="l"
+										// eslint-disable-next-line no-alert
 										onClick={() => alert('открывается страничка с заявками')}
 										type="button"
 									>
@@ -269,6 +273,7 @@ function ProjectView() {
 									<Button
 										theme="opposite"
 										size="l"
+										// eslint-disable-next-line no-alert
 										onClick={() => alert('отменить проект')}
 										type="button"
 									>
