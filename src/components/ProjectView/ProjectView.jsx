@@ -13,6 +13,7 @@ import '../../routes/router.scss';
 import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
+import NotFound from '../NotFound/NotFound';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -45,6 +46,7 @@ function ProjectView() {
 	const [organization, setOrganization] = useState({
 		title: '',
 	});
+	const [error, setError] = useState(null);
 
 	const crumbs = [
 		{
@@ -99,7 +101,10 @@ function ProjectView() {
 					})
 					.catch((err) => console.error(err));
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				setError(err);
+			});
 	}, [idProject]);
 
 	const openImageEnlarge = () => {
@@ -117,6 +122,10 @@ function ProjectView() {
 			typeStyle: 'enlarge-image',
 		});
 	};
+
+	if (error) {
+		return <NotFound />;
+	}
 
 	return (
 		<section className="project-view">
