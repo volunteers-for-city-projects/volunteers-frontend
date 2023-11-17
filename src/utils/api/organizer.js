@@ -15,19 +15,11 @@ const createProject = (value) => {
 const getProjectById = (id) =>
 	request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null);
 
-/* const getAllProjects = () => {
-	const token = localStorage.getItem('token');
-	return request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null);
-}; */
+const getAllProjects = (limitParameter) =>
+	request(ENDPOINT_ORGANIZER_PROJECTS + limitParameter, 'GET', null);
 
-const getAllProjects = () => request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null);
-
-/* const getNextPrev = (url) => {
-	const token = localStorage.getItem('token');
-	return request(url, 'GET', null);
-}; */
-
-const getNextPrev = (url) => request(url.slice(URL.length - 1), 'GET', null);
+const getNextPrev = (limitParameter) =>
+	request(ENDPOINT_ORGANIZER_PROJECTS + limitParameter, 'GET', null);
 
 export {
 	getProjectCategories,
