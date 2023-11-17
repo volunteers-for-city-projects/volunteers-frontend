@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
@@ -111,10 +111,15 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<CardProject cardProject={item} key={item.id} />
+							<Link
+								key={item.id}
+								className="projects__link"
+								to={`/projects/${item.id}`}
+							>
+								<CardProject cardProject={item} />
+							</Link>
 						))}
 				</div>
-
 				<div className="projects__button">
 					<button className="profile__pagination-btn" onClick={handleClickNext}>
 						&#62;
