@@ -5,12 +5,12 @@ import moment from 'moment';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
-import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
 import { createProject } from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
+import CustomTextarea from '../CustomTextarea/CustomTextarea';
 
 function Project() {
 	const { cities, skills, projectCategories, setModal, currentUser } =
@@ -215,6 +215,8 @@ function Project() {
 
 	const nameRef = useRef(null);
 
+	// При сохранении проекта как черновика обязательное поле только одно - Имя проекта
+	// при этом localstorage очищается
 	const handleDraftSaveClick = (values, errors) => {
 		try {
 			console.info(values);
@@ -229,12 +231,13 @@ function Project() {
 					state: 'success',
 					onSubmit: (event) => {
 						event.preventDefault();
-						navigate('/profile');
+						navigate('/profile/organizer');
 						setModal({
 							isOpen: false,
 						});
 					},
 				});
+				localStorage.removeItem('draft');
 			}
 		} catch (error) {
 			console.error(error);
@@ -274,34 +277,63 @@ function Project() {
 		}
 	};
 
+	const handleBlur = (e) => {
+		formik.handleBlur(e);
+	};
+
+	const handleBlurSelectOption = (name) => {
+		formik.setFieldTouched(name, true);
+	};
+
+	const selectOption = (name, selectedOption) => {
+		const selectedItem = [
+			{
+				label: selectedOption.label,
+				value: selectedOption.value,
+			},
+		];
+		formik.setFieldValue(name, selectedItem);
+	};
+
+	const selectOptions = (name, selectedOption) => {
+		const selectedItems = selectedOption.map((option) => ({
+			label: option.label,
+			value: option.value,
+		}));
+
+		formik.setFieldValue(name, selectedItems);
+	};
+
 	return (
-		<section className="add-project">
-			<div className="add-project__menu-container">
+		<section className="project">
+			<div className="project__menu-container">
 				<Crumbs />
 			</div>
 			<form
-				name="add-project-form"
-				className="add-project__form"
+				className="project__form"
+				name="project-form"
 				action="#"
 				method="post"
 				onSubmit={formik.handleSubmit}
 			>
-				<div className="add-project__name-container">
+				<div className="project__custom-input">
 					<CustomInput
 						inputRef={nameRef}
 						name="name"
 						type="text"
 						label=""
 						placeholder="Введите название проекта"
-						error={formik.errors.name}
+						error={formik.touched.name && Boolean(formik.errors.name)}
+						helperText={formik.touched.name && formik.errors.name}
 						value={formik.values.name}
 						handleChange={formik.handleChange}
+						onBlur={(e) => handleBlur(e)}
 					/>
 				</div>
-				<div className="add-project__image-wrapper">
+				<div className="project__image-wrapper">
 					<div>
 						<img
-							className="add-project__image"
+							className="project__image"
 							alt="Изображение проекта"
 							src={image.length > 0 ? image : projectImage}
 						/>
@@ -311,15 +343,15 @@ function Project() {
 								formik.errors.image}
 						</span>
 					</div>
-					<div className="add-project__upload-image-container">
-						<span className="add-project__upload-image-label">
+					<div className="project__upload-image-container">
+						<span className="project__upload-image-label">
 							Загрузить новую фотографию*
 						</span>
 						<input
 							name="image"
 							type="file"
 							tabIndex={0}
-							className="add-project__button add-project__upload-image-button"
+							className="project__button project__upload-image-button"
 							accept="image/png, image/jpeg"
 							onChange={handleImageChange}
 							onClick={() => setIsFocused(true)}
@@ -327,82 +359,86 @@ function Project() {
 						/>
 					</div>
 				</div>
-				<div className="add-project__form-wrapper">
-					<div className="add-project__general-group-wrapper">
-						<h2 className="add-project__caption-group">Общая информация</h2>
-						<div className="add-project__general-group">
-							<InputTextArea
+				<div className="project__form-wrapper">
+					<div className="project__general-group-wrapper">
+						<h2 className="project__caption-group">Общая информация</h2>
+						<div className="project__general-group">
+							<CustomTextarea
 								name="description"
 								label="Описание проекта"
 								placeholder="Расскажите о проекте"
-								error={formik.errors.description}
+								error={
+									formik.touched.description &&
+									Boolean(formik.errors.description)
+								}
+								helperText={
+									formik.touched.description && formik.errors.description
+								}
 								value={formik.values.description}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="goal"
 								label="Цель проекта"
 								placeholder=""
-								error={formik.errors.goal}
+								error={formik.touched.goal && Boolean(formik.errors.goal)}
+								helperText={formik.touched.goal && formik.errors.goal}
 								value={formik.values.goal}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="events"
 								label="Мероприятия"
 								placeholder="Например: Лекция по экологии; Посадка саженцев;"
-								error={formik.errors.events}
+								error={formik.touched.events && Boolean(formik.errors.events)}
+								helperText={formik.touched.events && formik.errors.events}
 								value={formik.values.events}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="tasks"
 								label="Задачи проекта"
 								placeholder="Опишите, какие задачи будут стоять перед волонтёрами: к примеру, «уборка территории» и «высадка деревьев»"
-								error={formik.errors.tasks}
+								error={formik.touched.tasks && Boolean(formik.errors.tasks)}
+								helperText={formik.touched.tasks && formik.errors.tasks}
 								value={formik.values.tasks}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="provide"
 								label="Организатор предоставляет:"
 								placeholder="Например: саженцы, перчатки, обед"
-								error={formik.errors.provide}
+								error={formik.touched.provide && Boolean(formik.errors.provide)}
+								helperText={formik.touched.provide && formik.errors.provide}
 								value={formik.values.provide}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 							/>
 						</div>
 					</div>
-					<div className="add-project__place-group-wrapper">
-						<h2 className="add-project__caption-group">Место проведения</h2>
-						<div className="add-project__place-group">
+					<div className="project__place-group-wrapper">
+						<h2 className="project__caption-group">Место проведения</h2>
+						<div className="project__place-group">
 							<SelectOption
 								name="city"
 								label="Город"
 								placeholder="Выберите город"
-								width={400}
 								options={cities}
-								error={formik.errors.city}
-								value={formik.values.city}
-								handleChange={(selectedOption) => {
-									console.log(selectedOption);
-									formik.setFieldValue('city', [
-										{
-											label: selectedOption.label,
-											value: selectedOption.value,
-										},
-									]);
-								}}
-								submitCount={formik.submitCount}
+								handleChange={(selectedOption) =>
+									selectOption('city', selectedOption)
+								}
+								value={formik.values?.city}
+								error={formik.touched.city && Boolean(formik.errors.city)}
+								helperText={formik.touched.city && formik.errors.city}
+								onBlur={() => handleBlurSelectOption('city')}
 								required
 							/>
 							<CustomInput
@@ -410,24 +446,28 @@ function Project() {
 								type="text"
 								label="Адрес"
 								placeholder="Улица, дом, корпус, строение"
-								error={formik.errors.address}
+								error={formik.touched.address && Boolean(formik.errors.address)}
+								helperText={formik.touched.address && formik.errors.address}
 								value={formik.values.address}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__dates-group-wrapper">
-						<h2 className="add-project__caption-group">Сроки проведения</h2>
-						<div className="add-project__dates-group">
+					<div className="project__dates-group-wrapper">
+						<h2 className="project__caption-group">Сроки проведения</h2>
+						<div className="project__dates-group">
 							<CustomInput
 								name="date"
 								type="text"
 								label="Дата проведения"
 								placeholder="01.02.2023 - 12.10.2023"
-								error={formik.errors.date}
+								error={formik.touched.date && Boolean(formik.errors.date)}
+								helperText={formik.touched.date && formik.errors.date}
 								value={formik.values.date}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 							<CustomInput
@@ -435,9 +475,13 @@ function Project() {
 								type="text"
 								label="Время проведения (местное время)"
 								placeholder="10:00 - 16:00"
-								error={formik.errors.timeRange}
+								error={
+									formik.touched.timeRange && Boolean(formik.errors.timeRange)
+								}
+								helperText={formik.touched.timeRange && formik.errors.timeRange}
 								value={formik.values.timeRange}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 							<CustomInput
@@ -445,57 +489,64 @@ function Project() {
 								type="text"
 								label="Дата подачи заявок"
 								placeholder="02.10.2023 - 12.10.2023"
-								error={formik.errors.submissionDate}
+								error={
+									formik.touched.submissionDate &&
+									Boolean(formik.errors.submissionDate)
+								}
+								helperText={
+									formik.touched.submissionDate && formik.errors.submissionDate
+								}
 								value={formik.values.submissionDate}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__additional-group-wrapper">
-						<h2 className="add-project__caption-group">
+					<div className="project__additional-group-wrapper">
+						<h2 className="project__caption-group">
 							Дополнительная информация
 						</h2>
-						<div className="add-project__additional-group">
+						<div className="project__additional-group">
 							<SelectOption
+								name="categoryProject"
 								label="Категория проекта"
 								placeholder="Выберите категорию"
-								width={400}
 								options={projectCategories}
-								error={formik.errors.categoryProject}
-								value={formik.values.categoryProject}
-								handleChange={(selectedOption) => {
-									console.log(selectedOption);
-									const selectedValues = selectedOption.map((option) => ({
-										label: option.label,
-										value: option.value,
-									}));
-									formik.setFieldValue('categoryProject', selectedValues);
-								}}
+								handleChange={(selectedOption) =>
+									selectOptions('categoryProject', selectedOption)
+								}
+								value={formik.values?.categoryProject}
+								error={
+									formik.touched.categoryProject &&
+									Boolean(formik.errors.categoryProject)
+								}
+								helperText={
+									formik.touched.categoryProject &&
+									formik.errors.categoryProject
+								}
+								onBlur={() => handleBlurSelectOption('categoryProject')}
 								isMulti
 								required
 							/>
 							<SelectOption
+								name="skills"
 								label="Навыки"
 								placeholder="Выберите навыки"
-								width={400}
 								options={skills}
-								error={formik.errors.skills}
-								value={formik.values.skills}
-								handleChange={(selectedOption) => {
-									console.log(selectedOption);
-									const selectedValues = selectedOption.map((option) => ({
-										label: option.label,
-										value: option.value,
-									}));
-									formik.setFieldValue('skills', selectedValues);
-								}}
+								handleChange={(selectedOption) =>
+									selectOptions('skills', selectedOption)
+								}
+								value={formik.values?.skills}
+								error={formik.touched.skills && Boolean(formik.errors.skills)}
+								helperText={formik.touched.skills && formik.errors.skills}
+								onBlur={() => handleBlurSelectOption('skills')}
 								isMulti
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__form-buttons">
+					<div className="project__form-buttons">
 						<Pushbutton
 							label="Опубликовать проект"
 							size="large-var"
