@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import './SelectOption.scss';
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 function SelectOption({
 	label,
@@ -12,8 +12,8 @@ function SelectOption({
 	value,
 	isMulti,
 	required,
+	...props
 }) {
-	const [isFocused, setIsFocused] = useState(false);
 	const customStyles = {
 		control: (baseStyles) => ({
 			...baseStyles,
@@ -23,7 +23,7 @@ function SelectOption({
 			fontWeight: '400',
 			lineHeight: '23px',
 			borderRadius: '5px',
-			borderColor: isFocused && error?.length > 0 ? '#f78254' : '#3f3f3f',
+			borderColor: error ? '#f78254' : '#3f3f3f',
 			borderWidth: '1px',
 			minHeight: '50px',
 			padding: '2px 5px',
@@ -78,15 +78,12 @@ function SelectOption({
 				className="select-option"
 				placeholder={placeholder}
 				options={options}
+				value={value}
 				onChange={changeOption}
-				onBlur={() => {
-					setIsFocused(true);
-				}}
 				components={{
 					IndicatorSeparator: () => null,
 				}}
 				styles={customStyles}
-				value={value}
 				theme={(theme) => ({
 					...theme,
 					borderRadius: 5,
@@ -97,9 +94,10 @@ function SelectOption({
 					},
 				})}
 				isMulti={isMulti}
+				{...props}
 			/>
 			<span className="select-option__error-message">
-				{isFocused && error?.length > 0 && error}
+				{error && props.helperText}
 			</span>
 		</div>
 	);
@@ -115,7 +113,7 @@ SelectOption.propTypes = {
 		})
 	),
 	handleChange: PropTypes.func,
-	error: PropTypes.string,
+	error: PropTypes.bool,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
 	value: PropTypes.arrayOf(
@@ -124,6 +122,7 @@ SelectOption.propTypes = {
 			name: PropTypes.string,
 		})
 	),
+	helperText: PropTypes.string,
 };
 
 SelectOption.defaultProps = {
@@ -141,10 +140,11 @@ SelectOption.defaultProps = {
 	],
 	handleChange: (selectedOption) =>
 		console.log(`Option selected: `, selectedOption),
-	error: undefined,
+	error: false,
 	isMulti: false,
 	required: false,
 	value: [],
+	helperText: '',
 };
 
 export default SelectOption;
