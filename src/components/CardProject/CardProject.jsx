@@ -51,8 +51,10 @@ function CardProject({ cardProject }) {
 						</div>
 						<div className="card__data">
 							<p className="card__data-city">{`г. ${city}`}</p>
-							<p className="card__data-day">{day}</p>
-							<p className="card__data-time">{time}</p>
+							<p className="card__data-day">{day?.split(' ')[0]}</p>
+							<p className="card__data-time">{`${day?.split(' ')[1]} - ${
+								time?.split(' ')[1]
+							}`}</p>
 						</div>
 					</div>
 				</div>
