@@ -279,6 +279,11 @@ function Project() {
 
 	const handleBlur = (e) => {
 		formik.handleBlur(e);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [e.target.name]: e.target.value })
+		);
 	};
 
 	const handleBlurSelectOption = (name) => {
@@ -293,6 +298,11 @@ function Project() {
 			},
 		];
 		formik.setFieldValue(name, selectedItem);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [name]: selectedItem })
+		);
 	};
 
 	const selectOptions = (name, selectedOption) => {
@@ -300,8 +310,12 @@ function Project() {
 			label: option.label,
 			value: option.value,
 		}));
-
 		formik.setFieldValue(name, selectedItems);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [name]: selectedItems })
+		);
 	};
 
 	return (
