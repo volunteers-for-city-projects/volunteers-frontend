@@ -1,5 +1,5 @@
 import Volunteer from './Volunteer';
-import AbstractEntity from './AbstarctEntity';
+import AbstractEntity from './AbstractEntity';
 /* ,postIncome,  */
 import {
 	getIncomes,

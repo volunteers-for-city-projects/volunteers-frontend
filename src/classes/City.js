@@ -1,4 +1,4 @@
-import AbstractEntity from './AbstarctEntity';
+import AbstractEntity from './AbstractEntity';
 import { getCities } from '../utils/api/signupApi';
 
 class City extends AbstractEntity {

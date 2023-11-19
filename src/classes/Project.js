@@ -1,6 +1,6 @@
 import ProjectEventAddress from './ProjectEventAddress';
 import ProjectIncome from './ProjectIncome';
-import AbstractEntity from './AbstarctEntity';
+import AbstractEntity from './AbstractEntity';
 import { getProject } from '../utils/api/project';
 
 /**

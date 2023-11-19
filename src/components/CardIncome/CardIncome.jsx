@@ -41,7 +41,7 @@ function CardIncome({ income, layout }) {
 		children: '',
 	};
 
-	/* переменные для рабты с модалкми */
+	/* переменные для работы с модалкми */
 	const closeModal = () => setModal();
 	const openModal = (modalTitle, modalContent) =>
 		setModal({ ...modalParam, children: modalContent, title: modalTitle });
@@ -106,7 +106,7 @@ function CardIncome({ income, layout }) {
 		</div>
 	);
 
-	// TODO: запрос сопровидиловки из API
+	// TODO: запрос сопроводительного письма из API
 	const coverLetter = (
 		<p className={bem('#__letter')}>
 			"Меня зовут ***, я сильно мотивированный волонтер из Москвы. Ваш проект

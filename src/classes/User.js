@@ -1,4 +1,4 @@
-import AbstractEntity from './AbstarctEntity';
+import AbstractEntity from './AbstractEntity';
 
 class User extends AbstractEntity {
 	id;

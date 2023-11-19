@@ -1,6 +1,6 @@
 import User from './User';
 import City from './City';
-import AbstractEntity from './AbstarctEntity';
+import AbstractEntity from './AbstractEntity';
 
 class Volunteer extends AbstractEntity {
 	static DATE_FIELDS = ['dateOfBirth'];
