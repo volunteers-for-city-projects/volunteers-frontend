@@ -6,12 +6,13 @@ import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-
 import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
-	const limitAddingProjects = 6;
-	const [projectsOffset, setProjectsOffset] = useState(limitAddingProjects);
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const { setIsLoading, skills, cities, projectCategories } =
@@ -19,7 +20,7 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${limitAddingProjects}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -36,8 +37,10 @@ function Projects() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
-			setProjectsOffset(projectsOffset + limitAddingProjects);
-			getNextPrev(`?limit=${limitAddingProjects}&offset=${projectsOffset}`)
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getNextPrev(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
 				})
