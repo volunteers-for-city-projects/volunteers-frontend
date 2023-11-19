@@ -197,7 +197,7 @@
 		}
 
 		&__form {
-			margin-top: 28px;
+			margin-top: 8px;
 			margin-bottom: 8px;
 			gap: 50px;
 		}
@@ -221,37 +221,6 @@
 			display: inline-block;
 			margin: 0;
 			padding: 0;
-		}
-
-		&__button-icon-list {
-			display: flex;
-			gap: 16px;
-			justify-content: center;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-		}
-
-		&__button {
-			background-color: transparent;
-			border: none;
-
-			&:hover {
-				opacity: 0.8;
-				transition: opacity 100ms ease-in;
-				cursor: pointer;
-			}
-
-			&:disabled {
-				cursor: default;
-				opacity: 0.5;
-			}
-		}
-
-		&__icon {
-			display: block;
-			width: 24px;
-			height: 24px;
 		}
 	}
 }
