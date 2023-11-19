@@ -14,6 +14,10 @@ import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
+import {
+	setLikeForProject,
+	resetLikeForProject,
+} from '../../utils/api/projects';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -47,6 +51,7 @@ function ProjectView() {
 		title: '',
 	});
 	const [error, setError] = useState(null);
+	const [isLiked, setIsLiked] = useState(project.is_favorited);
 
 	const crumbs = [
 		{
@@ -127,6 +132,20 @@ function ProjectView() {
 		return <NotFound />;
 	}
 
+	const toggleLike = () => {
+		console.log(project.id);
+		if (isLiked) {
+			resetLikeForProject(project.id)
+				.then(() => setIsLiked(false))
+				.catch((err) => console.log(err));
+		} else {
+			setLikeForProject(project.id)
+				.then(() => setIsLiked(true))
+				.catch((err) => console.log(err));
+			setIsLiked(true);
+		}
+	};
+
 	return (
 		<section className="project-view">
 			<div className="project-view__container">
@@ -155,7 +174,10 @@ function ProjectView() {
 							{' '}
 						</button>
 						<button
-							className="project-view__btn project-view__btn_type_like"
+							onClick={toggleLike}
+							className={`project-view__btn project-view__btn_type_like ${
+								isLiked ? 'project-view__btn_state_liked' : ''
+							} `}
 							type="button"
 						>
 							{' '}
