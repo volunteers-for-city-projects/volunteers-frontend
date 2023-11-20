@@ -3,28 +3,19 @@ import { useOutletContext, useLocation } from 'react-router-dom'; //
 import './CardProject.scss';
 // import basket from '../../images/basket.svg'; // иконка корзинки
 import like from '../../images/like.svg';
+import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 
 function CardProject({ cardProject }) {
 	const { isLoggedIn } = useOutletContext();
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
-
 	const {
-		status,
 		name: nameProject,
 		city,
 		start_datetime: day,
 		end_datetime: time,
-		isModeration,
 		picture: image,
 	} = cardProject;
-
-	const baseStatusClassName = 'card__status-count';
-	const moderStatusClassName = 'card__status-count_moder';
-
-	const statusClassName = `${baseStatusClassName} ${
-		isModeration ? moderStatusClassName : ''
-	}`;
 
 	return (
 		<article
@@ -35,7 +26,7 @@ function CardProject({ cardProject }) {
 				<div className="card__overlay" />
 				<div className="card__info">
 					<div className="card__status">
-						<p className={statusClassName}>{status}</p>
+						<ShowProjectStatus cardProject={cardProject} />
 
 						{isLoggedIn || pageProfile ? (
 							<button

@@ -1,18 +1,19 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
 import Button from '../Button/Button';
-
 import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
-	const limitAddingProjects = 6;
-	const [projectsOffset, setProjectsOffset] = useState(limitAddingProjects);
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const { setIsLoading, skills, cities, projectCategories, currentUser } =
@@ -22,7 +23,7 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${limitAddingProjects}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -37,8 +38,10 @@ function Projects() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
-			setProjectsOffset(projectsOffset + limitAddingProjects);
-			getNextPrev(`?limit=${limitAddingProjects}&offset=${projectsOffset}`)
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getNextPrev(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
 				})
@@ -115,10 +118,15 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<CardProject cardProject={item} key={item.id} />
+							<Link
+								key={item.id}
+								className="projects__link"
+								to={`/projects/${item.id}`}
+							>
+								<CardProject cardProject={item} />
+							</Link>
 						))}
 				</div>
-
 				<div className="projects__button">
 					<Button
 						className="projects__button-item"

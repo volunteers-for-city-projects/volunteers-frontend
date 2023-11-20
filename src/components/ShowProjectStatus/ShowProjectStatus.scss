@@ -1,0 +1,30 @@
+@import '../../style/variables.scss';
+
+.project-status {
+	display: inline-block;
+	font-family: $--Font-Primary;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 20px;
+	padding: 0;
+	margin: 0;
+
+	&_type {
+		&_project_completed {
+			color: $--Dark-grey;
+		}
+
+		&_applications-expected {
+			color: $--Secondary;
+		}
+
+		&_applications-over {
+			color: $--Wrong;
+		}
+
+		&_applications-open {
+			color: $--Status_green;
+		}
+	}
+}

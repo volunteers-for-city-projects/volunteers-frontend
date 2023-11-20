@@ -12,10 +12,8 @@ const createProject = (value) => {
 	return request(ENDPOINT_ORGANIZER_PROJECTS, 'POST', value, token);
 };
 
-const getProjectById = (id) => {
-	const token = localStorage.getItem('token');
-	return request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null, token);
-};
+const getProjectById = (id) =>
+	request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null);
 
 const getAllProjects = (limitParameter) =>
 	request(ENDPOINT_ORGANIZER_PROJECTS + limitParameter, 'GET', null);

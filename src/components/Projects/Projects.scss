@@ -10,6 +10,11 @@
 		position: relative;
 	}
 
+	&__link {
+		text-decoration: none;
+		color: $--Text;
+	}
+
 	&__label {
 		display: flex;
 		justify-content: space-between;
