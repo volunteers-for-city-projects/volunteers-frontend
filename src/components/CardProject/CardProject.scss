@@ -3,7 +3,7 @@
 		box-sizing: border-box;
 		width: 100%;
 		border-radius: 10px;
-		min-height: 181px;
+		height: 181px;
 		border: 1px solid #9bc1f9;
 		padding: 18px 14px;
 		background-repeat: no-repeat;
@@ -75,6 +75,7 @@
 		align-items: center;
 		z-index: 2;
 		color: #3f3f3f;
+		width: 347px;
 	}
 	&__name-title {
 		margin: 0;
