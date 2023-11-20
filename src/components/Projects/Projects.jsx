@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, Link } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
@@ -47,6 +47,9 @@ function Projects() {
 				})
 				.finally(setIsLoading(false));
 		}
+	}
+	function handleProject(evt, id) {
+		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
 	}
 
 	return (
@@ -111,13 +114,16 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<Link
+							<div
+								role="presentation"
 								key={item.id}
 								className="projects__link"
-								to={`/projects/${item.id}`}
+								onClick={(evt) => {
+									handleProject(evt, item.id);
+								}}
 							>
 								<CardProject cardProject={item} />
-							</Link>
+							</div>
 						))}
 				</div>
 				<div className="projects__button">

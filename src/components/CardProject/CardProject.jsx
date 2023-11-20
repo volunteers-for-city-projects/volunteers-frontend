@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import basket from '../../images/basket.svg';
+import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
+	const { isLoggedIn } = useOutletContext();
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
 
@@ -15,8 +17,9 @@ function CardProject({ cardProject }) {
 		//	end_datetime: time,
 		isModeration,
 		picture: image,
+		id: projectId,
+		is_favorited: isFavorited,
 	} = cardProject;
-
 	const baseStatusClassName = 'card__status-count';
 	const moderStatusClassName = 'card__status-count_moder';
 
@@ -50,6 +53,13 @@ function CardProject({ cardProject }) {
 					<p className="card__data-time">{/* time */}</p>
 				</li>
 			</ul>
+			{isLoggedIn && (
+				<ProjectLikeButton
+					parent="card"
+					projectId={projectId}
+					isFavorited={isFavorited}
+				/>
+			)}
 		</article>
 	);
 }
@@ -65,6 +75,8 @@ CardProject.propTypes = {
 		end_datetime: PropTypes.string,
 		isModeration: PropTypes.bool,
 		picture: PropTypes.string,
+		id: PropTypes.number,
+		is_favorited: PropTypes.bool,
 	}),
 };
 
