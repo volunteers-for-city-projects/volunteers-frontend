@@ -1,9 +1,13 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, Link } from 'react-router-dom';
-import { Crumbs } from '../Crumbs/Crumbs';
+import { useFormik } from 'formik';
+import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
+import Input from '../Input/Input';
+import { Crumbs } from '../Crumbs/Crumbs';
+
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
 import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
@@ -15,6 +19,7 @@ function Projects() {
 	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+
 	const { setIsLoading, skills, cities, projectCategories } =
 		useOutletContext();
 
@@ -52,6 +57,17 @@ function Projects() {
 		}
 	}
 
+	const formik = useFormik({
+		validateOnMount: true,
+		validateOnChange: true,
+		initialValues: {
+			date: '',
+			city: '',
+			categories: '',
+			skills: '',
+		},
+	});
+
 	return (
 		<section className="projects">
 			<div className="projects__container">
@@ -74,22 +90,39 @@ function Projects() {
 				</div>
 
 				<div className="projects__selects">
-					<SelectOption
+					<InputMask
+						component={Input}
+						mask="__.__.____ - __.__.____"
+						replacement={{ _: /\d/ }}
+						onChange={formik.handleChange}
 						id="date"
 						name="date"
-						label="Дата и время"
+						type="text"
+						label="Дата или период"
+						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
 						options={[]}
+						handleChange={formik.handleChange}
+						value={formik.values.date}
 					/>
-
 					<SelectOption
 						id="city"
 						name="city"
 						label="Город"
 						placeholder="Выберите город"
-						width={400}
 						options={cities}
+						touched={formik.touched.city}
+						value={formik.values.city}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue('city', [
+								{
+									label: selectedOption.label,
+									value: selectedOption.value,
+								},
+							]);
+						}}
+						required
 					/>
 
 					<SelectOption
@@ -97,17 +130,42 @@ function Projects() {
 						name="categories"
 						label="Категории"
 						placeholder="Выберите категории"
-						width={400}
 						options={projectCategories}
+						isMulti
+						width={400}
+						value={formik.values.categories}
+						touched={formik.touched.categories}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'categories',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
-
 					<SelectOption
 						id="skills"
 						name="skills"
-						label="Выберите навыки"
-						placeholder="Введите имя"
-						width={400}
+						label="Навыки"
+						placeholder="Выберите навыки"
 						options={skills}
+						isMulti
+						width={400}
+						value={formik.values.skills}
+						touched={formik.touched.skills}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'skills',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
 				</div>
 

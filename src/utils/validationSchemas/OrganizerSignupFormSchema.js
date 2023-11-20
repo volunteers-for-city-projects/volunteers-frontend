@@ -4,7 +4,7 @@ export const OrganizerSignupFormSchema = Yup.object({
 	organization: Yup.string()
 		.trim()
 		.required('Поле обязательно для заполнения')
-		.matches(/^[А-Яа-яёЁ0-9\s\-.,&+!№]+$/, {
+		.matches(/^[А-Яа-яёЁ0-9\s\-.,&+!"№]+$/, {
 			message: 'Введите название кириллицей',
 			excludeEmptyString: true,
 		})
