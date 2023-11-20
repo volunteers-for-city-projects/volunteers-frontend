@@ -89,13 +89,7 @@ ShowProjectStatus.propTypes = {
 		end_date_application: PropTypes.string,
 		start_datetime: PropTypes.string,
 		end_datetime: PropTypes.string,
-		status: PropTypes.oneOf([
-			'open',
-			'ready_for_feedback',
-			'project_completed',
-			'canceled_by_organizer',
-			'editing',
-		]),
+		status: PropTypes.string,
 	}),
 	className: PropTypes.string,
 };
