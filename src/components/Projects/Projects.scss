@@ -32,6 +32,7 @@
 		display: flex;
 		gap: 20px;
 		z-index: 3;
+		width: 400px;
 	}
 	&__cards {
 		display: grid;
@@ -42,6 +43,11 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
+
+		&-item {
+			width: 150px;
+			font-size: 15px;
+		}
 	}
 }
 
@@ -56,6 +62,11 @@
 		&__label-btn {
 			width: 280px;
 		}
-		
+		&__selects {
+			width: 280px;
+		}
+		.select-option__label {
+			width: 280px;
+		}
 	}
 }

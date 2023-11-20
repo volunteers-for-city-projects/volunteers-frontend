@@ -38,11 +38,12 @@ function CardProject({ cardProject }) {
 						<p className={statusClassName}>{status}</p>
 
 						{isLoggedIn || pageProfile ? (
-							<img
-								className="card__status-icon"
-								src={like}
-								alt="знак лайк карточки"
-							/>
+							<button
+								className="card__status-btn"
+								style={{ backgroundImage: `url(${like})` }}
+							>
+								{' '}
+							</button>
 						) : null}
 					</div>
 					<div className="card__description">

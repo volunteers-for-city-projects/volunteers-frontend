@@ -120,7 +120,11 @@ function Projects() {
 				</div>
 
 				<div className="projects__button">
-					<Button size="sx" onClick={() => handleClickNext()}>
+					<Button
+						className="projects__button-item"
+						size="xs"
+						onClick={() => handleClickNext()}
+					>
 						Показать еще
 					</Button>
 				</div>
