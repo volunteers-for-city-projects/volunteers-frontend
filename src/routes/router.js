@@ -24,6 +24,7 @@ import ProfileOrganization from '../components/ProfileOrganization/ProfileOrgani
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
 import Projects from '../components/Projects/Projects';
 import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectIncomes';
+import ProjectView from '../components/ProjectView/ProjectView';
 
 const router = createHashRouter([
 	{
@@ -131,6 +132,10 @@ const router = createHashRouter([
 			{
 				path: 'project/:projectId/participants',
 				element: <PageProjectIncomes status="accepted" />,
+			},
+			{
+				path: 'projects/:idProject',
+				element: <ProjectView />,
 			},
 			{
 				path: 'profile',

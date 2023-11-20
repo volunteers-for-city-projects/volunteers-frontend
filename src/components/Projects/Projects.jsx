@@ -1,31 +1,45 @@
 import './Projects.scss';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
 
-import { getNextPrev } from '../../utils/api/organizer';
+import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
 
 function Projects() {
-	const {
-		projects,
-		setProjects,
-		setIsLoading,
-		skills,
-		cities,
-		projectCategories,
-	} = useOutletContext();
+	const limitAddingProjects = 6;
+	const [projectsOffset, setProjectsOffset] = useState(limitAddingProjects);
+	const [projects, setProjects] = useState([]);
+	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+	const { setIsLoading, skills, cities, projectCategories } =
+		useOutletContext();
+
+	useEffect(() => {
+		setIsLoading(true);
+		getAllProjects(`?limit=${limitAddingProjects}`)
+			.then((dataProjects) => {
+				setProjectsNextUrl(dataProjects.next);
+				setProjects(dataProjects.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			})
+			.finally(setIsLoading(false));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const navigate = useNavigate();
 
-	function getNewBatchProjects(url) {
-		if (url) {
+	function handleClickNext() {
+		if (projectsNextUrl) {
 			setIsLoading(true);
-			getNextPrev(url)
+			setProjectsOffset(projectsOffset + limitAddingProjects);
+			getNextPrev(`?limit=${limitAddingProjects}&offset=${projectsOffset}`)
 				.then((data) => {
-					setProjects(data);
+					setProjects([...projects, ...data.results]);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -33,14 +47,6 @@ function Projects() {
 				})
 				.finally(setIsLoading(false));
 		}
-	}
-
-	function handleClickNext() {
-		getNewBatchProjects(projects.next);
-	}
-
-	function handleClickPrev() {
-		getNewBatchProjects(projects.previous);
 	}
 
 	return (
@@ -103,17 +109,18 @@ function Projects() {
 				</div>
 
 				<div className="projects__cards">
-					{projects &&
-						projects.results.length > 0 &&
-						projects.results.map((item) => (
-							<CardProject cardProject={item} key={item.id} />
+					{projects.length > 0 &&
+						projects.map((item) => (
+							<Link
+								key={item.id}
+								className="projects__link"
+								to={`/projects/${item.id}`}
+							>
+								<CardProject cardProject={item} />
+							</Link>
 						))}
 				</div>
-
 				<div className="projects__button">
-					<button className="profile__pagination-btn" onClick={handleClickPrev}>
-						&#60;
-					</button>
 					<button className="profile__pagination-btn" onClick={handleClickNext}>
 						&#62;
 					</button>

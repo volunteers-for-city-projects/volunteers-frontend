@@ -6,18 +6,6 @@ import './CardNews.scss';
 function CardNews({ card }) {
 	const { tags, title, picture, created_at: date } = card;
 
-	const originalDate = new Date(date);
-
-	const day = originalDate.getDate();
-	const month = originalDate.getMonth() + 1;
-	const year = originalDate.getFullYear() % 100;
-
-	const formattedDay = day < 10 ? `0${day}` : day;
-	const formattedMonth = month < 10 ? `0${month}` : month;
-	const formattedYear = year < 10 ? `0${year}` : year;
-
-	const formattedDate = `${formattedDay}.${formattedMonth}.${formattedYear}`;
-
 	const tagsData = useMemo(() => {
 		if (tags) {
 			return tags.map((item) => ({
@@ -30,7 +18,7 @@ function CardNews({ card }) {
 
 	return (
 		<article className="news__cards-item">
-			<ul
+			<div
 				className="news__card-image"
 				style={{ backgroundImage: `url(${picture})` }}
 			>
@@ -42,10 +30,10 @@ function CardNews({ card }) {
 							</button>
 						</li>
 					))}
-			</ul>
+			</div>
 			<div className="news__card-container">
 				<h3 className="news__card-description">{title}</h3>
-				<p className="news__card-date">{formattedDate}</p>
+				<p className="news__card-date">{date.split(' ')[0]}</p>
 			</div>
 		</article>
 	);

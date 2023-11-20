@@ -21,7 +21,7 @@ const createVolunteer = (volunteerData) =>
 
 const updateVolunteer = (volunteerId, updatedVolunteerData) => {
 	const token = localStorage.getItem('token');
-	request(
+	return request(
 		`${ENDPOINT_VOLUNTEERS}${volunteerId}/`,
 		'PUT',
 		updatedVolunteerData,
@@ -34,7 +34,7 @@ const createOrganization = (organizationData) =>
 
 const updateOrganization = (organizationId, updatedOrganizationData) => {
 	const token = localStorage.getItem('token');
-	request(
+	return request(
 		`${ENDPOINT_ORGANIZATIONS}${organizationId}/`,
 		'PUT',
 		updatedOrganizationData,

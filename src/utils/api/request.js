@@ -14,8 +14,11 @@ const processErrors = (errorObject) => {
 		const objLogin = errorObject.CustomTokenCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'email')) {
 			if (
-				objLogin.email ===
-				'Пользователь с данным адресом электронной почты не существует.'
+				objLogin.email.some(
+					(error) =>
+						error ===
+						'Пользователь с данным адресом электронной почты не существует.'
+				)
 			) {
 				return [
 					{
@@ -36,7 +39,7 @@ const processErrors = (errorObject) => {
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'password')) {
-			if (objLogin.password === 'Неправильный пароль.') {
+			if (objLogin.password.some((error) => error === 'Неправильный пароль.')) {
 				return [
 					{
 						textError: 'Неверно указана электронная почта или пароль.',
@@ -57,8 +60,10 @@ const processErrors = (errorObject) => {
 		const objRegister = errorObject.VolunteerCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'email')) {
 			if (
-				objRegister.email[0] ===
-				'Пользователь с таким Электронная почта уже существует.'
+				objRegister.email.some(
+					(error) =>
+						error === 'Пользователь с таким Электронная почта уже существует.'
+				)
 			) {
 				return [
 					{
@@ -81,8 +86,10 @@ const processErrors = (errorObject) => {
 		const objRegister = errorObject.OgranizationCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'email')) {
 			if (
-				objRegister.email[0] ===
-				'Пользователь с таким Электронная почта уже существует.'
+				objRegister.email.some(
+					(error) =>
+						error === 'Пользователь с таким Электронная почта уже существует.'
+				)
 			) {
 				return [
 					{
@@ -94,7 +101,11 @@ const processErrors = (errorObject) => {
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'ogrn')) {
-			if (objRegister.ogrn[0] === 'Организация с таким ОГРН уже существует.') {
+			if (
+				objRegister.ogrn.some(
+					(error) => error === 'Организация с таким ОГРН уже существует.'
+				)
+			) {
 				return [
 					{
 						textError: 'Организация с таким ОГРН уже существует.',
