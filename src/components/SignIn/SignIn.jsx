@@ -141,19 +141,21 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 				type="button"
 				onClick={onClickRegestration}
 			/>
-			<h2 className="sign-in__heading-button-icon-list">Через соцсети</h2>
-			<ul className="sign-in__button-icon-list">
-				<li>
-					<button className="sign-in__button" disabled={isLoading}>
-						<img className="sign-in__icon" src={telegram} alt="Телеграмм" />
-					</button>
-				</li>
-				<li>
-					<button className="sign-in__button" disabled={isLoading}>
-						<img className="sign-in__icon" src={vkontakte} alt="ВКонтакте" />
-					</button>
-				</li>
-			</ul>
+			<div className="sign-in__wrapper-icon-list">
+				<h2 className="sign-in__heading-button-icon-list">Через соцсети</h2>
+				<ul className="sign-in__button-icon-list">
+					<li>
+						<button className="sign-in__button" disabled={isLoading}>
+							<img className="sign-in__icon" src={telegram} alt="Телеграмм" />
+						</button>
+					</li>
+					<li>
+						<button className="sign-in__button" disabled={isLoading}>
+							<img className="sign-in__icon" src={vkontakte} alt="ВКонтакте" />
+						</button>
+					</li>
+				</ul>
+			</div>
 		</section>
 	);
 }
