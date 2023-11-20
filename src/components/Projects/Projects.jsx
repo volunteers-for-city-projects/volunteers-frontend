@@ -64,7 +64,6 @@ function Projects() {
 								label="Создать новый проект"
 								color="white"
 								size="large-var"
-								minWidth="400px"
 								backgroundColor="#A6C94F"
 								border="none"
 								onClick={() => navigate('/profile/organizer/create-project')}

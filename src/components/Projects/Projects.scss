@@ -53,6 +53,9 @@
 		&__cards {
 			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
 		}
+		&__label-btn {
+			width: 280px;
+		}
 		
 	}
 }
