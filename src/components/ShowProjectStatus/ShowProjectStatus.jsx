@@ -85,10 +85,10 @@ export default ShowProjectStatus;
 
 ShowProjectStatus.propTypes = {
 	cardProject: PropTypes.shape({
-		start_date_application: PropTypes.instanceOf(Date),
-		end_date_application: PropTypes.instanceOf(Date),
-		start_datetime: PropTypes.instanceOf(Date),
-		end_datetime: PropTypes.instanceOf(Date),
+		start_date_application: PropTypes.string,
+		end_date_application: PropTypes.string,
+		start_datetime: PropTypes.string,
+		end_datetime: PropTypes.string,
 		status: PropTypes.oneOf([
 			'open',
 			'ready_for_feedback',
