@@ -10,6 +10,8 @@ class AbstractEntity {
 	static createByData(dataObject) {
 		const instance = new this();
 		Object.keys(dataObject).forEach((k) => {
+			if (typeof k !== 'string') return;
+
 			const kCamel = camelCase(k);
 			let value = dataObject[k];
 			instance[kCamel] = value;

@@ -111,6 +111,8 @@ class ProjectIncome extends AbstractEntity {
 		 * @type {ProjeectIncome} income
 		 */
 		const income = super.createByData(data);
+		if (!income.id) return income;
+
 		income.#projectData =
 			data.project; /* Создать сразу объект класса  Project нельзя из-за циклической зависимости  */
 		income.volunteer = Volunteer.createByData(data.volunteer);
@@ -127,6 +129,18 @@ class ProjectIncome extends AbstractEntity {
 	 */
 	static load() {
 		return getIncomes().then((data) => super.createListByData(data.results));
+	}
+
+	static createNew(incomeData, userId, projectId) {
+		const { phone, email, telegram, letter } = incomeData;
+		return postIncome({
+			phone,
+			email,
+			telegram,
+			letter,
+			project: projectId,
+			volunteer: userId,
+		});
 	}
 }
 export default ProjectIncome;
