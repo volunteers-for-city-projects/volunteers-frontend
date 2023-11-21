@@ -2,8 +2,11 @@
 
 .profile {
 	background: #fdfdfd;
-	margin: 0 auto;
+	// margin: 0 auto;
+  //  margin: 0 130px;
 	max-width: 1920px;
+	display: flex;
+	flex-direction: column;
 
 	&__menu-container {
 		margin-left: 130px;
@@ -63,12 +66,13 @@
 	&__wrapper {
 		display: flex;
 		gap: 25px;
-		padding: 0 120px 0;
+	//	padding: 0 120px 0;
+	margin: 0 auto;
 		box-sizing: border-box;
 	}
 
 	&__projects {
-		width: 960px;
+		width: 1099px;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
@@ -98,33 +102,43 @@
 			margin: 10px 0 0;
 			color: $--Text;
 		}
+		&-picture {
+			display: flex;
+			justify-content: flex-end;
+
+		}
 		&-image {
 			width: 570px;
 			height: 568px;
 			margin-top: 10px;
-			margin-left: 500px;
+		//	margin-left: 500px;
 			margin-bottom: 50px;
 		}
 	}
 
 	@media screen and (max-width: 1919px) {
+		
+		//	margin: 0 93px;
+		
 		&__menu-container {
-			margin-left: 100px;
+			margin-left: 51px;
 		}
 		&__personal {
 			width: 377px;
-			padding: 16px 0 16px 60px;
+		//	padding: 16px 0 16px 60px;
 		}
 
 		&__projects {
-			width: 732px;
+			width: 780px;
 		}
 		&__wrapper {
 			gap: 90px;
-			padding: 0 73px 0;
+	//		padding: 0 73px 0;
 		}
 		&__blank-image {
-			margin-left: 172px;
+			width: 242px;
+			height: 242px;
+		//	margin-left: 172px;
 		}
 	}
 }

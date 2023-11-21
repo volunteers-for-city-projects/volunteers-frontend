@@ -6,6 +6,13 @@ function ProfileButtonsTabs() {
 	return (
 		<div className="buttons-tabs__container">
 			<Pushbutton
+				label="Избранные"
+				color="black"
+				size="mini"
+				backgroundColor="#FDFDFD"
+				border="1px solid #A6C94F"
+			/>
+			<Pushbutton
 				label="Активен"
 				color="black"
 				size="mini"

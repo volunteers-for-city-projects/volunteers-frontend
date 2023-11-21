@@ -150,11 +150,13 @@ function ProfileVolunteer() {
 							<p className="profile__blank-title">
 								Здесь будут отображаться ваши проекты
 							</p>
-							<img
-								className="profile__blank-image"
-								src={cityImage}
-								alt="город"
-							/>
+							<div className="profile__blank-picture">
+								<img
+									className="profile__blank-image"
+									src={cityImage}
+									alt="город"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
