@@ -5,8 +5,8 @@
 }
 
 .signup {
-	margin: 30px auto 70px;
-	// padding: 0 177px 0 832px;
+	margin: 30px auto 170px;
+	padding: 0 208px 0 832px;
 
 	display: flex;
 	flex-direction: column;
@@ -26,25 +26,26 @@
 		background-color: transparent;
 
 		&_organizer {
-			position: sticky;
+			position: fixed;
 			top: 0;
 			left: 0;
 			width: 695px;
 			height: 1000px;
-
 			background-image: url(../../images/signup_background_image_organize.svg);
-			translate: -64px -13px;
+			translate: 102px 20px;
 		}
+
 		&_volunteer {
-			position: sticky;
+			position: fixed;
 			top: 0;
 			left: 0;
 			width: 695px;
 			height: 624px;
-			translate: -108px 118px;
+			translate: 58px 150px;
 			background-image: url(../../images/signup_background_image.svg);
 		}
 	}
+
 	&__content-wrap {
 		display: flex;
 		flex-direction: column;
@@ -63,7 +64,8 @@
 
 @media screen and (max-width: 1919px) {
 	.signup {
-		// padding: 0 75px 0 640px;
+		padding: 0 0 0 565px;
+		margin: 20px auto 20px;
 
 		display: flex;
 		flex-direction: column;
@@ -86,23 +88,22 @@
 			background-color: transparent;
 
 			&_volunteer {
-				position: sticky;
+				position: fixed;
 				top: 0;
 				left: 0;
 				width: 508px;
 				height: 438px;
 				background-image: url(../../images/signup_background_image_1366.svg);
-				translate: -12px 105px;
+				translate: 83px 140px;
 			}
 			&_organizer {
-				position: sticky;
+				position: fixed;
 				top: 0;
 				left: 0;
 				width: 508px;
 				height: 438px;
-
 				background-image: url(../../images/signup_background_image_organize_1366.svg);
-				translate: -12px 120px;
+				translate: 100px 150px;
 			}
 		}
 		&__content-wrap {
