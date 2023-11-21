@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './ProfileOrganization.scss';
 import {
 	useNavigate,
@@ -10,15 +10,21 @@ import ProfileData from '../ProfileData/ProfileData';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import CardProject from '../CardProject/CardProject';
-import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
-import ProfilePagination from '../ProfilePagination/ProfilePagination';
+import Button from '../Button/Button';
 import cityImage from '../../images/city.png';
 import organizationImage from '../../images/avatar.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getOrganizationInformation } from '../../utils/api/profile';
+import { getProjectsMe, getNextPrevMe } from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function ProfileOrganization() {
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
+	const [projectsMe, setProjectsMe] = useState([]);
+	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const {
 		currentUser,
 		setCurrentUser,
@@ -99,6 +105,32 @@ function ProfileOrganization() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location]);
 
+	useEffect(() => {
+		getProjectsMe(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
+			.then((data) => {
+				setProjectsNextUrl(data.next);
+				setProjectsMe(data.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, []);
+
+	function handleClickNext() {
+		if (projectsNextUrl) {
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getNextPrevMe(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			)
+				.then((data) => {
+					setProjectsMe([...projectsMe, ...data.results]);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+		}
+	}
+
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
 		<section className="profile">
@@ -158,11 +190,11 @@ function ProfileOrganization() {
 							</div>
 						</div>
 
-						{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
+						{projectsMe.length > 0 && <ProfileButtonsTabs />}
 
-						{cardsProjectsArray.length > 0 ? (
+						{projectsMe.length > 0 ? (
 							<div className="profile__projects-cards">
-								{cardsProjectsArray.map((item) => (
+								{projectsMe.map((item) => (
 									<CardProject cardProject={item} key={item.id} />
 								))}
 							</div>
@@ -178,8 +210,13 @@ function ProfileOrganization() {
 								/>
 							</div>
 						)}
-
-						{cardsProjectsArray.length >= 4 && <ProfilePagination />}
+						{projectsMe.length >= 6 && (
+							<div className="profile__button">
+								<Button size="s" onClick={() => handleClickNext()}>
+									Показать еще
+								</Button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
