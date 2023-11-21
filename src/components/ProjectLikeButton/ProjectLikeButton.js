@@ -1,13 +1,16 @@
 import './ProjectLikeButton.scss';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	setLikeForProject,
 	resetLikeForProject,
 } from '../../utils/api/projects';
 
 function ProjectLikeButton({ parent, projectId, isFavorited }) {
-	const [isLiked, setIsLiked] = useState(isFavorited);
+	const [isLiked, setIsLiked] = useState(false);
+	useEffect(() => {
+		setIsLiked(isFavorited);
+	}, [isFavorited]);
 	const toggleLike = () => {
 		if (isLiked) {
 			resetLikeForProject(projectId)

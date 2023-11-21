@@ -29,7 +29,10 @@
 		background-position: center;
 		transition: opacity 0.3s;
 	}
-
+	&__like-btn {
+		height: 40px;
+		width: 40px;
+	}
 	&__btn:hover {
 		opacity: 0.8;
 		cursor: pointer;

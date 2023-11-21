@@ -9,22 +9,23 @@ const getProjectCategories = () =>
 
 const createProject = (value) => {
 	const token = localStorage.getItem('token');
-	return request(ENDPOINT_ORGANIZER_PROJECTS, 'POST', value, token);
+	request(ENDPOINT_ORGANIZER_PROJECTS, 'POST', value, token);
 };
 
-const getProjectById = (id) =>
-	request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'GET', null);
+const getProjectById = (id, isLoggedIn) =>
+	request(
+		`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`,
+		'GET',
+		null,
+		isLoggedIn ? localStorage.getItem('token') : null
+	);
 
-const getAllProjects = (limitParameter) =>
-	request(ENDPOINT_ORGANIZER_PROJECTS + limitParameter, 'GET', null);
+const getAllProjects = (limitParameter, isLoggedIn) =>
+	request(
+		ENDPOINT_ORGANIZER_PROJECTS + limitParameter,
+		'GET',
+		null,
+		isLoggedIn ? localStorage.getItem('token') : null
+	);
 
-const getNextPrev = (limitParameter) =>
-	request(ENDPOINT_ORGANIZER_PROJECTS + limitParameter, 'GET', null);
-
-export {
-	getProjectCategories,
-	createProject,
-	getProjectById,
-	getAllProjects,
-	getNextPrev,
-};
+export { getProjectCategories, createProject, getProjectById, getAllProjects };

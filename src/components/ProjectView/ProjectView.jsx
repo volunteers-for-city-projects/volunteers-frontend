@@ -92,7 +92,7 @@ function ProjectView() {
 		);
 
 	useEffect(() => {
-		getProjectById(idProject)
+		getProjectById(idProject, isLoggedIn)
 			.then((res) => {
 				setProject(res);
 				getOrganizationInformation(res.organization)
@@ -105,7 +105,7 @@ function ProjectView() {
 				console.error(err);
 				setError(err);
 			});
-	}, [idProject]);
+	}, [idProject, isLoggedIn]);
 
 	const openImageEnlarge = () => {
 		setModal({
