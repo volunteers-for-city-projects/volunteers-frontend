@@ -42,17 +42,11 @@
 		height: 32px;
 		align-items: center;
 		z-index: 2;
-
-		&-count {
-			margin: 0;
-			font-size: 14px;
-			font-weight: 700;
-			line-height: 32px;
-			color: #3f3f3f;
-			&_moder {
-				color: #f78254;
-			}
+		&-buttons {
+			display: flex;
+			gap: 24px;
 		}
+
 		&-btn {
 			width: 24px;
 			height: 24px;

@@ -1,14 +1,8 @@
 import PropTypes from 'prop-types';
-import { useOutletContext, useLocation } from 'react-router-dom'; //
 import './CardProject.scss';
-// import basket from '../../images/basket.svg'; // иконка корзинки
-import like from '../../images/like.svg';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 
 function CardProject({ cardProject }) {
-	const { isLoggedIn } = useOutletContext();
-	const location = useLocation();
-	const pageProfile = location.pathname === '/profile/organizer';
 	const {
 		name: nameProject,
 		city,
@@ -27,15 +21,9 @@ function CardProject({ cardProject }) {
 				<div className="card__info">
 					<div className="card__status">
 						<ShowProjectStatus cardProject={cardProject} />
-
-						{isLoggedIn || pageProfile ? (
-							<button
-								className="card__status-btn"
-								style={{ backgroundImage: `url(${like})` }}
-							>
-								{' '}
-							</button>
-						) : null}
+						<div className="card__status-buttons">
+							{/*  блок для трёх кнопок: редактировать, удалить, лайк */}
+						</div>
 					</div>
 					<div className="card__description">
 						<div className="card__name">
