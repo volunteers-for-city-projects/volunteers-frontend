@@ -1,4 +1,9 @@
 .custom-slider {
 	width: 540px !important;
 }
-
+.swiper-button-prev { 
+	top: var(--swiper-navigation-top-offset, 35%) !important;
+}
+.swiper-button-next {
+    top: var(--swiper-navigation-top-offset, 35%) !important;
+}

@@ -28,7 +28,7 @@ function Slider({ news }) {
 	return (
 		<Swiper
 			style={{
-				'--swiper-theme-color': '#A6C94F',
+				'--swiper-theme-color': '#9bc1f9',
 				'--swiper-navigation-size': '80px',
 			}}
 			modules={[Navigation]}
