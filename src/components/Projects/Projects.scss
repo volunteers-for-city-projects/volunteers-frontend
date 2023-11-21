@@ -2,11 +2,10 @@
 .projects {
 	margin: 0 auto;
 	&__container {
-		// margin: 40px 130px 24px 130px;
 		margin: 40px auto 24px;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 15px;
 		width: 1660px;
 		position: relative;
 	}
@@ -38,6 +37,7 @@
 		display: flex;
 		gap: 20px;
 		z-index: 3;
+		width: 400px;
 	}
 	&__cards {
 		display: grid;
@@ -46,7 +46,32 @@
 	}
 	&__button {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
 		align-items: center;
+
+		&-item {
+			width: 150px;
+			font-size: 15px;
+		}
+	}
+}
+
+@media screen and (max-width: 1919px) {
+	.projects {
+		&__container {
+			width: 1180px;
+		}
+		&__cards {
+			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+		}
+		&__label-btn {
+			width: 280px;
+		}
+		&__selects {
+			width: 280px;
+		}
+		.select-option__label {
+			width: 280px;
+		}
 	}
 }

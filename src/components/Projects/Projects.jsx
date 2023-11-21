@@ -10,6 +10,7 @@ import { Crumbs } from '../Crumbs/Crumbs';
 
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
+import Button from '../Button/Button';
 import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
@@ -19,9 +20,10 @@ function Projects() {
 	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
-
-	const { setIsLoading, skills, cities, projectCategories } =
+	const { setIsLoading, skills, cities, projectCategories, currentUser } =
 		useOutletContext();
+	const navigate = useNavigate();
+	const { role } = currentUser;
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -36,8 +38,6 @@ function Projects() {
 			.finally(setIsLoading(false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const navigate = useNavigate();
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
@@ -77,15 +77,18 @@ function Projects() {
 				<div className="projects__label">
 					<h2 className="projects__label-title">Проекты</h2>
 					<div className="projects__label-btn">
-						<Pushbutton
-							label="Создать новый проект"
-							color="white"
-							size="large-var"
-							minWidth="400px"
-							backgroundColor="#A6C94F"
-							border="none"
-							onClick={() => navigate('/profile/organizer/create-project')}
-						/>
+						{role === 'organizer' ? (
+							<Pushbutton
+								label="Создать новый проект"
+								color="white"
+								size="large-var"
+								backgroundColor="#A6C94F"
+								border="none"
+								onClick={() => navigate('/profile/organizer/create-project')}
+							/>
+						) : (
+							''
+						)}
 					</div>
 				</div>
 
@@ -182,9 +185,13 @@ function Projects() {
 						))}
 				</div>
 				<div className="projects__button">
-					<button className="profile__pagination-btn" onClick={handleClickNext}>
-						&#62;
-					</button>
+					<Button
+						className="projects__button-item"
+						size="xs"
+						onClick={() => handleClickNext()}
+					>
+						Показать еще
+					</Button>
 				</div>
 			</div>
 		</section>
