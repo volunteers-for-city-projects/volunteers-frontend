@@ -33,7 +33,7 @@ function CardNews({ card }) {
 			</div>
 			<div className="news__card-container">
 				<h3 className="news__card-description">{title}</h3>
-				<p className="news__card-date">{date.split(' ')[0]}</p>
+				<p className="news__card-date">{date?.split(' ')[0]}</p>
 			</div>
 		</article>
 	);

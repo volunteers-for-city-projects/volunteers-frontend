@@ -55,6 +55,8 @@
 			font-weight: 500;
 			line-height: 28px;
 			color: $--Text;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
@@ -125,6 +127,13 @@
 		}
 	
 	}
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-bottom: 22px;	
+	}
+
 	&__button {
 		display: flex;
 		justify-content: flex-end;
