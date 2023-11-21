@@ -63,7 +63,12 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 						password: values.organize_password,
 						second_name: values.organize_secondname,
 					},
-					title: values.organization,
+					title: values.organization
+						.replace(/^"/g, '«')
+						.replace(/ "/g, ' «')
+						.replace(/" /g, '» ')
+						.replace(/"$/, '»')
+						.replace(/"/, '«'),
 					ogrn: values.organize_ogrn.replace(/-/g, ''),
 					phone:
 						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
@@ -184,7 +189,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					name="photo"
 					label=""
 					type="file"
-					value={formik.values.confirm_password}
+					value={formik.values.photo}
 					error={formik.errors.photo}
 					setFieldValue={formik.setFieldValue}
 					setFieldError={formik.setFieldError}
@@ -270,7 +275,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_password"
 					name="organize_password"
 					label="Пароль"
-					type="text"
+					type="password"
 					placeholder="Пароль"
 					inputSize="small"
 					error={formik.errors.organize_password}
@@ -284,7 +289,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					id="organize_confirm_password"
 					name="organize_confirm_password"
 					label="Повторный пароль"
-					type="text"
+					type="password"
 					placeholder="Повторный пароль"
 					inputSize="small"
 					error={formik.errors.organize_confirm_password}

@@ -2,30 +2,30 @@ import PropTypes from 'prop-types';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import basket from '../../images/basket.svg';
+import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
 	const { isLoggedIn } = useOutletContext();
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
-
 	const {
-		status,
+		// status,
 		name: nameProject,
 		city,
 		start_datetime: day,
 		//	end_datetime: time,
-		isModeration,
+		// isModeration,
 		picture: image,
 		id: projectId,
 		is_favorited: isFavorited,
 	} = cardProject;
-	const baseStatusClassName = 'card__status-count';
-	const moderStatusClassName = 'card__status-count_moder';
 
-	const statusClassName = `${baseStatusClassName} ${
-		isModeration ? moderStatusClassName : ''
-	}`;
+	/* 	const baseStatusClassName = 'card__status-count';
+	const moderStatusClassName = 'card__status-count_moder'; */
+
+	// const statusClassName = `${baseStatusClassName} ${isModeration ? moderStatusClassName : ''
+	// 	}`;
 
 	return (
 		<article
@@ -35,7 +35,8 @@ function CardProject({ cardProject }) {
 			<ul className="card__info">
 				<div className="card__overlay" />
 				<li className="card__status">
-					<p className={statusClassName}>{status}</p>
+					{/* <p className={statusClassName}>{status}</p> */}
+					<ShowProjectStatus cardProject={cardProject} />
 					{pageProfile ? (
 						<img
 							className="card__status-icon"

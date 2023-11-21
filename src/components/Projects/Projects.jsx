@@ -1,25 +1,31 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { Crumbs } from '../Crumbs/Crumbs';
+import { useFormik } from 'formik';
+import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
+import Input from '../Input/Input';
+import { Crumbs } from '../Crumbs/Crumbs';
+
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
-
 import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
-	const limitAddingProjects = 6;
-	const [projectsOffset, setProjectsOffset] = useState(limitAddingProjects);
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+
 	const { setIsLoading, skills, cities, projectCategories } =
 		useOutletContext();
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${limitAddingProjects}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -36,8 +42,10 @@ function Projects() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
-			setProjectsOffset(projectsOffset + limitAddingProjects);
-			getNextPrev(`?limit=${limitAddingProjects}&offset=${projectsOffset}`)
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getNextPrev(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
 				})
@@ -48,6 +56,17 @@ function Projects() {
 				.finally(setIsLoading(false));
 		}
 	}
+
+	const formik = useFormik({
+		validateOnMount: true,
+		validateOnChange: true,
+		initialValues: {
+			date: '',
+			city: '',
+			categories: '',
+			skills: '',
+		},
+	});
 	function handleProject(evt, id) {
 		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
 	}
@@ -74,22 +93,39 @@ function Projects() {
 				</div>
 
 				<div className="projects__selects">
-					<SelectOption
+					<InputMask
+						component={Input}
+						mask="__.__.____ - __.__.____"
+						replacement={{ _: /\d/ }}
+						onChange={formik.handleChange}
 						id="date"
 						name="date"
-						label="Дата и время"
+						type="text"
+						label="Дата или период"
+						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
 						options={[]}
+						handleChange={formik.handleChange}
+						value={formik.values.date}
 					/>
-
 					<SelectOption
 						id="city"
 						name="city"
 						label="Город"
 						placeholder="Выберите город"
-						width={400}
 						options={cities}
+						touched={formik.touched.city}
+						value={formik.values.city}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue('city', [
+								{
+									label: selectedOption.label,
+									value: selectedOption.value,
+								},
+							]);
+						}}
+						required
 					/>
 
 					<SelectOption
@@ -97,17 +133,42 @@ function Projects() {
 						name="categories"
 						label="Категории"
 						placeholder="Выберите категории"
-						width={400}
 						options={projectCategories}
+						isMulti
+						width={400}
+						value={formik.values.categories}
+						touched={formik.touched.categories}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'categories',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
-
 					<SelectOption
 						id="skills"
 						name="skills"
-						label="Выберите навыки"
-						placeholder="Введите имя"
-						width={400}
+						label="Навыки"
+						placeholder="Выберите навыки"
 						options={skills}
+						isMulti
+						width={400}
+						value={formik.values.skills}
+						touched={formik.touched.skills}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'skills',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
 				</div>
 
