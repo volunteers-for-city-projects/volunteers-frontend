@@ -37,7 +37,6 @@
 		display: flex;
 		gap: 20px;
 		z-index: 3;
-		width: 400px;
 	}
 	&__cards {
 		display: grid;
@@ -65,9 +64,6 @@
 			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
 		}
 		&__label-btn {
-			width: 280px;
-		}
-		&__selects {
 			width: 280px;
 		}
 		.select-option__label {
