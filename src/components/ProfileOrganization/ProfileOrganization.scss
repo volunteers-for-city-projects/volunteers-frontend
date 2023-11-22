@@ -2,17 +2,13 @@
 
 .profile {
 	background: #fdfdfd;
-	// margin: 0 auto;
- //   margin: 0 130px;
-	max-width: 1920px;
+	max-width: 100%;
 	display: flex;
 	flex-direction: column;
 
 	&__menu-container {
-	//	margin-left: 130px;
-	// margin-left: 0px;
-
-		margin-top: 30px auto o;
+		margin-left: 130px;
+		margin-top: 30px;
 	}
 
 	&__personal {
@@ -69,7 +65,6 @@
 		display: flex;
 		margin: 0 auto;
 		gap: 25px;
-	//	padding: 0 120px 0;
 		box-sizing: border-box;
 	}
 	&__projects {
@@ -128,55 +123,48 @@
 		&-picture {
 			display: flex;
 			justify-content: flex-end;
-
 		}
 		&-image {
 			width: 570px;
 			height: 568px;
 			margin-top: 10px;
-		//	margin-left: 445px;
 			margin-bottom: 50px;
 		}
-	
 	}
 	&__button {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		margin-bottom: 22px;	
+		margin-bottom: 22px;
 	}
 
 	&__button {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		margin-bottom: 22px;	
+		margin-bottom: 22px;
 	}
 
 	@media screen and (max-width: 1919px) {
-		
-		//	margin: 0 93px;
-		
 		&__menu-container {
-			 margin-left: 51px;
+			margin-left: 51px;
+			margin-top: 20px;
 		}
 		&__personal {
 			width: 377px;
-		//	padding: 16px 0 0 60px;
+			margin-top: 0;
 		}
 
 		&__projects {
 			width: 780px;
+			margin-top: 0;
 		}
-
 		&__wrapper {
-			gap: 90px;
-		//	padding: 0 73px 0;
+			max-width: 1180px;
 		}
 		&__blank-image {
 			width: 242px;
 			height: 242px;
-		//	margin-left: 152px;
 		}
 		&__projects-container {
 			gap: 20px;
