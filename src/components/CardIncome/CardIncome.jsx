@@ -7,7 +7,7 @@ import './CardIncome.scss';
 import { bemClassHelper } from '../../utils/utils';
 
 import imgProfile from '../../images/fotoProfile.svg';
-import imgOnRemoveWindow from '../../images/modals/wood.png';
+import ModalContent from '../ModalContent/ModalContent';
 
 const handleError = (e) => {
 	console.error(e); // TODO display error
@@ -133,18 +133,17 @@ function CardIncome({ income, layout }) {
 	const openConfirmRemove = () => {
 		const modalTitle = 'Удаление участника проекта';
 		const modalContent = (
-			<div className={bem('#__modal-remove')}>
-				<img src={imgOnRemoveWindow} alt="Вы уверенны?" />
-				<h4>Вы уверены, что хотите удалить участника проекта?</h4>
-				<div className={bem('#__modal-buttons')}>
-					<Button size="s" theme="opposite" onClick={closeModal}>
-						Отменить
-					</Button>
-					<Button size="s" onClick={handleRemoveParticipant}>
-						Удалить участника
-					</Button>
-				</div>
-			</div>
+			<ModalContent
+				text="Вы уверены, что хотите удалить участника проекта?"
+				icon="remove"
+			>
+				<Button size="s" theme="opposite" onClick={closeModal}>
+					Отменить
+				</Button>
+				<Button size="s" onClick={handleRemoveParticipant}>
+					Удалить участника
+				</Button>
+			</ModalContent>
 		);
 		openModal(modalTitle, modalContent);
 	};

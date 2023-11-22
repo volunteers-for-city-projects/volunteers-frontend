@@ -16,6 +16,7 @@ import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import FormIncome from '../FormIncome/FormIncome';
 import SignIn from '../SignIn/SignIn';
+import ModalContent from '../ModalContent/ModalContent';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -131,7 +132,10 @@ function ProjectView() {
 				type: 'init',
 				state: 'info',
 				children: (
-					<>Ваша заявка принята, организатор в скором времени свяжется с вами</>
+					<ModalContent
+						text="Ваша заявка принята, организатор в скором времени свяжется с вами"
+						icon="success"
+					/>
 				),
 			});
 		};
