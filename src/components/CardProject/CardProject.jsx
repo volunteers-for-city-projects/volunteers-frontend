@@ -30,6 +30,11 @@ function CardProject({ cardProject }) {
 						<div className="card__status-buttons">
 							{/*  блок для трёх кнопок: редактировать, удалить, лайк */}
 							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
+							{pageProfile ? (
+								<button className="card__status-btn"> </button>
+							) : (
+								''
+							)}
 						</div>
 					</div>
 					<div className="card__description">

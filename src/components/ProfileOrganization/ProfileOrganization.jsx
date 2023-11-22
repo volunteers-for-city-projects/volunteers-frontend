@@ -136,92 +136,101 @@ function ProfileOrganization() {
 
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
-		<section className="profile">
-			<div className="profile__menu-container">
-				<Crumbs />
-			</div>
-			<div className="profile__wrapper">
-				<div className="profile__personal">
-					<div className="profile__personal-container">
-						<div className="profile__personal-label">
-							<img
-								className="profile__image"
-								src={photo || organizationImage}
-								alt="Логотип организатора"
-							/>
-							<div className="profile__personal-btn">
-								<Pushbutton
-									label="Изменить пароль"
-									color="#3F3F3F"
-									size="large-var"
-									minWidth="280px"
-									backgroundColor="transparent"
-									border="1px solid #A6C94F"
-									onClick={() => handleChangePasswordForm()}
-								/>
-								<Pushbutton
-									label="Редактировать профиль"
-									color="#3F3F3F"
-									size="large-var"
-									minWidth="280px"
-									backgroundColor="transparent"
-									border="1px solid #A6C94F"
-									onClick={() => navigate('edit-profile')}
-								/>
-							</div>
-						</div>
-						<div className="profile__name">
-							<h2 className="profile__name-surname">{title}</h2>
-						</div>
-						<ProfileData dataArray={dataOrganization} />
-					</div>
+		<section className="profile-org">
+			<div className="profile-org__container">
+				<div className="profile-org__menu">
+					<Crumbs />
 				</div>
-				<div className="profile__projects">
-					<div className="profile__projects-container">
-						<div className="profile__projects-label">
-							<h2 className="profile__projects-title">Ваши проекты</h2>
-							<div className="profile__projects-btn">
-								<Pushbutton
-									label="Добавить проект"
-									color="white"
-									size="large-var"
-									minWidth="283px"
-									backgroundColor="#A6C94F"
-									border="none"
-									onClick={() => navigate('/profile/organizer/create-project')}
+				<div className="profile-org__wrapper">
+					<div className="profile-org__personal">
+						<div className="profile-org__personal-container">
+							<div className="profile-org__personal-label">
+								<img
+									className="profile-org__image"
+									src={photo || organizationImage}
+									alt="Логотип организатора"
 								/>
-							</div>
-						</div>
-
-						{projectsMe.length > 0 && <ProfileButtonsTabs />}
-
-						{projectsMe.length > 0 ? (
-							<div className="profile__projects-cards">
-								{projectsMe.map((item) => (
-									<CardProject cardProject={item} key={item.id} />
-								))}
-							</div>
-						) : (
-							<div className="profile__blank">
-								<p className="profile__blank-title">
-									Здесь будут отображаться ваши проекты
-								</p>
-								<div className="profile__blank-picture">
-									<img
-										className="profile__blank-image"
-										src={cityImage}
-										alt="город"
+								<div className="profile-org__personal-btn">
+									<Pushbutton
+										label="Изменить пароль"
+										color="#3F3F3F"
+										size="large-var"
+										minWidth="280px"
+										backgroundColor="transparent"
+										border="1px solid #A6C94F"
+										onClick={() => handleChangePasswordForm()}
+									/>
+									<Pushbutton
+										label="Редактировать профиль"
+										color="#3F3F3F"
+										size="large-var"
+										minWidth="280px"
+										backgroundColor="transparent"
+										border="1px solid #A6C94F"
+										onClick={() => navigate('edit-profile')}
 									/>
 								</div>
 							</div>
-						)}
-						{projectsMe.length >= 6 && (
-							<div className="profile__button">
-								<Button size="s" onClick={() => handleClickNext()}>
-									Показать еще
-								</Button>
+							<div className="profile-org__name">
+								<h2 className="profile-org__name-surname">{title}</h2>
 							</div>
-						)}
+
+							<ProfileData dataArray={dataOrganization} />
+						</div>
+					</div>
+					<div className="profile-org__projects">
+						<div className="profile-org__projects-container">
+							<div className="profile-org__projects-label">
+								<h2 className="profile-org__projects-title">Ваши проекты</h2>
+								<div className="profile-org__projects-btn">
+									<Pushbutton
+										label="Добавить проект"
+										color="white"
+										size="large-var"
+										minWidth="283px"
+										backgroundColor="#A6C94F"
+										border="none"
+										onClick={() =>
+											navigate('/profile/organizer/create-project')
+										}
+									/>
+								</div>
+							</div>
+
+							{projectsMe.length > 0 && <ProfileButtonsTabs />}
+
+							{projectsMe.length > 0 ? (
+								<div className="profile-org__projects-cards">
+									{projectsMe.map((item) => (
+										<CardProject cardProject={item} key={item.id} />
+									))}
+								</div>
+							) : (
+								<div className="profile-org__blank">
+									<p className="profile-org__blank-title">
+										Здесь будут отображаться ваши проекты
+									</p>
+									<div className="profile-org__blank-picture">
+										<img
+											className="profile-org__blank-image"
+											src={cityImage}
+											alt="город"
+										/>
+									</div>
+								</div>
+							)}
+							{projectsMe.length >= 6 && (
+								<div className="profile-org__button">
+									<Button
+										className="profile-org__button-item"
+										size="xs"
+										onClick={() => handleClickNext()}
+									>
+										Показать еще
+									</Button>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

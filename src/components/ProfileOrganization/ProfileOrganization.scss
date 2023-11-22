@@ -1,13 +1,17 @@
 @import '../../style/variables.scss';
 
-.profile {
+.profile-org {
 	background: #fdfdfd;
 	max-width: 100%;
 	display: flex;
 	flex-direction: column;
+	&__container {
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+	}
 
-	&__menu-container {
-		margin-left: 130px;
+	&__menu {
 		margin-top: 30px;
 	}
 
@@ -19,7 +23,7 @@
 		background: $--White;
 		border-radius: 10px;
 		width: 540px;
-		padding: 20px 0 0 0;
+		padding: 20px 0 20px 0;
 		box-sizing: border-box;
 		&-container {
 			display: flex;
@@ -100,6 +104,7 @@
 			flex-direction: column;
 			gap: 32px;
 		}
+
 		&-cards {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(468px, 1fr));
@@ -131,23 +136,20 @@
 			margin-bottom: 50px;
 		}
 	}
+	
 	&__button {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 		margin-bottom: 22px;
-	}
-
-	&__button {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		margin-bottom: 22px;
+		&-item {
+			width: 150px;
+			font-size: 15px;
+		}
 	}
 
 	@media screen and (max-width: 1919px) {
-		&__menu-container {
-			margin-left: 51px;
+		&__menu {
 			margin-top: 20px;
 		}
 		&__personal {
