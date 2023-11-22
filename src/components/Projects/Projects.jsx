@@ -2,10 +2,11 @@ import './Projects.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { InputMask } from '@react-input/mask';
+// import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
-import Input from '../Input/Input';
+// import Input from '../Input/Input';
+import InputDateRange from '../InputDateRange/InputDateRange';
 import { Crumbs } from '../Crumbs/Crumbs';
 
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
@@ -93,19 +94,13 @@ function Projects() {
 				</div>
 
 				<div className="projects__selects">
-					<InputMask
-						component={Input}
-						mask="__.__.____ - __.__.____"
-						replacement={{ _: /\d/ }}
-						onChange={formik.handleChange}
+					<InputDateRange
 						id="date"
 						name="date"
-						type="text"
 						label="Дата или период"
 						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
-						options={[]}
 						handleChange={formik.handleChange}
 						value={formik.values.date}
 					/>
@@ -116,7 +111,7 @@ function Projects() {
 						placeholder="Выберите город"
 						options={cities}
 						touched={formik.touched.city}
-						value={formik.values.city}
+						value={formik.values.city || []}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue('city', [
 								{
@@ -127,7 +122,6 @@ function Projects() {
 						}}
 						required
 					/>
-
 					<SelectOption
 						id="categories"
 						name="categories"
@@ -136,7 +130,7 @@ function Projects() {
 						options={projectCategories}
 						isMulti
 						width={400}
-						value={formik.values.categories}
+						value={formik.values.categories || []}
 						touched={formik.touched.categories}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
@@ -157,7 +151,7 @@ function Projects() {
 						options={skills}
 						isMulti
 						width={400}
-						value={formik.values.skills}
+						value={formik.values.skills || []}
 						touched={formik.touched.skills}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
