@@ -27,7 +27,7 @@ const getProjectsMe = () => {
 	return request(ENDPOINT_ORGANIZER_PROJECTS_ME, 'GET', null, token);
 };
 
-const getNextPrevMe = (limitParameter) => {
+const getNextPrevProjectsMe = (limitParameter) => {
 	const token = localStorage.getItem('token');
 	return request(
 		ENDPOINT_ORGANIZER_PROJECTS_ME + limitParameter,
@@ -44,5 +44,5 @@ export {
 	getAllProjects,
 	getNextPrev,
 	getProjectsMe,
-	getNextPrevMe,
+	getNextPrevProjectsMe,
 };

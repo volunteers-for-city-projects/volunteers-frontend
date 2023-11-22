@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
+import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 
 function CardProject({ cardProject }) {
 	const {
@@ -9,7 +11,11 @@ function CardProject({ cardProject }) {
 		start_datetime: day,
 		end_datetime: time,
 		picture: image,
+		id: projectId,
 	} = cardProject;
+
+	const location = useLocation();
+	const pageProfile = location.pathname === '/profile/organizer';
 
 	return (
 		<article
@@ -23,6 +29,7 @@ function CardProject({ cardProject }) {
 						<ShowProjectStatus cardProject={cardProject} />
 						<div className="card__status-buttons">
 							{/*  блок для трёх кнопок: редактировать, удалить, лайк */}
+							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
 						</div>
 					</div>
 					<div className="card__description">
@@ -54,6 +61,7 @@ CardProject.propTypes = {
 		end_datetime: PropTypes.string,
 		isModeration: PropTypes.bool,
 		picture: PropTypes.string,
+		id: PropTypes.number,
 	}),
 };
 

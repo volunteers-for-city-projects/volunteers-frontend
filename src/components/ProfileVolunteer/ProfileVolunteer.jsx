@@ -13,6 +13,10 @@ import cityImage from '../../images/city.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getVolunteerInformation } from '../../utils/api/profile';
 import volunteerImage from '../../images/avatar.png';
+import cardsProjectsArray from '../../utils/cardsProjectsArray';
+import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
+import Button from '../Button/Button';
+import CardProject from '../CardProject/CardProject';
 
 function ProfileVolunteer() {
 	const {
@@ -146,18 +150,35 @@ function ProfileVolunteer() {
 				<div className="profile__projects">
 					<div className="profile__projects-container">
 						<h2 className="profile__projects-title">Ваши проекты</h2>
-						<div className="profile__blank">
-							<p className="profile__blank-title">
-								Здесь будут отображаться ваши проекты
-							</p>
-							<div className="profile__blank-picture">
-								<img
-									className="profile__blank-image"
-									src={cityImage}
-									alt="город"
-								/>
+
+						{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
+
+						{cardsProjectsArray.length > 0 ? (
+							<div className="profile__projects-cards">
+								{cardsProjectsArray.map((item) => (
+									<CardProject cardProject={item} key={item.id} />
+								))}
 							</div>
-						</div>
+						) : (
+							<div className="profile__blank">
+								<p className="profile__blank-title">
+									Здесь будут отображаться ваши проекты
+								</p>
+								<div className="profile__blank-picture">
+									<img
+										className="profile__blank-image"
+										src={cityImage}
+										alt="город"
+									/>
+								</div>
+							</div>
+						)}
+
+						{cardsProjectsArray.length >= 6 && (
+							<div className="profile__button">
+								<Button size="s">Показать еще</Button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

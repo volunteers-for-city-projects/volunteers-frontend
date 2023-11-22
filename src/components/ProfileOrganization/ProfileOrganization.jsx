@@ -16,7 +16,10 @@ import cityImage from '../../images/city.png';
 import organizationImage from '../../images/avatar.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getOrganizationInformation } from '../../utils/api/profile';
-import { getProjectsMe, getNextPrevMe } from '../../utils/api/organizer';
+import {
+	getProjectsMe,
+	getNextPrevProjectsMe,
+} from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function ProfileOrganization() {
@@ -119,7 +122,7 @@ function ProfileOrganization() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrevMe(
+			getNextPrevProjectsMe(
 				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
 			)
 				.then((data) => {
