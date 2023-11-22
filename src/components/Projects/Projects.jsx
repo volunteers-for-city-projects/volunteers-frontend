@@ -2,10 +2,11 @@ import './Projects.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { InputMask } from '@react-input/mask';
+// import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
-import Input from '../Input/Input';
+// import Input from '../Input/Input';
+import InputDateRange from '../InputDateRange/InputDateRange';
 import { Crumbs } from '../Crumbs/Crumbs';
 
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
@@ -87,19 +88,13 @@ function Projects() {
 				</div>
 
 				<div className="projects__selects">
-					<InputMask
-						component={Input}
-						mask="__.__.____ - __.__.____"
-						replacement={{ _: /\d/ }}
-						onChange={formik.handleChange}
+					<InputDateRange
 						id="date"
 						name="date"
-						type="text"
 						label="Дата или период"
 						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
-						options={[]}
 						handleChange={formik.handleChange}
 						value={formik.values.date}
 					/>
@@ -121,7 +116,6 @@ function Projects() {
 						}}
 						required
 					/>
-
 					<SelectOption
 						id="categories"
 						name="categories"
