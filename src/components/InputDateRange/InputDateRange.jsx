@@ -70,6 +70,7 @@ const InputDateRange = forwardRef(
 					name={name}
 					selectsRange
 					isClearable
+					type="text"
 					placeholderText={placeholder}
 					startDate={startDate}
 					endDate={endDate}
@@ -109,7 +110,7 @@ InputDateRange.propTypes = {
 	value: PropTypes.string,
 	handleChange: PropTypes.func,
 	label: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
+	// type: PropTypes.string.isRequired,
 	inputSize: PropTypes.oneOf(['mini', 'small', 'medium', 'large', 'photo']),
 	placeholder: PropTypes.string,
 	disabled: PropTypes.bool,

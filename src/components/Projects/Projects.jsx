@@ -105,7 +105,7 @@ function Projects() {
 						placeholder="Выберите город"
 						options={cities}
 						touched={formik.touched.city}
-						value={formik.values.city}
+						value={formik.values.city || []}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue('city', [
 								{
@@ -124,7 +124,7 @@ function Projects() {
 						options={projectCategories}
 						isMulti
 						width={400}
-						value={formik.values.categories}
+						value={formik.values.categories || []}
 						touched={formik.touched.categories}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
@@ -145,7 +145,7 @@ function Projects() {
 						options={skills}
 						isMulti
 						width={400}
-						value={formik.values.skills}
+						value={formik.values.skills || []}
 						touched={formik.touched.skills}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
