@@ -134,8 +134,14 @@
 		cursor: pointer;
 	}
 
+	&__wrapper-icon-list {
+		margin: 32px 0 0 0;
+		padding: 0;
+		display: block;
+	}
+
 	&__heading-button-icon-list {
-		margin: 23px 0 0 0;
+		margin: 0;
 		padding: 0 0 16px 0;
 		color: $--Black;
 		text-align: center;
@@ -175,5 +181,46 @@
 		display: block;
 		width: 24px;
 		height: 24px;
+	}
+
+	@media (max-width: 1919px) {
+		&__header-title {
+			font-size: 34px;
+			font-weight: 500;
+			line-height: 130%;
+			/* 56px */
+		}
+
+		&__header-text {
+			font-size: 20px;
+			line-height: 23px;
+		}
+
+		&__form {
+			margin-top: 8px;
+			margin-bottom: 8px;
+			gap: 50px;
+		}
+
+		&__inputs {
+			gap: 50px;
+		}
+
+		&__input-error {
+			bottom: -38px;
+		}
+
+		&__wrapper-icon-list {
+			margin: 8px 0 0 0;
+			display: flex;
+			justify-content: center;
+			gap: 12px;
+		}
+
+		&__heading-button-icon-list {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+		}
 	}
 }

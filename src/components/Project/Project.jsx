@@ -62,7 +62,7 @@ function Project() {
 		provide: Yup.string()
 			.min(2, 'Количество символов от 2 до 750')
 			.max(750, 'Количество символов от 2 до 750'),
-		city: Yup.number().required('Поле обязательно для заполнения'),
+		// city: Yup.number().required('Поле обязательно для заполнения'),
 		address: Yup.string()
 			.matches(
 				/^[А-Яа-яЁёa-zA-Z0-9.,\s-]+$/,
@@ -175,9 +175,11 @@ function Project() {
 					project_events: values.events,
 					organizer_provides: values.provide,
 					organization: currentUser.id,
-					city: values.city,
-					categories: values.categoryProject,
-					skills: values.skills,
+					city: values.city[0].value,
+					categories: values.categoryProject.map(
+						(categoryProject) => categoryProject.value
+					),
+					skills: values.skills.map((skill) => skill.value),
 				});
 				setModal({
 					isOpen: true,
@@ -338,17 +340,21 @@ function Project() {
 						<h2 className="add-project__caption-group">Место проведения</h2>
 						<div className="add-project__place-group">
 							<SelectOption
+								id="city"
 								name="city"
 								label="Город"
 								placeholder="Выберите город"
-								width={400}
 								options={cities}
-								error={formik.errors.city}
+								touched={formik.touched.city}
 								value={formik.values.city}
 								handleChange={(selectedOption) => {
-									formik.setFieldValue('city', selectedOption.value);
+									formik.setFieldValue('city', [
+										{
+											label: selectedOption.label,
+											value: selectedOption.value,
+										},
+									]);
 								}}
-								submitCount={formik.submitCount}
 								required
 							/>
 							<CustomInput
@@ -404,35 +410,45 @@ function Project() {
 						</h2>
 						<div className="add-project__additional-group">
 							<SelectOption
+								id="categoryProject"
+								name="categoryProject"
 								label="Категория проекта"
 								placeholder="Выберите категорию"
-								width={400}
 								options={projectCategories}
-								error={formik.errors.categoryProject}
-								value={formik.values.categoryProject}
-								handleChange={(selectedOption) => {
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
-									formik.setFieldValue('categoryProject', selectedValues);
-								}}
 								isMulti
+								width={400}
+								value={formik.values.categoryProject}
+								touched={formik.touched.categoryProject}
+								handleChange={(selectedOption) => {
+									formik.setFieldValue(
+										'categoryProject',
+										selectedOption.map((option) => ({
+											label: option.label,
+											value: option.value,
+										}))
+									);
+								}}
 								required
 							/>
 							<SelectOption
+								id="skills"
+								name="skills"
 								label="Навыки"
 								placeholder="Выберите навыки"
-								width={400}
 								options={skills}
-								error={formik.errors.skills}
-								value={formik.values.skills}
-								handleChange={(selectedOption) => {
-									const selectedValues = selectedOption.map(
-										(option) => option.value
-									);
-									formik.setFieldValue('skills', selectedValues);
-								}}
 								isMulti
+								width={400}
+								value={formik.values.skills}
+								touched={formik.touched.skills}
+								handleChange={(selectedOption) => {
+									formik.setFieldValue(
+										'skills',
+										selectedOption.map((option) => ({
+											label: option.label,
+											value: option.value,
+										}))
+									);
+								}}
 								required
 							/>
 						</div>

@@ -3,11 +3,11 @@
 // import window from '../images/window.png';
 
 const cardsProjectsArray = [
-	/*	 {
+	/*	{
 		id: 0,
 		status: '23 заявки',
 		nameProject: 'Проект с длинным названием про экологию',
-		city: 'г. Москва',
+		city: ' Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		image: nature,
@@ -16,7 +16,7 @@ const cardsProjectsArray = [
 		id: 1,
 		status: '23 заявки',
 		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
+		city: ' Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		image: city,
@@ -25,7 +25,7 @@ const cardsProjectsArray = [
 		id: 2,
 		status: 'Проект на модерации',
 		nameProject: 'Проект с длинным названием про экологию',
-		city: 'г. Москва',
+		city: ' Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		isModeration: true,
@@ -35,11 +35,30 @@ const cardsProjectsArray = [
 		id: 3,
 		status: '23 заявки',
 		nameProject: 'Уборка пляжа',
-		city: 'г. Москва',
+		city: ' Москва',
 		day: '24.10.2023',
 		time: '10:00 - 16:00',
 		image: nature,
-	}, */
+	},
+	{
+		id: 2,
+		status: 'Проект на модерации',
+		nameProject: 'Проект с длинным названием про экологию',
+		city: ' Москва',
+		day: '24.10.2023',
+		time: '10:00 - 16:00',
+		isModeration: true,
+		image: window,
+	},
+	{
+		id: 3,
+		status: '23 заявки',
+		nameProject: 'Уборка пляжа',
+		city: ' Москва',
+		day: '24.10.2023',
+		time: '10:00 - 16:00',
+		image: nature,
+	},  */
 ];
 
 export default cardsProjectsArray;
