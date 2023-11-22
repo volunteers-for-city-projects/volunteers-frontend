@@ -26,6 +26,17 @@ function Projects() {
 	const navigate = useNavigate();
 	const { role } = currentUser;
 
+	const formik = useFormik({
+		validateOnMount: true,
+		validateOnChange: true,
+		initialValues: {
+			date: '',
+			city: '',
+			categories: '',
+			skills: '',
+		},
+	});
+
 	useEffect(() => {
 		setIsLoading(true);
 		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
@@ -39,6 +50,26 @@ function Projects() {
 			.finally(setIsLoading(false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		setIsLoading(true);
+		if (formik.values.city) {
+			const cityFilter = formik.values.city;
+			getAllProjects(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&city=${encodeURIComponent(
+					cityFilter[0].value
+				)}`
+			)
+				.then((dataProjects) => {
+					setProjectsNextUrl(dataProjects.next);
+					setProjects(dataProjects.results);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				})
+				.finally(setIsLoading(false));
+		}
+	}, [formik.values.city, setIsLoading]);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
@@ -57,17 +88,6 @@ function Projects() {
 				.finally(setIsLoading(false));
 		}
 	}
-
-	const formik = useFormik({
-		validateOnMount: true,
-		validateOnChange: true,
-		initialValues: {
-			date: '',
-			city: '',
-			categories: '',
-			skills: '',
-		},
-	});
 
 	return (
 		<section className="projects">
