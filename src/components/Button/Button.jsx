@@ -5,7 +5,7 @@ import clsx from 'clsx';
 /**
  * @param {Object} obj
  * @param {'default'|'opposite'|'neutral'} obj.theme default - основной цвет(зеленый), opposite - противоположный основному(оранжевый), neutral - нейтральный (белый)
- * @param {"l"|"m"|"s"|"sx"|null} obj.size Размер кнопки. null - без размера, растянется на ширину контенера
+ * @param {"l"|"m"|"s"|"xs"|null} obj.size Размер кнопки. null - без размера, растянется на ширину контенера
  * @param {String} obj.className Класс, который нужно подмиксовать к кнопке
  * @param {(JSX|String)} obj.children Содержимое кнопки
  * @param {Function} obj.onClick Функция

@@ -1,66 +1,60 @@
 import PropTypes from 'prop-types';
+
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
-import basket from '../../images/basket.svg';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
+
 	const { isLoggedIn } = useOutletContext();
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
+
 	const {
-		// status,
 		name: nameProject,
 		city,
 		start_datetime: day,
-		//	end_datetime: time,
-		// isModeration,
+		end_datetime: time,
 		picture: image,
 		id: projectId,
 		is_favorited: isFavorited,
 	} = cardProject;
-
-	/* 	const baseStatusClassName = 'card__status-count';
-	const moderStatusClassName = 'card__status-count_moder'; */
-
-	// const statusClassName = `${baseStatusClassName} ${isModeration ? moderStatusClassName : ''
-	// 	}`;
 
 	return (
 		<article
 			className="card__project"
 			style={{ backgroundImage: `url(${image})` }}
 		>
-			<ul className="card__info">
+			<div className="card__container">
 				<div className="card__overlay" />
-				<li className="card__status">
-					{/* <p className={statusClassName}>{status}</p> */}
-					<ShowProjectStatus cardProject={cardProject} />
-					{pageProfile ? (
-						<img
-							className="card__status-icon"
-							src={basket}
-							alt="редактировать"
-						/>
-					) : null}
-				</li>
-				<li className="card__name">
-					<p className="card__name-title">{nameProject}</p>
-				</li>
-				<li className="card__data">
-					<p className="card__data-city">{city}</p>
-					<p className="card__data-day">{day}</p>
-					<p className="card__data-time">{/* time */}</p>
-				</li>
-			</ul>
-			{isLoggedIn && (
+				<div className="card__info">
+					<div className="card__status">
+						<ShowProjectStatus cardProject={cardProject} />
+						<div className="card__status-buttons">
+							{isLoggedIn && (
 				<ProjectLikeButton
 					parent="card"
 					projectId={projectId}
 					isFavorited={isFavorited}
 				/>
 			)}
+						</div>
+					</div>
+					<div className="card__description">
+						<div className="card__name">
+							<p className="card__name-title">{nameProject}</p>
+						</div>
+						<div className="card__data">
+							<p className="card__data-city">{`г. ${city}`}</p>
+							<p className="card__data-day">{day?.split(' ')[0]}</p>
+							<p className="card__data-time">{`${day?.split(' ')[1]} - ${
+								time?.split(' ')[1]
+							}`}</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</article>
 	);
 }

@@ -1,0 +1,23 @@
+@import '../../style/variables.scss';
+
+.page-project-incomes {
+	padding: 50px 130px;
+	color: $--Text;
+	&__title {
+		font-size: 56px;
+		font-weight: 400;
+		line-height: 100%;
+	}
+	&__address {
+		color: $--Black;
+		opacity: 0.6;
+		font-size: 23px;
+		font-weight: 500;
+		line-height: 130%;
+	}
+	&__count {
+		font-size: 34px;
+		font-weight: 400;
+		line-height: 130%;
+	}
+}

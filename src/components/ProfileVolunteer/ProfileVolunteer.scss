@@ -55,6 +55,8 @@
 			font-weight: 500;
 			line-height: 28px;
 			color: $--Text;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 

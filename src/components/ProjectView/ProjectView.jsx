@@ -15,6 +15,9 @@ import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
+import FormIncome from '../FormIncome/FormIncome';
+import SignIn from '../SignIn/SignIn';
+
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -122,7 +125,39 @@ function ProjectView() {
 			typeStyle: 'enlarge-image',
 		});
 	};
-
+	const openIncomeForm = () => {
+		const onSubmit = () => {
+			setModal({
+				isOpen: true,
+				type: 'init',
+				state: 'info',
+				children: (
+					<>Ваша заявка принята, организатор в скором времени свяжется с вами</>
+				),
+			});
+		};
+		setModal({
+			isOpen: true,
+			title: 'Заявка на участие в проекте',
+			children: (
+				<FormIncome
+					currentUser={currentUser}
+					onSubmit={onSubmit}
+					projectId={idProject}
+				/>
+			),
+			type: 'init',
+			state: 'info',
+		});
+	};
+	const openLoginForm = () => {
+		setModal({
+			isOpen: true,
+			children: <SignIn />,
+			type: 'init',
+			state: 'info',
+		});
+	};
 	if (error) {
 		return <NotFound />;
 	}
@@ -224,12 +259,7 @@ function ProjectView() {
 							<Button
 								theme="default"
 								size="l"
-								onClick={() =>
-									// eslint-disable-next-line no-alert
-									alert(
-										'открывается модалка для того чтобы войти в аккаунт или зарегистрироваться'
-									)
-								}
+								onClick={openLoginForm}
 								type="button"
 							>
 								Подать заявку на участие в проекте
@@ -239,10 +269,7 @@ function ProjectView() {
 							<Button
 								theme="default"
 								size="l"
-								onClick={() =>
-									// eslint-disable-next-line no-alert
-									alert('открывается модалка для заполнения заявки')
-								}
+								onClick={openIncomeForm}
 								type="button"
 							>
 								Подать заявку на участие в проекте
