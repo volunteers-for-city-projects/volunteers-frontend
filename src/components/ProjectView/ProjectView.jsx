@@ -14,6 +14,9 @@ import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
+import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
+import FormIncome from '../FormIncome/FormIncome';
+import SignIn from '../SignIn/SignIn';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -47,7 +50,6 @@ function ProjectView() {
 		title: '',
 	});
 	const [error, setError] = useState(null);
-
 	const crumbs = [
 		{
 			id: 1,
@@ -92,7 +94,7 @@ function ProjectView() {
 		);
 
 	useEffect(() => {
-		getProjectById(idProject)
+		getProjectById(idProject, isLoggedIn)
 			.then((res) => {
 				setProject(res);
 				getOrganizationInformation(res.organization)
@@ -105,7 +107,7 @@ function ProjectView() {
 				console.error(err);
 				setError(err);
 			});
-	}, [idProject]);
+	}, [idProject, isLoggedIn]);
 
 	const openImageEnlarge = () => {
 		setModal({
@@ -122,11 +124,42 @@ function ProjectView() {
 			typeStyle: 'enlarge-image',
 		});
 	};
-
+	const openIncomeForm = () => {
+		const onSubmit = () => {
+			setModal({
+				isOpen: true,
+				type: 'init',
+				state: 'info',
+				children: (
+					<>Ваша заявка принята, организатор в скором времени свяжется с вами</>
+				),
+			});
+		};
+		setModal({
+			isOpen: true,
+			title: 'Заявка на участие в проекте',
+			children: (
+				<FormIncome
+					currentUser={currentUser}
+					onSubmit={onSubmit}
+					projectId={idProject}
+				/>
+			),
+			type: 'init',
+			state: 'info',
+		});
+	};
+	const openLoginForm = () => {
+		setModal({
+			isOpen: true,
+			children: <SignIn />,
+			type: 'init',
+			state: 'info',
+		});
+	};
 	if (error) {
 		return <NotFound />;
 	}
-
 	return (
 		<section className="project-view">
 			<div className="project-view__container">
@@ -154,12 +187,13 @@ function ProjectView() {
 						>
 							{' '}
 						</button>
-						<button
-							className="project-view__btn project-view__btn_type_like"
-							type="button"
-						>
-							{' '}
-						</button>
+						{isLoggedIn && (
+							<ProjectLikeButton
+								parent="project-view"
+								projectId={project.id}
+								isFavorited={project.is_favorited}
+							/>
+						)}
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
@@ -224,12 +258,7 @@ function ProjectView() {
 							<Button
 								theme="default"
 								size="l"
-								onClick={() =>
-									// eslint-disable-next-line no-alert
-									alert(
-										'открывается модалка для того чтобы войти в аккаунт или зарегистрироваться'
-									)
-								}
+								onClick={openLoginForm}
 								type="button"
 							>
 								Подать заявку на участие в проекте
@@ -239,10 +268,7 @@ function ProjectView() {
 							<Button
 								theme="default"
 								size="l"
-								onClick={() =>
-									// eslint-disable-next-line no-alert
-									alert('открывается модалка для заполнения заявки')
-								}
+								onClick={openIncomeForm}
 								type="button"
 							>
 								Подать заявку на участие в проекте

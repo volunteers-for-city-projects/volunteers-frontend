@@ -1,0 +1,13 @@
+.form-income {
+	box-sizing: border-box;
+	width: 100%;
+	input {
+		width: 300px;
+	}
+	.error-message_type-small {
+		width: 50%;
+	}
+	&__submit {
+		width: 100%;
+	}
+}

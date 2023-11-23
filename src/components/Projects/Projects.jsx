@@ -1,17 +1,19 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, Link } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { InputMask } from '@react-input/mask';
+// import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
-import Input from '../Input/Input';
+// import Input from '../Input/Input';
+import InputDateRange from '../InputDateRange/InputDateRange';
 import { Crumbs } from '../Crumbs/Crumbs';
 
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
+import { getAllProjects } from '../../utils/api/organizer';
 import Button from '../Button/Button';
-import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
@@ -20,14 +22,22 @@ function Projects() {
 	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
-	const { setIsLoading, skills, cities, projectCategories, currentUser } =
-		useOutletContext();
+
+	const {
+		isLoggedIn,
+		setIsLoading,
+		skills,
+		cities,
+		projectCategories,
+		currentUser,
+	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const { role } = currentUser;
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`, isLoggedIn)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -37,14 +47,15 @@ function Projects() {
 			})
 			.finally(setIsLoading(false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [isLoggedIn]);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrev(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			getAllProjects(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`,
+				isLoggedIn
 			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
@@ -67,6 +78,9 @@ function Projects() {
 			skills: '',
 		},
 	});
+	function handleProject(evt, id) {
+		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
+	}
 
 	return (
 		<section className="projects">
@@ -93,19 +107,13 @@ function Projects() {
 				</div>
 
 				<div className="projects__selects">
-					<InputMask
-						component={Input}
-						mask="__.__.____ - __.__.____"
-						replacement={{ _: /\d/ }}
-						onChange={formik.handleChange}
+					<InputDateRange
 						id="date"
 						name="date"
-						type="text"
 						label="Дата или период"
 						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
-						options={[]}
 						handleChange={formik.handleChange}
 						value={formik.values.date}
 					/>
@@ -116,7 +124,7 @@ function Projects() {
 						placeholder="Выберите город"
 						options={cities}
 						touched={formik.touched.city}
-						value={formik.values.city}
+						value={formik.values.city || []}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue('city', [
 								{
@@ -127,7 +135,6 @@ function Projects() {
 						}}
 						required
 					/>
-
 					<SelectOption
 						id="categories"
 						name="categories"
@@ -136,7 +143,7 @@ function Projects() {
 						options={projectCategories}
 						isMulti
 						width={400}
-						value={formik.values.categories}
+						value={formik.values.categories || []}
 						touched={formik.touched.categories}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
@@ -157,7 +164,7 @@ function Projects() {
 						options={skills}
 						isMulti
 						width={400}
-						value={formik.values.skills}
+						value={formik.values.skills || []}
 						touched={formik.touched.skills}
 						handleChange={(selectedOption) => {
 							formik.setFieldValue(
@@ -175,13 +182,16 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<Link
+							<div
+								role="presentation"
 								key={item.id}
 								className="projects__link"
-								to={`/projects/${item.id}`}
+								onClick={(evt) => {
+									handleProject(evt, item.id);
+								}}
 							>
 								<CardProject cardProject={item} />
-							</Link>
+							</div>
 						))}
 				</div>
 				<div className="projects__button">

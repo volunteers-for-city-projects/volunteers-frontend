@@ -12,7 +12,12 @@
 		position: relative;
 		cursor: pointer;
 	}
-
+	&__like-btn {
+		position: absolute;
+		top: 22px;
+		right: 16px;
+		z-index: 2;
+	}
 	&__overlay {
 		position: absolute;
 		top: 0;
@@ -133,6 +138,9 @@
 		}
 		&__name-title {
 			font-size: 23px;
+		}
+		&__status-buttons {
+			gap: 16px;
 		}
 	}
 }

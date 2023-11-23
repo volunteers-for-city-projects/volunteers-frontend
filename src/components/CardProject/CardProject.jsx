@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
+import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
+	const { isLoggedIn } = useOutletContext();
+
 	const {
 		name: nameProject,
 		city,
@@ -12,6 +15,7 @@ function CardProject({ cardProject }) {
 		end_datetime: time,
 		picture: image,
 		id: projectId,
+		is_favorited: isFavorited,
 	} = cardProject;
 
 	const location = useLocation();
@@ -34,6 +38,22 @@ function CardProject({ cardProject }) {
 								<button className="card__status-btn"> </button>
 							) : (
 								''
+							)}
+							{pageProfile ? (
+								<ProjectLikeButton
+									parent="card__status-btn"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							) : (
+								''
+							)}
+							{isLoggedIn && (
+								<ProjectLikeButton
+									parent="card"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
 							)}
 						</div>
 					</div>
@@ -67,6 +87,7 @@ CardProject.propTypes = {
 		isModeration: PropTypes.bool,
 		picture: PropTypes.string,
 		id: PropTypes.number,
+		is_favorited: PropTypes.bool,
 	}),
 };
 
