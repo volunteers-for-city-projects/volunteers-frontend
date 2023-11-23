@@ -12,7 +12,12 @@
 		position: relative;
 		cursor: pointer;
 	}
-
+	&__like-btn {
+		position: absolute;
+		top: 22px;
+		right: 16px;
+		z-index: 2;
+	}
 	&__overlay {
 		position: absolute;
 		top: 0;
