@@ -14,6 +14,7 @@ import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
+import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import SignIn from '../SignIn/SignIn';
 
@@ -49,7 +50,6 @@ function ProjectView() {
 		title: '',
 	});
 	const [error, setError] = useState(null);
-
 	const crumbs = [
 		{
 			id: 1,
@@ -94,7 +94,7 @@ function ProjectView() {
 		);
 
 	useEffect(() => {
-		getProjectById(idProject)
+		getProjectById(idProject, isLoggedIn)
 			.then((res) => {
 				setProject(res);
 				getOrganizationInformation(res.organization)
@@ -107,7 +107,7 @@ function ProjectView() {
 				console.error(err);
 				setError(err);
 			});
-	}, [idProject]);
+	}, [idProject, isLoggedIn]);
 
 	const openImageEnlarge = () => {
 		setModal({
@@ -160,7 +160,6 @@ function ProjectView() {
 	if (error) {
 		return <NotFound />;
 	}
-
 	return (
 		<section className="project-view">
 			<div className="project-view__container">
@@ -188,12 +187,13 @@ function ProjectView() {
 						>
 							{' '}
 						</button>
-						<button
-							className="project-view__btn project-view__btn_type_like"
-							type="button"
-						>
-							{' '}
-						</button>
+						{isLoggedIn && (
+							<ProjectLikeButton
+								parent="project-view"
+								projectId={project.id}
+								isFavorited={project.is_favorited}
+							/>
+						)}
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">

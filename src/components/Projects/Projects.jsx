@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, Link } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -11,8 +11,9 @@ import { Crumbs } from '../Crumbs/Crumbs';
 
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
+import { getAllProjects } from '../../utils/api/organizer';
 import Button from '../Button/Button';
-import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
@@ -21,14 +22,22 @@ function Projects() {
 	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
-	const { setIsLoading, skills, cities, projectCategories, currentUser } =
-		useOutletContext();
+
+	const {
+		isLoggedIn,
+		setIsLoading,
+		skills,
+		cities,
+		projectCategories,
+		currentUser,
+	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const { role } = currentUser;
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`, isLoggedIn)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -38,14 +47,15 @@ function Projects() {
 			})
 			.finally(setIsLoading(false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [isLoggedIn]);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrev(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			getAllProjects(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`,
+				isLoggedIn
 			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
@@ -68,6 +78,9 @@ function Projects() {
 			skills: '',
 		},
 	});
+	function handleProject(evt, id) {
+		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
+	}
 
 	return (
 		<section className="projects">
@@ -169,13 +182,16 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<Link
+							<div
+								role="presentation"
 								key={item.id}
 								className="projects__link"
-								to={`/projects/${item.id}`}
+								onClick={(evt) => {
+									handleProject(evt, item.id);
+								}}
 							>
 								<CardProject cardProject={item} />
-							</Link>
+							</div>
 						))}
 				</div>
 				<div className="projects__button">
