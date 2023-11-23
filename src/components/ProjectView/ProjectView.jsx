@@ -18,7 +18,6 @@ import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import SignIn from '../SignIn/SignIn';
 
-
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
 		useOutletContext();
