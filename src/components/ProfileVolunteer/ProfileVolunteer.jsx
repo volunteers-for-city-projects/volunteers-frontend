@@ -177,8 +177,8 @@ function ProfileVolunteer() {
 							)}
 
 							{cardsProjectsArray.length >= 6 && (
-								<div className="profile__button">
-									<Button className="profile__button-item" size="xs">
+								<div className="projects__button">
+									<Button className="projects__button-item" size="xs">
 										Показать еще
 									</Button>
 								</div>
