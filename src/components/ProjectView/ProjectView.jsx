@@ -15,7 +15,6 @@ import { getOrganizationInformation } from '../../utils/api/profile';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import FormIncome from '../FormIncome/FormIncome';
-import SignIn from '../SignIn/SignIn';
 import ModalContent from '../ModalContent/ModalContent';
 
 function ProjectView() {
@@ -154,9 +153,29 @@ function ProjectView() {
 		});
 	};
 	const openLoginForm = () => {
+		const login = (link) => {
+			setModal({ isOpen: false });
+			navigate(link);
+		};
 		setModal({
 			isOpen: true,
-			children: <SignIn />,
+			children: (
+				<ModalContent
+					icon="key"
+					text="Для подачи заявки необходимо авторизоваться"
+				>
+					<Button theme="default" size="s" onClick={() => login('/login')}>
+						Войти
+					</Button>
+					<Button
+						theme="neutral"
+						size="s"
+						onClick={() => login('/registration/volunteer')}
+					>
+						Регистрация
+					</Button>
+				</ModalContent>
+			),
 			type: 'init',
 			state: 'info',
 		});
@@ -286,7 +305,7 @@ function ProjectView() {
 										theme="default"
 										size="l"
 										// eslint-disable-next-line no-alert
-										onClick={() => alert('открывается страничка с участниками')}
+										onClick={() => navigate('participants')}
 										type="button"
 									>
 										Участники проекта
@@ -295,7 +314,7 @@ function ProjectView() {
 										theme="default"
 										size="l"
 										// eslint-disable-next-line no-alert
-										onClick={() => alert('открывается страничка с заявками')}
+										onClick={() => navigate('incomes')}
 										type="button"
 									>
 										Посмотреть заявки

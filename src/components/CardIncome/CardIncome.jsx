@@ -1,20 +1,14 @@
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
+// import { useState } from 'react';
+
 import PropTypes from 'prop-types';
 import Button from '../Button/Button';
-import Modal from '../Modal/Modal';
+
 import './CardIncome.scss';
 import { bemClassHelper } from '../../utils/utils';
 
 import imgProfile from '../../images/fotoProfile.svg';
 import ModalContent from '../ModalContent/ModalContent';
 
-const handleError = (e) => {
-	console.error(e); // TODO display error
-};
-const handleSuccess = (e) => {
-	console.log(e); // TODO display message
-};
 /**
  * @typedef {import('../../classes/ProjectIncome').default} ProjectIncome
  * @param {Object} obj
@@ -22,16 +16,22 @@ const handleSuccess = (e) => {
  * @param {''|'accepted'} obj.layout
  * @returns
  */
-function CardIncome({ income, layout }) {
-	const [modal, setModal] = useState();
+function CardIncome({
+	income,
+	layout,
+	handleAccept,
+	handleRemove,
+	handleReject,
+	setModal,
+}) {
 	if (!income) return '';
 
-	/* Вспомогательная функция для формирования классов */
 	const baseClass = 'card-income';
-	const bem = bemClassHelper(baseClass);
-
+	const bem =
+		bemClassHelper(
+			baseClass
+		); /* Вспомогательная функция для формирования классов */
 	const { volunteer } = income;
-
 	const fio = volunteer.user.getFullName();
 	const modalParam = {
 		isOpen: true,
@@ -42,26 +42,16 @@ function CardIncome({ income, layout }) {
 	};
 
 	/* переменные для работы с модалкми */
-	const closeModal = () => setModal();
+	const closeModal = () => setModal({ ...modalParam, isOpen: false });
 	const openModal = (modalTitle, modalContent) =>
 		setModal({ ...modalParam, children: modalContent, title: modalTitle });
 
-	/* actions */
-	const handleReject = () => {
-		income.reject().then(handleSuccess).catch(handleError);
-	};
-	const handleAccept = () => {
-		income.accept().then(handleSuccess).catch(handleError);
-	};
-	const handleRemoveParticipant = () => {
-		income
-			.delete()
-			.then(() => closeModal())
-			.catch((e) => handleError(e))
-			.finally(() => closeModal());
-	};
 	/* Элементы вьюшек */
-	const title = <h2 className={bem('#__title')}>{fio}</h2>;
+	const title = (
+		<h2 className={bem('#__title')}>
+			{fio} --- {income.statusIncomes} --- {income.id}
+		</h2>
+	);
 	const photo = (
 		<img
 			className={bem('#__photo')}
@@ -75,26 +65,6 @@ function CardIncome({ income, layout }) {
 			<p>{volunteer.getSkillsAsString()}</p>
 		</div>
 	);
-	const actionDecline = (
-		<Button
-			size="s"
-			theme="opposite"
-			className={bem('#__action')}
-			onClick={handleReject}
-		>
-			Отклонить заявку
-		</Button>
-	);
-	const actionAccept = (
-		<Button
-			size="s"
-			theme="default"
-			className={bem('#__action')}
-			onClick={handleAccept}
-		>
-			Принять заявку
-		</Button>
-	);
 	const about = (
 		<div className={bem('#__about')}>
 			<h4>Город: </h4>
@@ -102,7 +72,7 @@ function CardIncome({ income, layout }) {
 
 			<h4>Контактные данные:</h4>
 			<span>{volunteer.phone}</span>
-			<spa>{volunteer.user.email}</spa>
+			<span>{volunteer.user.email}</span>
 		</div>
 	);
 
@@ -118,17 +88,6 @@ function CardIncome({ income, layout }) {
 		</p>
 	);
 
-	/* открыть анкету в модальном окне */
-	const handleOpenQuestionnaire = () => {
-		const modalTitle = 'Заявка волонтера';
-		const modalContent = (
-			<div className={bem(baseClass, '#_layout_popup')}>
-				{photo} {coverLetter} {title} {about} {actionDecline} {actionAccept}
-			</div>
-		);
-		openModal(modalTitle, modalContent);
-	};
-
 	/* открыть модальное окно подтверждения удаления участника */
 	const openConfirmRemove = () => {
 		const modalTitle = 'Удаление участника проекта';
@@ -140,24 +99,58 @@ function CardIncome({ income, layout }) {
 				<Button size="s" theme="opposite" onClick={closeModal}>
 					Отменить
 				</Button>
-				<Button size="s" onClick={handleRemoveParticipant}>
+				<Button size="s" onClick={() => handleRemove(income)}>
 					Удалить участника
 				</Button>
 			</ModalContent>
 		);
 		openModal(modalTitle, modalContent);
 	};
+
 	/* Кнопки */
-	const buttonAnket = (
+	const buttonRemove = (
+		<button
+			className={bem(`#__button-remove`)}
+			onClick={openConfirmRemove}
+			title="remove"
+		>
+			{}
+		</button>
+	);
+	const buttonReject = (
 		<Button
 			size="s"
-			theme="neutral"
-			className={`${baseClass}__button`}
-			onClick={handleOpenQuestionnaire}
+			theme="opposite"
+			className={bem('#__action')}
+			onClick={() => handleReject(income)}
 		>
-			Анкета
+			Отклонить заявку
 		</Button>
 	);
+	const buttonAccept = (
+		<Button
+			size="s"
+			theme="default"
+			className={bem('#__action')}
+			onClick={() => handleAccept(income)}
+		>
+			Принять заявку
+		</Button>
+	);
+
+	/* открыть анкету в модальном окне */
+	const handleOpenQuestionnaire = () => {
+		const modalTitle = 'Заявка волонтера';
+		const modalContent = (
+			<div className={bem(baseClass, '#_layout_modal')}>
+				{photo} {coverLetter} {title} {about}
+				<div className={bem('#__buttons')}>
+					{buttonReject} {buttonAccept}
+				</div>
+			</div>
+		);
+		openModal(modalTitle, modalContent);
+	};
 	const buttonAbout = (
 		<Button
 			size="s"
@@ -168,14 +161,15 @@ function CardIncome({ income, layout }) {
 			О волонтере
 		</Button>
 	);
-	const buttonRemove = (
-		<button
-			className={bem(`#__button-remove`)}
-			onClick={openConfirmRemove}
-			title="remove"
+	const buttonAnket = (
+		<Button
+			size="s"
+			theme="neutral"
+			className={`${baseClass}__button`}
+			onClick={handleOpenQuestionnaire}
 		>
-			{}
-		</button>
+			Анкета
+		</Button>
 	);
 
 	/* Формирование отображаемого содержимого */
@@ -196,27 +190,20 @@ function CardIncome({ income, layout }) {
 			viewLayout = 'default';
 			view = (
 				<>
-					{title} {photo} {buttonAnket} {desc} {actionDecline} {actionAccept}{' '}
+					{title} {photo} {buttonAnket} {desc} {buttonReject} {buttonAccept}{' '}
 				</>
 			);
 	}
-	const modalView = modal
-		? createPortal(
-				<Modal modal={modal} closeModal={closeModal} />,
-				document.body
-		  )
-		: '';
 
-	return (
-		<>
-			<div className={bem('#', `#_layout_${viewLayout}`)}>{view}</div>
-			{modalView}
-		</>
-	);
+	return <div className={bem('#', `#_layout_${viewLayout}`)}>{view}</div>;
 }
 CardIncome.propTypes = {
 	income: PropTypes.objectOf(CardIncome).isRequired,
-	layout: PropTypes.oneOf(['accepted', 'default']),
+	layout: PropTypes.oneOf(['application_submitted', 'accepted', 'default']),
+	handleAccept: PropTypes.func.isRequired,
+	handleRemove: PropTypes.func.isRequired,
+	handleReject: PropTypes.func.isRequired,
+	setModal: PropTypes.func.isRequired,
 };
 CardIncome.defaultProps = {
 	layout: 'default',

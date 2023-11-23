@@ -46,6 +46,12 @@ class ProjectIncome extends AbstractEntity {
 	 * @type {Date} Дата создания заявки  readOnly */
 	createdAt;
 
+	phone;
+
+	telegram;
+
+	cover_letter;
+
 	getStatusText() {
 		return STATUS_MESSAGES[this.statusIncomes];
 	}
@@ -137,7 +143,7 @@ class ProjectIncome extends AbstractEntity {
 			phone,
 			email,
 			telegram,
-			letter,
+			cover_letter: letter,
 			project: projectId,
 			volunteer: userId,
 		});

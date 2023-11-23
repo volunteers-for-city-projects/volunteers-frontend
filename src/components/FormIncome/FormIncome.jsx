@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { InputMask } from '@react-input/mask';
 import { useFormik } from 'formik';
@@ -8,9 +9,25 @@ import { IncomeFormSchema } from '../../utils/validationSchemas/IncomeFormSchema
 import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 import Button from '../Button/Button';
 import ProjectIncome from '../../classes/ProjectIncome';
+import PopupWindow from '../PopupWindow/PopupWindow';
 import './FormIncome.scss';
 
 function FormIncome({ currentUser, onSubmit, projectId }) {
+	const [popup, setPopup] = useState({ isOpen: false });
+	const openPopup = (text, type, errorArray = []) => {
+		setPopup({
+			text,
+			type,
+			isOpen: true,
+			errorArray,
+		});
+		setTimeout(() => {
+			setPopup({
+				isOpen: false,
+			});
+		}, 3000);
+	};
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
@@ -21,10 +38,10 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 			letter: '',
 		},
 		validationSchema: IncomeFormSchema,
-		onSubmit: async () => {
+		onSubmit: () => {
 			ProjectIncome.createNew(formik.values, currentUser.id, projectId)
 				.then(() => onSubmit())
-				.catch((e) => console.log(e));
+				.catch((e) => openPopup('', 'error', e));
 		},
 	});
 
@@ -92,6 +109,8 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 			<Button type="submit" className="form-income__submit">
 				Подать заявку на участие в проекте
 			</Button>
+
+			{popup?.isOpen && <PopupWindow {...popup} />}
 		</form>
 	);
 }

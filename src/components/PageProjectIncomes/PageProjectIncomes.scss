@@ -20,4 +20,10 @@
 		font-weight: 400;
 		line-height: 130%;
 	}
+	&__incomes {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 50px;
+	}
+	
 }
