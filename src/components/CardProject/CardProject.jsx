@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
 
-import { useLocation, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
-
 	const { isLoggedIn } = useOutletContext();
-	const location = useLocation();
-	const pageProfile = location.pathname === '/profile/organizer';
 
 	const {
 		name: nameProject,
@@ -33,12 +30,12 @@ function CardProject({ cardProject }) {
 						<ShowProjectStatus cardProject={cardProject} />
 						<div className="card__status-buttons">
 							{isLoggedIn && (
-				<ProjectLikeButton
-					parent="card"
-					projectId={projectId}
-					isFavorited={isFavorited}
-				/>
-			)}
+								<ProjectLikeButton
+									parent="card"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							)}
 						</div>
 					</div>
 					<div className="card__description">

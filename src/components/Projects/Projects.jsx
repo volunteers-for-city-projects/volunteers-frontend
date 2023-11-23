@@ -23,9 +23,15 @@ function Projects() {
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 
-	const { isLoggedIn, setIsLoading, skills, cities, projectCategories } =
-		useOutletContext();
-  
+	const {
+		isLoggedIn,
+		setIsLoading,
+		skills,
+		cities,
+		projectCategories,
+		currentUser,
+	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const { role } = currentUser;
 
