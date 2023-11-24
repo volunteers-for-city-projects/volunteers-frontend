@@ -245,6 +245,8 @@ function ProfileOrganization() {
 				skills,
 				projectCategories,
 				setModal,
+				projectsMe,
+				setProjectsMe,
 			}}
 		/>
 	);

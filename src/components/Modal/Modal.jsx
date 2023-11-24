@@ -10,6 +10,7 @@ import modalSuccess from '../../images/modals/success.png';
 import modalError from '../../images/modals/error.png';
 import modalCity from '../../images/modals/city.png';
 import modalPasswordSuccess from '../../images/modals/key-image.png';
+import modalDeleteCardProject from '../../images/modals/modalDeleteCardProject.png';
 
 function Modal({ modal, closeModal }) {
 	const {
@@ -115,6 +116,18 @@ function Modal({ modal, closeModal }) {
 					'Информация о вашем проекте сохранена! Он будет доступен в личном кабинете',
 				textButton: '',
 				image: modalCity,
+			},
+		},
+		deleteCardProject: {
+			info: {
+				title: 'Вы уверены, что хотите удалить проект ?',
+				textButton: '',
+				image: modalDeleteCardProject,
+			},
+			success: {
+				title: 'Ваш проект удален',
+				textButton: '',
+				image: modalSuccess,
 			},
 		},
 	};
@@ -301,6 +314,36 @@ function Modal({ modal, closeModal }) {
 				</>
 			),
 		},
+		deleteCardProject: {
+			info: (
+				<>
+					<p className="modal__text modal__text_type_confirm">
+						{contentText[type][state].title}
+					</p>
+					<div className="modal__buttons">
+						<Pushbutton
+							label="Отменить"
+							color="#FFF"
+							backgroundColor="#F78254"
+							size="pre-large"
+							type="button"
+							minWidth="280px"
+							border="none"
+							onClick={closeModal}
+						/>
+						<Pushbutton
+							label="Удалить проект"
+							color="#FFF"
+							backgroundColor="#A6C94F"
+							size="pre-large"
+							type="submit"
+							minWidth="280px"
+							border="1px solid #A6C94F"
+						/>
+					</div>
+				</>
+			),
+		},
 	};
 
 	return (
@@ -328,9 +371,11 @@ function Modal({ modal, closeModal }) {
 							className={clsx('modal__image', {
 								modal__image_type_confirm: type === 'confirm',
 								modal__image_type_success: state === 'success',
+
 								modal__image_type_project:
 									type === 'project' || type === 'draft',
 								'modal__image_type_change-password': type === 'changePassword',
+								'modal__image_type_delete-card': type === 'deleteCardProject',
 							})}
 							src={contentText[type][state].image}
 							alt={`${type} ${state}`}
