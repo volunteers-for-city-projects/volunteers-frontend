@@ -342,7 +342,7 @@ function Project() {
 					project_events: values.events || '',
 					organizer_provides: values.provide || '',
 					organization: currentUser.id,
-					city: null,
+					city: values.city !== null ? values.city[0].value : null,
 					categories:
 						values.categoryProject?.map((options) => options.value) || [],
 					skills: values.skills?.map((options) => options.value) || [],
