@@ -41,7 +41,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 		onSubmit: () => {
 			ProjectIncome.createNew(formik.values, currentUser.id, projectId)
 				.then(() => onSubmit())
-				.catch((e) => openPopup('', 'error', e));
+				.catch((e) => openPopup(e, 'error'));
 		},
 	});
 

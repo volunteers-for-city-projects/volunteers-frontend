@@ -1,20 +1,20 @@
 .modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 675px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 675px;
 
-    &__icon{
-        width: 150px;        
-    }
-    &__text {
-        font-size: 23px;
-        font-weight: 500;
-    }
-    &__additional{
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        width: 100%;
-    }
+	&__icon {
+		width: 150px;
+	}
+	&__text {
+		font-size: 23px;
+		font-weight: 500;
+	}
+	&__additional {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		width: 100%;
+	}
 }

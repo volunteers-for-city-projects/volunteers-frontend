@@ -1,13 +1,13 @@
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
-import { useOutletContext, useParams, Link } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bemClassHelper } from '../../utils/utils';
 import Project from '../../classes/Project';
 import { STATUS_SUBBMITED, STATUS_ACCEPTED } from '../../classes/ProjectIncome';
 import CardIncome from '../CardIncome/CardIncome';
 import PopupWindow from '../PopupWindow/PopupWindow';
-import arrow from '../../images/icon-strelka.svg';
+import Button from '../Button/Button';
 import './PageProjectIncomes.scss';
 
 /**
@@ -17,7 +17,9 @@ import './PageProjectIncomes.scss';
  * @returns
  */
 function PageProjectIncomes({ status }) {
+	const navigate = useNavigate();
 	const [popup, setPopup] = useState({ isOpen: false });
+	const [displayCount, setDisplayCount] = useState(6);
 
 	/** @type {[Project, @callback]} */
 	const [project, setProject] = useState();
@@ -116,67 +118,41 @@ function PageProjectIncomes({ status }) {
 	const baseClass = 'page-project-incomes';
 	const bem = bemClassHelper(baseClass, '#');
 
+	const parentUrl = `/projects/${project.id}`;
+
 	let title = '';
-	let pageName = '';
+	let button = '';
 	switch (status) {
 		case STATUS_ACCEPTED:
 			title = 'Участников проекта';
-			pageName = 'Участники';
+			button = (
+				<Button size="m" onClick={() => navigate(`${parentUrl}/incomes`)}>
+					Заявки участников
+				</Button>
+			);
 			break;
 		case STATUS_SUBBMITED:
 			title = 'Заявок подано';
-			pageName = 'Заявки';
+			button = (
+				<Button size="m" onClick={() => navigate(`${parentUrl}/participants`)}>
+					Заявки участников
+				</Button>
+			);
 			break;
 		default:
 			throw new Error('Bad status value in PageProjectIncomes');
 	}
-	const crumbs = [
-		{
-			id: 1,
-			text: 'Главная',
-			path: '/',
-		},
-		{
-			id: 2,
-			text: 'Проекты',
-			path: '/projects',
-		},
-		{
-			id: 3,
-			text: `Проект «${project.name.trim()}»`,
-			path: `/projects/${project.id}`,
-		},
-		{
-			id: 4,
-			text: pageName,
-			path: window.location,
-		},
-	];
+
 	return (
 		<section className={baseClass}>
-			<ul className="crumbs">
-				{crumbs.map((item) => (
-					<li key={item.id} className="crumbs__item">
-						<Link to={item.path} className="router__link">
-							{' '}
-							{item.text}{' '}
-						</Link>
-
-						{item.id !== 4 && (
-							<img className="crumbs__separator" src={arrow} alt="стрелка" />
-						)}
-					</li>
-				))}
-			</ul>
-
-			<h2 className={bem('#__title')}>«{project.name}»</h2>
-			<h4 className={bem('#__address')}>{project.eventAddress.addressLine}</h4>
-			<h3 className={bem('#__count')}>
-				{title}: {incomes.length}
-			</h3>
-
+			<div className={bem('#__head')}>
+				<h3 className={bem('#__count')}>
+					{title}: {incomes.length}
+				</h3>
+				{button}
+			</div>
 			<div className={bem('#__incomes')}>
-				{incomes.map((income) => (
+				{incomes.slice(0, displayCount).map((income) => (
 					<CardIncome
 						income={income}
 						key={income.id}
@@ -188,6 +164,17 @@ function PageProjectIncomes({ status }) {
 					/>
 				))}
 			</div>
+			{incomes.length > displayCount ? (
+				<Button
+					onClick={() => setDisplayCount((old) => old + 3)}
+					className={bem('#__button-more')}
+					size="xs"
+				>
+					Показать еще
+				</Button>
+			) : (
+				''
+			)}
 
 			{popup?.isOpen &&
 				createPortal(

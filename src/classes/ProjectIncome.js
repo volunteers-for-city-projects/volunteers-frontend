@@ -79,7 +79,9 @@ class ProjectIncome extends AbstractEntity {
 	 * @returns {Promise{}}
 	 */
 	accept() {
-		return acceptIncome(this.id);
+		return acceptIncome(this.id).then(() => {
+			this.statusIncomes = STATUS_ACCEPTED;
+		});
 	}
 
 	// DELETE /incomes/{id}/delete_incomes/
