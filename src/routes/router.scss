@@ -8,6 +8,9 @@
 	font-weight: 500;
 	line-height: 130%;
 	text-decoration: none;
+	&_mane {
+		color: rgba(0, 0, 0, 0.6);
+	}
 
 	&:hover {
 		opacity: 0.7;

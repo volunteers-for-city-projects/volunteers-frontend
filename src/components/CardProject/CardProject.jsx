@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-
-import { useOutletContext } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
+import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
@@ -17,6 +17,9 @@ function CardProject({ cardProject }) {
 		id: projectId,
 		is_favorited: isFavorited,
 	} = cardProject;
+
+	const location = useLocation();
+	const pageProfile = location.pathname === '/profile/organizer';
 
 	return (
 		<article
@@ -35,6 +38,22 @@ function CardProject({ cardProject }) {
 									projectId={projectId}
 									isFavorited={isFavorited}
 								/>
+							)}
+
+							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
+							{pageProfile ? (
+								<button className="card__status-btn"> </button>
+							) : (
+								''
+							)}
+							{pageProfile ? (
+								<ProjectLikeButton
+									parent="profile-org"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							) : (
+								''
 							)}
 						</div>
 					</div>

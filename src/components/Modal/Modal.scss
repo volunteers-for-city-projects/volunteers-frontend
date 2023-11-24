@@ -99,7 +99,7 @@
 
 	&__image_type_project {
 		width: 362px;
-		height: 132px;
+		height: 137px;
 	}
 
 	&__image_type_change-password {
@@ -119,6 +119,13 @@
 	&__text_type_confirm {
 		font-size: 28px;
 		font-weight: 500;
+	}
+
+	&__text_type_wrong {
+		font-family: $--Font-Primary;
+		font-weight: 500;
+		line-height: 130%; /* 29.9px */
+		color: $--Wrong;
 	}
 
 	&__buttons {
