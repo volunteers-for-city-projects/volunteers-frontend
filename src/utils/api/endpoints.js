@@ -25,3 +25,4 @@ export const ENDPOINT_RESEND_ACTIVATION_USER = 'auth/resend_activation/';
 
 export const ENDPOINT_ORGANIZER_PROJECT_CATEGORIES = 'project_categories/';
 export const ENDPOINT_ORGANIZER_PROJECTS = 'projects/';
+export const ENDPOINT_ORGANIZER_PROJECTS_DRAFT = 'projects/draft/';

@@ -8,7 +8,7 @@ import CustomInput from '../CustomInput/CustomInput';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { createProject } from '../../utils/api/organizer';
+import { createProject, createProjectAsDraft } from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
 import CustomTextarea from '../CustomTextarea/CustomTextarea';
 
@@ -18,6 +18,7 @@ function Project() {
 	const [image, setImage] = useState('');
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
+	const nameRef = useRef(null);
 
 	const projectValues = {
 		name: '',
@@ -133,39 +134,125 @@ function Project() {
 			.required('Поле обязательно для заполнения'),
 	});
 
-	const dateTimeFormatter = (date, time) => {
+	// Принимает строку диапазона дат и возвращает массив из даты начала и даты окончания
+	// Например: DD.MM.YYYY - DD.MM.YYYY => [{DD.MM.YYYY}, {DD.MM.YYYY}]
+	const dateRangeParser = (rangeDateString) => {
+		let result = null;
+		if (rangeDateString?.length > 0) {
+			const dateStringArray = rangeDateString.split('-');
+			if (dateStringArray.length > 1) {
+				const beginDateString = dateStringArray[0].trim();
+				const endDateString = dateStringArray[1].trim();
+				result = [beginDateString, endDateString];
+			}
+		}
+		return result;
+	};
+
+	// Принимает строку временного диапазона и возвращает массив из времени начала и времени окончания
+	// Например: HH:mm - HH:mm => [{HH:mm}, {HH:mm}]
+	const timeRangeParser = (rangeTimeString) => {
+		let result = null;
+		if (rangeTimeString?.length > 0) {
+			const timeStringArray = rangeTimeString.split('-');
+			if (timeStringArray.length > 1) {
+				const beginTimeString = timeStringArray[0].trim();
+				const endTimeString = timeStringArray[1].trim();
+				result = [beginTimeString, endTimeString];
+			}
+		}
+		return result;
+	};
+
+	// Возвращает дату и время в указанном формате
+	const dateTimeFormatter = (date, time, formatString) => {
+		let result = null;
 		const parsePattern = 'DD.MM.YYYY HH:mm';
-		const formatPattern = 'YYYY-MM-DDTHH:mm:ss.000Z';
-		return moment(`${date} ${time}`, parsePattern).format(formatPattern);
+		if (date?.length > 0 && time?.length > 0) {
+			result = moment(`${date} ${time}`, parsePattern);
+		}
+		return result.format(formatString);
+	};
+
+	// Преобразует все строки даты и времени в экземпляры datetime
+	const startEndDateTimes = (date, timeRange, submissionDate) => {
+		const dateTimeFormatPattern = 'YYYY-MM-DD HH:mm:ss';
+		const dateRangeArray = dateRangeParser(date);
+		console.info(`dateRangeArray`, dateRangeArray);
+		const timeRangeArray = timeRangeParser(timeRange);
+		console.info(`timeRangeArray`, timeRangeArray);
+
+		let startDatetime;
+		let endDatetime;
+		if (dateRangeArray === null || timeRangeArray === null) {
+			startDatetime = null;
+			endDatetime = null;
+		} else {
+			startDatetime = dateTimeFormatter(
+				dateRangeArray[0],
+				timeRangeArray[0],
+				dateTimeFormatPattern
+			);
+			endDatetime = dateTimeFormatter(
+				dateRangeArray[1],
+				timeRangeArray[1],
+				dateTimeFormatPattern
+			);
+		}
+
+		const submissionDateRangeArray = dateRangeParser(submissionDate);
+		console.info(`submissionDateRangeArray`, submissionDateRangeArray);
+
+		let startDateApplication;
+		let endDateApplication;
+		if (submissionDateRangeArray === null) {
+			startDateApplication = null;
+			endDateApplication = null;
+		} else {
+			startDateApplication = dateTimeFormatter(
+				submissionDateRangeArray[0],
+				'00:00',
+				dateTimeFormatPattern
+			);
+			endDateApplication = dateTimeFormatter(
+				submissionDateRangeArray[1],
+				'23:59',
+				dateTimeFormatPattern
+			);
+		}
+		return {
+			startDatetime,
+			endDatetime,
+			startDateApplication,
+			endDateApplication,
+		};
 	};
 
 	const handleSubmit = async (values) => {
 		try {
+			const {
+				startDatetime,
+				endDatetime,
+				startDateApplication,
+				endDateApplication,
+			} = startEndDateTimes(
+				values.date,
+				values.timeRange,
+				values.submissionDate
+			);
 			await createProject({
 				name: values.name,
 				description: values.description,
 				picture: image,
-				start_datetime: dateTimeFormatter(
-					values.date.split('-')[0].trim(),
-					values.timeRange.split('-')[0].trim()
-				),
-				end_datetime: dateTimeFormatter(
-					values.date.split('-')[1].trim(),
-					values.timeRange.split('-')[1].trim()
-				),
-				start_date_application: dateTimeFormatter(
-					values.submissionDate.split('-')[0].trim(),
-					'00:00'
-				),
-				end_date_application: dateTimeFormatter(
-					values.submissionDate.split('-')[1].trim(),
-					'23:59'
-				),
+				start_datetime: startDatetime,
+				end_datetime: endDatetime,
+				start_date_application: startDateApplication,
+				end_date_application: endDateApplication,
 				event_purpose: values.goal,
 				event_address: {
 					address_line: values.address,
-					street: 'street',
-					house: 'house',
+					street: 'Улица',
+					house: 'Дом',
 					block: '',
 					building: '',
 				},
@@ -173,9 +260,9 @@ function Project() {
 				project_events: values.events,
 				organizer_provides: values.provide,
 				organization: currentUser.id,
-				city: values.city,
-				categories: values.categoryProject,
-				skills: values.skills,
+				city: values.city[0].value,
+				categories: values.categoryProject.map((options) => options.value),
+				skills: values.skills.map((options) => options.value),
 			});
 			setModal({
 				isOpen: true,
@@ -190,6 +277,7 @@ function Project() {
 					});
 				},
 			});
+			localStorage.removeItem('draft');
 		} catch (error) {
 			if (Array.isArray(error)) {
 				setModal({
@@ -213,17 +301,52 @@ function Project() {
 		onSubmit: handleSubmit,
 	});
 
-	const nameRef = useRef(null);
-
 	// При сохранении проекта как черновика обязательное поле только одно - Имя проекта
 	// при этом localstorage очищается
-	const handleDraftSaveClick = (values, errors) => {
+	const handleDraftSaveClick = async (values, errors) => {
 		try {
-			console.info(values);
-			console.info(errors);
 			if (errors?.name) {
 				nameRef.current.focus();
 			} else {
+				const {
+					startDatetime,
+					endDatetime,
+					startDateApplication,
+					endDateApplication,
+				} = startEndDateTimes(
+					values.date,
+					values.timeRange,
+					values.submissionDate
+				);
+
+				await createProjectAsDraft({
+					name: values.name,
+					description: values.description || '',
+					picture: image || null,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal || '',
+					event_address:
+						values.address?.length > 0
+							? {
+									address_line: values.address,
+									street: 'улицв',
+									house: '10',
+									block: '',
+									building: '',
+							  }
+							: null,
+					project_tasks: values.tasks || '',
+					project_events: values.events || '',
+					organizer_provides: values.provide || '',
+					organization: currentUser.id,
+					city: null,
+					categories:
+						values.categoryProject?.map((options) => options.value) || [],
+					skills: values.skills?.map((options) => options.value) || [],
+				});
 				setModal({
 					isOpen: true,
 					title: 'Черновик проекта успешно сохранён',
@@ -243,16 +366,10 @@ function Project() {
 			console.error(error);
 			setModal({
 				isOpen: true,
-				title: 'Черновик не сохранён',
-				type: 'draft',
+				type: 'error',
 				state: 'info',
-				onSubmit: (event) => {
-					event.preventDefault();
-					navigate('/profile');
-					setModal({
-						isOpen: false,
-					});
-				},
+				title: 'Черновик не сохранён',
+				errorArray: error,
 			});
 		}
 	};
@@ -271,12 +388,27 @@ function Project() {
 					formik.setFieldValue('image', base64Data);
 					setImage(base64Data);
 				};
-				reader.readAsDataURL(file);
+				const dataUrl = reader.readAsDataURL(file);
+				console.log(dataUrl);
 				setIsFocused(false);
 			}
 		}
 	};
 
+	// useEffect(() => {
+	// 	if (image) {
+	// 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+	// 		localStorage.setItem(
+	// 			'draft',
+	// 			JSON.stringify({
+	// 				...currentDraft,
+	// 				image,
+	// 			})
+	// 		);
+	// 	}
+	// }, [image]);
+
+	//
 	const handleBlur = (e) => {
 		formik.handleBlur(e);
 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
@@ -569,6 +701,7 @@ function Project() {
 							backgroundColor="#A6C94F"
 							border="1px solid #A6C94F"
 							disabled={!formik.isValid}
+							type="submit"
 						/>
 						<Pushbutton
 							label="Сохранить как черновик"
@@ -578,6 +711,7 @@ function Project() {
 							backgroundColor="#FDFDFD"
 							border="1px solid #A6C94F"
 							onClick={() => handleDraftSaveClick(formik.values, formik.errors)}
+							type="button"
 						/>
 					</div>
 				</div>

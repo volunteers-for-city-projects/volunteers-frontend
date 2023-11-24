@@ -1,6 +1,7 @@
 import request from './request';
 import {
 	ENDPOINT_ORGANIZER_PROJECT_CATEGORIES,
+	ENDPOINT_ORGANIZER_PROJECTS_DRAFT,
 	ENDPOINT_ORGANIZER_PROJECTS,
 } from './endpoints';
 
@@ -31,8 +32,14 @@ const getAllProjects = () => request(ENDPOINT_ORGANIZER_PROJECTS, 'GET', null);
 
 const getNextPrev = (url) => request(url.slice(URL.length - 1), 'GET', null);
 
+const createProjectAsDraft = (value) => {
+	const token = localStorage.getItem('token');
+	return request(ENDPOINT_ORGANIZER_PROJECTS_DRAFT, 'POST', value, token);
+};
+
 export {
 	getProjectCategories,
+	createProjectAsDraft,
 	createProject,
 	getProjectById,
 	getAllProjects,
