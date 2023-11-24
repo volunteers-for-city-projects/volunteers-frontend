@@ -32,7 +32,14 @@ function CardProject({ cardProject }) {
 					<div className="card__status">
 						<ShowProjectStatus cardProject={cardProject} />
 						<div className="card__status-buttons">
-							{/*  блок для трёх кнопок: редактировать, удалить, лайк */}
+							{isLoggedIn && (
+								<ProjectLikeButton
+									parent="card"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							)}
+
 							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
 							{pageProfile ? (
 								<button className="card__status-btn"> </button>
@@ -41,19 +48,12 @@ function CardProject({ cardProject }) {
 							)}
 							{pageProfile ? (
 								<ProjectLikeButton
-									parent="card__status-btn"
+									parent="profile-org"
 									projectId={projectId}
 									isFavorited={isFavorited}
 								/>
 							) : (
 								''
-							)}
-							{isLoggedIn && (
-								<ProjectLikeButton
-									parent="card"
-									projectId={projectId}
-									isFavorited={isFavorited}
-								/>
 							)}
 						</div>
 					</div>

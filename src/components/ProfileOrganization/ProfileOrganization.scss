@@ -148,6 +148,11 @@
 		}
 	}
 
+	&__like-btn {
+		width: 24px;
+		height: 24px;
+	}
+
 	@media screen and (max-width: 1919px) {
 		&__menu {
 			margin-top: 20px;
