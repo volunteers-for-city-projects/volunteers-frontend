@@ -1,11 +1,11 @@
+import './CustomDateRange.scss';
 import DatePicker, { registerLocale } from 'react-datepicker';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ru } from 'date-fns/locale';
-import './react-datepicker.scss';
-import './CustomDateRange.scss';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import styled from 'styled-components';
 
 export default function CustomDateRange({
 	name,
@@ -32,36 +32,51 @@ export default function CustomDateRange({
 					{`${label}${required ? '*' : ''}`}
 				</label>
 			)}
-			<DatePicker
-				locale={ru}
-				dateFormat="dd.MM.yyyy"
-				name={name}
-				selectsRange
-				isClearable
-				type="text"
-				placeholderText={placeholder}
-				startDate={startDate}
-				endDate={endDate}
-				calendarClassName="calendar"
-				popperClassName="calendar"
-				wrapperClassName="calendar"
-				required={required}
-				autoComplete="off"
-				onChange={(v) => {
-					setDateRange(v);
-					console.log(v);
-				}}
-				className={clsx('custom-daterange-input__field', {
-					'custom-daterange-input__field-error': error,
-				})}
-				{...props}
-			/>
+			<Styles>
+				<DatePicker
+					locale={ru}
+					dateFormat="dd.MM.yyyy"
+					name={name}
+					selectsRange
+					isClearable
+					type="text"
+					placeholderText={placeholder}
+					startDate={startDate}
+					endDate={endDate}
+					required={required}
+					autoComplete="off"
+					onChange={(v) => {
+						setDateRange(v);
+						console.log(v);
+					}}
+					className={clsx('custom-daterange-input__field', {
+						'custom-daterange-input__field-error': error,
+					})}
+					{...props}
+				/>
+			</Styles>
 			<span className="custom-daterange-input__error-message">
 				{error && helperText}
 			</span>
 		</div>
 	);
 }
+
+const Styles = styled.div`
+	.react-datepicker-wrapper {
+		width: 100%;
+	}
+
+	.react-datepicker__close-icon {
+		padding: 0 13px 0 0;
+	}
+
+	.react-datepicker__close-icon::after {
+		background-color: transparent;
+		color: #333;
+		font-size: 26px;
+	}
+`;
 
 CustomDateRange.propTypes = {
 	name: PropTypes.string,
