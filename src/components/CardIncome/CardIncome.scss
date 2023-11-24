@@ -1,0 +1,73 @@
+@import '../../style/variables.scss';
+.card-income {
+	display: grid;
+	&__modal-remove {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		> img {
+			width: 150px;
+		}
+	}
+
+	&__modal-buttons {
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+	}
+	&__button-remove {
+		background: url('../../images/basket-colored.svg');
+		width: 40px;
+		height: 40px;
+		border: none;
+		justify-self: end;
+		cursor: pointer;
+	}
+	&__photo {
+		justify-self: center;
+	}
+	&_layout_default {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: repeat(4, auto);
+		row-gap: 20px;
+		column-gap: 28px;
+		> .card-income__title {
+			grid-column: 1/3;
+		}
+		> .card-income__photo {
+			grid-row: 2/4;
+		}
+	}
+	&_layout_accepted {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: repeat(4, auto);
+		row-gap: 20px;
+		column-gap: 28px;
+		> .card-income__title {
+			grid-column: 1/3;
+		}
+		> .card-income__photo {
+			grid-row: 2/5;
+			height: 100%;
+		}
+	}
+	&_layout_popup {
+		grid-template-columns: 2fr 1fr 1fr;
+		grid-template-rows: repeat(3, auto);
+		row-gap: 20px;
+		column-gap: 28px;
+		> .card-income__letter {
+			grid-column: 2/4;
+		}
+		> .card-income__title {
+			grid-column: 1/4;
+		}
+		> .card-income__about {
+			display: flex;
+			flex-direction: column;
+		}
+		> .card-income__action {
+			align-self: end;
+		}
+	}
+}

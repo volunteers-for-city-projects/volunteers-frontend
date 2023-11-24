@@ -1,12 +1,17 @@
 @import '../../style/variables.scss';
 
-.profile {
+.profile-org {
 	background: #fdfdfd;
-	margin: 0 auto;
-	max-width: 1920px;
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	&__container {
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+	}
 
-	&__menu-container {
-		margin-left: 130px;
+	&__menu {
 		margin-top: 30px;
 	}
 
@@ -17,8 +22,8 @@
 		margin-top: 50px;
 		background: $--White;
 		border-radius: 10px;
-		width: 676px;
-		padding: 20px 40px 0 40px;
+		width: 540px;
+		padding: 20px 0 20px 0;
 		box-sizing: border-box;
 		&-container {
 			display: flex;
@@ -55,17 +60,19 @@
 			font-weight: 500;
 			line-height: 28px;
 			color: $--Text;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
 	&__wrapper {
 		display: flex;
+		margin: 0 auto;
 		gap: 25px;
-		padding: 0 120px 0;
 		box-sizing: border-box;
 	}
 	&__projects {
-		width: 960px;
+		width: 1099px;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
@@ -97,9 +104,10 @@
 			flex-direction: column;
 			gap: 32px;
 		}
+
 		&-cards {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(468px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(468px, 1fr));
 			gap: 20px;
 		}
 	}
@@ -108,6 +116,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		min-height: 675px;
 		&-title {
 			font-size: 23px;
 			font-style: normal;
@@ -116,41 +125,60 @@
 			margin: 10px 0 0;
 			color: $--Text;
 		}
+		&-picture {
+			display: flex;
+			justify-content: flex-end;
+		}
 		&-image {
 			width: 570px;
 			height: 568px;
 			margin-top: 10px;
-			margin-left: 445px;
 			margin-bottom: 50px;
 		}
 	}
+	
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-bottom: 22px;
+		&-item {
+			width: 150px;
+			font-size: 15px;
+		}
+	}
+
+	&__like-btn {
+		width: 24px;
+		height: 24px;
+	}
 
 	@media screen and (max-width: 1919px) {
-		&__menu-container {
-			margin-left: 100px;
+		&__menu {
+			margin-top: 20px;
 		}
 		&__personal {
 			width: 377px;
-			padding: 16px 0 0 60px;
+			margin-top: 0;
 		}
 
 		&__projects {
-			width: 732px;
+			width: 780px;
+			margin-top: 0;
 		}
-
 		&__wrapper {
-			gap: 90px;
-			padding: 0 73px 0;
+			max-width: 1180px;
 		}
 		&__blank-image {
-			margin-left: 152px;
+			width: 242px;
+			height: 242px;
 		}
 		&__projects-container {
 			gap: 20px;
 		}
 		&__projects-cards {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(356px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
 			gap: 20px;
 		}
 	}

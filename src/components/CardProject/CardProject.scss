@@ -3,7 +3,7 @@
 		box-sizing: border-box;
 		width: 100%;
 		border-radius: 10px;
-		height: 100%;
+		height: 181px;
 		border: 1px solid #9bc1f9;
 		padding: 18px 14px;
 		background-repeat: no-repeat;
@@ -12,7 +12,9 @@
 		position: relative;
 		cursor: pointer;
 	}
-
+//	&__like-btn {
+//
+//	}
 	&__overlay {
 		position: absolute;
 		top: 0;
@@ -24,12 +26,17 @@
 		border-radius: 10px;
 	}
 
-	&__info {
-		list-style: none;
+	&__container {
 		display: flex;
-		flex-direction: column;
+		height: 100%;
 		padding: 0;
 		margin: 0;
+	}
+	&__info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 100%;
 	}
 	&__status {
 		display: flex;
@@ -37,31 +44,50 @@
 		height: 32px;
 		align-items: center;
 		z-index: 2;
-
-		&-count {
-			margin: 0;
-			font-size: 20px;
-			font-weight: 700;
-			line-height: 32px;
-			color: #3f3f3f;
-			&_moder {
-				color: #f78254;
+		&-buttons {
+			display: flex;
+			gap: 24px;
+		}
+		&-btn {
+			width: 24px;
+			height: 24px;
+			background-color: transparent;
+			border: none;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			transition: opacity 0.3s;
+			background-image: url(../../images/pensil.svg);
+			&:hover {
+				opacity: 0.8;
+				cursor: pointer;
 			}
 		}
-		&-icon {
+
+		&-btn {
 			width: 24px;
 			height: 24px;
 			cursor: pointer;
+			border: none;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			background-color: transparent;
 		}
+		
+	}
+	&__description {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
 	}
 
 	&__name {
-		padding-top: 53px;
-		height: 47px;
 		display: flex;
 		align-items: center;
 		z-index: 2;
 		color: #3f3f3f;
+		width: 347px;
 	}
 	&__name-title {
 		margin: 0;
@@ -76,7 +102,6 @@
 	}
 	&__data {
 		display: flex;
-		margin-top: 22px;
 		gap: 10px;
 		z-index: 2;
 
@@ -105,9 +130,17 @@
 		}
 	}
 
+
 	@media screen and (max-width: 1919px) {
+		&__project {
+			height: 150px;
+		}
 		&__name-title {
-			font-size: 26px;
+			font-size: 23px;
+		}
+		&__status-buttons {
+			gap: 16px;
 		}
 	}
 }
+

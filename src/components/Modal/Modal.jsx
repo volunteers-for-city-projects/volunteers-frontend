@@ -208,9 +208,7 @@ function Modal({ modal, closeModal }) {
 					{contentText[type][state].errorsArray &&
 						contentText[type][state].errorsArray.map((item) => (
 							<li key={item.id}>
-								<p className="modal__text modal__text_error">
-									{item.textError}
-								</p>
+								<p className="modal__text">{item.textError}</p>
 							</li>
 						))}
 				</ul>
@@ -219,7 +217,7 @@ function Modal({ modal, closeModal }) {
 				<>
 					<p className="modal__text">
 						{contentText[type][state].errorsArray &&
-							contentText[type][state].errorsArray[0].notActiveEmail}
+							contentText[type][state].errorsArray[0]?.notActiveEmail}
 					</p>
 					<button className="modal__button-resend" type="submit">
 						{contentText[type][state].textButton}
@@ -230,7 +228,7 @@ function Modal({ modal, closeModal }) {
 				<>
 					<p className="modal__text">
 						{contentText[type][state].errorsArray &&
-							contentText[type][state].errorsArray[0].notExistEmail}
+							contentText[type][state].errorsArray[0]?.notExistEmail}
 					</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
@@ -311,6 +309,7 @@ function Modal({ modal, closeModal }) {
 				className={clsx('modal__container', {
 					'modal__container_type_change-password':
 						typeStyle === 'change-password',
+					'modal__container_type_enlarge-image': typeStyle === 'enlarge-image',
 				})}
 			>
 				<div className="modal__title-container">

@@ -1,31 +1,64 @@
 import './Projects.scss';
+import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { Crumbs } from '../Crumbs/Crumbs';
+import { useFormik } from 'formik';
+// import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import SelectOption from '../SelectOption/SelectOption';
+// import Input from '../Input/Input';
+import InputDateRange from '../InputDateRange/InputDateRange';
+import { Crumbs } from '../Crumbs/Crumbs';
+
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
+import { getAllProjects } from '../../utils/api/organizer';
+import Button from '../Button/Button';
 
-import { getNextPrev } from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
+	const [projects, setProjects] = useState([]);
+	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+
 	const {
-		projects,
-		setProjects,
+		isLoggedIn,
 		setIsLoading,
 		skills,
 		cities,
 		projectCategories,
+		currentUser,
 	} = useOutletContext();
 
 	const navigate = useNavigate();
+	const { role } = currentUser;
 
-	function getNewBatchProjects(url) {
-		if (url) {
+	useEffect(() => {
+		setIsLoading(true);
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`, isLoggedIn)
+			.then((dataProjects) => {
+				setProjectsNextUrl(dataProjects.next);
+				setProjects(dataProjects.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			})
+			.finally(setIsLoading(false));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLoggedIn]);
+
+	function handleClickNext() {
+		if (projectsNextUrl) {
 			setIsLoading(true);
-			getNextPrev(url)
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getAllProjects(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`,
+				isLoggedIn
+			)
 				.then((data) => {
-					setProjects(data);
+					setProjects([...projects, ...data.results]);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -35,12 +68,18 @@ function Projects() {
 		}
 	}
 
-	function handleClickNext() {
-		getNewBatchProjects(projects.next);
-	}
-
-	function handleClickPrev() {
-		getNewBatchProjects(projects.previous);
+	const formik = useFormik({
+		validateOnMount: true,
+		validateOnChange: true,
+		initialValues: {
+			date: '',
+			city: '',
+			categories: '',
+			skills: '',
+		},
+	});
+	function handleProject(evt, id) {
+		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
 	}
 
 	return (
@@ -52,71 +91,117 @@ function Projects() {
 				<div className="projects__label">
 					<h2 className="projects__label-title">Проекты</h2>
 					<div className="projects__label-btn">
-						<Pushbutton
-							label="Создать новый проект"
-							color="white"
-							size="large-var"
-							minWidth="400px"
-							backgroundColor="#A6C94F"
-							border="none"
-							onClick={() => navigate('/profile/organizer/create-project')}
-						/>
+						{role === 'organizer' ? (
+							<Pushbutton
+								label="Создать новый проект"
+								color="white"
+								size="large-var"
+								backgroundColor="#A6C94F"
+								border="none"
+								onClick={() => navigate('/profile/organizer/create-project')}
+							/>
+						) : (
+							''
+						)}
 					</div>
 				</div>
 
 				<div className="projects__selects">
-					<SelectOption
+					<InputDateRange
 						id="date"
 						name="date"
-						label="Дата и время"
+						label="Дата или период"
+						inputSize="small"
 						placeholder="15.05.2023 – 20.05.2023"
 						width={400}
-						options={[]}
+						handleChange={formik.handleChange}
+						value={formik.values.date}
 					/>
-
 					<SelectOption
 						id="city"
 						name="city"
 						label="Город"
 						placeholder="Выберите город"
-						width={400}
 						options={cities}
+						touched={formik.touched.city}
+						value={formik.values.city || []}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue('city', [
+								{
+									label: selectedOption.label,
+									value: selectedOption.value,
+								},
+							]);
+						}}
+						required
 					/>
-
 					<SelectOption
 						id="categories"
 						name="categories"
 						label="Категории"
 						placeholder="Выберите категории"
-						width={400}
 						options={projectCategories}
+						isMulti
+						width={400}
+						value={formik.values.categories || []}
+						touched={formik.touched.categories}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'categories',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
-
 					<SelectOption
 						id="skills"
 						name="skills"
-						label="Выберите навыки"
-						placeholder="Введите имя"
-						width={400}
+						label="Навыки"
+						placeholder="Выберите навыки"
 						options={skills}
+						isMulti
+						width={400}
+						value={formik.values.skills || []}
+						touched={formik.touched.skills}
+						handleChange={(selectedOption) => {
+							formik.setFieldValue(
+								'skills',
+								selectedOption.map((option) => ({
+									label: option.label,
+									value: option.value,
+								}))
+							);
+						}}
+						required
 					/>
 				</div>
 
 				<div className="projects__cards">
-					{projects &&
-						projects.results.length > 0 &&
-						projects.results.map((item) => (
-							<CardProject cardProject={item} key={item.id} />
+					{projects.length > 0 &&
+						projects.map((item) => (
+							<div
+								role="presentation"
+								key={item.id}
+								className="projects__link"
+								onClick={(evt) => {
+									handleProject(evt, item.id);
+								}}
+							>
+								<CardProject cardProject={item} />
+							</div>
 						))}
 				</div>
-
 				<div className="projects__button">
-					<button className="profile__pagination-btn" onClick={handleClickPrev}>
-						&#60;
-					</button>
-					<button className="profile__pagination-btn" onClick={handleClickNext}>
-						&#62;
-					</button>
+					<Button
+						className="projects__button-item"
+						size="xs"
+						onClick={() => handleClickNext()}
+					>
+						Показать еще
+					</Button>
 				</div>
 			</div>
 		</section>

@@ -2,7 +2,23 @@ import errorFields from '../errorFields';
 
 export const BASE_URL = 'https://better-together.acceleratorpracticum.ru/api';
 
+const parseErrors = (obj) => {
+	const errorArray = [];
+	Object.values(obj).forEach((value) => {
+		if (Array.isArray(value)) {
+			const errorTexts = value.map((errorText) => ({ textError: errorText }));
+			errorArray.push(...errorTexts);
+		} else if (typeof value === 'object' && value !== null) {
+			const nestedErrors = parseErrors(value);
+			errorArray.push(...nestedErrors);
+		}
+	});
+	return errorArray;
+};
+
 const processErrors = (errorObject) => {
+	const serializer = Object.keys(errorObject)[0];
+
 	// Обработка ошибок для страницы авторизации
 
 	if (
@@ -13,17 +29,12 @@ const processErrors = (errorObject) => {
 	) {
 		const objLogin = errorObject.CustomTokenCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'email')) {
-			if (
-				objLogin.email ===
-				'Пользователь с данным адресом электронной почты не существует.'
-			) {
-				return [
-					{
-						notExistEmail:
-							'Пользователя с такой электронной почтой не существует.',
-					},
-				];
-			}
+			return [
+				{
+					notExistEmail:
+						'Пользователя с такой электронной почтой не существует.',
+				},
+			];
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'not_active')) {
@@ -36,13 +47,11 @@ const processErrors = (errorObject) => {
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objLogin, 'password')) {
-			if (objLogin.password === 'Неправильный пароль.') {
-				return [
-					{
-						textError: 'Неверно указана электронная почта или пароль.',
-					},
-				];
-			}
+			return [
+				{
+					textError: 'Неверно указана электронная почта или пароль.',
+				},
+			];
 		}
 	}
 
@@ -56,17 +65,11 @@ const processErrors = (errorObject) => {
 	) {
 		const objRegister = errorObject.VolunteerCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'email')) {
-			if (
-				objRegister.email[0] ===
-				'Пользователь с таким Электронная почта уже существует.'
-			) {
-				return [
-					{
-						textError:
-							'Пользователь с такой электронной почтой уже существует.',
-					},
-				];
-			}
+			return [
+				{
+					textError: 'Пользователь с такой электронной почтой уже существует.',
+				},
+			];
 		}
 	}
 
@@ -80,57 +83,72 @@ const processErrors = (errorObject) => {
 	) {
 		const objRegister = errorObject.OgranizationCreateSerializer;
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'email')) {
-			if (
-				objRegister.email[0] ===
-				'Пользователь с таким Электронная почта уже существует.'
-			) {
-				return [
-					{
-						textError:
-							'Пользователь с такой электронной почтой уже существует.',
-					},
-				];
-			}
+			return [
+				{
+					textError: 'Пользователь с такой электронной почтой уже существует.',
+				},
+			];
 		}
 
 		if (Object.prototype.hasOwnProperty.call(objRegister, 'ogrn')) {
-			if (objRegister.ogrn[0] === 'Организация с таким ОГРН уже существует.') {
-				return [
-					{
-						textError: 'Организация с таким ОГРН уже существует.',
-					},
-				];
-			}
+			return [
+				{
+					textError: 'Организация с таким ОГРН уже существует.',
+				},
+			];
 		}
 	}
 
-	const otherErrors = Object.values(errorObject).reduce((acc, current) => {
-		const errors = Object.entries(current);
-		return [
-			...acc,
-			...errors.map((error) => {
-				if (errorFields[error[0]]) {
-					return {
-						textError: `В поле «${errorFields[error[0]]}» ошибка: ${
-							Array.isArray(error[1])
-								? error[1]
-										.map((item) => item)
-										.join(', ')
-										.toLowerCase()
-								: error[1].toLowerCase()
-						}`,
-					};
-				}
-				return {
-					textError: Array.isArray(error[1])
-						? error[1].map((item) => item).join(', ')
-						: error[1],
-				};
-			}),
-		];
-	}, []);
+	// Обработка ошибок для страницы восстановление пароля
 
-	return otherErrors;
+	if (
+		Object.prototype.hasOwnProperty.call(
+			errorObject,
+			'CustomSendEmailResetSerializer'
+		)
+	) {
+		const objResetEmail = errorObject.CustomSendEmailResetSerializer;
+		if (Object.prototype.hasOwnProperty.call(objResetEmail, 'email')) {
+			return [
+				{
+					textError: 'Пользователя с такой электронной почтой не существует.',
+				},
+			];
+		}
+	}
+
+	if (
+		Object.prototype.hasOwnProperty.call(
+			errorObject[serializer],
+			'ValidationErrors'
+		) &&
+		Object.keys(errorObject[serializer].ValidationErrors || {}).length > 0
+	) {
+		const validationErrors = errorObject[serializer].ValidationErrors;
+		const errorObjects = Object.entries(validationErrors).reduce(
+			(acc, [key, value]) => {
+				const fieldName = errorFields[key];
+				const errorText = value.map((item) => item.toLowerCase()).join(', ');
+
+				if (fieldName) {
+					acc.push({
+						textError: `В поле «${fieldName}» ошибка: ${errorText}`,
+					});
+				} else {
+					acc.push({
+						textError: errorText,
+					});
+				}
+
+				return acc;
+			},
+			[]
+		);
+
+		return errorObjects;
+	}
+
+	return parseErrors(errorObject);
 };
 
 const handleResponse = (res) => {

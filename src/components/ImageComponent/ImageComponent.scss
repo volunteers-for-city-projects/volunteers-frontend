@@ -20,4 +20,17 @@
 		display: flex;
 		align-items: center;
 	}
+
+	@media (max-width: 1919px) {
+		&__type {
+			&_entrance {
+				width: 471px;
+				height: 384px;
+			}
+			&_flashlight {
+				width: 129px;
+				height: 377px;
+			}
+		}
+	}
 }

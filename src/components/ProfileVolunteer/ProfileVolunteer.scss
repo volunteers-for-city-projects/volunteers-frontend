@@ -2,11 +2,16 @@
 
 .profile {
 	background: #fdfdfd;
-	margin: 0 auto;
-	max-width: 1920px;
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
 
-	&__menu-container {
-		margin-left: 130px;
+	&__container {
+		display: flex;
+		flex-direction: column;
+		margin: 0 auto;
+	}
+	&__menu {
 		margin-top: 30px;
 	}
 
@@ -17,8 +22,8 @@
 		margin-top: 50px;
 		background: $--White;
 		border-radius: 10px;
-		width: 676px;
-		padding: 20px 40px 0 40px;
+		width: 540px;
+		padding: 20px 0 20px 0;
 		box-sizing: border-box;
 		&-container {
 			display: flex;
@@ -55,27 +60,37 @@
 			font-weight: 500;
 			line-height: 28px;
 			color: $--Text;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
 	&__wrapper {
 		display: flex;
 		gap: 25px;
-		padding: 0 120px 0;
+		margin: 0 auto;
 		box-sizing: border-box;
 	}
 
 	&__projects {
-		width: 960px;
+		width: 1099px;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 
+		&-label {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+
 		&-container {
 			display: flex;
 			flex-direction: column;
 		}
+
 		&-title {
 			margin: 0;
 			font-size: 56px;
@@ -83,11 +98,29 @@
 			line-height: 100%;
 			color: $--Text;
 		}
+		&-btn {
+			display: flex;
+			align-items: center;
+			width: 283px;
+		}
+
+		&-container {
+			display: flex;
+			flex-direction: column;
+			gap: 32px;
+		}
+		&-cards {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(468px, 1fr));
+			gap: 20px;
+		}
 	}
+
 	&__blank {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		min-height: 675px;
 		&-title {
 			font-size: 23px;
 			font-style: normal;
@@ -96,33 +129,56 @@
 			margin: 10px 0 0;
 			color: $--Text;
 		}
+		&-picture {
+			display: flex;
+			justify-content: flex-end;
+		}
 		&-image {
 			width: 570px;
 			height: 568px;
 			margin-top: 10px;
-			margin-left: 500px;
 			margin-bottom: 50px;
 		}
 	}
 
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-bottom: 22px;
+	}
+
+	&__button-item {
+		width: 150px;
+		font-size: 15px;
+	}
 	@media screen and (max-width: 1919px) {
-		&__menu-container {
-			margin-left: 100px;
+		&__menu {
+			margin-top: 20px;
 		}
 		&__personal {
+			margin-top: 0;
 			width: 377px;
-			padding: 16px 0 16px 60px;
 		}
 
 		&__projects {
-			width: 732px;
+			width: 780px;
+			margin-top: 0;
 		}
 		&__wrapper {
-			gap: 90px;
-			padding: 0 73px 0;
+			max-width: 1180px;
 		}
 		&__blank-image {
-			margin-left: 172px;
+			width: 242px;
+			height: 242px;
+		}
+		&__projects-container {
+			gap: 20px;
+		}
+		&__projects-cards {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
+			gap: 20px;
 		}
 	}
 }

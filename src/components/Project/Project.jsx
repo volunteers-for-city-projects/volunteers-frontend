@@ -574,6 +574,7 @@ function Project() {
 						<h2 className="project__caption-group">Место проведения</h2>
 						<div className="project__place-group">
 							<SelectOption
+								id="city"
 								name="city"
 								label="Город"
 								placeholder="Выберите город"
@@ -655,6 +656,7 @@ function Project() {
 						</h2>
 						<div className="project__additional-group">
 							<SelectOption
+								id="categoryProject"
 								name="categoryProject"
 								label="Категория проекта"
 								placeholder="Выберите категорию"
@@ -676,6 +678,7 @@ function Project() {
 								required
 							/>
 							<SelectOption
+								id="skills"
 								name="skills"
 								label="Навыки"
 								placeholder="Выберите навыки"

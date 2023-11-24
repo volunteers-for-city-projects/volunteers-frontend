@@ -10,3 +10,13 @@ export const ERROR_MESSAGE_PASSWORD_NO_MATCH = 'Пароли не совпада
 export const ERROR_MESSAGE_CONNECTION_PROBLEM =
 	'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 export const ERROR_MESSAGE_EMAIL_MIN_MAX = 'Длина поля от 5 до 256 символов';
+
+export const PROJECT_CARD_DISPLAY_LIMIT = 6;
+export const DATE_FORMAT_FROM_SERVER = 'DD.MM.YYYY hh:mm';
+export const MESSAGE_PROJECT_COMPLETED = 'Проект завершён ';
+export const MESSAGE_PROJECT_APPLICATIONS_EXPECTED = 'Приём заявок начнётся ';
+export const MESSAGE_PROJECT_ACCEPTANCE_APPLICATIONS_OPEN = 'Приём заявок до ';
+export const MESSAGE_PROJECT_ACCEPTANCE_APPLICATIONS_OVER =
+	'Приём заявок окончен, дата начала проекта: ';
+export const MESSAGE_PROJECT_NO_DATE =
+	'Проект - черновик. Необходимо заполнить даты!';

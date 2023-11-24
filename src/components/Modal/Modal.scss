@@ -41,6 +41,11 @@
 		&_type_change-password {
 			width: 640px;
 		}
+
+		&_type_enlarge-image {
+			width: 70vw;
+			height: 80vh;
+		}
 	}
 
 	&__title-container {
@@ -109,10 +114,6 @@
 		font-weight: 400;
 		line-height: 1;
 		text-align: center;
-	}
-
-	&__text_error {
-		text-align: left;
 	}
 
 	&__text_type_confirm {
