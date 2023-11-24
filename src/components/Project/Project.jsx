@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
-import InputTextArea from '../InputTextArea/InputTextArea';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { createProject } from '../../utils/api/organizer';
+import { createProject, createProjectAsDraft } from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
+import CustomTextarea from '../CustomTextarea/CustomTextarea';
 
 function Project() {
 	const { cities, skills, projectCategories, setModal, currentUser } =
@@ -18,6 +18,7 @@ function Project() {
 	const [image, setImage] = useState('');
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
+	const nameRef = useRef(null);
 
 	const projectValues = {
 		name: '',
@@ -62,7 +63,9 @@ function Project() {
 		provide: Yup.string()
 			.min(2, 'Количество символов от 2 до 750')
 			.max(750, 'Количество символов от 2 до 750'),
-		// city: Yup.number().required('Поле обязательно для заполнения'),
+		city: Yup.array()
+			.of(Yup.object({ label: Yup.string(), value: Yup.number() }))
+			.required('Поле обязательно для заполнения'),
 		address: Yup.string()
 			.matches(
 				/^[А-Яа-яЁёa-zA-Z0-9.,\s-]+$/,
@@ -131,84 +134,245 @@ function Project() {
 			.required('Поле обязательно для заполнения'),
 	});
 
-	const dateTimeFormatter = (date, time) => {
-		const parsePattern = 'DD.MM.YYYY HH:mm';
-		const formatPattern = 'YYYY-MM-DDTHH:mm:ss.000Z';
-		return moment(`${date} ${time}`, parsePattern).format(formatPattern);
+	// Принимает строку диапазона дат и возвращает массив из даты начала и даты окончания
+	// Например: DD.MM.YYYY - DD.MM.YYYY => [{DD.MM.YYYY}, {DD.MM.YYYY}]
+	const dateRangeParser = (rangeDateString) => {
+		let result = null;
+		if (rangeDateString?.length > 0) {
+			const dateStringArray = rangeDateString.split('-');
+			if (dateStringArray.length > 1) {
+				const beginDateString = dateStringArray[0].trim();
+				const endDateString = dateStringArray[1].trim();
+				result = [beginDateString, endDateString];
+			}
+		}
+		return result;
 	};
+
+	// Принимает строку временного диапазона и возвращает массив из времени начала и времени окончания
+	// Например: HH:mm - HH:mm => [{HH:mm}, {HH:mm}]
+	const timeRangeParser = (rangeTimeString) => {
+		let result = null;
+		if (rangeTimeString?.length > 0) {
+			const timeStringArray = rangeTimeString.split('-');
+			if (timeStringArray.length > 1) {
+				const beginTimeString = timeStringArray[0].trim();
+				const endTimeString = timeStringArray[1].trim();
+				result = [beginTimeString, endTimeString];
+			}
+		}
+		return result;
+	};
+
+	// Возвращает дату и время в указанном формате
+	const dateTimeFormatter = (date, time, formatString) => {
+		let result = null;
+		const parsePattern = 'DD.MM.YYYY HH:mm';
+		if (date?.length > 0 && time?.length > 0) {
+			result = moment(`${date} ${time}`, parsePattern);
+		}
+		return result.format(formatString);
+	};
+
+	// Преобразует все строки даты и времени в экземпляры datetime
+	const startEndDateTimes = (date, timeRange, submissionDate) => {
+		const dateTimeFormatPattern = 'YYYY-MM-DD HH:mm:ss';
+		const dateRangeArray = dateRangeParser(date);
+		console.info(`dateRangeArray`, dateRangeArray);
+		const timeRangeArray = timeRangeParser(timeRange);
+		console.info(`timeRangeArray`, timeRangeArray);
+
+		let startDatetime;
+		let endDatetime;
+		if (dateRangeArray === null || timeRangeArray === null) {
+			startDatetime = null;
+			endDatetime = null;
+		} else {
+			startDatetime = dateTimeFormatter(
+				dateRangeArray[0],
+				timeRangeArray[0],
+				dateTimeFormatPattern
+			);
+			endDatetime = dateTimeFormatter(
+				dateRangeArray[1],
+				timeRangeArray[1],
+				dateTimeFormatPattern
+			);
+		}
+
+		const submissionDateRangeArray = dateRangeParser(submissionDate);
+		console.info(`submissionDateRangeArray`, submissionDateRangeArray);
+
+		let startDateApplication;
+		let endDateApplication;
+		if (submissionDateRangeArray === null) {
+			startDateApplication = null;
+			endDateApplication = null;
+		} else {
+			startDateApplication = dateTimeFormatter(
+				submissionDateRangeArray[0],
+				'00:00',
+				dateTimeFormatPattern
+			);
+			endDateApplication = dateTimeFormatter(
+				submissionDateRangeArray[1],
+				'23:59',
+				dateTimeFormatPattern
+			);
+		}
+		return {
+			startDatetime,
+			endDatetime,
+			startDateApplication,
+			endDateApplication,
+		};
+	};
+
+	const handleSubmit = async (values) => {
+		try {
+			const {
+				startDatetime,
+				endDatetime,
+				startDateApplication,
+				endDateApplication,
+			} = startEndDateTimes(
+				values.date,
+				values.timeRange,
+				values.submissionDate
+			);
+			await createProject({
+				name: values.name,
+				description: values.description,
+				picture: image,
+				start_datetime: startDatetime,
+				end_datetime: endDatetime,
+				start_date_application: startDateApplication,
+				end_date_application: endDateApplication,
+				event_purpose: values.goal,
+				event_address: {
+					address_line: values.address,
+					street: 'Улица',
+					house: 'Дом',
+					block: '',
+					building: '',
+				},
+				project_tasks: values.tasks,
+				project_events: values.events,
+				organizer_provides: values.provide,
+				organization: currentUser.id,
+				city: values.city[0].value,
+				categories: values.categoryProject.map((options) => options.value),
+				skills: values.skills.map((options) => options.value),
+			});
+			setModal({
+				isOpen: true,
+				title: 'Проект отправлен на модерацию',
+				type: 'project',
+				state: 'success',
+				onSubmit: (event) => {
+					event.preventDefault();
+					navigate('/profile');
+					setModal({
+						isOpen: false,
+					});
+				},
+			});
+			localStorage.removeItem('draft');
+		} catch (error) {
+			if (Array.isArray(error)) {
+				setModal({
+					isOpen: true,
+					type: 'error',
+					state: 'info',
+					title: 'Произошла ошибка',
+					errorArray: error,
+				});
+			} else {
+				console.error(error);
+			}
+		}
+	};
+
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: projectValues,
 		validationSchema,
-		onSubmit: async (values) => {
-			try {
-				await createProject({
+		onSubmit: handleSubmit,
+	});
+
+	// При сохранении проекта как черновика обязательное поле только одно - Имя проекта
+	// при этом localstorage очищается
+	const handleDraftSaveClick = async (values, errors) => {
+		try {
+			if (errors?.name) {
+				nameRef.current.focus();
+			} else {
+				const {
+					startDatetime,
+					endDatetime,
+					startDateApplication,
+					endDateApplication,
+				} = startEndDateTimes(
+					values.date,
+					values.timeRange,
+					values.submissionDate
+				);
+
+				await createProjectAsDraft({
 					name: values.name,
-					description: values.description,
-					picture: image,
-					start_datetime: dateTimeFormatter(
-						values.date.split('-')[0].trim(),
-						values.timeRange.split('-')[0].trim()
-					),
-					end_datetime: dateTimeFormatter(
-						values.date.split('-')[1].trim(),
-						values.timeRange.split('-')[1].trim()
-					),
-					start_date_application: dateTimeFormatter(
-						values.submissionDate.split('-')[0].trim(),
-						'00:00'
-					),
-					end_date_application: dateTimeFormatter(
-						values.submissionDate.split('-')[1].trim(),
-						'23:59'
-					),
-					event_purpose: values.goal,
-					event_address: {
-						address_line: values.address,
-						street: 'street',
-						house: 'house',
-						block: '',
-						building: '',
-					},
-					project_tasks: values.tasks,
-					project_events: values.events,
-					organizer_provides: values.provide,
+					description: values.description || '',
+					picture: image || null,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal || '',
+					event_address:
+						values.address?.length > 0
+							? {
+									address_line: values.address,
+									street: 'улицв',
+									house: '10',
+									block: '',
+									building: '',
+							  }
+							: null,
+					project_tasks: values.tasks || '',
+					project_events: values.events || '',
+					organizer_provides: values.provide || '',
 					organization: currentUser.id,
-					city: values.city[0].value,
-					categories: values.categoryProject.map(
-						(categoryProject) => categoryProject.value
-					),
-					skills: values.skills.map((skill) => skill.value),
+					city: values.city !== null ? values.city[0].value : null,
+					categories:
+						values.categoryProject?.map((options) => options.value) || [],
+					skills: values.skills?.map((options) => options.value) || [],
 				});
 				setModal({
 					isOpen: true,
-					title: 'Проект отправлен на модерацию',
-					type: 'project',
+					title: 'Черновик проекта успешно сохранён',
+					type: 'draft',
 					state: 'success',
 					onSubmit: (event) => {
 						event.preventDefault();
-						navigate('/profile');
+						navigate('/profile/organizer');
 						setModal({
 							isOpen: false,
 						});
 					},
 				});
-			} catch (error) {
-				if (Array.isArray(error)) {
-					setModal({
-						isOpen: true,
-						type: 'error',
-						state: 'info',
-						title: 'Произошла ошибка',
-						errorArray: error,
-					});
-				} else {
-					console.error(error);
-				}
+				localStorage.removeItem('draft');
 			}
-		},
-	});
+		} catch (error) {
+			console.error(error);
+			setModal({
+				isOpen: true,
+				type: 'error',
+				state: 'info',
+				title: 'Черновик не сохранён',
+				errorArray: error,
+			});
+		}
+	};
 
 	const handleImageChange = (event) => {
 		const file = event.target.files[0];
@@ -224,39 +388,98 @@ function Project() {
 					formik.setFieldValue('image', base64Data);
 					setImage(base64Data);
 				};
-				reader.readAsDataURL(file);
+				const dataUrl = reader.readAsDataURL(file);
+				console.log(dataUrl);
 				setIsFocused(false);
 			}
 		}
 	};
 
+	// useEffect(() => {
+	// 	if (image) {
+	// 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+	// 		localStorage.setItem(
+	// 			'draft',
+	// 			JSON.stringify({
+	// 				...currentDraft,
+	// 				image,
+	// 			})
+	// 		);
+	// 	}
+	// }, [image]);
+
+	//
+	const handleBlur = (e) => {
+		formik.handleBlur(e);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [e.target.name]: e.target.value })
+		);
+	};
+
+	const handleBlurSelectOption = (name) => {
+		formik.setFieldTouched(name, true);
+	};
+
+	const selectOption = (name, selectedOption) => {
+		const selectedItem = [
+			{
+				label: selectedOption.label,
+				value: selectedOption.value,
+			},
+		];
+		formik.setFieldValue(name, selectedItem);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [name]: selectedItem })
+		);
+	};
+
+	const selectOptions = (name, selectedOption) => {
+		const selectedItems = selectedOption.map((option) => ({
+			label: option.label,
+			value: option.value,
+		}));
+		formik.setFieldValue(name, selectedItems);
+		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
+		localStorage.setItem(
+			'draft',
+			JSON.stringify({ ...currentDraft, [name]: selectedItems })
+		);
+	};
+
 	return (
-		<section className="add-project">
-			<div className="add-project__menu-container">
+		<section className="project">
+			<div className="project__menu-container">
 				<Crumbs />
 			</div>
 			<form
-				name="add-project-form"
-				className="add-project__form"
+				className="project__form"
+				name="project-form"
 				action="#"
 				method="post"
 				onSubmit={formik.handleSubmit}
 			>
-				<div className="add-project__name-container">
+				<div className="project__custom-input">
 					<CustomInput
+						inputRef={nameRef}
 						name="name"
 						type="text"
 						label=""
 						placeholder="Введите название проекта"
-						error={formik.errors.name}
+						error={formik.touched.name && Boolean(formik.errors.name)}
+						helperText={formik.touched.name && formik.errors.name}
 						value={formik.values.name}
 						handleChange={formik.handleChange}
+						onBlur={(e) => handleBlur(e)}
 					/>
 				</div>
-				<div className="add-project__image-wrapper">
+				<div className="project__image-wrapper">
 					<div>
 						<img
-							className="add-project__image"
+							className="project__image"
 							alt="Изображение проекта"
 							src={image.length > 0 ? image : projectImage}
 						/>
@@ -266,14 +489,15 @@ function Project() {
 								formik.errors.image}
 						</span>
 					</div>
-					<div className="add-project__upload-image-container">
-						<span className="add-project__upload-image-label">
+					<div className="project__upload-image-container">
+						<span className="project__upload-image-label">
 							Загрузить новую фотографию*
 						</span>
 						<input
 							name="image"
 							type="file"
-							className="add-project__button add-project__upload-image-button"
+							tabIndex={0}
+							className="project__button project__upload-image-button"
 							accept="image/png, image/jpeg"
 							onChange={handleImageChange}
 							onClick={() => setIsFocused(true)}
@@ -281,80 +505,87 @@ function Project() {
 						/>
 					</div>
 				</div>
-				<div className="add-project__form-wrapper">
-					<div className="add-project__general-group-wrapper">
-						<h2 className="add-project__caption-group">Общая информация</h2>
-						<div className="add-project__general-group">
-							<InputTextArea
+				<div className="project__form-wrapper">
+					<div className="project__general-group-wrapper">
+						<h2 className="project__caption-group">Общая информация</h2>
+						<div className="project__general-group">
+							<CustomTextarea
 								name="description"
 								label="Описание проекта"
 								placeholder="Расскажите о проекте"
-								error={formik.errors.description}
+								error={
+									formik.touched.description &&
+									Boolean(formik.errors.description)
+								}
+								helperText={
+									formik.touched.description && formik.errors.description
+								}
 								value={formik.values.description}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="goal"
 								label="Цель проекта"
 								placeholder=""
-								error={formik.errors.goal}
+								error={formik.touched.goal && Boolean(formik.errors.goal)}
+								helperText={formik.touched.goal && formik.errors.goal}
 								value={formik.values.goal}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="events"
 								label="Мероприятия"
 								placeholder="Например: Лекция по экологии; Посадка саженцев;"
-								error={formik.errors.events}
+								error={formik.touched.events && Boolean(formik.errors.events)}
+								helperText={formik.touched.events && formik.errors.events}
 								value={formik.values.events}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="tasks"
 								label="Задачи проекта"
 								placeholder="Опишите, какие задачи будут стоять перед волонтёрами: к примеру, «уборка территории» и «высадка деревьев»"
-								error={formik.errors.tasks}
+								error={formik.touched.tasks && Boolean(formik.errors.tasks)}
+								helperText={formik.touched.tasks && formik.errors.tasks}
 								value={formik.values.tasks}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<InputTextArea
+							<CustomTextarea
 								name="provide"
 								label="Организатор предоставляет:"
 								placeholder="Например: саженцы, перчатки, обед"
-								error={formik.errors.provide}
+								error={formik.touched.provide && Boolean(formik.errors.provide)}
+								helperText={formik.touched.provide && formik.errors.provide}
 								value={formik.values.provide}
 								handleChange={formik.handleChange}
-								submitCount={formik.submitCount}
+								onBlur={(e) => handleBlur(e)}
 							/>
 						</div>
 					</div>
-					<div className="add-project__place-group-wrapper">
-						<h2 className="add-project__caption-group">Место проведения</h2>
-						<div className="add-project__place-group">
+					<div className="project__place-group-wrapper">
+						<h2 className="project__caption-group">Место проведения</h2>
+						<div className="project__place-group">
 							<SelectOption
 								id="city"
 								name="city"
 								label="Город"
 								placeholder="Выберите город"
 								options={cities}
-								touched={formik.touched.city}
-								value={formik.values.city}
-								handleChange={(selectedOption) => {
-									formik.setFieldValue('city', [
-										{
-											label: selectedOption.label,
-											value: selectedOption.value,
-										},
-									]);
-								}}
+								handleChange={(selectedOption) =>
+									selectOption('city', selectedOption)
+								}
+								value={formik.values?.city}
+								error={formik.touched.city && Boolean(formik.errors.city)}
+								helperText={formik.touched.city && formik.errors.city}
+								onBlur={() => handleBlurSelectOption('city')}
 								required
 							/>
 							<CustomInput
@@ -362,24 +593,28 @@ function Project() {
 								type="text"
 								label="Адрес"
 								placeholder="Улица, дом, корпус, строение"
-								error={formik.errors.address}
+								error={formik.touched.address && Boolean(formik.errors.address)}
+								helperText={formik.touched.address && formik.errors.address}
 								value={formik.values.address}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__dates-group-wrapper">
-						<h2 className="add-project__caption-group">Сроки проведения</h2>
-						<div className="add-project__dates-group">
+					<div className="project__dates-group-wrapper">
+						<h2 className="project__caption-group">Сроки проведения</h2>
+						<div className="project__dates-group">
 							<CustomInput
 								name="date"
 								type="text"
 								label="Дата проведения"
 								placeholder="01.02.2023 - 12.10.2023"
-								error={formik.errors.date}
+								error={formik.touched.date && Boolean(formik.errors.date)}
+								helperText={formik.touched.date && formik.errors.date}
 								value={formik.values.date}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 							<CustomInput
@@ -387,9 +622,13 @@ function Project() {
 								type="text"
 								label="Время проведения (местное время)"
 								placeholder="10:00 - 16:00"
-								error={formik.errors.timeRange}
+								error={
+									formik.touched.timeRange && Boolean(formik.errors.timeRange)
+								}
+								helperText={formik.touched.timeRange && formik.errors.timeRange}
 								value={formik.values.timeRange}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 							<CustomInput
@@ -397,37 +636,45 @@ function Project() {
 								type="text"
 								label="Дата подачи заявок"
 								placeholder="02.10.2023 - 12.10.2023"
-								error={formik.errors.submissionDate}
+								error={
+									formik.touched.submissionDate &&
+									Boolean(formik.errors.submissionDate)
+								}
+								helperText={
+									formik.touched.submissionDate && formik.errors.submissionDate
+								}
 								value={formik.values.submissionDate}
 								handleChange={formik.handleChange}
+								onBlur={(e) => handleBlur(e)}
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__additional-group-wrapper">
-						<h2 className="add-project__caption-group">
+					<div className="project__additional-group-wrapper">
+						<h2 className="project__caption-group">
 							Дополнительная информация
 						</h2>
-						<div className="add-project__additional-group">
+						<div className="project__additional-group">
 							<SelectOption
 								id="categoryProject"
 								name="categoryProject"
 								label="Категория проекта"
 								placeholder="Выберите категорию"
 								options={projectCategories}
+								handleChange={(selectedOption) =>
+									selectOptions('categoryProject', selectedOption)
+								}
+								value={formik.values?.categoryProject}
+								error={
+									formik.touched.categoryProject &&
+									Boolean(formik.errors.categoryProject)
+								}
+								helperText={
+									formik.touched.categoryProject &&
+									formik.errors.categoryProject
+								}
+								onBlur={() => handleBlurSelectOption('categoryProject')}
 								isMulti
-								width={400}
-								value={formik.values.categoryProject}
-								touched={formik.touched.categoryProject}
-								handleChange={(selectedOption) => {
-									formik.setFieldValue(
-										'categoryProject',
-										selectedOption.map((option) => ({
-											label: option.label,
-											value: option.value,
-										}))
-									);
-								}}
 								required
 							/>
 							<SelectOption
@@ -436,24 +683,19 @@ function Project() {
 								label="Навыки"
 								placeholder="Выберите навыки"
 								options={skills}
+								handleChange={(selectedOption) =>
+									selectOptions('skills', selectedOption)
+								}
+								value={formik.values?.skills}
+								error={formik.touched.skills && Boolean(formik.errors.skills)}
+								helperText={formik.touched.skills && formik.errors.skills}
+								onBlur={() => handleBlurSelectOption('skills')}
 								isMulti
-								width={400}
-								value={formik.values.skills}
-								touched={formik.touched.skills}
-								handleChange={(selectedOption) => {
-									formik.setFieldValue(
-										'skills',
-										selectedOption.map((option) => ({
-											label: option.label,
-											value: option.value,
-										}))
-									);
-								}}
 								required
 							/>
 						</div>
 					</div>
-					<div className="add-project__form-buttons">
+					<div className="project__form-buttons">
 						<Pushbutton
 							label="Опубликовать проект"
 							size="large-var"
@@ -471,7 +713,8 @@ function Project() {
 							color="#333"
 							backgroundColor="#FDFDFD"
 							border="1px solid #A6C94F"
-							type="save"
+							onClick={() => handleDraftSaveClick(formik.values, formik.errors)}
+							type="button"
 						/>
 					</div>
 				</div>

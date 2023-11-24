@@ -1,6 +1,7 @@
 import request from './request';
 import {
 	ENDPOINT_ORGANIZER_PROJECT_CATEGORIES,
+	ENDPOINT_ORGANIZER_PROJECTS_DRAFT,
 	ENDPOINT_ORGANIZER_PROJECTS,
 	ENDPOINT_ORGANIZER_PROJECTS_ME,
 } from './endpoints';
@@ -44,8 +45,14 @@ const getNextPrevProjectsMe = (limitParameter) => {
 	);
 };
 
+const createProjectAsDraft = (value) => {
+	const token = localStorage.getItem('token');
+	return request(ENDPOINT_ORGANIZER_PROJECTS_DRAFT, 'POST', value, token);
+};
+
 export {
 	getProjectCategories,
+	createProjectAsDraft,
 	createProject,
 	getProjectById,
 	getAllProjects,

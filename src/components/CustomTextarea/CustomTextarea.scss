@@ -1,9 +1,11 @@
 @import '../../style/variables.scss';
 
-.custom-input {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
+.textarea {
+	&__container {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
 
 	&__label {
 		margin: 0 0 12px;
@@ -17,9 +19,10 @@
 
 	&__field {
 		min-width: 300px;
-		height: 50px;
+		min-height: 60px;
+		height: 175px;
 		box-sizing: border-box;
-		padding: 0 16px;
+		padding: 16px;
 		border-radius: 5px;
 		border: 1px solid $--Text;
 		color: $--Text;
