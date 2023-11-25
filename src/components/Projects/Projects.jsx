@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, Link } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -12,7 +12,7 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
 import Button from '../Button/Button';
-import { getNextPrev, getAllProjects } from '../../utils/api/organizer';
+import { getAllProjects, getNextPrev } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
@@ -53,23 +53,60 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
+
+		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
+
 		if (formik.values.city) {
 			const cityFilter = formik.values.city;
-			getAllProjects(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&city=${encodeURIComponent(
-					cityFilter[0].value
-				)}`
-			)
-				.then((dataProjects) => {
-					setProjectsNextUrl(dataProjects.next);
-					setProjects(dataProjects.results);
-				})
-				.catch((err) => {
-					console.log(`Ошибка: ${err}`);
-				})
-				.finally(setIsLoading(false));
+			filterQuery += `&city=${encodeURIComponent(cityFilter[0].value)}`;
 		}
-	}, [formik.values.city, setIsLoading]);
+		if (formik.values.skills) {
+			const skillsFilter = formik.values.skills;
+			filterQuery += `&skills=${encodeURIComponent(skillsFilter[0].value)}`;
+		}
+
+		if (formik.values.categories) {
+			const categoriesFilter = formik.values.categories;
+			filterQuery += `&categories=${encodeURIComponent(
+				categoriesFilter[0].value
+			)}`;
+		}
+
+		if (formik.values.date) {
+			const [startDate, endDate] = formik.values.date.split(' - ');
+			filterQuery += `&start_datetime=${encodeURIComponent(startDate)}`;
+			filterQuery += `&end_datetime=${encodeURIComponent(endDate)}`;
+		}
+
+		getAllProjects(filterQuery)
+			.then((dataProjects) => {
+				setProjectsNextUrl(dataProjects.next);
+				setProjects(dataProjects.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			})
+			.finally(setIsLoading(false));
+	}, [
+		formik.values.city,
+		formik.values.categories,
+		formik.values.skills,
+		formik.values.date,
+		setIsLoading,
+	]);
+
+	// useEffect(() => {
+	// 	const storedValues =
+	// 		JSON.parse(localStorage.getItem('projects-filter-values')) || {};
+	// 	formik.setValues({ ...formik.values, ...storedValues });
+	// }, []);
+	//
+	// useEffect(() => {
+	// 	localStorage.setItem(
+	// 		'projects-filter-values',
+	// 		JSON.stringify(formik.values)
+	// 	);
+	// }, []);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
@@ -132,14 +169,18 @@ function Projects() {
 						options={cities}
 						touched={formik.touched.city}
 						value={formik.values.city || []}
-						handleChange={(selectedOption) => {
+						handleClear={() => {
+							formik.setFieldValue('city', '');
+						}}
+						handleChange={(option) => {
 							formik.setFieldValue('city', [
 								{
-									label: selectedOption.label,
-									value: selectedOption.value,
+									label: option.label,
+									value: option.value,
 								},
 							]);
 						}}
+						addCloseButton
 						required
 					/>
 					<SelectOption
@@ -148,19 +189,22 @@ function Projects() {
 						label="Категории"
 						placeholder="Выберите категории"
 						options={projectCategories}
-						isMulti
+						// isMulti
 						width={400}
 						value={formik.values.categories || []}
 						touched={formik.touched.categories}
-						handleChange={(selectedOption) => {
-							formik.setFieldValue(
-								'categories',
-								selectedOption.map((option) => ({
+						handleClear={() => {
+							formik.setFieldValue('categories', '');
+						}}
+						handleChange={(option) => {
+							formik.setFieldValue('categories', [
+								{
 									label: option.label,
 									value: option.value,
-								}))
-							);
+								},
+							]);
 						}}
+						addCloseButton
 						required
 					/>
 					<SelectOption
@@ -169,19 +213,22 @@ function Projects() {
 						label="Навыки"
 						placeholder="Выберите навыки"
 						options={skills}
-						isMulti
+						// isMulti
 						width={400}
 						value={formik.values.skills || []}
 						touched={formik.touched.skills}
-						handleChange={(selectedOption) => {
-							formik.setFieldValue(
-								'skills',
-								selectedOption.map((option) => ({
+						handleClear={() => {
+							formik.setFieldValue('skills', '');
+						}}
+						handleChange={(option) => {
+							formik.setFieldValue('skills', [
+								{
 									label: option.label,
 									value: option.value,
-								}))
-							);
+								},
+							]);
 						}}
+						addCloseButton
 						required
 					/>
 				</div>

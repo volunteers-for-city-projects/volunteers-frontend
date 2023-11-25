@@ -2,6 +2,7 @@
 
 .select-option {
 	margin: 16px 0 0;
+	position: relative;
 
 	&__container {
 		width: 400px;
@@ -13,6 +14,7 @@
 			style: normal;
 		}
 		line-height: 20px;
+		position: relative;
 	}
 
 	&__label {
@@ -30,6 +32,34 @@
 		word-wrap: break-word;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	&__close-icon {
+		cursor: pointer;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		position: absolute;
+		top: 46px;
+		right: 10px;
+		display: table-cell;
+		vertical-align: middle;
+
+		&::after {
+			cursor: pointer;
+			background-color: #a6c94f;
+			color: #fff;
+			border-radius: 50%;
+			height: 20px;
+			width: 20px;
+			padding: 2px;
+			font-size: 12px;
+			line-height: 1;
+			text-align: center;
+			display: table-cell;
+			vertical-align: middle;
+			content: '\00d7';
+		}
 	}
 
 	&__error-message {
@@ -74,6 +104,34 @@
 			word-wrap: break-word;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+
+		&__close-icon {
+			cursor: pointer;
+			background-color: transparent;
+			border: 0;
+			outline: 0;
+			position: absolute;
+			top: 46px;
+			right: 10px;
+			display: table-cell;
+			vertical-align: middle;
+
+			&::after {
+				cursor: pointer;
+				background-color: #a6c94f;
+				color: #fff;
+				border-radius: 50%;
+				height: 20px;
+				width: 20px;
+				padding: 2px;
+				font-size: 12px;
+				line-height: 1;
+				text-align: center;
+				display: table-cell;
+				vertical-align: middle;
+				content: '\00d7';
+			}
 		}
 
 		&__error-message {
