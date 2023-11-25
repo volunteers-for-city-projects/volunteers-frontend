@@ -49,27 +49,30 @@
 		&_hovered {
 			cursor: pointer;
 			&:hover + .project-view__status-push-message {
-				width: 650px;
+				width: fit-content;
 				height: fit-content;
+				font-size: 28px;
 				opacity: 1;
 				transition:
-					opacity 0.3s,
 					height 0.3s,
-					width 0.3s;
+					width 0.3s,
+					font-size 0.3s,
+					opacity 0.5s;
 				@media screen and (max-width: 1919px) {
-					width: 500px;
+					font-size: 18px;
 				}
 			}
 		}
 	}
 	&__status-push-message {
+		box-sizing: border-box;
 		text-align: center;
 		margin: 0;
 		color: $--Text;
 		font-family: Fira Sans;
-		font-size: 28px;
+		font-size: 0;
 		font-weight: 600;
-		line-height: 1.23;
+		line-height: 1.17;
 		padding: 22px;
 		width: 0px;
 		height: 0;
@@ -82,7 +85,6 @@
 		border-radius: 5px;
 		overflow: hidden;
 		@media screen and (max-width: 1919px) {
-			font-size: 18px;
 			padding: 16px;
 		}
 	}

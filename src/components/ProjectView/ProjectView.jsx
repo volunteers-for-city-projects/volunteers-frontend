@@ -210,9 +210,9 @@ function ProjectView() {
 						{`Время начала заявок начнется в ${project.start_date_application
 							.split(' ')
 							.reverse()
-							.join(
-								' '
-							)} время окончания подачи заявок ${project.end_date_application
+							.join(' ')}`}{' '}
+						<br />
+						{`время окончания подачи заявок ${project.end_date_application
 							.split(' ')
 							.reverse()
 							.join(' ')}`}
