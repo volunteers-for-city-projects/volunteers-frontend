@@ -17,6 +17,7 @@ import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import SignIn from '../SignIn/SignIn';
+import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -29,8 +30,8 @@ function ProjectView() {
 		event_address: {
 			address_line: '',
 		},
-		start_date_application: '',
-		end_date_application: '',
+		start_datetime: '',
+		end_datetime: '',
 		picture: null,
 		skills: [
 			{
@@ -75,14 +76,14 @@ function ProjectView() {
 		},
 		{
 			id: 2,
-			text: `${project.start_date_application.split(' ')[0]} - ${
-				project.end_date_application.split(' ')[0]
+			text: `${project.start_datetime.split(' ')[0]} - ${
+				project.end_datetime.split(' ')[0]
 			}`,
 		},
 		{
 			id: 3,
-			text: `${project.start_date_application.split(' ')[1]} - ${
-				project.end_date_application.split(' ')[1]
+			text: `${project.start_datetime.split(' ')[1]} - ${
+				project.end_datetime.split(' ')[1]
 			}`,
 		},
 	];
@@ -108,7 +109,6 @@ function ProjectView() {
 				setError(err);
 			});
 	}, [idProject, isLoggedIn]);
-
 	const openImageEnlarge = () => {
 		setModal({
 			isOpen: true,
@@ -207,7 +207,10 @@ function ProjectView() {
 							))}
 						</ul>
 					</div>
-					<p>Тут будет вычисляться статус и задаваться цвет</p>
+					<ShowProjectStatus
+						cardProject={project}
+						className="project-view__status"
+					/>
 				</div>
 				<div className="project-view__container-info">
 					<div className="project-view__container-image-info">

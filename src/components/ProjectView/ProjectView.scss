@@ -34,6 +34,22 @@
 		height: 40px;
 		width: 40px;
 	}
+	&__status {
+		font-size: 23px;
+		text-transform: lowercase;
+		flex-shrink: 0;
+	}
+	&__status::before {
+		box-sizing: border-box;
+		content: '';
+		width: 24px;
+		aspect-ratio: 1;
+		border: 4px solid;
+		display: inline-block;
+		border-radius: 50%;
+		vertical-align: bottom;
+		margin-right: 12px;
+	}
 	&__btn:hover {
 		opacity: 0.8;
 		cursor: pointer;
