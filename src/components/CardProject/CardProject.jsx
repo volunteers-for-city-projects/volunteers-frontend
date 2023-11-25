@@ -19,7 +19,8 @@ function CardProject({ cardProject }) {
 	} = cardProject;
 
 	const location = useLocation();
-	const pageProfile = location.pathname === '/profile/organizer';
+	const pageProfileOrg = location.pathname === '/profile/organizer';
+	const pageProfileVol = location.pathname === '/profile/volunteer';
 
 	return (
 		<article
@@ -40,13 +41,17 @@ function CardProject({ cardProject }) {
 								/>
 							)}
 
-							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
-							{pageProfile ? (
+							{pageProfileOrg ? (
+								<ProjectDeleteButton projectId={projectId} />
+							) : (
+								''
+							)}
+							{pageProfileOrg ? (
 								<button className="card__status-btn"> </button>
 							) : (
 								''
 							)}
-							{pageProfile ? (
+							{pageProfileOrg || pageProfileVol ? (
 								<ProjectLikeButton
 									parent="profile-org"
 									projectId={projectId}

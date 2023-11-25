@@ -202,7 +202,11 @@ function ProfileOrganization() {
 							{projectsMe.length > 0 ? (
 								<div className="profile-org__projects-cards">
 									{projectsMe.map((item) => (
-										<CardProject cardProject={item} key={item.id} />
+										<CardProject
+											cardProject={item}
+											key={item.id}
+											projects={projectsMe}
+										/>
 									))}
 								</div>
 							) : (
@@ -246,7 +250,6 @@ function ProfileOrganization() {
 				projectCategories,
 				setModal,
 				projectsMe,
-				setProjectsMe,
 			}}
 		/>
 	);

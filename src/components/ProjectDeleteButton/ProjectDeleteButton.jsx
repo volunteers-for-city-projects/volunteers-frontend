@@ -1,21 +1,21 @@
 import './ProjectDeleteButton.scss';
-// import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useOutletContext, Outlet } from 'react-router-dom';
 import { deleteCardProjectOrganization } from '../../utils/api/projects';
 
 function ProjectDeleteButton({ projectId }) {
-	const { projectsMe, setProjectsMe } = useOutletContext();
-	const { setModal, setPopup, closePopup } = useOutletContext();
+	const { projectsMe, setModal, setPopup, closePopup } = useOutletContext();
 
-	//	const [setDeleteCard] = useState(false);
+	const [projectsDelete, setProjectsDelete] = useState(projectsMe);
 
 	const deleteProjectCard = () => {
 		deleteCardProjectOrganization(projectId)
 			.then(() =>
-				setProjectsMe(projectsMe.filter((m) => m.projectId !== projectId))
+				setProjectsDelete(
+					projectsDelete.filter((m) => m.projectId !== projectId)
+				)
 			)
-
 			.catch((err) => {
 				console.error(err);
 			});
@@ -53,6 +53,7 @@ function ProjectDeleteButton({ projectId }) {
 					setModal,
 					setPopup,
 					closePopup,
+					projectsMe,
 				}}
 			/>
 		</>
