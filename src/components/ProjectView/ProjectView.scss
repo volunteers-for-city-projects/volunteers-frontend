@@ -44,6 +44,47 @@
 		flex-shrink: 0;
 		justify-self: end;
 		align-self: end;
+		line-height: 1.5;
+		text-align: end;
+		&_hovered {
+			cursor: pointer;
+			&:hover + .project-view__status-push-message {
+				width: 650px;
+				height: fit-content;
+				opacity: 1;
+				transition:
+					opacity 0.3s,
+					height 0.3s,
+					width 0.3s;
+				@media screen and (max-width: 1919px) {
+					width: 500px;
+				}
+			}
+		}
+	}
+	&__status-push-message {
+		text-align: center;
+		margin: 0;
+		color: $--Text;
+		font-family: Fira Sans;
+		font-size: 28px;
+		font-weight: 600;
+		line-height: 1.23;
+		padding: 22px;
+		width: 0px;
+		height: 0;
+		opacity: 0;
+		position: absolute;
+		top: 40px;
+		right: 0;
+		border: 2px solid $--Secondary;
+		background-color: white;
+		border-radius: 5px;
+		overflow: hidden;
+		@media screen and (max-width: 1919px) {
+			font-size: 18px;
+			padding: 16px;
+		}
 	}
 	&__status::before {
 		box-sizing: border-box;
@@ -53,7 +94,7 @@
 		border: 4px solid;
 		display: inline-block;
 		border-radius: 50%;
-		vertical-align: bottom;
+		vertical-align: middle;
 		margin-right: 12px;
 	}
 	&__btn:hover {
@@ -83,6 +124,7 @@
 		display: grid;
 		row-gap: 32px;
 		grid-template-columns: 1fr 920px;
+		position: relative;
 		@media screen and (max-width: 1919px) {
 			grid-template-columns: 1fr 680px;
 			row-gap: 24.5px;

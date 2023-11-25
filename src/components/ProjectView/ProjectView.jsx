@@ -31,7 +31,9 @@ function ProjectView() {
 			address_line: '',
 		},
 		start_datetime: '',
+		start_date_application: '',
 		end_datetime: '',
+		end_date_application: '',
 		picture: null,
 		skills: [
 			{
@@ -197,20 +199,24 @@ function ProjectView() {
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
-					{/* <div className="project-view__container-name-place"> */}
 					<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
-					{/* <ul className="project-view__list-place">
-						{infoProject.map((item) => (
-							<li key={item.id} className="project-view__item">
-								<p className="project-view__place">{item.text}</p>
-							</li>
-						))}
-					</ul> */}
-					{/* </div> */}
 					<ShowProjectStatus
 						cardProject={project}
-						className="project-view__status"
+						className={`project-view__status ${
+							project.status === 'editing' ? 'project-view__status_hovered' : ''
+						}`}
 					/>
+					<p className="project-view__status-push-message">
+						{`Время начала заявок начнется в ${project.start_date_application
+							.split(' ')
+							.reverse()
+							.join(
+								' '
+							)} время окончания подачи заявок ${project.end_date_application
+							.split(' ')
+							.reverse()
+							.join(' ')}`}
+					</p>
 					<ul className="project-view__list-place">
 						{infoProject.map((item) => (
 							<li key={item.id} className="project-view__item">
