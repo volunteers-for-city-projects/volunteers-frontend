@@ -1,8 +1,8 @@
 @import '../../style/variables.scss';
 
-.add-project {
+.project {
 	margin: 0 auto;
-	&__name-container {
+	&__custom-input {
 		max-width: 540px;
 		box-sizing: border-box;
 		margin: 54px 0 15px;
@@ -121,7 +121,7 @@
 	}
 	&__place-group {
 		display: grid;
-		grid-template-columns: min-content 1fr;
+		grid-template-columns: 400px 1fr;
 		gap: 20px;
 		&-wrapper {
 			display: flex;
@@ -186,17 +186,14 @@
 			}
 		}
 	}
-}
-@media screen and (max-width: 1660px) {
-	.add-project {
+	@media screen and (max-width: 1660px) {
 		padding: 0 30px;
 	}
-}
-@media screen and (max-width: 1366px) {
-	.add-project {
+	@media screen and (max-width: 1366px) {
 		max-width: 1180px;
 	}
 }
+
 .error {
 	&-message {
 		display: block;

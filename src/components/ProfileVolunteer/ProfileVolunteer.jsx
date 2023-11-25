@@ -13,6 +13,10 @@ import cityImage from '../../images/city.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getVolunteerInformation } from '../../utils/api/profile';
 import volunteerImage from '../../images/avatar.png';
+import cardsProjectsArray from '../../utils/cardsProjectsArray';
+import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
+import CardProject from '../CardProject/CardProject';
+import Button from '../Button/Button';
 
 function ProfileVolunteer() {
 	const {
@@ -100,61 +104,85 @@ function ProfileVolunteer() {
 	return location.pathname === '/profile/volunteer' ||
 		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
-			<div className="profile__menu-container">
-				<Crumbs />
-			</div>
-			<div className="profile__wrapper">
-				<div className="profile__personal">
-					<div className="profile__personal-container">
-						<div className="profile__personal-label">
-							<img
-								className="profile__image"
-								src={photo || volunteerImage}
-								alt="Логотип организатора"
-							/>
-							<div className="profile__personal-btn">
-								<Pushbutton
-									label="Изменить пароль"
-									color="#3F3F3F"
-									size="large-var"
-									minWidth="280px"
-									backgroundColor="transparent"
-									border="1px solid #A6C94F"
-									onClick={() => handleChangePasswordForm()}
-								/>
-								<Pushbutton
-									label="Редактировать профиль"
-									color="#3F3F3F"
-									size="large-var"
-									minWidth="280px"
-									backgroundColor="transparent"
-									border="1px solid #A6C94F"
-									onClick={() => navigate('edit-profile')}
-								/>
-							</div>
-						</div>
-						<div className="profile__name">
-							<h2 className="profile__name-surname">
-								{`${firstName} ${secondName} ${lastName}`}
-							</h2>
-						</div>
-						{dataVolunteer.length > 0 && (
-							<ProfileData dataArray={dataVolunteer} />
-						)}
-					</div>
+			<div className="profile__container">
+				<div className="profile__menu">
+					<Crumbs />
 				</div>
-				<div className="profile__projects">
-					<div className="profile__projects-container">
-						<h2 className="profile__projects-title">Ваши проекты</h2>
-						<div className="profile__blank">
-							<p className="profile__blank-title">
-								Здесь будут отображаться ваши проекты
-							</p>
-							<img
-								className="profile__blank-image"
-								src={cityImage}
-								alt="город"
-							/>
+				<div className="profile__wrapper">
+					<div className="profile__personal">
+						<div className="profile__personal-container">
+							<div className="profile__personal-label">
+								<img
+									className="profile__image"
+									src={photo || volunteerImage}
+									alt="Логотип организатора"
+								/>
+								<div className="profile__personal-btn">
+									<Pushbutton
+										label="Изменить пароль"
+										color="#3F3F3F"
+										size="large-var"
+										minWidth="280px"
+										backgroundColor="transparent"
+										border="1px solid #A6C94F"
+										onClick={() => handleChangePasswordForm()}
+									/>
+									<Pushbutton
+										label="Редактировать профиль"
+										color="#3F3F3F"
+										size="large-var"
+										minWidth="280px"
+										backgroundColor="transparent"
+										border="1px solid #A6C94F"
+										onClick={() => navigate('edit-profile')}
+									/>
+								</div>
+							</div>
+							<div className="profile__name">
+								<h2 className="profile__name-surname">
+									{`${firstName} ${secondName} ${lastName}`}
+								</h2>
+							</div>
+							{dataVolunteer.length > 0 && (
+								<ProfileData dataArray={dataVolunteer} />
+							)}
+						</div>
+					</div>
+					<div className="profile__projects">
+						<div className="profile__projects-container">
+							<div className="profile__projects-label">
+								<h2 className="profile__projects-title">Ваши проекты</h2>
+							</div>
+							{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
+
+							{cardsProjectsArray.length > 0 ? (
+								<div className="profile__projects-cards">
+									{cardsProjectsArray.map((item) => (
+										<CardProject cardProject={item} key={item.id} />
+									))}
+								</div>
+							) : (
+								<div className="profile__blank">
+									<p className="profile__blank-title">
+										Здесь будут отображаться ваши проекты
+									</p>
+									<div className="profile__blank-picture">
+										<img
+											className="profile__blank-image"
+											src={cityImage}
+											alt="город"
+										/>
+									</div>
+								</div>
+							)}
+
+							{cardsProjectsArray.length >= 6 && (
+								<div className="projects__button">
+									<Button className="projects__button-item" size="xs">
+										Показать еще
+									</Button>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

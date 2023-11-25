@@ -12,12 +12,9 @@
 		position: relative;
 		cursor: pointer;
 	}
-	&__like-btn {
-		position: absolute;
-		top: 22px;
-		right: 16px;
-		z-index: 2;
-	}
+//	&__like-btn {
+//
+//	}
 	&__overlay {
 		position: absolute;
 		top: 0;
@@ -51,6 +48,21 @@
 			display: flex;
 			gap: 24px;
 		}
+		&-btn {
+			width: 24px;
+			height: 24px;
+			background-color: transparent;
+			border: none;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			transition: opacity 0.3s;
+			background-image: url(../../images/pensil.svg);
+			&:hover {
+				opacity: 0.8;
+				cursor: pointer;
+			}
+		}
 
 		&-btn {
 			width: 24px;
@@ -62,6 +74,7 @@
 			background-position: center;
 			background-color: transparent;
 		}
+		
 	}
 	&__description {
 		display: flex;
@@ -117,6 +130,7 @@
 		}
 	}
 
+
 	@media screen and (max-width: 1919px) {
 		&__project {
 			height: 150px;
@@ -124,5 +138,9 @@
 		&__name-title {
 			font-size: 23px;
 		}
+		&__status-buttons {
+			gap: 16px;
+		}
 	}
 }
+
