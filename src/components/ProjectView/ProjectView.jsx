@@ -197,20 +197,27 @@ function ProjectView() {
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
-					<div className="project-view__container-name-place">
-						<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
-						<ul className="project-view__list-place">
-							{infoProject.map((item) => (
-								<li key={item.id} className="project-view__item">
-									<p className="project-view__place">{item.text}</p>
-								</li>
-							))}
-						</ul>
-					</div>
+					{/* <div className="project-view__container-name-place"> */}
+					<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
+					{/* <ul className="project-view__list-place">
+						{infoProject.map((item) => (
+							<li key={item.id} className="project-view__item">
+								<p className="project-view__place">{item.text}</p>
+							</li>
+						))}
+					</ul> */}
+					{/* </div> */}
 					<ShowProjectStatus
 						cardProject={project}
 						className="project-view__status"
 					/>
+					<ul className="project-view__list-place">
+						{infoProject.map((item) => (
+							<li key={item.id} className="project-view__item">
+								<p className="project-view__place">{item.text}</p>
+							</li>
+						))}
+					</ul>
 				</div>
 				<div className="project-view__container-info">
 					<div className="project-view__container-image-info">

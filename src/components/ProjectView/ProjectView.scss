@@ -7,6 +7,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 30px;
+		@media screen and (max-width: 1366px) {
+			margin: 26.5px auto 24px;
+			gap: 20px;
+		}
 	}
 
 	&__container-crumbs {
@@ -38,6 +42,8 @@
 		font-size: 23px;
 		text-transform: lowercase;
 		flex-shrink: 0;
+		justify-self: end;
+		align-self: end;
 	}
 	&__status::before {
 		box-sizing: border-box;
@@ -74,16 +80,19 @@
 	}
 
 	&__container-name-place-date {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
+		display: grid;
+		row-gap: 32px;
+		grid-template-columns: 1fr 920px;
+		@media screen and (max-width: 1919px) {
+			grid-template-columns: 1fr 680px;
+			row-gap: 24.5px;
+		}
 	}
 
 	&__container-name-place {
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
-		overflow: hidden;
 	}
 
 	&__title {
@@ -104,6 +113,8 @@
 		list-style-type: none;
 		display: flex;
 		gap: 16px;
+		grid-column-start: 1;
+		grid-column-end: 3;
 	}
 
 	&__place {
@@ -201,6 +212,9 @@
 		padding: 30px;
 		box-shadow: 1px 1px 18px 0px rgba(180, 203, 249, 0.6);
 		border-radius: 10px;
+		@media screen and (max-width: 1919px) {
+			gap: 24px;
+		}
 	}
 
 	&__list-common-info {
@@ -210,6 +224,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: 32px;
+		@media screen and (max-width: 1919px) {
+			gap: 24px;
+		}
 	}
 
 	&__text {
