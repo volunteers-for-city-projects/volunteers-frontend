@@ -4,6 +4,7 @@ import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
+import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 
 function CardProject({ cardProject }) {
 	const { isLoggedIn } = useOutletContext();
@@ -42,7 +43,11 @@ function CardProject({ cardProject }) {
 
 							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
 							{pageProfile ? (
-								<button className="card__status-btn"> </button>
+								// <button className="card__status-btn"> </button>
+								<ProjectEditButton
+									projectId={projectId}
+									parent="card-project"
+								/>
 							) : (
 								''
 							)}
