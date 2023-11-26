@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function ProjectEditButton({ parent, projectId }) {
 	const navigate = useNavigate();
 	const handleClick = () => {
-		navigate(`project/edit/${projectId}`);
+		navigate(`/profile/organizer/edit-project/${projectId}`);
 	};
 	return (
 		<button

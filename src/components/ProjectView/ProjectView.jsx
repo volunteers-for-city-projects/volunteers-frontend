@@ -51,7 +51,6 @@ function ProjectView() {
 		organizer_provides: '',
 		organization: null,
 	});
-	console.log(project);
 	const [organization, setOrganization] = useState({
 		title: '',
 	});
@@ -75,18 +74,19 @@ function ProjectView() {
 	];
 
 	const infoProject = [
+		{ id: 1, text: `г. ${project.city}` },
 		{
-			id: 1,
+			id: 2,
 			text: project.event_address.address_line.trim(),
 		},
 		{
-			id: 2,
+			id: 3,
 			text: `${project.start_datetime.split(' ')[0]} - ${
 				project.end_datetime.split(' ')[0]
 			}`,
 		},
 		{
-			id: 3,
+			id: 4,
 			text: `${project.start_datetime.split(' ')[1]} - ${
 				project.end_datetime.split(' ')[1]
 			}`,
@@ -339,7 +339,9 @@ function ProjectView() {
 										theme="default"
 										size="l"
 										// eslint-disable-next-line no-alert
-										onClick={() => alert('открывается страничка с участниками')}
+										onClick={() =>
+											navigate(`/profile/organizer/project-participans/${id}`)
+										}
 										type="button"
 									>
 										Участники проекта
@@ -349,7 +351,9 @@ function ProjectView() {
 											theme="default"
 											size="l"
 											// eslint-disable-next-line no-alert
-											onClick={() => alert('открывается страничка с заявками')}
+											onClick={() =>
+												navigate(`/profile/organizer/project-applications/{id}`)
+											}
 											type="button"
 										>
 											Посмотреть заявки
