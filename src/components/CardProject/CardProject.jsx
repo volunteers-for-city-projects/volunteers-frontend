@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useLocation, useOutletContext } from 'react-router-dom';
+import { useLocation, useOutletContext, useNavigate } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
@@ -7,6 +7,7 @@ import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 
 function CardProject({ cardProject }) {
+	const navigate = useNavigate();
 	const { isLoggedIn } = useOutletContext();
 
 	const {
@@ -21,9 +22,14 @@ function CardProject({ cardProject }) {
 
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
-
+	function handleProject(evt) {
+		if (!evt.target.className.includes('like'))
+			navigate(`/projects/${cardProject.id}`);
+	}
 	return (
 		<article
+			role="presentation"
+			onClick={handleProject}
 			className="card__project"
 			style={{ backgroundImage: `url(${image})` }}
 		>

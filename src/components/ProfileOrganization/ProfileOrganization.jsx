@@ -133,7 +133,6 @@ function ProfileOrganization() {
 				});
 		}
 	}
-
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
 		<section className="profile-org">

@@ -103,7 +103,21 @@
 		opacity: 0.8;
 		cursor: pointer;
 	}
+	&__photo-message {
+		font-size: 23px;
+		font-weight: 500;
+		line-height: 1.3;
+		margin: 0;
+		padding: 22px;
+		border: 2px solid $--Secondary;
+		color: $--Text;
+		border-radius: 5px;
+	}
 
+	&__project-edit-btn {
+		background-image: url('../../images/edit_profile_prView.svg');
+		margin-left: 40px;
+	}
 	&__btn_type_share {
 		background-image: url(../../images/share.svg);
 	}

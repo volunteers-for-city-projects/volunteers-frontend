@@ -78,9 +78,6 @@ function Projects() {
 			skills: '',
 		},
 	});
-	function handleProject(evt, id) {
-		if (!evt.target.className.includes('like')) navigate(`/projects/${id}`);
-	}
 
 	return (
 		<section className="projects">
@@ -182,16 +179,7 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<div
-								role="presentation"
-								key={item.id}
-								className="projects__link"
-								onClick={(evt) => {
-									handleProject(evt, item.id);
-								}}
-							>
-								<CardProject cardProject={item} />
-							</div>
+							<CardProject key={item.id} cardProject={item} />
 						))}
 				</div>
 				<div className="projects__button">

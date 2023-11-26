@@ -12,12 +12,14 @@ import './ProjectView.scss';
 import '../../routes/router.scss';
 import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
+// import { editProject } from '../../utils/api/projects';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import SignIn from '../SignIn/SignIn';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
+import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -49,6 +51,7 @@ function ProjectView() {
 		organizer_provides: '',
 		organization: null,
 	});
+	console.log(project);
 	const [organization, setOrganization] = useState({
 		title: '',
 	});
@@ -159,6 +162,18 @@ function ProjectView() {
 			state: 'info',
 		});
 	};
+
+	const handleCancelProject = () => {
+		alert('измеение статуса проекта');
+		// editProject(idProject, {
+		// 	status: 'canceled_by_organizer',
+		// })
+		// 	.then(() => {
+		// 		project.status = "canceled_by_organizer'";
+		// 	})
+		// 	.catch((err) => console.log * err);
+	};
+
 	if (error) {
 		return <NotFound />;
 	}
@@ -199,7 +214,17 @@ function ProjectView() {
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
-					<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
+					<h2 className="project-view__title">
+						{`«${project.name.trim()}»`}
+						{isLoggedIn &&
+							role === 'organizer' &&
+							id === project.organization && (
+								<ProjectEditButton
+									parent="project-view"
+									projectId={project.id}
+								/>
+							)}
+					</h2>
 					<ShowProjectStatus
 						cardProject={project}
 						className={`project-view__status ${
@@ -294,6 +319,22 @@ function ProjectView() {
 							role === 'organizer' &&
 							id === project.organization && (
 								<>
+									{project.status.includes('closed') && (
+										<>
+											<p className="project-view__photo-message">
+												Вы можете добавить фото мероприятий завершённого проекта
+											</p>
+											<Button
+												theme="default"
+												size="l"
+												// eslint-disable-next-line no-alert
+												onClick={() => alert('Добавить Фотографии')}
+												type="button"
+											>
+												Добавить Фотографии
+											</Button>
+										</>
+									)}
 									<Button
 										theme="default"
 										size="l"
@@ -303,24 +344,28 @@ function ProjectView() {
 									>
 										Участники проекта
 									</Button>
-									<Button
-										theme="default"
-										size="l"
-										// eslint-disable-next-line no-alert
-										onClick={() => alert('открывается страничка с заявками')}
-										type="button"
-									>
-										Посмотреть заявки
-									</Button>
-									<Button
-										theme="opposite"
-										size="l"
-										// eslint-disable-next-line no-alert
-										onClick={() => alert('отменить проект')}
-										type="button"
-									>
-										Отменить проект
-									</Button>
+									{!project.status.includes('closed') && (
+										<Button
+											theme="default"
+											size="l"
+											// eslint-disable-next-line no-alert
+											onClick={() => alert('открывается страничка с заявками')}
+											type="button"
+										>
+											Посмотреть заявки
+										</Button>
+									)}
+									{!project.status.includes('closed') && (
+										<Button
+											theme="opposite"
+											size="l"
+											// eslint-disable-next-line no-alert
+											onClick={handleCancelProject}
+											type="button"
+										>
+											Отменить проект
+										</Button>
+									)}
 								</>
 							)}
 						{isLoggedIn &&
