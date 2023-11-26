@@ -12,7 +12,7 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import cardsProjectsPreview from '../../utils/cardsProjectsPreview';
 import CardProject from '../CardProject/CardProject';
 import Button from '../Button/Button';
-import { getAllProjects, getNextPrev } from '../../utils/api/organizer';
+import { getAllProjects } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function Projects() {
@@ -21,8 +21,16 @@ function Projects() {
 	);
 	const [projects, setProjects] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
-	const { setIsLoading, skills, cities, projectCategories, currentUser } =
-		useOutletContext();
+
+	const {
+		isLoggedIn,
+		setIsLoading,
+		skills,
+		cities,
+		projectCategories,
+		currentUser,
+	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const { role } = currentUser;
 
@@ -39,7 +47,7 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`, isLoggedIn)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -49,7 +57,7 @@ function Projects() {
 			})
 			.finally(setIsLoading(false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [isLoggedIn]);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -112,8 +120,9 @@ function Projects() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrev(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			getAllProjects(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`,
+				isLoggedIn
 			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
