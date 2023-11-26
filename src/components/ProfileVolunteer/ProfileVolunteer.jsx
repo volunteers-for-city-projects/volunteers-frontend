@@ -5,7 +5,7 @@ import {
 	Outlet,
 	useLocation,
 } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Crumbs } from '../Crumbs/Crumbs';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import ProfileData from '../ProfileData/ProfileData';
@@ -13,12 +13,22 @@ import cityImage from '../../images/city.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getVolunteerInformation } from '../../utils/api/profile';
 import volunteerImage from '../../images/avatar.png';
-import cardsProjectsArray from '../../utils/cardsProjectsArray';
+// import cardsProjectsArray from '../../utils/cardsProjectsArray';
 import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import CardProject from '../CardProject/CardProject';
 import Button from '../Button/Button';
+import {
+	getProjectsMe,
+	getNextPrevProjectsMe,
+} from '../../utils/api/organizer';
+import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function ProfileVolunteer() {
+	const [projectsOffset, setProjectsOffset] = useState(
+		PROJECT_CARD_DISPLAY_LIMIT
+	);
+	const [projectsMeVol, setProjectsMeVol] = useState([]);
+	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const {
 		currentUser,
 		setCurrentUser,
@@ -101,6 +111,32 @@ function ProfileVolunteer() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location]);
 
+	useEffect(() => {
+		getProjectsMe(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
+			.then((data) => {
+				setProjectsNextUrl(data.next);
+				setProjectsMeVol(data.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, []);
+
+	function handleClickNext() {
+		if (projectsNextUrl) {
+			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+			getNextPrevProjectsMe(
+				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
+			)
+				.then((data) => {
+					setProjectsMeVol([...projectsMeVol, ...data.results]);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+		}
+	}
+
 	return location.pathname === '/profile/volunteer' ||
 		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
@@ -153,11 +189,11 @@ function ProfileVolunteer() {
 							<div className="profile__projects-label">
 								<h2 className="profile__projects-title">Ваши проекты</h2>
 							</div>
-							{cardsProjectsArray.length > 0 && <ProfileButtonsTabs />}
+							{projectsMeVol.length > 0 && <ProfileButtonsTabs />}
 
-							{cardsProjectsArray.length > 0 ? (
+							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">
-									{cardsProjectsArray.map((item) => (
+									{projectsMeVol.map((item) => (
 										<CardProject cardProject={item} key={item.id} />
 									))}
 								</div>
@@ -176,9 +212,13 @@ function ProfileVolunteer() {
 								</div>
 							)}
 
-							{cardsProjectsArray.length >= 6 && (
+							{projectsMeVol.length >= 6 && (
 								<div className="projects__button">
-									<Button className="projects__button-item" size="xs">
+									<Button
+										className="projects__button-item"
+										size="xs"
+										onClick={() => handleClickNext()}
+									>
 										Показать еще
 									</Button>
 								</div>
