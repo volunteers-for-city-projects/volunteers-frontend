@@ -23,7 +23,7 @@ function CardProject({ cardProject }) {
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
 	function handleProject(evt) {
-		if (evt.target.className === 'card__project')
+		if (!/edit|like|delete/.test(evt.target.className))
 			navigate(`/projects/${cardProject.id}`);
 	}
 	return (
