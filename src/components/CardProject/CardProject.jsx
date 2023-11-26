@@ -1,15 +1,25 @@
 import PropTypes from 'prop-types';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
+import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
+import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
 function CardProject({ cardProject }) {
+	const { isLoggedIn } = useOutletContext();
+
 	const {
 		name: nameProject,
 		city,
 		start_datetime: day,
 		end_datetime: time,
 		picture: image,
+		id: projectId,
+		is_favorited: isFavorited,
 	} = cardProject;
+
+	const location = useLocation();
+	const pageProfile = location.pathname === '/profile/organizer';
 
 	return (
 		<article
@@ -22,7 +32,29 @@ function CardProject({ cardProject }) {
 					<div className="card__status">
 						<ShowProjectStatus cardProject={cardProject} />
 						<div className="card__status-buttons">
-							{/*  блок для трёх кнопок: редактировать, удалить, лайк */}
+							{isLoggedIn && (
+								<ProjectLikeButton
+									parent="card"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							)}
+
+							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
+							{pageProfile ? (
+								<button className="card__status-btn"> </button>
+							) : (
+								''
+							)}
+							{pageProfile ? (
+								<ProjectLikeButton
+									parent="profile-org"
+									projectId={projectId}
+									isFavorited={isFavorited}
+								/>
+							) : (
+								''
+							)}
 						</div>
 					</div>
 					<div className="card__description">
@@ -54,6 +86,8 @@ CardProject.propTypes = {
 		end_datetime: PropTypes.string,
 		isModeration: PropTypes.bool,
 		picture: PropTypes.string,
+		id: PropTypes.number,
+		is_favorited: PropTypes.bool,
 	}),
 };
 

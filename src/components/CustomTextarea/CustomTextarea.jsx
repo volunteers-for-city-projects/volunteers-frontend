@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import './CustomInput.scss';
 import clsx from 'clsx';
+import './CustomTextarea.scss';
 
-export default function CustomInput({
+export default function CustomTextarea({
 	name,
 	label,
 	placeholder,
-	type,
 	handleChange,
 	error,
 	required,
-	inputRef,
 	helperText,
 	...props
 }) {
@@ -23,52 +21,42 @@ export default function CustomInput({
 	);
 
 	return (
-		<div className="custom-input">
+		<div className="textarea__container">
 			{label.length > 0 && (
-				<label htmlFor="custom-input__field" className="custom-input__label">
+				<label htmlFor="textarea" className="textarea__label">
 					{`${label}${required ? '*' : ''}`}
 				</label>
 			)}
-			<input
-				ref={inputRef}
+			<textarea
 				name={name}
-				type={type}
 				placeholder={placeholder}
-				className={clsx('custom-input__field', {
-					'custom-input__field-error': error,
+				className={clsx('textarea__field', {
+					'textarea__field-error': error,
 				})}
 				required={required}
 				onChange={changeName}
 				{...props}
 			/>
-			<span className="custom-input__error-message">{error && helperText}</span>
+			<span className="textarea__error-message">{error && helperText}</span>
 		</div>
 	);
 }
 
-CustomInput.propTypes = {
+CustomTextarea.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
-	type: PropTypes.string.isRequired,
 	handleChange: PropTypes.func,
 	error: PropTypes.bool,
 	required: PropTypes.bool,
-	inputRef: PropTypes.oneOfType([
-		// Either a function
-		PropTypes.func,
-		// Or the instance of a DOM native element (see the note about SSR)
-		PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-	]),
 	helperText: PropTypes.string,
 };
 
-CustomInput.defaultProps = {
+CustomTextarea.defaultProps = {
 	name: '',
 	placeholder: '',
 	required: false,
 	error: false,
 	handleChange: () => {},
-	inputRef: undefined,
 	helperText: '',
 };

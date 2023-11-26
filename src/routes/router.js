@@ -32,7 +32,7 @@ const router = createHashRouter([
 		element: <App />,
 		handle: {
 			crumb: () => (
-				<Link to="/" className="router__link">
+				<Link to="/" className="router__link router__link_mane">
 					Главная
 				</Link>
 			),

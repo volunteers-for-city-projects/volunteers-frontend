@@ -1,11 +1,12 @@
 .buttons-tabs__container {
 	display: grid;
-	grid-template-columns: repeat(5, 149px);
+	grid-template-columns: repeat(6, 149px);
 	gap: 20px;
 }
 
 @media screen and (max-width: 1919px) {
 	.buttons-tabs__container {
-		grid-template-columns: repeat(5, 130px);
+		grid-template-columns: repeat(6, 120px);
+		gap: 11px;
 	}
 }

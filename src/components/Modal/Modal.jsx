@@ -109,6 +109,14 @@ function Modal({ modal, closeModal }) {
 				image: modalPasswordSuccess,
 			},
 		},
+		draft: {
+			success: {
+				title:
+					'Информация о вашем проекте сохранена! Он будет доступен в личном кабинете',
+				textButton: '',
+				image: modalCity,
+			},
+		},
 	};
 
 	const contentMap = {
@@ -200,9 +208,7 @@ function Modal({ modal, closeModal }) {
 					{contentText[type][state].errorsArray &&
 						contentText[type][state].errorsArray.map((item) => (
 							<li key={item.id}>
-								<p className="modal__text modal__text_error">
-									{item.textError}
-								</p>
+								<p className="modal__text">{item.textError}</p>
 							</li>
 						))}
 				</ul>
@@ -211,7 +217,7 @@ function Modal({ modal, closeModal }) {
 				<>
 					<p className="modal__text">
 						{contentText[type][state].errorsArray &&
-							contentText[type][state].errorsArray[0].notActiveEmail}
+							contentText[type][state].errorsArray[0]?.notActiveEmail}
 					</p>
 					<button className="modal__button-resend" type="submit">
 						{contentText[type][state].textButton}
@@ -222,7 +228,7 @@ function Modal({ modal, closeModal }) {
 				<>
 					<p className="modal__text">
 						{contentText[type][state].errorsArray &&
-							contentText[type][state].errorsArray[0].notExistEmail}
+							contentText[type][state].errorsArray[0]?.notExistEmail}
 					</p>
 					<Pushbutton
 						label={contentText[type][state].textButton}
@@ -265,6 +271,36 @@ function Modal({ modal, closeModal }) {
 				/>
 			),
 		},
+		draft: {
+			success: (
+				<>
+					<p className="modal__text modal__text_type_confirm">
+						{contentText[type][state].title}
+					</p>
+					<div className="modal__buttons">
+						<Pushbutton
+							label="Вернуться к редактированию"
+							color="#000"
+							backgroundColor="transparent"
+							size="pre-large"
+							type="button"
+							minWidth="198px"
+							border="1px solid #A6C94F"
+							onClick={closeModal}
+						/>
+						<Pushbutton
+							label="Перейти в личный кабинет"
+							color="#fff"
+							backgroundColor="#A6C94F"
+							size="pre-large"
+							type="submit"
+							minWidth="198px"
+							border="none"
+						/>
+					</div>
+				</>
+			),
+		},
 	};
 
 	return (
@@ -292,7 +328,8 @@ function Modal({ modal, closeModal }) {
 							className={clsx('modal__image', {
 								modal__image_type_confirm: type === 'confirm',
 								modal__image_type_success: state === 'success',
-								modal__image_type_project: type === 'project',
+								modal__image_type_project:
+									type === 'project' || type === 'draft',
 								'modal__image_type_change-password': type === 'changePassword',
 							})}
 							src={contentText[type][state].image}
