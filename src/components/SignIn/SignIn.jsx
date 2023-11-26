@@ -73,7 +73,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 			>
 				<div className="sign-in__inputs">
 					<label className="sign-in__label" htmlFor="userEmail">
-						E-mail
+						E-mail*
 						<input
 							type="email"
 							placeholder="Введите E-mail"
@@ -97,7 +97,7 @@ function SignIn({ title, subtitle, buttonSubmitText, onSignIn, className }) {
 					</label>
 
 					<label className="sign-in__label" htmlFor="userPassword">
-						Пароль
+						Пароль*
 						<input
 							type="password"
 							placeholder="Введите пароль"
