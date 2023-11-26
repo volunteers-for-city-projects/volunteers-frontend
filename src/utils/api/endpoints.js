@@ -29,4 +29,3 @@ export const ENDPOINT_ORGANIZER_PROJECTS = 'projects/';
 export const ENDPOINT_ORGANIZER_PROJECTS_DRAFT = 'projects/draft/';
 
 export const ENDPOINT_ORGANIZER_PROJECTS_ME = 'projects/me';
-
