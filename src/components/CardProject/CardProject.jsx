@@ -23,7 +23,7 @@ function CardProject({ cardProject }) {
 	const location = useLocation();
 	const pageProfile = location.pathname === '/profile/organizer';
 	function handleProject(evt) {
-		if (!evt.target.className.includes('like'))
+		if (evt.target.className === 'card__project')
 			navigate(`/projects/${cardProject.id}`);
 	}
 	return (
@@ -50,10 +50,7 @@ function CardProject({ cardProject }) {
 							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
 							{pageProfile ? (
 								// <button className="card__status-btn"> </button>
-								<ProjectEditButton
-									projectId={projectId}
-									parent="card-project"
-								/>
+								<ProjectEditButton projectId={projectId} parent="card" />
 							) : (
 								''
 							)}
