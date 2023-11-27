@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
-import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import { EDITING, REJECTED, PROJECT_COMPLETED } from '../../utils/constants';
 
-function CardProject({ cardProject }) {
+function CardProject({ cardProject, onCardDelete }) {
 	const { isLoggedIn, currentUser } = useOutletContext();
 
 	const {
@@ -35,6 +34,9 @@ function CardProject({ cardProject }) {
 		currentUser.id === organization &&
 		(statusApprove === EDITING || statusApprove === REJECTED);
 
+	function handleClickDelete() {
+		onCardDelete(cardProject);
+	}
 
 	return (
 		<article
@@ -56,12 +58,18 @@ function CardProject({ cardProject }) {
 							)}
 
 							{pageProfileOrg && deleteFlag ? (
-
-								<ProjectDeleteButton projectId={projectId} />
+								<button
+									className="project__delete-button"
+									onClick={handleClickDelete}
+									type="button"
+								>
+									{' '}
+								</button>
 							) : (
 								''
 							)}
-							{pageProfileOrg  && editFlag ? (
+
+							{pageProfileOrg && editFlag ? (
 								<button className="card__status-btn"> </button>
 							) : (
 								''
@@ -111,6 +119,7 @@ CardProject.propTypes = {
 		is_favorited: PropTypes.bool,
 		organization: PropTypes.number,
 	}),
+	onCardDelete: PropTypes.func,
 };
 
 CardProject.defaultProps = {
@@ -126,4 +135,5 @@ CardProject.defaultProps = {
 		cityName: '',
 		organization: null,
 	}),
+	onCardDelete: undefined,
 };
