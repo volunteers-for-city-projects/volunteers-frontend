@@ -59,6 +59,7 @@ function Projects() {
 			)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
+					setProjectsNextUrl(data.next);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -194,15 +195,17 @@ function Projects() {
 							</div>
 						))}
 				</div>
-				<div className="projects__button">
-					<Button
-						className="projects__button-item"
-						size="xs"
-						onClick={() => handleClickNext()}
-					>
-						Показать еще
-					</Button>
-				</div>
+				{projectsNextUrl ? (
+					<div className="projects__button">
+						<Button
+							className="projects__button-item"
+							size="xs"
+							onClick={() => handleClickNext()}
+						>
+							Показать еще
+						</Button>
+					</div>
+				) : null}
 			</div>
 		</section>
 	);
