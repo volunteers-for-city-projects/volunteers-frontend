@@ -154,7 +154,6 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 							},
 						]);
 					}}
-					addCloseButton
 					required
 				/>
 				<InputMask
@@ -272,6 +271,7 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					value={formik.values.organize_phone}
 					handleChange={formik.handleChange}
 					submitCount={formik.submitCount}
+					required
 				/>
 			</InputGroup>
 			<InputGroup title="Пароль">

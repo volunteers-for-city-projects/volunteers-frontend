@@ -315,7 +315,6 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 							},
 						]);
 					}}
-					addCloseButton
 					required
 				/>
 			</InputGroup>

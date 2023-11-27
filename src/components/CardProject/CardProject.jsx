@@ -35,7 +35,6 @@ function CardProject({ cardProject }) {
 		currentUser.id === organization &&
 		(statusApprove === EDITING || statusApprove === REJECTED);
 
-
 	return (
 		<article
 			className="card__project"
@@ -56,12 +55,11 @@ function CardProject({ cardProject }) {
 							)}
 
 							{pageProfileOrg && deleteFlag ? (
-
 								<ProjectDeleteButton projectId={projectId} />
 							) : (
 								''
 							)}
-							{pageProfileOrg  && editFlag ? (
+							{pageProfileOrg && editFlag ? (
 								<button className="card__status-btn"> </button>
 							) : (
 								''
