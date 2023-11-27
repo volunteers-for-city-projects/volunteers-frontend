@@ -46,10 +46,13 @@ class Project extends AbstractEntity {
 	 */
 	loadIncomes(status = '') {
 		return ProjectIncome.load().then((items) => {
-			items.forEach((item) => item.setProject(this));
-			this.#incomes = status
-				? items.filter((item) => item.statusIncomes === status)
-				: items;
+			const filtered = items.filter(
+				(item) =>
+					item.project.name === this.name &&
+					(!status || item.statusIncomes === status)
+			); // TODO filter by ID or on server
+			filtered.forEach((item) => item.setProject(this));
+			this.#incomes = filtered;
 			return this.#incomes;
 		});
 	}
