@@ -60,7 +60,7 @@ function PasswordRecovery({
 				className="password-recovery__form"
 			>
 				<label className="password-recovery__label" htmlFor="userEmail">
-					E-mail
+					E-mail*
 					<input
 						type="email"
 						placeholder="Введите E-mail"
