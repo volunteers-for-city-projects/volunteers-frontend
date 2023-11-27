@@ -238,6 +238,11 @@ function ProfileOrganization() {
 					</div>
 				</div>
 			</div>
+			<Outlet
+				context={{
+					projectsMe,
+				}}
+			/>
 		</section>
 	) : (
 		<Outlet

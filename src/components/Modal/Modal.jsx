@@ -343,6 +343,7 @@ function Modal({ modal, closeModal }) {
 					</div>
 				</>
 			),
+			success: <p className="modal__text">{contentText[type][state].title}</p>,
 		},
 	};
 

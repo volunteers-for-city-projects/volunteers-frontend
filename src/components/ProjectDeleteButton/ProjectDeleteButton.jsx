@@ -5,19 +5,42 @@ import { useOutletContext, Outlet } from 'react-router-dom';
 import { deleteCardProjectOrganization } from '../../utils/api/projects';
 
 function ProjectDeleteButton({ projectId }) {
-	const { projectsMe, setModal, setPopup, closePopup } = useOutletContext();
+	// , setPopup, closePopup
 
+	const { projectsMe, setModal, setPopup, closePopup } = useOutletContext();
 	const [projectsDelete, setProjectsDelete] = useState(projectsMe);
 
 	const deleteProjectCard = () => {
 		deleteCardProjectOrganization(projectId)
-			.then(() =>
+			.then(() => {
 				setProjectsDelete(
 					projectsDelete.filter((m) => m.projectId !== projectId)
-				)
-			)
+				);
+				setModal({
+					isOpen: true,
+					type: 'deleteCardProject',
+					state: 'success',
+					title: '',
+					typeStyle: 'deleteCardProject',
+				});
+			})
+
+			//	.catch((err) => {
+			//		if (Array.isArray(err)) {
+			//			setPopup({
+			//				isOpen: true,
+			//				type: 'error',
+			//				styleType: 'modal',
+			//				errorArray: err,
+			//			});
+			//		} else {
+			//			console.error(err);
+			//		}
+			//		closePopup();
+			//	})
+
 			.catch((err) => {
-				console.error(err);
+				console.log(err);
 			});
 	};
 
@@ -59,8 +82,16 @@ function ProjectDeleteButton({ projectId }) {
 		</>
 	);
 }
+
 ProjectDeleteButton.propTypes = {
 	projectId: PropTypes.number,
+	// popup: PropTypes.shape({
+	//	isOpen: PropTypes.bool,
+	//	text: PropTypes.string,
+	//	type: PropTypes.string,
+	// }).isRequired,
+	// closePopup: PropTypes.func.isRequired,
+	// setPopup: PropTypes.func.isRequired,
 };
 ProjectDeleteButton.defaultProps = {
 	projectId: 0,
