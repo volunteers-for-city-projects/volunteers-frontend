@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
-import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
+// import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 
-function CardProject({ cardProject }) {
+function CardProject({ cardProject, onCardDelete }) {
 	const { isLoggedIn } = useOutletContext();
 
 	const {
@@ -21,6 +21,10 @@ function CardProject({ cardProject }) {
 	const location = useLocation();
 	const pageProfileOrg = location.pathname === '/profile/organizer';
 	const pageProfileVol = location.pathname === '/profile/volunteer';
+
+	function handleClickDelete() {
+		onCardDelete(cardProject);
+	}
 
 	return (
 		<article
@@ -42,7 +46,13 @@ function CardProject({ cardProject }) {
 							)}
 
 							{pageProfileOrg ? (
-								<ProjectDeleteButton projectId={projectId} />
+								<button
+									className="project__delete-button"
+									onClick={handleClickDelete}
+									type="button"
+								>
+									{' '}
+								</button>
 							) : (
 								''
 							)}
@@ -94,6 +104,7 @@ CardProject.propTypes = {
 		id: PropTypes.number,
 		is_favorited: PropTypes.bool,
 	}),
+	onCardDelete: PropTypes.func,
 };
 
 CardProject.defaultProps = {
@@ -107,4 +118,5 @@ CardProject.defaultProps = {
 		image: '',
 		cityName: '',
 	}),
+	onCardDelete: undefined,
 };

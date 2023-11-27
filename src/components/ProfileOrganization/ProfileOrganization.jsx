@@ -21,6 +21,7 @@ import {
 	getNextPrevProjectsMe,
 } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
+import { deleteCardProjectOrganization } from '../../utils/api/projects';
 
 function ProfileOrganization() {
 	const [projectsOffset, setProjectsOffset] = useState(
@@ -134,6 +135,48 @@ function ProfileOrganization() {
 		}
 	}
 
+	const deleteProjectCard = (projectId) => {
+		deleteCardProjectOrganization(projectId)
+			.then(() => {
+				setProjectsMe((state) => state.filter((c) => c.id !== projectId));
+				setModal({
+					isOpen: true,
+					type: 'deleteCardProject',
+					state: 'success',
+					title: '',
+					typeStyle: 'deleteCardProject',
+				});
+			})
+			.catch((err) => {
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				}
+			});
+	};
+
+	const handleDeleteModal = (cardProject) => {
+		setModal({
+			isOpen: true,
+			type: 'deleteCardProject',
+			state: 'info',
+			title: 'Удаление проекта',
+			typeStyle: 'deleteCardProject',
+			onSubmit: (event) => {
+				event.preventDefault();
+				deleteProjectCard(cardProject.id);
+				setModal({
+					isOpen: false,
+				});
+			},
+		});
+	};
+
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
 		<section className="profile-org">
@@ -206,6 +249,7 @@ function ProfileOrganization() {
 											cardProject={item}
 											key={item.id}
 											projects={projectsMe}
+											onCardDelete={handleDeleteModal}
 										/>
 									))}
 								</div>
