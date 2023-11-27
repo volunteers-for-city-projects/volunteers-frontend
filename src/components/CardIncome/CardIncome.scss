@@ -1,6 +1,9 @@
 @import '../../style/variables.scss';
 .card-income {
 	display: grid;
+	button {
+		padding: 15px;
+	}
 	&__modal-remove {
 		display: flex;
 		flex-direction: column;
@@ -10,11 +13,6 @@
 		}
 	}
 
-	&__modal-buttons {
-		display: flex;
-		justify-content: space-around;
-		width: 100%;
-	}
 	&__button-remove {
 		background: url('../../images/basket-colored.svg');
 		width: 40px;
@@ -26,16 +24,32 @@
 	&__photo {
 		justify-self: center;
 	}
+	&__subtitle {
+		margin: 0 0 10px 0;
+	}
+	&__skills {
+		margin: 0;
+	}
+	&__buttons {
+		display: flex;
+		gap: 10px;
+		> button {
+			width: 100%;
+		}
+		flex-wrap: wrap;
+	}
+
 	&_layout_default {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 6fr 7fr;
 		grid-template-rows: repeat(4, auto);
-		row-gap: 20px;
-		column-gap: 28px;
+		row-gap: 10px;
+		column-gap: 20px;
 		> .card-income__title {
 			grid-column: 1/3;
 		}
 		> .card-income__photo {
-			grid-row: 2/4;
+			grid-row: 2/5;
+			width: 100%;
 		}
 	}
 	&_layout_accepted {
@@ -51,23 +65,44 @@
 			height: 100%;
 		}
 	}
-	&_layout_popup {
-		grid-template-columns: 2fr 1fr 1fr;
+	&_layout_modal {
+		grid-template-columns: 1fr 2fr;
 		grid-template-rows: repeat(3, auto);
 		row-gap: 20px;
 		column-gap: 28px;
-		> .card-income__letter {
-			grid-column: 2/4;
-		}
 		> .card-income__title {
-			grid-column: 1/4;
+			grid-column: 1/3;
 		}
 		> .card-income__about {
 			display: flex;
 			flex-direction: column;
 		}
-		> .card-income__action {
-			align-self: end;
+		> .card-income__buttons {
+			flex-wrap: nowrap;
+			align-items: end;
 		}
 	}
 }
+/*
+@media screen and (max-width: 1919px) {
+	.card-income {
+		&_layout_default {			
+			grid-template-columns: 5fr 8fr 13fr;
+			grid-template-rows: repeat(4, auto);
+			> .card-income__title {
+				grid-column: 1/4;
+			}
+			> .card-income__button_about {
+				grid-row: 5/6;
+				grid-column: 1/3;
+			}
+			> .card-income__buttons{				
+				grid-row: 2/6;
+				grid-column: 3/4;
+				flex-direction: column;
+				justify-content: end;
+			}
+		}		
+	}
+}
+*/

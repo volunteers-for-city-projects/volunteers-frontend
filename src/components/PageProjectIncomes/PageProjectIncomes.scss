@@ -3,6 +3,15 @@
 .page-project-incomes {
 	padding: 50px 130px;
 	color: $--Text;
+	display: flex;
+	flex-direction: column;
+
+	&__head {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
 	&__title {
 		font-size: 56px;
 		font-weight: 400;
@@ -19,5 +28,28 @@
 		font-size: 34px;
 		font-weight: 400;
 		line-height: 130%;
+	}
+	&__incomes {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+	}
+	&__button-more {
+		margin-top: 32px;
+		align-self: flex-end;
+		font-family: Fira Sans;
+		font-size: 15px;
+		font-weight: 400;
+		line-height: 17px;
+		padding: 0;
+	}
+}
+
+@media screen and (max-width: 1919px) {
+	.page-project-incomes {
+		&__incomes {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 22px;
+		}
 	}
 }

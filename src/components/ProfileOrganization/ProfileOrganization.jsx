@@ -21,6 +21,7 @@ import {
 	getNextPrevProjectsMe,
 } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
+import { deleteCardProjectOrganization } from '../../utils/api/projects';
 
 function ProfileOrganization() {
 	const [projectsOffset, setProjectsOffset] = useState(
@@ -127,12 +128,55 @@ function ProfileOrganization() {
 			)
 				.then((data) => {
 					setProjectsMe([...projectsMe, ...data.results]);
+					setProjectsNextUrl(data.next);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
 				});
 		}
 	}
+
+	const deleteProjectCard = (projectId) => {
+		deleteCardProjectOrganization(projectId)
+			.then(() => {
+				setProjectsMe((state) => state.filter((c) => c.id !== projectId));
+				setModal({
+					isOpen: true,
+					type: 'deleteCardProject',
+					state: 'success',
+					title: '',
+					typeStyle: 'deleteCardProject',
+				});
+			})
+			.catch((err) => {
+				if (Array.isArray(err)) {
+					setModal({
+						isOpen: true,
+						type: 'error',
+						state: 'info',
+						title: 'Произошла ошибка',
+						errorArray: err,
+					});
+				}
+			});
+	};
+
+	const handleDeleteModal = (cardProject) => {
+		setModal({
+			isOpen: true,
+			type: 'deleteCardProject',
+			state: 'info',
+			title: 'Удаление проекта',
+			typeStyle: 'deleteCardProject',
+			onSubmit: (event) => {
+				event.preventDefault();
+				deleteProjectCard(cardProject.id);
+				setModal({
+					isOpen: false,
+				});
+			},
+		});
+	};
 
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
@@ -202,7 +246,12 @@ function ProfileOrganization() {
 							{projectsMe.length > 0 ? (
 								<div className="profile-org__projects-cards">
 									{projectsMe.map((item) => (
-										<CardProject cardProject={item} key={item.id} />
+										<CardProject
+											cardProject={item}
+											key={item.id}
+											projects={projectsMe}
+											onCardDelete={handleDeleteModal}
+										/>
 									))}
 								</div>
 							) : (
@@ -219,7 +268,7 @@ function ProfileOrganization() {
 									</div>
 								</div>
 							)}
-							{projectsMe.length >= 6 && (
+							{projectsMe.length >= 6 && projectsNextUrl && (
 								<div className="profile-org__button">
 									<Button
 										className="profile-org__button-item"
@@ -234,6 +283,11 @@ function ProfileOrganization() {
 					</div>
 				</div>
 			</div>
+			<Outlet
+				context={{
+					projectsMe,
+				}}
+			/>
 		</section>
 	) : (
 		<Outlet
@@ -245,6 +299,7 @@ function ProfileOrganization() {
 				skills,
 				projectCategories,
 				setModal,
+				projectsMe,
 			}}
 		/>
 	);
