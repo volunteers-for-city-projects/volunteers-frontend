@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './ProfileOrganization.scss';
 import {
+	Outlet,
+	useLocation,
 	useNavigate,
 	useOutletContext,
-	useLocation,
-	Outlet,
 } from 'react-router-dom';
 import ProfileData from '../ProfileData/ProfileData';
 import { Crumbs } from '../Crumbs/Crumbs';
@@ -17,8 +17,8 @@ import organizationImage from '../../images/avatar.png';
 import { getUserInformation } from '../../utils/api/login';
 import { getOrganizationInformation } from '../../utils/api/profile';
 import {
-	getProjectsMe,
 	getNextPrevProjectsMe,
+	getProjectsMe,
 } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
@@ -28,6 +28,7 @@ function ProfileOrganization() {
 	);
 	const [projectsMe, setProjectsMe] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+	const [activeTab, setActiveTab] = useState('');
 	const {
 		currentUser,
 		setCurrentUser,
@@ -198,7 +199,12 @@ function ProfileOrganization() {
 								</div>
 							</div>
 
-							{projectsMe.length > 0 && <ProfileButtonsTabs />}
+							{projectsMe.length > 0 && (
+								<ProfileButtonsTabs
+									activeTab={activeTab}
+									setActiveTab={setActiveTab}
+								/>
+							)}
 
 							{projectsMe.length > 0 ? (
 								<div className="profile-org__projects-cards">

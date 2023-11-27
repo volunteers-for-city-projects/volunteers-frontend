@@ -44,7 +44,7 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						size="mini"
 						border="1px solid #A6C94F"
 						onClick={() => setActiveTab('moderation')}
-						backgroundColor={activeTab !== 'completed' ? '#FDFDFD' : '#a6c94f'}
+						backgroundColor={activeTab !== 'moderation' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
 					<Pushbutton
