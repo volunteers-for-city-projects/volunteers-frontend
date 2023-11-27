@@ -20,3 +20,17 @@ export const MESSAGE_PROJECT_ACCEPTANCE_APPLICATIONS_OVER =
 	'Приём заявок окончен, дата начала проекта: ';
 export const MESSAGE_PROJECT_NO_DATE =
 	'Проект - черновик. Необходимо заполнить даты!';
+export const MESSAGE_PROJECT_NOT_DEFINED = 'Статус проекта не определен!';
+export const MESSAGE_PROJECT_EDITING = 'Черновик';
+export const MESSAGE_PROJECT_PENDING = 'На модерации';
+export const MESSAGE_PROJECT_REJECTED = 'Отклонён модератором';
+export const MESSAGE_PROJECT_CANCELED_BY_ORGANIZER = 'Отменён организатором';
+export const APPROVED = 'approved';
+export const EDITING = 'editing';
+export const PENDING = 'pending';
+export const REJECTED = 'rejected';
+export const CANCELED_BY_ORGANIZER = 'canceled_by_organizer';
+export const OPEN = 'open';
+export const READY_FOR_FEEDBACK = 'ready_for_feedback';
+export const RECEPTION_OF_RESPONSES_CLOSED = 'reception_of_responses_closed';
+export const PROJECT_COMPLETED = 'project_completed';

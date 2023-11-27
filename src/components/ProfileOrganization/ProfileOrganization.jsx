@@ -127,6 +127,7 @@ function ProfileOrganization() {
 			)
 				.then((data) => {
 					setProjectsMe([...projectsMe, ...data.results]);
+					setProjectsNextUrl(data.next);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -218,7 +219,7 @@ function ProfileOrganization() {
 									</div>
 								</div>
 							)}
-							{projectsMe.length >= 6 && (
+							{projectsMe.length >= 6 && projectsNextUrl && (
 								<div className="profile-org__button">
 									<Button
 										className="profile-org__button-item"

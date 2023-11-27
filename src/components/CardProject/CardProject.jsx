@@ -4,11 +4,11 @@ import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectDeleteButton from '../ProjectDeleteButton/ProjectDeleteButton';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
-import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
+import { EDITING, REJECTED, PROJECT_COMPLETED } from '../../utils/constants';
 
 function CardProject({ cardProject }) {
 	const navigate = useNavigate();
-	const { isLoggedIn } = useOutletContext();
+	const { isLoggedIn, currentUser } = useOutletContext();
 
 	const {
 		name: nameProject,
@@ -18,10 +18,24 @@ function CardProject({ cardProject }) {
 		picture: image,
 		id: projectId,
 		is_favorited: isFavorited,
+		status,
+		status_approve: statusApprove,
+		organization,
 	} = cardProject;
 
 	const location = useLocation();
-	const pageProfile = location.pathname === '/profile/organizer';
+
+	const pageProfileOrg = location.pathname === '/profile/organizer';
+	const pageProfileVol = location.pathname === '/profile/volunteer';
+	const editFlag =
+		currentUser.role === 'organizer' &&
+		currentUser.id === organization &&
+		status !== PROJECT_COMPLETED;
+	const deleteFlag =
+		currentUser.role === 'organizer' &&
+		currentUser.id === organization &&
+		(statusApprove === EDITING || statusApprove === REJECTED);
+
 	function handleProject(evt) {
 		if (!/edit|like|delete/.test(evt.target.className))
 			navigate(`/projects/${cardProject.id}`);
@@ -47,14 +61,17 @@ function CardProject({ cardProject }) {
 								/>
 							)}
 
-							{pageProfile ? <ProjectDeleteButton projectId={projectId} /> : ''}
-							{pageProfile ? (
-								// <button className="card__status-btn"> </button>
-								<ProjectEditButton projectId={projectId} parent="card" />
+							{pageProfileOrg && deleteFlag ? (
+								<ProjectDeleteButton projectId={projectId} />
 							) : (
 								''
 							)}
-							{pageProfile ? (
+							{pageProfileOrg && editFlag ? (
+								<button className="card__status-btn"> </button>
+							) : (
+								''
+							)}
+							{pageProfileOrg || pageProfileVol ? (
 								<ProjectLikeButton
 									parent="profile-org"
 									projectId={projectId}
@@ -88,6 +105,7 @@ export default CardProject;
 CardProject.propTypes = {
 	cardProject: PropTypes.shape({
 		status: PropTypes.string,
+		status_approve: PropTypes.string,
 		name: PropTypes.string,
 		city: PropTypes.string,
 		start_datetime: PropTypes.string,
@@ -96,12 +114,14 @@ CardProject.propTypes = {
 		picture: PropTypes.string,
 		id: PropTypes.number,
 		is_favorited: PropTypes.bool,
+		organization: PropTypes.number,
 	}),
 };
 
 CardProject.defaultProps = {
 	cardProject: PropTypes.shape({
 		status: '',
+		status_approve: '',
 		name: '',
 		city: '',
 		start_datetime: '',
@@ -109,5 +129,6 @@ CardProject.defaultProps = {
 		isModeration: true,
 		image: '',
 		cityName: '',
+		organization: null,
 	}),
 };
