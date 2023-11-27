@@ -21,7 +21,7 @@ export default ProjectEditButton;
 
 ProjectEditButton.propTypes = {
 	parent: PropTypes.string,
-	projectId: PropTypes.string,
+	projectId: PropTypes.number,
 };
 
 ProjectEditButton.defaultProps = {

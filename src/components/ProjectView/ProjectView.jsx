@@ -72,7 +72,7 @@ function ProjectView() {
 			path: `/projects/${idProject}`,
 		},
 	];
-	debugger; // eslint-disable-line no-debugger
+	// eslint-disable-line no-debugger
 	const infoProject = [
 		{ id: 1, text: `г. ${project.city}` },
 		{
