@@ -234,35 +234,6 @@ const router = createHashRouter([
 									),
 								},
 							},
-							{
-								path: 'project-participans/:IdProject',
-								element: <Stub text="Тут будут участники" />,
-								handle: {
-									crumb: () => (
-										<Link
-											to="/profile/organizer/project-participans/:idProject"
-											className="router__link"
-										>
-											Участники
-										</Link>
-									),
-								},
-							},
-
-							{
-								path: 'project-applications/:IdProject',
-								element: <Stub text="Тут  будут заявки на участие" />,
-								handle: {
-									crumb: () => (
-										<Link
-											to="/profile/organizer/project-applications/:idProject"
-											className="router__link"
-										>
-											Заявки
-										</Link>
-									),
-								},
-							},
 						],
 					},
 				],
