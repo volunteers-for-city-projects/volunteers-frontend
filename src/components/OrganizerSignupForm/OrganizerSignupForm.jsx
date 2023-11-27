@@ -142,15 +142,19 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					placeholder="Выберите город"
 					options={cities}
 					touched={formik.touched.organize_city}
-					value={formik.values.organize_city}
-					handleChange={(selectedOption) => {
+					value={formik.values.organize_city || []}
+					handleClear={() => {
+						formik.setFieldValue('organize_city', '');
+					}}
+					handleChange={(option) => {
 						formik.setFieldValue('organize_city', [
 							{
-								label: selectedOption.label,
-								value: selectedOption.value,
+								label: option.label,
+								value: option.value,
 							},
 						]);
 					}}
+					addCloseButton
 					required
 				/>
 				<InputMask

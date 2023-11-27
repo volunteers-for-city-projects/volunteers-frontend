@@ -1,9 +1,9 @@
 import './ProfileVolunteer.scss';
 import {
-	useNavigate,
-	useOutletContext,
 	Outlet,
 	useLocation,
+	useNavigate,
+	useOutletContext,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Crumbs } from '../Crumbs/Crumbs';
@@ -18,8 +18,8 @@ import ProfileButtonsTabs from '../ProfileButtonsTabs/ProfileButtonsTabs';
 import CardProject from '../CardProject/CardProject';
 import Button from '../Button/Button';
 import {
-	getProjectsMe,
 	getNextPrevProjectsMe,
+	getProjectsMe,
 } from '../../utils/api/organizer';
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
@@ -29,6 +29,8 @@ function ProfileVolunteer() {
 	);
 	const [projectsMeVol, setProjectsMeVol] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
+	const [activeTab, setActiveTab] = useState('');
+
 	const {
 		currentUser,
 		setCurrentUser,
@@ -122,6 +124,39 @@ function ProfileVolunteer() {
 			});
 	}, []);
 
+	useEffect(() => {
+		setProjectsOffset(6);
+		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
+
+		if (activeTab === 'favorites') {
+			filterQuery += `&is_favorited=true`;
+		}
+
+		if (activeTab === 'active') {
+			filterQuery +=
+				`&status="reception_of_responses_closed"` ||
+				`&status="ready_for_feedback"` ||
+				`&status="editing"`;
+		}
+
+		if (activeTab === 'completed') {
+			filterQuery += `&status=project_completed`;
+		}
+
+		if (activeTab === 'canceled') {
+			filterQuery += `&status=project_completed`;
+		}
+
+		getProjectsMe(filterQuery)
+			.then((dataProjects) => {
+				setProjectsNextUrl(dataProjects.next);
+				setProjectsMeVol(dataProjects.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, [activeTab]);
+
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
@@ -189,7 +224,12 @@ function ProfileVolunteer() {
 							<div className="profile__projects-label">
 								<h2 className="profile__projects-title">Ваши проекты</h2>
 							</div>
-							{projectsMeVol.length > 0 && <ProfileButtonsTabs />}
+							{projectsMeVol.length > 0 && (
+								<ProfileButtonsTabs
+									activeTab={activeTab}
+									setActiveTab={setActiveTab}
+								/>
+							)}
 
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">

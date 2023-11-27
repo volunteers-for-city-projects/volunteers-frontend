@@ -47,7 +47,7 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
-		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`, isLoggedIn)
+		getAllProjects(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=0`, isLoggedIn)
 			.then((dataProjects) => {
 				setProjectsNextUrl(dataProjects.next);
 				setProjects(dataProjects.results);
@@ -61,7 +61,7 @@ function Projects() {
 
 	useEffect(() => {
 		setIsLoading(true);
-
+		setProjectsOffset(6);
 		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
 
 		if (formik.values.city) {
@@ -82,8 +82,8 @@ function Projects() {
 
 		if (formik.values.date) {
 			const [startDate, endDate] = formik.values.date.split(' - ');
-			filterQuery += `&start_datetime=${encodeURIComponent(startDate)}`;
-			filterQuery += `&end_datetime=${encodeURIComponent(endDate)}`;
+			filterQuery += `&start_datetime=${encodeURIComponent(startDate)} 00:00`;
+			filterQuery += `&end_datetime=${encodeURIComponent(endDate)} 23:59`;
 		}
 
 		getAllProjects(filterQuery)
@@ -101,29 +101,58 @@ function Projects() {
 		formik.values.skills,
 		formik.values.date,
 		setIsLoading,
+		setProjectsNextUrl,
 	]);
 
-	// useEffect(() => {
-	// 	const storedValues =
-	// 		JSON.parse(localStorage.getItem('projects-filter-values')) || {};
-	// 	formik.setValues({ ...formik.values, ...storedValues });
-	// }, []);
-	//
-	// useEffect(() => {
-	// 	localStorage.setItem(
-	// 		'projects-filter-values',
-	// 		JSON.stringify(formik.values)
-	// 	);
-	// }, []);
+	const filterProjects = async (startDate, endDate) => {
+		setIsLoading(true);
+		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
+		filterQuery += `&start_datetime=${encodeURIComponent(
+			startDate.toISOString()
+		)}`;
+		filterQuery += `&end_datetime=${encodeURIComponent(endDate.toISOString())}`;
+
+		try {
+			const dataProjects = await getAllProjects(filterQuery);
+			setProjects(dataProjects.results);
+			setProjectsNextUrl(dataProjects.next);
+		} catch (err) {
+			console.log(`Ошибка: ${err}`);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setIsLoading(true);
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getAllProjects(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`,
-				isLoggedIn
-			)
+
+			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`;
+
+			if (formik.values.city) {
+				const cityFilter = formik.values.city;
+				filterQuery += `&city=${encodeURIComponent(cityFilter[0].value)}`;
+			}
+			if (formik.values.skills) {
+				const skillsFilter = formik.values.skills;
+				filterQuery += `&skills=${encodeURIComponent(skillsFilter[0].value)}`;
+			}
+
+			if (formik.values.categories) {
+				const categoriesFilter = formik.values.categories;
+				filterQuery += `&categories=${encodeURIComponent(
+					categoriesFilter[0].value
+				)}`;
+			}
+
+			if (formik.values.date) {
+				const [startDate, endDate] = formik.values.date.split(' - ');
+				filterQuery += `&start_datetime=${encodeURIComponent(startDate)} 00:00`;
+				filterQuery += `&end_datetime=${encodeURIComponent(endDate)} 23:59`;
+			}
+
+			getAllProjects(filterQuery, isLoggedIn)
 				.then((data) => {
 					setProjects([...projects, ...data.results]);
 					setProjectsNextUrl(data.next);
@@ -170,6 +199,7 @@ function Projects() {
 						width={400}
 						handleChange={formik.handleChange}
 						value={formik.values.date}
+						filterData={filterProjects}
 					/>
 					<SelectOption
 						id="city"
@@ -191,7 +221,6 @@ function Projects() {
 							]);
 						}}
 						addCloseButton
-						required
 					/>
 					<SelectOption
 						id="categories"
@@ -215,7 +244,6 @@ function Projects() {
 							]);
 						}}
 						addCloseButton
-						required
 					/>
 					<SelectOption
 						id="skills"
@@ -239,7 +267,6 @@ function Projects() {
 							]);
 						}}
 						addCloseButton
-						required
 					/>
 				</div>
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-	useParams,
 	Link,
-	useOutletContext,
 	useNavigate,
+	useOutletContext,
+	useParams,
 } from 'react-router-dom';
 import arrow from '../../images/icon-strelka.svg';
 import projectNull from '../../images/project-null.png';
@@ -16,7 +16,6 @@ import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
-import SignIn from '../SignIn/SignIn';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
 
