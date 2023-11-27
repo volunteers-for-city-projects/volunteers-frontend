@@ -11,6 +11,7 @@ import projectImage from '../../images/city.png';
 import { createProject, createProjectAsDraft } from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
 import CustomTextarea from '../CustomTextarea/CustomTextarea';
+import CustomDateRange from '../CustomDateRange/CustomDateRange';
 
 function Project() {
 	const { cities, skills, projectCategories, setModal, currentUser } =
@@ -20,21 +21,22 @@ function Project() {
 	const navigate = useNavigate();
 	const nameRef = useRef(null);
 
+	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
 	const projectValues = {
-		name: '',
-		description: '',
-		image: '',
-		goal: '',
-		events: '',
-		tasks: '',
-		provide: '',
-		city: null,
-		address: '',
-		date: '',
-		timeRange: '',
-		submissionDate: '',
-		categoryProject: null,
-		skills: null,
+		name: draftLocalstorage?.name || '',
+		description: draftLocalstorage?.description || '',
+		image: draftLocalstorage?.image || '',
+		goal: draftLocalstorage?.goal || '',
+		events: draftLocalstorage?.events || '',
+		tasks: draftLocalstorage?.tasks || '',
+		provide: draftLocalstorage?.provide || '',
+		city: draftLocalstorage?.city || null,
+		address: draftLocalstorage?.address || '',
+		date: draftLocalstorage?.date || '',
+		timeRange: draftLocalstorage?.timeRange || '',
+		submissionDate: draftLocalstorage?.submissionDate || '',
+		categoryProject: draftLocalstorage?.categoryProject || null,
+		skills: draftLocalstorage?.skills || null,
 	};
 
 	const validationSchema = Yup.object({
@@ -605,16 +607,18 @@ function Project() {
 					<div className="project__dates-group-wrapper">
 						<h2 className="project__caption-group">Сроки проведения</h2>
 						<div className="project__dates-group">
-							<CustomInput
+							<CustomDateRange
 								name="date"
-								type="text"
 								label="Дата проведения"
 								placeholder="01.02.2023 - 12.10.2023"
 								error={formik.touched.date && Boolean(formik.errors.date)}
 								helperText={formik.touched.date && formik.errors.date}
 								value={formik.values.date}
 								handleChange={formik.handleChange}
-								onBlur={(e) => handleBlur(e)}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									formik.handleChange(e.target.name)(e.target.value.trim());
+								}}
 								required
 							/>
 							<CustomInput
@@ -631,9 +635,8 @@ function Project() {
 								onBlur={(e) => handleBlur(e)}
 								required
 							/>
-							<CustomInput
+							<CustomDateRange
 								name="submissionDate"
-								type="text"
 								label="Дата подачи заявок"
 								placeholder="02.10.2023 - 12.10.2023"
 								error={
@@ -645,7 +648,10 @@ function Project() {
 								}
 								value={formik.values.submissionDate}
 								handleChange={formik.handleChange}
-								onBlur={(e) => handleBlur(e)}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									formik.handleChange(e.target.name)(e.target.value.trim());
+								}}
 								required
 							/>
 						</div>

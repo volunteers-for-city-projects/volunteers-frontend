@@ -8,6 +8,9 @@
 	font-weight: 500;
 	line-height: 130%;
 	text-decoration: none;
+	@media screen and (max-width: 1366px) {
+		font-size: 15px;
+	}
 	&_mane {
 		color: rgba(0, 0, 0, 0.6);
 	}

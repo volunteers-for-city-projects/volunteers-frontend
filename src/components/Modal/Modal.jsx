@@ -10,7 +10,7 @@ import modalSuccess from '../../images/modals/success.png';
 import modalError from '../../images/modals/error.png';
 import modalCity from '../../images/modals/city.png';
 import modalPasswordSuccess from '../../images/modals/key-image.png';
-import modalDeleteCardProject from '../../images/modals/modalDeleteCardProject.png';
+import modalDeleteCardProject from '../../images/modals/remove.png';
 
 function Modal({ modal, closeModal }) {
 	const {
