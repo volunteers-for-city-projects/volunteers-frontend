@@ -29,7 +29,8 @@
 	}
 
 	&__selects {
-		display: flex;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 		gap: 20px;
 		z-index: 3;
 	}
@@ -60,6 +61,9 @@
 		}
 		&__label-btn {
 			width: 280px;
+		}
+		&__selects {
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		}
 		.select-option__label {
 			width: 280px;
