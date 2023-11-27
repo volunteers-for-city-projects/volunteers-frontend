@@ -164,6 +164,7 @@ function ProjectView() {
 	};
 
 	const handleCancelProject = () => {
+		// eslint-disable-next-line no-alert
 		alert('измеение статуса проекта');
 		// editProject(idProject, {
 		// 	status: 'canceled_by_organizer',

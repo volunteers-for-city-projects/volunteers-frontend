@@ -10,7 +10,7 @@ function ProjectEditButton({ parent, projectId }) {
 	return (
 		<button
 			onClick={handleClick}
-			className={`project-edit-btn ${parent}__project-edit-btn`}
+			className={` project-edit-btn ${parent}__project-edit-btn`}
 		>
 			{' '}
 		</button>
