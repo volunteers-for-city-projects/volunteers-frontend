@@ -8,6 +8,7 @@ function ProjectDeleteButton({ projectId }) {
 	// , setPopup, closePopup
 
 	const { projectsMe, setModal, setPopup, closePopup } = useOutletContext();
+
 	const [projectsDelete, setProjectsDelete] = useState(projectsMe);
 
 	const deleteProjectCard = () => {

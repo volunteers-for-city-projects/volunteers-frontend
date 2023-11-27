@@ -120,7 +120,7 @@ function ProfileVolunteer() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, []);
+	}, [projectsMeVol]);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
