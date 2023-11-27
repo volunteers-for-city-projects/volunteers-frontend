@@ -11,6 +11,8 @@ const parseErrors = (obj) => {
 		} else if (typeof value === 'object' && value !== null) {
 			const nestedErrors = parseErrors(value);
 			errorArray.push(...nestedErrors);
+		} else if (typeof value === 'string') {
+			errorArray.push({ textError: value });
 		}
 	});
 	return errorArray;

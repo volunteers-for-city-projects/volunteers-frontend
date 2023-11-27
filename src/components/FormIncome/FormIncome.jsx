@@ -40,8 +40,8 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 		validationSchema: IncomeFormSchema,
 		onSubmit: () => {
 			ProjectIncome.createNew(formik.values, currentUser.id, projectId)
-				.then(() => onSubmit())
-				.catch((e) => openPopup(e, 'error'));
+				.then((income) => onSubmit(income))
+				.catch((e) => openPopup('', 'error', e));
 		},
 	});
 
@@ -105,6 +105,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 				placeholder="Расскажите немного о себе, какие задачи вы бы хотели выполнять, кем хотели бы быть"
 				value={formik.values.letter}
 				handleChange={formik.handleChange}
+				error={formik.errors.letter}
 			/>
 			<Button type="submit" className="form-income__submit">
 				Подать заявку на участие в проекте

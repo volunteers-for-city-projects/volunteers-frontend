@@ -135,7 +135,7 @@ function PageProjectIncomes({ status }) {
 			title = 'Заявок подано';
 			button = (
 				<Button size="m" onClick={() => navigate(`${parentUrl}/participants`)}>
-					Заявки участников
+					Участники проекта
 				</Button>
 			);
 			break;
