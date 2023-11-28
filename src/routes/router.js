@@ -127,11 +127,19 @@ const router = createHashRouter([
 			},
 			{
 				path: 'projects/:projectId/incomes',
-				element: <PageProjectIncomes status="application_submitted" />,
+				element: (
+					<ProtectedRouteElementForAuthorizedOrganizer>
+						<PageProjectIncomes status="application_submitted" />
+					</ProtectedRouteElementForAuthorizedOrganizer>
+				),
 			},
 			{
 				path: 'projects/:projectId/participants',
-				element: <PageProjectIncomes status="accepted" />,
+				element: (
+					<ProtectedRouteElementForAuthorizedOrganizer>
+						<PageProjectIncomes status="accepted" />
+					</ProtectedRouteElementForAuthorizedOrganizer>
+				),
 			},
 			{
 				path: 'projects/:idProject',
