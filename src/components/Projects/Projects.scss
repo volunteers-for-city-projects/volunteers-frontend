@@ -64,7 +64,7 @@
 		}
 		&__cards {
 			gap: 12px;
-			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
 		}
 		&__label-btn {
 			width: 280px;
