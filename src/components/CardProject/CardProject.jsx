@@ -41,8 +41,6 @@ function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
 		onCardDelete(cardProject);
 	}
 
-	console.log(`првиет ${organization}`);
-
 	return (
 		<article
 			className="card__project"
