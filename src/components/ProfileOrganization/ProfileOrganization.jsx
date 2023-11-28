@@ -178,6 +178,10 @@ function ProfileOrganization() {
 		});
 	};
 
+	const handleDislikedCard = (projectId) => {
+		setProjectsMe((state) => state.filter((c) => c.id !== projectId));
+	};
+
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
 		<section className="profile-org">
@@ -249,8 +253,8 @@ function ProfileOrganization() {
 										<CardProject
 											cardProject={item}
 											key={item.id}
-											projects={projectsMe}
 											onCardDelete={handleDeleteModal}
+											onCardDisliked={handleDislikedCard}
 										/>
 									))}
 								</div>
