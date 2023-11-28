@@ -3,9 +3,14 @@ import { useLocation, useOutletContext } from 'react-router-dom';
 import './CardProject.scss';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
-import { EDITING, REJECTED, PROJECT_COMPLETED } from '../../utils/constants';
+import {
+	EDITING,
+	REJECTED,
+	PROJECT_COMPLETED,
+	ROLE_ORGANIZER,
+} from '../../utils/constants';
 
-function CardProject({ cardProject, onCardDelete }) {
+function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
 	const { isLoggedIn, currentUser } = useOutletContext();
 
 	const {
@@ -14,8 +19,6 @@ function CardProject({ cardProject, onCardDelete }) {
 		start_datetime: day,
 		end_datetime: time,
 		picture: image,
-		id: projectId,
-		is_favorited: isFavorited,
 		status,
 		status_approve: statusApprove,
 		organization,
@@ -26,17 +29,19 @@ function CardProject({ cardProject, onCardDelete }) {
 	const pageProfileOrg = location.pathname === '/profile/organizer';
 	const pageProfileVol = location.pathname === '/profile/volunteer';
 	const editFlag =
-		currentUser.role === 'organizer' &&
+		currentUser.role === ROLE_ORGANIZER &&
 		currentUser.id === organization &&
 		status !== PROJECT_COMPLETED;
 	const deleteFlag =
-		currentUser.role === 'organizer' &&
+		currentUser.role === ROLE_ORGANIZER &&
 		currentUser.id === organization &&
 		(statusApprove === EDITING || statusApprove === REJECTED);
 
 	function handleClickDelete() {
 		onCardDelete(cardProject);
 	}
+
+	console.log(`првиет ${organization}`);
 
 	return (
 		<article
@@ -52,8 +57,8 @@ function CardProject({ cardProject, onCardDelete }) {
 							{isLoggedIn && (
 								<ProjectLikeButton
 									parent="card"
-									projectId={projectId}
-									isFavorited={isFavorited}
+									cardProject={cardProject}
+									onCardDisliked={onCardDisliked}
 								/>
 							)}
 
@@ -77,8 +82,8 @@ function CardProject({ cardProject, onCardDelete }) {
 							{pageProfileOrg || pageProfileVol ? (
 								<ProjectLikeButton
 									parent="profile-org"
-									projectId={projectId}
-									isFavorited={isFavorited}
+									cardProject={cardProject}
+									onCardDisliked={onCardDisliked}
 								/>
 							) : (
 								''
@@ -120,6 +125,7 @@ CardProject.propTypes = {
 		organization: PropTypes.number,
 	}),
 	onCardDelete: PropTypes.func,
+	onCardDisliked: PropTypes.func,
 };
 
 CardProject.defaultProps = {
@@ -131,9 +137,9 @@ CardProject.defaultProps = {
 		start_datetime: '',
 		end_datetime: '',
 		isModeration: true,
-		image: '',
+		picture: '',
 		cityName: '',
-		organization: null,
 	}),
 	onCardDelete: undefined,
+	onCardDisliked: undefined,
 };

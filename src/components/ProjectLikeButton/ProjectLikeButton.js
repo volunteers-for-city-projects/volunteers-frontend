@@ -1,20 +1,37 @@
-import './ProjectLikeButton.scss';
+import { useOutletContext } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './ProjectLikeButton.scss';
 import { useEffect, useState } from 'react';
 import {
 	setLikeForProject,
 	resetLikeForProject,
 } from '../../utils/api/projects';
+import { ROLE_ORGANIZER } from '../../utils/constants';
 
-function ProjectLikeButton({ parent, projectId, isFavorited }) {
+function ProjectLikeButton({ parent, cardProject, onCardDisliked }) {
+	const {
+		id: projectId,
+		is_favorited: isFavorited,
+		organization,
+	} = cardProject;
 	const [isLiked, setIsLiked] = useState(false);
+	const { currentUser } = useOutletContext();
 	useEffect(() => {
 		setIsLiked(isFavorited);
 	}, [isFavorited]);
+
 	const toggleLike = () => {
 		if (isLiked) {
 			resetLikeForProject(projectId)
-				.then(() => setIsLiked(false))
+				.then(() => {
+					setIsLiked(false);
+					if (
+						currentUser.role !== ROLE_ORGANIZER ||
+						currentUser.id !== organization
+					) {
+						onCardDisliked(projectId);
+					}
+				})
 				.catch((err) => console.log(err));
 		} else {
 			setLikeForProject(projectId)
@@ -36,12 +53,22 @@ function ProjectLikeButton({ parent, projectId, isFavorited }) {
 }
 ProjectLikeButton.propTypes = {
 	parent: PropTypes.string,
-	projectId: PropTypes.number,
-	isFavorited: PropTypes.bool,
+	cardProject: PropTypes.shape({
+		id: PropTypes.number,
+		is_favorited: PropTypes.bool,
+		organization: PropTypes.number,
+	}),
+	onCardDisliked: PropTypes.func,
 };
+
 ProjectLikeButton.defaultProps = {
 	parent: '',
-	projectId: 0,
-	isFavorited: false,
+	cardProject: PropTypes.shape({
+		is_favorited: false,
+		id: null,
+		organization: null,
+	}),
+	onCardDisliked: undefined,
 };
+
 export default ProjectLikeButton;

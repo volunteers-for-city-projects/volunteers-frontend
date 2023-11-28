@@ -70,7 +70,6 @@ function ProjectView() {
 			path: `/projects/${idProject}`,
 		},
 	];
-	debugger; // eslint-disable-line no-debugger
 	const infoProject = [
 		{
 			id: 1,
