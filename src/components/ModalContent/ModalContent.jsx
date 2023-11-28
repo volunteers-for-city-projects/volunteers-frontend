@@ -18,7 +18,6 @@ const bem = bemClassHelper('modal-content');
  * @param {String} obj.text
  */
 export default function ModalContent({ icon, text, children }) {
-	console.log(icon, text, children);
 	const icons = {
 		remove: iconRemove,
 		success: iconSuccess,

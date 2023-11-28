@@ -10,9 +10,11 @@ import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 import Button from '../Button/Button';
 import ProjectIncome from '../../classes/ProjectIncome';
 import PopupWindow from '../PopupWindow/PopupWindow';
+import { bemClassHelper } from '../../utils/utils';
 import './FormIncome.scss';
 
 function FormIncome({ currentUser, onSubmit, projectId }) {
+	const bem = bemClassHelper('form-income');
 	const [popup, setPopup] = useState({ isOpen: false });
 	const openPopup = (text, type, errorArray = []) => {
 		setPopup({
@@ -46,7 +48,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 	});
 
 	return (
-		<form className="form-income" onSubmit={formik.handleSubmit}>
+		<form className={bem('#')} onSubmit={formik.handleSubmit}>
 			<InputGroup title="Контактные данные">
 				<InputMask
 					component={Input}
@@ -63,21 +65,6 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 					handleChange={formik.handleChange}
 					error={formik.errors.phone}
 					touched={formik.touched.phone}
-				/>
-				<Input
-					id="email"
-					name="email"
-					label="E-mail"
-					type="email"
-					placeholder="example@email.ru"
-					inputSize="small"
-					error={formik.errors.email}
-					touched={formik.touched.email}
-					value={formik.values.email}
-					handleChange={formik.handleChange}
-					submitCount={formik.submitCount}
-					autoсomplete="off"
-					required
 				/>
 				<Input
 					id="telegram"
@@ -97,17 +84,33 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 					submitCount={formik.submitCount}
 					autoсomplete="off"
 				/>
+				<div className={bem('#__email-group')}>
+					<label htmlFor="email" className={bem('#__label')}>
+						Почта
+						<input
+							value={currentUser.email}
+							disabled
+							className="input input_type-small"
+							name="email"
+							id="email"
+						/>
+					</label>
+					<p className={bem('#__tip')}>
+						На указанную почту вам придет уведомление о поданной заявке{' '}
+					</p>
+				</div>
 			</InputGroup>
 
-			<InputGroup title="Сопроводительное письмо">{}</InputGroup>
-			<InputTextArea
-				name="letter"
-				placeholder="Расскажите немного о себе, какие задачи вы бы хотели выполнять, кем хотели бы быть"
-				value={formik.values.letter}
-				handleChange={formik.handleChange}
-				error={formik.errors.letter}
-			/>
-			<Button type="submit" className="form-income__submit">
+			<InputGroup title="Сопроводительное письмо">
+				<InputTextArea
+					name="letter"
+					placeholder="Расскажите немного о себе, какие задачи вы бы хотели выполнять, кем хотели бы быть"
+					value={formik.values.letter}
+					handleChange={formik.handleChange}
+					error={formik.errors.letter}
+				/>
+			</InputGroup>
+			<Button type="submit" className={bem('#__submit')}>
 				Подать заявку на участие в проекте
 			</Button>
 

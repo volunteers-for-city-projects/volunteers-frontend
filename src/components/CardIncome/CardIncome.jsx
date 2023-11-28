@@ -71,7 +71,6 @@ function CardIncome({
 		</div>
 	);
 
-	// TODO: запрос сопроводительного письма из API
 	const coverLetter = <p className={bem('#__letter')}>{income.coverLetter}</p>;
 
 	/* открыть модальное окно подтверждения удаления участника */

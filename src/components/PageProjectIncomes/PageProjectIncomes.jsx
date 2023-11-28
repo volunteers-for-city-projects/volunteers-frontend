@@ -23,7 +23,6 @@ function PageProjectIncomes({ status }) {
 
 	/** @type {[Project, @callback]} */
 	const [project, setProject] = useState();
-	// console.log(setProject);
 
 	/** @type {[Income[], @callback]} */
 	const [incomes, setIncomes] = useState([]);

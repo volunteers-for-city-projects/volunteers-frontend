@@ -48,9 +48,9 @@ class Project extends AbstractEntity {
 		return ProjectIncome.load().then((items) => {
 			const filtered = items.filter(
 				(item) =>
-					item.project.name === this.name &&
+					item.project.id === this.id &&
 					(!status || item.statusIncomes === status)
-			); // TODO filter by ID or on server
+			); // TODO filter on server
 			filtered.forEach((item) => item.setProject(this));
 			this.#incomes = filtered;
 			return this.#incomes;

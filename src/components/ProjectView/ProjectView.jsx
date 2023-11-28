@@ -95,8 +95,6 @@ function ProjectView() {
 		);
 
 	const [income, setIncome] = useState();
-	console.log(income);
-	// console.log(` =========== ${income}` )
 
 	useEffect(() => {
 		getProjectById(idProject, isLoggedIn)
@@ -120,14 +118,14 @@ function ProjectView() {
 					const volunteerIncome = incomes.find(
 						(item) =>
 							item.volunteer.id === id &&
-							item.project.name ===
-								project.name /* TODO API при получении заявок не возвращает ID проекта, поэтому сравнение по названию */
+							item.project.id ===
+								project.id /* TODO API при получении заявок не возвращает ID проекта, поэтому сравнение по названию */
 					);
 					setIncome(volunteerIncome);
 				}
 			});
 		}
-	}, [role, id, project.name]);
+	}, [role, id, project.id]);
 
 	const openImageEnlarge = () => {
 		setModal({

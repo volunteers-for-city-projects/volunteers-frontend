@@ -1,13 +1,60 @@
+@import '../../style/variables.scss';
 .form-income {
 	box-sizing: border-box;
-	width: 100%;
-	input {
-		width: 300px;
+	width: 100%;	
+	display: grid;
+	column-gap: 26px;
+	&__tip{
+		color: $--Dark-grey;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 17.746px; 
 	}
+	&__label {
+		color: $--Text;		
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 23px;
+	}
+	&__submit{
+		height: 48px;
+	}
+	input {
+		width: 346px;
+	}
+	&__email-group {
+		input {
+			background-color: rgba($color: $--Dark-grey, $alpha: 0.2);			
+		}
+	}	
 	.error-message_type-small {
 		width: 50%;
 	}
-	&__submit {
+		
+	textarea{
+		height: 100%;
 		width: 100%;
+		max-width: 100%;
+	}
+	.text-area__container {		
+		width: 100%;		
+	}	
+}
+@media screen and (max-width: 1919px) {
+	.form-income {
+		// grid-auto-flow: column;
+		grid-template-columns: 280fr 418fr;
+		grid-template-rows: auto 48px;
+		fieldset:first-child {
+			grid-row: 1/3;
+		}
+		input {
+			width: 100%;
+		}
+		div {
+			width: 100%;
+		}
 	}
 }
