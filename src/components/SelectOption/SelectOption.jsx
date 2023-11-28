@@ -8,9 +8,11 @@ function SelectOption({
 	placeholder,
 	options,
 	handleChange,
+	handleClear,
 	error,
 	value,
 	isMulti,
+	addCloseButton,
 	required,
 	...props
 }) {
@@ -69,6 +71,11 @@ function SelectOption({
 		[handleChange]
 	);
 
+	const clearValue = (e) => {
+		e.stopPropagation();
+		handleClear();
+	};
+
 	return (
 		<div className="select-option__container">
 			<label className="select-option__label" htmlFor="select-option">
@@ -96,6 +103,15 @@ function SelectOption({
 				isMulti={isMulti}
 				{...props}
 			/>
+			{value.length > 0 && !isMulti && addCloseButton && (
+				<button
+					className="select-option__close-icon"
+					type="button"
+					aria-label="Закрыть"
+					defaultValue=""
+					onClick={clearValue}
+				/>
+			)}
 			<span className="select-option__error-message">
 				{error && props.helperText}
 			</span>
@@ -113,6 +129,8 @@ SelectOption.propTypes = {
 		})
 	),
 	handleChange: PropTypes.func,
+	addCloseButton: PropTypes.bool,
+	handleClear: PropTypes.func,
 	error: PropTypes.bool,
 	isMulti: PropTypes.bool,
 	required: PropTypes.bool,
@@ -138,12 +156,13 @@ SelectOption.defaultProps = {
 		{ label: 'Белгород', value: 'belgorod' },
 		{ label: 'Казань', value: 'kazan' },
 	],
-	handleChange: (selectedOption) =>
-		console.log(`Option selected: `, selectedOption),
+	handleChange: () => {},
+	handleClear: () => {},
 	error: false,
 	isMulti: false,
 	required: false,
 	value: [],
+	addCloseButton: false,
 	helperText: '',
 };
 

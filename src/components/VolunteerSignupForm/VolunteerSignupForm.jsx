@@ -303,12 +303,15 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					placeholder="Выберите город"
 					options={cities}
 					touched={formik.touched.city}
-					value={formik.values.city}
-					handleChange={(selectedOption) => {
+					value={formik.values.city || []}
+					handleClear={() => {
+						formik.setFieldValue('city', '');
+					}}
+					handleChange={(option) => {
 						formik.setFieldValue('city', [
 							{
-								label: selectedOption.label,
-								value: selectedOption.value,
+								label: option.label,
+								value: option.value,
 							},
 						]);
 					}}

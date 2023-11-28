@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-	useParams,
 	Link,
-	useOutletContext,
 	useNavigate,
+	useOutletContext,
+	useParams,
 } from 'react-router-dom';
 import arrow from '../../images/icon-strelka.svg';
 import projectNull from '../../images/project-null.png';
@@ -119,16 +119,13 @@ function ProjectView() {
 			ProjectIncome.load().then((incomes) => {
 				if (Array.isArray(incomes)) {
 					const volunteerIncome = incomes.find(
-						(item) =>
-							item.volunteer.id === id &&
-							item.project.id === project.id
+						(item) => item.volunteer.id === id && item.project.id === project.id
 					);
 					setIncome(volunteerIncome);
 				}
 			});
 		}
 	}, [role, id, project.id]);
-
 
 	const openImageEnlarge = () => {
 		setModal({

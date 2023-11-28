@@ -584,7 +584,7 @@ function Project() {
 								handleChange={(selectedOption) =>
 									selectOption('city', selectedOption)
 								}
-								value={formik.values?.city}
+								value={formik.values?.city || []}
 								error={formik.touched.city && Boolean(formik.errors.city)}
 								helperText={formik.touched.city && formik.errors.city}
 								onBlur={() => handleBlurSelectOption('city')}
@@ -670,7 +670,7 @@ function Project() {
 								handleChange={(selectedOption) =>
 									selectOptions('categoryProject', selectedOption)
 								}
-								value={formik.values?.categoryProject}
+								value={formik.values?.categoryProject || []}
 								error={
 									formik.touched.categoryProject &&
 									Boolean(formik.errors.categoryProject)
@@ -692,7 +692,7 @@ function Project() {
 								handleChange={(selectedOption) =>
 									selectOptions('skills', selectedOption)
 								}
-								value={formik.values?.skills}
+								value={formik.values?.skills || []}
 								error={formik.touched.skills && Boolean(formik.errors.skills)}
 								helperText={formik.touched.skills && formik.errors.skills}
 								onBlur={() => handleBlurSelectOption('skills')}
