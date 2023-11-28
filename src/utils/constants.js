@@ -34,3 +34,4 @@ export const OPEN = 'open';
 export const READY_FOR_FEEDBACK = 'ready_for_feedback';
 export const RECEPTION_OF_RESPONSES_CLOSED = 'reception_of_responses_closed';
 export const PROJECT_COMPLETED = 'project_completed';
+export const ROLE_ORGANIZER = 'organizer';

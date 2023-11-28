@@ -23,7 +23,6 @@ function PageProjectIncomes({ status }) {
 
 	/** @type {[Project, @callback]} */
 	const [project, setProject] = useState();
-	// console.log(setProject);
 
 	/** @type {[Income[], @callback]} */
 	const [incomes, setIncomes] = useState([]);
@@ -135,7 +134,7 @@ function PageProjectIncomes({ status }) {
 			title = 'Заявок подано';
 			button = (
 				<Button size="m" onClick={() => navigate(`${parentUrl}/participants`)}>
-					Заявки участников
+					Участники проекта
 				</Button>
 			);
 			break;

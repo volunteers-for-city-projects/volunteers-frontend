@@ -1,8 +1,11 @@
 @import '../../style/variables.scss';
 .card-income {
-	display: grid;
-	button {
-		padding: 15px;
+
+	display: grid;	
+	&__button {
+		height: 48px;
+		align-self: flex-end;
+
 	}
 	&__modal-remove {
 		display: flex;
@@ -12,7 +15,6 @@
 			width: 150px;
 		}
 	}
-
 	&__button-remove {
 		background: url('../../images/basket-colored.svg');
 		width: 40px;
@@ -23,6 +25,10 @@
 	}
 	&__photo {
 		justify-self: center;
+		width: 100%;
+		border-radius: 10px;
+		height: 248px;
+		object-fit: cover;
 	}
 	&__subtitle {
 		margin: 0 0 10px 0;
@@ -62,7 +68,6 @@
 		}
 		> .card-income__photo {
 			grid-row: 2/5;
-			height: 100%;
 		}
 	}
 	&_layout_modal {

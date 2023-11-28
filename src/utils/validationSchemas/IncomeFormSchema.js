@@ -23,4 +23,8 @@ export const IncomeFormSchema = Yup.object({
 			/^[@_a-zA-Z_0-9]{4,32}$/,
 			'Имя должно cостоять из латинских букв или цифр'
 		),
+	letter: Yup.string()
+		.min(10, 'Длина поля от 10 до 750 символов')
+		.max(750, 'Длина поля от 10 до 750 символов')
+		.nullable(true),
 });

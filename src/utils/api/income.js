@@ -10,6 +10,6 @@ export const getIncome = (id) =>
 export const acceptIncome = (id) =>
 	request(`${ENDPOINT}${id}/accept_incomes/`, 'POST', '', token());
 export const deleteIncome = (id) =>
-	request(`${ENDPOINT}${id}/delete_incomes/`, 'DELETE', '', token());
+	request(`${ENDPOINT}${id}`, 'DELETE', '', token());
 export const rejectIncome = (id) =>
 	request(`${ENDPOINT}${id}/reject_incomes/`, 'PUT', '', token());

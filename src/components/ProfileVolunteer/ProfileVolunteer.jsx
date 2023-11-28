@@ -137,6 +137,10 @@ function ProfileVolunteer() {
 		}
 	}
 
+	const handleDislikedCard = (projectId) => {
+		setProjectsMeVol((state) => state.filter((c) => c.id !== projectId));
+	};
+
 	return location.pathname === '/profile/volunteer' ||
 		location.pathname === '/profile/volunteer/' ? (
 		<section className="profile">
@@ -194,7 +198,11 @@ function ProfileVolunteer() {
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">
 									{projectsMeVol.map((item) => (
-										<CardProject cardProject={item} key={item.id} />
+										<CardProject
+											cardProject={item}
+											key={item.id}
+											onCardDisliked={handleDislikedCard}
+										/>
 									))}
 								</div>
 							) : (

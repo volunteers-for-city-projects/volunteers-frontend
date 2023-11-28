@@ -17,9 +17,11 @@ import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
+import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
+import ProjectIncome from '../../classes/ProjectIncome';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -72,7 +74,7 @@ function ProjectView() {
 			path: `/projects/${idProject}`,
 		},
 	];
-	// eslint-disable-line no-debugger
+
 	const infoProject = [
 		{ id: 1, text: `г. ${project.city}` },
 		{
@@ -99,6 +101,8 @@ function ProjectView() {
 			project.categories.includes(Number(item.value))
 		);
 
+	const [income, setIncome] = useState();
+
 	useEffect(() => {
 		getProjectById(idProject, isLoggedIn)
 			.then((res) => {
@@ -114,6 +118,21 @@ function ProjectView() {
 				setError(err);
 			});
 	}, [idProject, isLoggedIn]);
+	useEffect(() => {
+		if (role === 'volunteer') {
+			ProjectIncome.load().then((incomes) => {
+				if (Array.isArray(incomes)) {
+					const volunteerIncome = incomes.find(
+						(item) =>
+							item.volunteer.id === id &&
+							item.project.id === project.id
+					);
+					setIncome(volunteerIncome);
+				}
+			});
+		}
+	}, [role, id, project.id]);
+
 	const openImageEnlarge = () => {
 		setModal({
 			isOpen: true,
@@ -130,7 +149,7 @@ function ProjectView() {
 		});
 	};
 	const openIncomeForm = () => {
-		const onSubmit = () => {
+		const onSubmit = (createdIncome) => {
 			setModal({
 				isOpen: true,
 				type: 'init',
@@ -142,6 +161,7 @@ function ProjectView() {
 					/>
 				),
 			});
+			setIncome(createdIncome);
 		};
 		setModal({
 			isOpen: true,
@@ -319,26 +339,21 @@ function ProjectView() {
 								</ul>
 							</div>
 						)}
-						{!isLoggedIn && (
-							<Button
-								theme="default"
-								size="l"
-								onClick={openLoginForm}
-								type="button"
-							>
-								Подать заявку на участие в проекте
-							</Button>
-						)}
-						{isLoggedIn && role === 'volunteer' && (
-							<Button
-								theme="default"
-								size="l"
-								onClick={openIncomeForm}
-								type="button"
-							>
-								Подать заявку на участие в проекте
-							</Button>
-						)}
+
+						{!isLoggedIn ||
+							(role === 'volunteer' && (
+								<Button
+									theme={income ? 'neutral' : 'default'}
+									size="l"
+									onClick={isLoggedIn ? openIncomeForm : openLoginForm}
+									type="button"
+									disabled={income !== undefined}
+								>
+									{income
+										? 'Заявка на участие подана'
+										: 'Подать заявку на участие в проекте'}
+								</Button>
+							))}
 						{isLoggedIn &&
 							role === 'organizer' &&
 							id === project.organization && (
