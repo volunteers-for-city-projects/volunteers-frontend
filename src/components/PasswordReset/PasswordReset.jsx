@@ -59,7 +59,7 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						Новый пароль*
 						<input
 							type="password"
-							placeholder="Пароль"
+							placeholder="Введите новый пароль"
 							className={clsx('password-reset__input', {
 								'password-reset__input_type-error':
 									formik.touched.userEmail && formik.errors.userEmail,
@@ -88,7 +88,7 @@ function PasswordReset({ title, subtitle, buttonSubmitText, onSaveChanges }) {
 						Новый пароль (повторно)*
 						<input
 							type="password"
-							placeholder="Пароль"
+							placeholder="Введите новый пароль"
 							className={clsx('password-reset__input', {
 								'password-reset__input_type-error':
 									formik.touched.userEmail && formik.errors.userEmail,

@@ -16,6 +16,7 @@ import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
+import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
 import ProjectIncome from '../../classes/ProjectIncome';
 
@@ -30,7 +31,9 @@ function ProjectView() {
 		event_address: {
 			address_line: '',
 		},
+		start_datetime: '',
 		start_date_application: '',
+		end_datetime: '',
 		end_date_application: '',
 		picture: null,
 		skills: [
@@ -68,7 +71,6 @@ function ProjectView() {
 			path: `/projects/${idProject}`,
 		},
 	];
-
 	const infoProject = [
 		{
 			id: 1,
@@ -76,14 +78,14 @@ function ProjectView() {
 		},
 		{
 			id: 2,
-			text: `${project.start_date_application.split(' ')[0]} - ${
-				project.end_date_application.split(' ')[0]
+			text: `${project.start_datetime.split(' ')[0]} - ${
+				project.end_datetime.split(' ')[0]
 			}`,
 		},
 		{
 			id: 3,
-			text: `${project.start_date_application.split(' ')[1]} - ${
-				project.end_date_application.split(' ')[1]
+			text: `${project.start_datetime.split(' ')[1]} - ${
+				project.end_datetime.split(' ')[1]
 			}`,
 		},
 	];
@@ -111,6 +113,7 @@ function ProjectView() {
 				setError(err);
 			});
 	}, [idProject, isLoggedIn]);
+
 	useEffect(() => {
 		if (role === 'volunteer') {
 			ProjectIncome.load().then((incomes) => {
@@ -118,14 +121,14 @@ function ProjectView() {
 					const volunteerIncome = incomes.find(
 						(item) =>
 							item.volunteer.id === id &&
-							item.project.id ===
-								project.id /* TODO API при получении заявок не возвращает ID проекта, поэтому сравнение по названию */
+							item.project.id === project.id
 					);
 					setIncome(volunteerIncome);
 				}
 			});
 		}
 	}, [role, id, project.id]);
+
 
 	const openImageEnlarge = () => {
 		setModal({
@@ -239,17 +242,31 @@ function ProjectView() {
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
-					<div className="project-view__container-name-place">
-						<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
-						<ul className="project-view__list-place">
-							{infoProject.map((item) => (
-								<li key={item.id} className="project-view__item">
-									<p className="project-view__place">{item.text}</p>
-								</li>
-							))}
-						</ul>
-					</div>
-					<p>Тут будет вычисляться статус и задаваться цвет</p>
+					<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
+					<ShowProjectStatus
+						cardProject={project}
+						className={`project-view__status ${
+							project.status === 'editing' ? 'project-view__status_hovered' : ''
+						}`}
+					/>
+					<p className="project-view__status-push-message">
+						{`Время начала заявок начнется в ${project.start_date_application
+							.split(' ')
+							.reverse()
+							.join(' ')}`}{' '}
+						<br />
+						{`время окончания подачи заявок ${project.end_date_application
+							.split(' ')
+							.reverse()
+							.join(' ')}`}
+					</p>
+					<ul className="project-view__list-place">
+						{infoProject.map((item) => (
+							<li key={item.id} className="project-view__item">
+								<p className="project-view__place">{item.text}</p>
+							</li>
+						))}
+					</ul>
 				</div>
 				<div className="project-view__container-info">
 					<div className="project-view__container-image-info">
