@@ -19,7 +19,6 @@ import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
-import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 import ProjectIncome from '../../classes/ProjectIncome';
 
@@ -123,9 +122,7 @@ function ProjectView() {
 			ProjectIncome.load().then((incomes) => {
 				if (Array.isArray(incomes)) {
 					const volunteerIncome = incomes.find(
-						(item) =>
-							item.volunteer.id === id &&
-							item.project.id === project.id
+						(item) => item.volunteer.id === id && item.project.id === project.id
 					);
 					setIncome(volunteerIncome);
 				}
