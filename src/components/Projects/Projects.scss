@@ -54,9 +54,11 @@
 @media screen and (max-width: 1919px) {
 	.projects {
 		&__container {
+			margin: 10px auto 24px;
 			width: 1180px;
 		}
 		&__cards {
+			gap: 12px;
 			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
 		}
 		&__label-btn {
