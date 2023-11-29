@@ -13,4 +13,12 @@
 		margin: 0 auto;
 		padding: 15px 70px;
 	}
+
+}
+
+@media screen and (max-width: 450px) {
+	.footer__container {
+		max-width: 358px;
+		
+	}
 }

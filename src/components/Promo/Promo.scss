@@ -93,4 +93,49 @@
 			margin-top: 80px;
 		}
 	}
+
+	@media screen and (max-width: 450px) {
+		&__title {
+			font-size: 55px;
+		}
+		&__subtitle {
+			margin: 40px 16px 0;
+			font-size: 28px;
+		}
+		&__container {
+			padding: 130px 16px 80px;
+			margin: 0 auto;
+		}
+		&__buttons {
+			display: flex;
+			flex-direction: column;
+			margin-top: 50px;
+			gap: 16px;
+		}
+		&__list {
+			width: 354px;
+			padding: 16px 10px;
+			box-sizing: border-box;
+			margin: 50px 8px 0;
+			gap: 0;
+			border-radius: 10px;
+            background: linear-gradient(267deg, #FFF 31.05%, rgba(255, 255, 255, 0.00) 98.09%);
+
+		}
+		&__item-title {
+			font-size: 36px;
+		}
+		&__item-subtitle {
+			font-size: 17px;
+		}
+	}
+
+	@media screen and (max-width: 356px) {
+		&__title {
+			font-size: 40px;
+		}
+		&__subtitle {
+			font-size: 20px;
+		}
+	}
 }

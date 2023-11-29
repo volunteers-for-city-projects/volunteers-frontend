@@ -36,4 +36,25 @@
 			300px 578px,
 			633px 308px;
 	}
+
+	@media screen and (max-width: 450px) {
+		.content-main__container {
+			background-image: url('../../images/main-page/group\ \(1\).png'),
+			url('../../images/main-page/cloud-left.png'),
+			url('../../images/main-page/cloud-left.png');
+			background-position: top 400px right,
+			top -20px left,
+			top 60px right -50px;
+			background-repeat: no-repeat, no-repeat;
+			background-size:
+			
+			300px 401px,
+			212px 103px,
+			212px 103px;
+
+		}
+
+
+}
+
 }

@@ -46,26 +46,6 @@
 		color: $--Primary;
 	}
 
-	&__wrapper-button {
-		width: 170px;
-		height: 56px;
-		box-sizing: border-box;
-		padding: 20px;
-		font-size: 12px;
-		font-weight: 400;
-		font-family: $--Font-Primary;
-		line-height: 17px;
-		border-radius: 10px;
-		border: 1.61px solid $--Black;
-		background-color: $--White;
-		transition: opacity 100ms ease-in;
-	}
-
-	&__wrapper-button:hover {
-		opacity: 0.8;
-		cursor: pointer;
-	}
-
 	&__card-image {
 		background-color: $--Light-grey;
 		height: 260px;
@@ -76,5 +56,24 @@
 		&__container-block {
 			max-width: 1178px;
 		}
+	}
+
+	@media screen and (max-width: 450px) {
+		&__container {
+			max-width: 450px;
+			margin: 0 16px;
+		}
+		&__container-block {
+
+			max-width: 450px;
+		}
+		&__wrapper-title {
+			font-size: 28px;
+		}
+		&__wrapper-btn {
+			visibility: hidden;
+			opacity: 0;
+		}
+		
 	}
 }

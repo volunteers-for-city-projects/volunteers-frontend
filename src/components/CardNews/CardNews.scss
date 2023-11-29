@@ -79,4 +79,16 @@
 		line-height: 1.3;
 		color: $--Dark-grey;
 	}
+
+	@media screen and (max-width: 450px) {
+		&__cards-item {
+			max-width: 358px;
+		}
+		&__card-description {
+			font-size: 20px;
+		}
+		&__card-date {
+			font-size: 20px;
+		}
+	}
 }

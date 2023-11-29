@@ -7,3 +7,11 @@
 .swiper-button-next {
 	top: var(--swiper-navigation-top-offset, 35%) !important;
 }
+
+ 
+@media screen and (max-width: 450px) {
+	.custom-slider {
+		width: 358px !important;
+	}
+}
+

@@ -94,4 +94,24 @@
 			width: 580px;
 		}
 	}
+
+	@media screen and (max-width: 450px) {
+		&__container {
+			max-width: 358px;
+			// margin: 0 16px;
+		}
+		&__title {
+			font-size: 28px;
+		}
+		&__items {
+			flex-direction: column;
+		}
+		&__item {
+			width: 358px;
+		}
+		&__subtitle {
+			font-size: 18px;
+		}
+
+	}
 }

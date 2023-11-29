@@ -5,3 +5,10 @@
 	display: flex;
 	gap: 16px;
 }
+
+@media screen and (max-width: 450px) {
+	.nav {
+		visibility: hidden;
+		opacity: 0;
+	}
+}

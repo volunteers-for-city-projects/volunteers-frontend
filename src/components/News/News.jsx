@@ -13,14 +13,17 @@ function News({ news }) {
 						<h2 className="news__wrapper-title" id="news">
 							Новости
 						</h2>
-						<Pushbutton
-							label="Смотреть все новости"
-							backgroundColor="#A6C94F"
-							size="large-var"
-							border="none"
-							color="#FFF"
-							minWidth="277px"
-						/>
+
+						<div className="news__wrapper-btn">
+							<Pushbutton
+								label="Смотреть все новости"
+								backgroundColor="#A6C94F"
+								size="large-var"
+								border="none"
+								color="#FFF"
+								minWidth="277px"
+							/>
+						</div>
 					</div>
 					<div className="news__cards">
 						<Slider news={news} />
