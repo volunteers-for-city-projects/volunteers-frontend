@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-	useParams,
 	Link,
-	useOutletContext,
 	useNavigate,
+	useOutletContext,
+	useParams,
 } from 'react-router-dom';
 import arrow from '../../images/icon-strelka.svg';
 import projectNull from '../../images/project-null.png';

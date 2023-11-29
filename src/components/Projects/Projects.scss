@@ -10,6 +10,11 @@
 		position: relative;
 	}
 
+	&__link {
+		text-decoration: none;
+		color: $--Text;
+	}
+
 	&__label {
 		display: flex;
 		justify-content: space-between;
@@ -36,7 +41,7 @@
 	}
 	&__cards {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(540px, 1fr));
 		gap: 20px;
 	}
 	&__button {
@@ -59,7 +64,7 @@
 		}
 		&__cards {
 			gap: 12px;
-			grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
 		}
 		&__label-btn {
 			width: 280px;

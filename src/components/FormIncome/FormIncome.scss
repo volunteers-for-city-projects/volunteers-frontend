@@ -1,24 +1,24 @@
 @import '../../style/variables.scss';
 .form-income {
 	box-sizing: border-box;
-	width: 100%;	
+	width: 100%;
 	display: grid;
 	column-gap: 26px;
-	&__tip{
+	&__tip {
 		color: $--Dark-grey;
 		font-size: 12px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 17.746px; 
+		line-height: 17.746px;
 	}
 	&__label {
-		color: $--Text;		
+		color: $--Text;
 		font-size: 20px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 23px;
 	}
-	&__submit{
+	&__submit {
 		height: 48px;
 	}
 	input {
@@ -26,21 +26,21 @@
 	}
 	&__email-group {
 		input {
-			background-color: rgba($color: $--Dark-grey, $alpha: 0.2);			
+			background-color: rgba($color: $--Dark-grey, $alpha: 0.2);
 		}
-	}	
+	}
 	.error-message_type-small {
 		width: 50%;
 	}
-		
-	textarea{
+
+	textarea {
 		height: 100%;
 		width: 100%;
 		max-width: 100%;
 	}
-	.text-area__container {		
-		width: 100%;		
-	}	
+	.text-area__container {
+		width: 100%;
+	}
 }
 @media screen and (max-width: 1919px) {
 	.form-income {

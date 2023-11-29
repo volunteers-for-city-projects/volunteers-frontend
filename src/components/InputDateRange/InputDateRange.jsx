@@ -19,6 +19,7 @@ const InputDateRange = forwardRef(
 			required,
 			error,
 			submitCount,
+			filterData,
 			...restProps
 		},
 		ref
@@ -62,7 +63,6 @@ const InputDateRange = forwardRef(
 						{required ? `${label}*` : label}
 					</label>
 				)}
-
 				<DatePicker
 					locale={ru}
 					dateFormat="dd.MM.yyyy"
@@ -85,18 +85,36 @@ const InputDateRange = forwardRef(
 					style={{ marginTop: label?.length === 0 && '0' }}
 					required={required}
 					onChange={(update) => {
-						setIsFocus(true);
-						setDateRange(update);
+						if (update === [null, null]) {
+							setDateRange([null, null]);
+							setIsFocus(false);
+						}
+						if (update && Array.isArray(update) && update.length === 2) {
+							const [start, end] = update;
+							const startOfDay = start
+								? new Date(start.setHours(0, 0, 0, 0))
+								: null;
+							const endOfDay = end
+								? new Date(end.setHours(23, 59, 59, 999))
+								: null;
+
+							setIsFocus(false);
+							setDateRange([startOfDay, endOfDay]);
+						}
 					}}
 					onBlur={(e) => {
 						setIsFocus(false);
 						const trimmedValue = e.target.value.trim();
 						handleChange(e.target.name)(trimmedValue);
 					}}
+					onCalendarClose={() => {
+						if (startDate !== null && endDate !== null) {
+							filterData(startDate, endDate);
+						}
+					}}
 					autoComplete="off"
 					{...restProps}
 				/>
-
 				<span className={`error-message error-message_type-${errorClass}`}>
 					{(!isFocus && error) || (submitCount === 1 && error && error)}
 				</span>
@@ -117,6 +135,7 @@ InputDateRange.propTypes = {
 	required: PropTypes.bool,
 	error: PropTypes.string,
 	submitCount: PropTypes.number,
+	filterData: PropTypes.func,
 };
 
 InputDateRange.defaultProps = {
@@ -127,6 +146,7 @@ InputDateRange.defaultProps = {
 	error: '',
 	submitCount: 0,
 	handleChange: () => {},
+	filterData: () => {},
 	value: '',
 };
 
