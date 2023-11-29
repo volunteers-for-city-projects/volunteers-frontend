@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -164,18 +164,6 @@ function Projects() {
 				.finally(setIsLoading(false));
 		}
 	}
-
-	const formik = useFormik({
-		validateOnMount: true,
-		validateOnChange: true,
-		initialValues: {
-			date: '',
-			city: '',
-			categories: '',
-			skills: '',
-		},
-	});
-
 
 	return (
 		<section className="projects">
