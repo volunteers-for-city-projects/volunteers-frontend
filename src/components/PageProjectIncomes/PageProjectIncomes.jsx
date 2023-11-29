@@ -99,7 +99,7 @@ function PageProjectIncomes({ status }) {
 	 */
 	const handleRemove = (income) =>
 		processPromise(
-			income.delete(),
+			income.reject(),
 			income,
 			'Участник удален из проекта, уведомление отправлено волонтёру'
 		);
