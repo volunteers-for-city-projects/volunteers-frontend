@@ -12,12 +12,14 @@ import './ProjectView.scss';
 import '../../routes/router.scss';
 import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
+// import { editProject } from '../../utils/api/projects';
 import Button from '../Button/Button';
 import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
+import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 import ProjectIncome from '../../classes/ProjectIncome';
 
 function ProjectView() {
@@ -71,19 +73,21 @@ function ProjectView() {
 			path: `/projects/${idProject}`,
 		},
 	];
+
 	const infoProject = [
+		{ id: 1, text: `г. ${project.city}` },
 		{
-			id: 1,
+			id: 2,
 			text: project.event_address.address_line.trim(),
 		},
 		{
-			id: 2,
+			id: 3,
 			text: `${project.start_datetime.split(' ')[0]} - ${
 				project.end_datetime.split(' ')[0]
 			}`,
 		},
 		{
-			id: 3,
+			id: 4,
 			text: `${project.start_datetime.split(' ')[1]} - ${
 				project.end_datetime.split(' ')[1]
 			}`,
@@ -113,7 +117,6 @@ function ProjectView() {
 				setError(err);
 			});
 	}, [idProject, isLoggedIn]);
-
 	useEffect(() => {
 		if (role === 'volunteer') {
 			ProjectIncome.load().then((incomes) => {
@@ -199,6 +202,19 @@ function ProjectView() {
 			state: 'info',
 		});
 	};
+
+	const handleCancelProject = () => {
+		// eslint-disable-next-line no-alert
+		alert('измеение статуса проекта');
+		// editProject(idProject, {
+		// 	status: 'canceled_by_organizer',
+		// })
+		// 	.then(() => {
+		// 		project.status = "canceled_by_organizer'";
+		// 	})
+		// 	.catch((err) => console.log * err);
+	};
+
 	if (error) {
 		return <NotFound />;
 	}
@@ -239,7 +255,17 @@ function ProjectView() {
 					</div>
 				</div>
 				<div className="project-view__container-name-place-date">
-					<h2 className="project-view__title">{`«${project.name.trim()}»`}</h2>
+					<h2 className="project-view__title">
+						{`«${project.name.trim()}»`}
+						{isLoggedIn &&
+							role === 'organizer' &&
+							id === project.organization && (
+								<ProjectEditButton
+									parent="project-view"
+									projectId={project.id}
+								/>
+							)}
+					</h2>
 					<ShowProjectStatus
 						cardProject={project}
 						className={`project-view__status ${
@@ -329,6 +355,22 @@ function ProjectView() {
 							role === 'organizer' &&
 							id === project.organization && (
 								<>
+									{project.status.includes('closed') && (
+										<>
+											<p className="project-view__photo-message">
+												Вы можете добавить фото мероприятий завершённого проекта
+											</p>
+											<Button
+												theme="default"
+												size="l"
+												// eslint-disable-next-line no-alert
+												onClick={() => alert('Добавить Фотографии')}
+												type="button"
+											>
+												Добавить Фотографии
+											</Button>
+										</>
+									)}
 									<Button
 										theme="default"
 										size="l"
@@ -338,24 +380,28 @@ function ProjectView() {
 									>
 										Участники проекта
 									</Button>
-									<Button
-										theme="default"
-										size="l"
-										// eslint-disable-next-line no-alert
-										onClick={() => navigate('incomes')}
-										type="button"
-									>
-										Посмотреть заявки
-									</Button>
-									<Button
-										theme="opposite"
-										size="l"
-										// eslint-disable-next-line no-alert
-										onClick={() => alert('отменить проект')}
-										type="button"
-									>
-										Отменить проект
-									</Button>
+									{!project.status.includes('closed') && (
+										<Button
+											theme="default"
+											size="l"
+											// eslint-disable-next-line no-alert
+											onClick={() => navigate('incomes')}
+											type="button"
+										>
+											Посмотреть заявки
+										</Button>
+									)}
+									{!project.status.includes('closed') && (
+										<Button
+											theme="opposite"
+											size="l"
+											// eslint-disable-next-line no-alert
+											onClick={handleCancelProject}
+											type="button"
+										>
+											Отменить проект
+										</Button>
+									)}
 								</>
 							)}
 						{isLoggedIn &&

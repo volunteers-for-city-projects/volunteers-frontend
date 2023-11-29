@@ -1,6 +1,6 @@
 import './Projects.scss';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useFormik } from 'formik';
 // import { InputMask } from '@react-input/mask';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
@@ -273,13 +273,7 @@ function Projects() {
 				<div className="projects__cards">
 					{projects.length > 0 &&
 						projects.map((item) => (
-							<Link
-								key={item.id}
-								className="projects__link"
-								to={`/projects/${item.id}`}
-							>
-								<CardProject cardProject={item} />
-							</Link>
+							<CardProject key={item.id} cardProject={item} />
 						))}
 				</div>
 				{projectsNextUrl ? (

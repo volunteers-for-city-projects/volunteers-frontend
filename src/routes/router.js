@@ -25,6 +25,7 @@ import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/Profi
 import Projects from '../components/Projects/Projects';
 import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectIncomes';
 import ProjectView from '../components/ProjectView/ProjectView';
+import Stub from '../components/Stub/Stub';
 
 const router = createHashRouter([
 	{
@@ -223,6 +224,20 @@ const router = createHashRouter([
 											className="router__link"
 										>
 											Новый проект
+										</Link>
+									),
+								},
+							},
+							{
+								path: 'edit-project/:IdProject',
+								element: <Stub text="Тут будет редактироваться проект" />,
+								handle: {
+									crumb: () => (
+										<Link
+											to="/profile/organizer/edit-project/:idProject"
+											className="router__link"
+										>
+											Редактировать проект
 										</Link>
 									),
 								},

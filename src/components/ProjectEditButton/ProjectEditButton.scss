@@ -1,0 +1,16 @@
+.project-edit-btn {
+	width: 24px;
+	height: 24px;
+	background-color: transparent;
+	border: none;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	transition: opacity 0.3s;
+	background-image: url(../../images/edit_profile_prView.svg);
+	&:hover {
+		opacity: 0.8;
+		cursor: pointer;
+	}
+	z-index: 1;
+}
