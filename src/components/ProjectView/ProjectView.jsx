@@ -21,6 +21,7 @@ import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
 import ModalContent from '../ModalContent/ModalContent';
 import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 import ProjectIncome from '../../classes/ProjectIncome';
+import Project from '../../classes/Project';
 
 function ProjectView() {
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
@@ -218,6 +219,8 @@ function ProjectView() {
 	if (error) {
 		return <NotFound />;
 	}
+	/** @type {Project} objProject */
+	const objProject = project ? Project.createByData(project) : null;
 	return (
 		<section className="project-view">
 			<div className="project-view__container">
@@ -337,8 +340,9 @@ function ProjectView() {
 							</div>
 						)}
 
-						{!isLoggedIn ||
-							(role === 'volunteer' && (
+						{objProject &&
+							role !== 'organizer' &&
+							objProject.isInIncomesPeriod() && (
 								<Button
 									theme={income ? 'neutral' : 'default'}
 									size="l"
@@ -350,7 +354,7 @@ function ProjectView() {
 										? 'Заявка на участие подана'
 										: 'Подать заявку на участие в проекте'}
 								</Button>
-							))}
+							)}
 						{isLoggedIn &&
 							role === 'organizer' &&
 							id === project.organization && (
