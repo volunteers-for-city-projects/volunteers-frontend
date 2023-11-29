@@ -2,6 +2,7 @@ import ProjectEventAddress from './ProjectEventAddress';
 import ProjectIncome from './ProjectIncome';
 import AbstractEntity from './AbstractEntity';
 import { getProject } from '../utils/api/project';
+import { APPROVED, PROJECT_COMPLETED } from '../utils/constants';
 
 /**
  * @class
@@ -36,8 +37,27 @@ class Project extends AbstractEntity {
 
 	city;
 
+	statusApprove;
+
+	status;
+
 	/** @type {Array} */
 	#incomes = [];
+
+	isInIncomesPeriod() {
+		const currentDate = new Date();
+		if (
+			this.statusApprove === APPROVED &&
+			this.status !== PROJECT_COMPLETED &&
+			this.startDateApplication &&
+			this.endDateApplication &&
+			currentDate > this.startDateApplication &&
+			currentDate < this.endDateApplication
+		) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * status - константы STATUS_* из модуля ProjectIncome
