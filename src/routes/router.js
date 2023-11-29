@@ -27,6 +27,8 @@ import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectInco
 import ProjectView from '../components/ProjectView/ProjectView';
 import Stub from '../components/Stub/Stub';
 
+import { getProjectById } from '../utils/api/organizer';
+
 const router = createHashRouter([
 	{
 		path: '/',
@@ -145,6 +147,8 @@ const router = createHashRouter([
 			{
 				path: 'projects/:idProject',
 				element: <ProjectView />,
+				loader: ({ params }) => getProjectById(params.idProject),
+				errorElement: <NotFound />,
 			},
 			{
 				path: 'profile',

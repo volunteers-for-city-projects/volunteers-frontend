@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
 	Link,
+	useLoaderData,
 	useNavigate,
 	useOutletContext,
 	useParams,
@@ -10,11 +11,9 @@ import projectNull from '../../images/project-null.png';
 import '../Crumbs/Crumbs.scss';
 import './ProjectView.scss';
 import '../../routes/router.scss';
-import { getProjectById } from '../../utils/api/organizer';
 import { getOrganizationInformation } from '../../utils/api/profile';
 // import { editProject } from '../../utils/api/projects';
 import Button from '../Button/Button';
-import NotFound from '../NotFound/NotFound';
 import ProjectLikeButton from '../ProjectLikeButton/ProjectLikeButton';
 import FormIncome from '../FormIncome/FormIncome';
 import ShowProjectStatus from '../ShowProjectStatus/ShowProjectStatus';
@@ -23,39 +22,18 @@ import ProjectEditButton from '../ProjectEditButton/ProjectEditButton';
 import ProjectIncome from '../../classes/ProjectIncome';
 
 function ProjectView() {
+	const project = useLoaderData();
+
 	const { projectCategories, currentUser, isLoggedIn, setModal } =
 		useOutletContext();
 	const { role, id } = currentUser;
 	const navigate = useNavigate();
 	const { idProject } = useParams();
-	const [project, setProject] = useState({
-		name: '',
-		event_address: {
-			address_line: '',
-		},
-		start_datetime: '',
-		start_date_application: '',
-		end_datetime: '',
-		end_date_application: '',
-		picture: null,
-		skills: [
-			{
-				id: null,
-				name: '',
-			},
-		],
-		categories: [],
-		description: '',
-		event_purpose: '',
-		project_events: '',
-		project_tasks: '',
-		organizer_provides: '',
-		organization: null,
-	});
+
 	const [organization, setOrganization] = useState({
 		title: '',
 	});
-	const [error, setError] = useState(null);
+
 	const crumbs = [
 		{
 			id: 1,
@@ -103,20 +81,12 @@ function ProjectView() {
 	const [income, setIncome] = useState();
 
 	useEffect(() => {
-		getProjectById(idProject, isLoggedIn)
-			.then((res) => {
-				setProject(res);
-				getOrganizationInformation(res.organization)
-					.then((result) => {
-						setOrganization(result);
-					})
-					.catch((err) => console.error(err));
+		getOrganizationInformation(project.organization)
+			.then((result) => {
+				setOrganization(result);
 			})
-			.catch((err) => {
-				console.error(err);
-				setError(err);
-			});
-	}, [idProject, isLoggedIn]);
+			.catch((err) => console.error(err));
+	}, [project]);
 	useEffect(() => {
 		if (role === 'volunteer') {
 			ProjectIncome.load().then((incomes) => {
@@ -202,7 +172,6 @@ function ProjectView() {
 			state: 'info',
 		});
 	};
-
 	const handleCancelProject = () => {
 		// eslint-disable-next-line no-alert
 		alert('измеение статуса проекта');
@@ -215,9 +184,6 @@ function ProjectView() {
 		// 	.catch((err) => console.log * err);
 	};
 
-	if (error) {
-		return <NotFound />;
-	}
 	return (
 		<section className="project-view">
 			<div className="project-view__container">
