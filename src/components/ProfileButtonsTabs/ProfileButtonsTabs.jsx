@@ -17,7 +17,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('favorites')}
+						onClick={() =>
+							activeTab !== 'favorites'
+								? setActiveTab('favorites')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'favorites' ? '#FDFDFD' : '#a6c94f'}
 					/>
 					<Pushbutton
@@ -25,7 +29,9 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('active')}
+						onClick={() =>
+							activeTab !== 'active' ? setActiveTab('active') : setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'active' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -34,7 +40,9 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('draft')}
+						onClick={() =>
+							activeTab !== 'draft' ? setActiveTab('draft') : setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'draft' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -43,7 +51,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('moderation')}
+						onClick={() =>
+							activeTab !== 'moderation'
+								? setActiveTab('moderation')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'moderation' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -52,7 +64,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('completed')}
+						onClick={() =>
+							activeTab !== 'completed'
+								? setActiveTab('completed')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'completed' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -61,7 +77,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('archive')}
+						onClick={() =>
+							activeTab !== 'archive'
+								? setActiveTab('archive')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'archive' ? '#FDFDFD' : '#a6c94f'}
 					/>
 				</>
@@ -72,7 +92,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('favorites')}
+						onClick={() =>
+							activeTab !== 'favorites'
+								? setActiveTab('favorites')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'favorites' ? '#FDFDFD' : '#a6c94f'}
 					/>
 					<Pushbutton
@@ -80,7 +104,9 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('active')}
+						onClick={() =>
+							activeTab !== 'active' ? setActiveTab('active') : setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'active' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -89,7 +115,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('completed')}
+						onClick={() =>
+							activeTab !== 'completed'
+								? setActiveTab('completed')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'completed' ? '#FDFDFD' : '#a6c94f'}
 					/>
 
@@ -98,7 +128,11 @@ function ProfileButtonsTabs({ activeTab, setActiveTab }) {
 						color="black"
 						size="mini"
 						border="1px solid #A6C94F"
-						onClick={() => setActiveTab('canceled')}
+						onClick={() =>
+							activeTab !== 'canceled'
+								? setActiveTab('canceled')
+								: setActiveTab('')
+						}
 						backgroundColor={activeTab !== 'canceled' ? '#FDFDFD' : '#a6c94f'}
 					/>
 				</>

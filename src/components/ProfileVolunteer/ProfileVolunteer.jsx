@@ -36,7 +36,6 @@ function ProfileVolunteer() {
 		currentUser,
 		setCurrentUser,
 		handleChangePasswordForm,
-		isLoggedIn,
 		cities,
 		skills,
 		projectCategories,
@@ -124,7 +123,7 @@ function ProfileVolunteer() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, [isLoggedIn]);
+	}, []);
 
 	useEffect(() => {
 		setProjectsOffset(6);
@@ -135,18 +134,15 @@ function ProfileVolunteer() {
 		}
 
 		if (activeTab === 'active') {
-			filterQuery +=
-				`&status=${encodeURIComponent('reception_of_responses_closed')}` +
-				`&status=${encodeURIComponent('ready_for_feedback')}` +
-				`&status=${encodeURIComponent('editing')}`;
+			filterQuery += `&active=${encodeURIComponent(true)}`;
 		}
 
 		if (activeTab === 'completed') {
-			filterQuery += `&status=project_completed`;
+			filterQuery += `&active=${encodeURIComponent(true)}`;
 		}
 
 		if (activeTab === 'canceled') {
-			filterQuery += `&status=project_canceled`;
+			filterQuery += `&canceled=${encodeURIComponent(true)}`;
 		}
 
 		getProjectsMe(filterQuery)
@@ -235,12 +231,10 @@ function ProfileVolunteer() {
 							<div className="profile__projects-label">
 								<h2 className="profile__projects-title">Ваши проекты</h2>
 							</div>
-							{projectsMeVol.length > 0 && (
-								<ProfileButtonsTabs
-									activeTab={activeTab}
-									setActiveTab={setActiveTab}
-								/>
-							)}
+							<ProfileButtonsTabs
+								activeTab={activeTab}
+								setActiveTab={setActiveTab}
+							/>
 
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">

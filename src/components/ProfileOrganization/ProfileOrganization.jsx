@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ProfileOrganization.scss';
 import {
+	Link,
 	Outlet,
 	useLocation,
 	useNavigate,
@@ -111,6 +112,7 @@ function ProfileOrganization() {
 	}, [location]);
 
 	useEffect(() => {
+		setProjectsOffset(6);
 		getProjectsMe(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
 			.then((data) => {
 				setProjectsNextUrl(data.next);
@@ -121,12 +123,76 @@ function ProfileOrganization() {
 			});
 	}, []);
 
+	useEffect(() => {
+		setProjectsOffset(6);
+		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
+
+		if (activeTab === 'favorites') {
+			filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'active') {
+			filterQuery += `&active=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'draft') {
+			filterQuery += `&draft=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'moderation') {
+			filterQuery += `&moderation=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'completed') {
+			filterQuery += `&completed=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'archive') {
+			filterQuery += `&archive=${encodeURIComponent(true)}`;
+		}
+
+		getProjectsMe(filterQuery)
+			.then((dataProjects) => {
+				// setProjectsNextUrl(dataProjects.next);
+				setProjectsMe(dataProjects.results);
+				// console.log(dataProjects);
+				console.log(dataProjects.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, [activeTab, setActiveTab]);
+
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrevProjectsMe(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
-			)
+			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`;
+
+			if (activeTab === 'favorites') {
+				filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'active') {
+				filterQuery += `&active=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'draft') {
+				filterQuery += `&draft=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'moderation') {
+				filterQuery += `&moderation=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'completed') {
+				filterQuery += `&completed=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'archive') {
+				filterQuery += `&archive=${encodeURIComponent(true)}`;
+			}
+
+			getNextPrevProjectsMe(filterQuery)
 				.then((data) => {
 					setProjectsMe([...projectsMe, ...data.results]);
 					setProjectsNextUrl(data.next);
@@ -136,6 +202,15 @@ function ProfileOrganization() {
 				});
 		}
 	}
+
+	const handleClickTabs = (tabId) => {
+		setActiveTab((prevTab) => {
+			if (prevTab !== tabId) {
+				setProjectsOffset(6); // Обнуляем projectsOffset при смене вкладки
+			}
+			return tabId;
+		});
+	};
 
 	const deleteProjectCard = (projectId) => {
 		deleteCardProjectOrganization(projectId)
@@ -182,6 +257,8 @@ function ProfileOrganization() {
 	const handleDislikedCard = (projectId) => {
 		setProjectsMe((state) => state.filter((c) => c.id !== projectId));
 	};
+
+	console.log(projectsMe);
 
 	return location.pathname === '/profile/organizer' ||
 		location.pathname === '/profile/organizer/' ? (
@@ -246,22 +323,26 @@ function ProfileOrganization() {
 								</div>
 							</div>
 
-							{projectsMe.length > 0 && (
-								<ProfileButtonsTabs
-									activeTab={activeTab}
-									setActiveTab={setActiveTab}
-								/>
-							)}
+							<ProfileButtonsTabs
+								activeTab={activeTab}
+								setActiveTab={handleClickTabs}
+							/>
 
 							{projectsMe.length > 0 ? (
 								<div className="profile-org__projects-cards">
 									{projectsMe.map((item) => (
-										<CardProject
-											cardProject={item}
+										<Link
 											key={item.id}
-											onCardDelete={handleDeleteModal}
-											onCardDisliked={handleDislikedCard}
-										/>
+											className="projects__link"
+											to={`/projects/${item.id}`}
+										>
+											<CardProject
+												cardProject={item}
+												key={item.id}
+												onCardDelete={handleDeleteModal}
+												onCardDisliked={handleDislikedCard}
+											/>
+										</Link>
 									))}
 								</div>
 							) : (
