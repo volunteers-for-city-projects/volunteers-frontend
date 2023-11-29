@@ -1,5 +1,6 @@
 import './ProfileVolunteer.scss';
 import {
+	Link,
 	Outlet,
 	useLocation,
 	useNavigate,
@@ -35,6 +36,7 @@ function ProfileVolunteer() {
 		currentUser,
 		setCurrentUser,
 		handleChangePasswordForm,
+		isLoggedIn,
 		cities,
 		skills,
 		projectCategories,
@@ -122,21 +124,21 @@ function ProfileVolunteer() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, []);
+	}, [isLoggedIn]);
 
 	useEffect(() => {
 		setProjectsOffset(6);
 		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
 
 		if (activeTab === 'favorites') {
-			filterQuery += `&is_favorited=true`;
+			filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
 		}
 
 		if (activeTab === 'active') {
 			filterQuery +=
-				`&status="reception_of_responses_closed"` ||
-				`&status="ready_for_feedback"` ||
-				`&status="editing"`;
+				`&status=${encodeURIComponent('reception_of_responses_closed')}` +
+				`&status=${encodeURIComponent('ready_for_feedback')}` +
+				`&status=${encodeURIComponent('editing')}`;
 		}
 
 		if (activeTab === 'completed') {
@@ -144,18 +146,20 @@ function ProfileVolunteer() {
 		}
 
 		if (activeTab === 'canceled') {
-			filterQuery += `&status=project_completed`;
+			filterQuery += `&status=project_canceled`;
 		}
 
 		getProjectsMe(filterQuery)
 			.then((dataProjects) => {
-				setProjectsNextUrl(dataProjects.next);
+				// setProjectsNextUrl(dataProjects.next);
 				setProjectsMeVol(dataProjects.results);
+				// console.log(dataProjects);
+				console.log(dataProjects.results);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, [activeTab]);
+	}, [activeTab, setActiveTab]);
 
 	function handleClickNext() {
 		if (projectsNextUrl) {
@@ -164,7 +168,10 @@ function ProfileVolunteer() {
 				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
 			)
 				.then((data) => {
-					setProjectsMeVol([...projectsMeVol, ...data.results]);
+					setProjectsMeVol((prevProjects) => [
+						...prevProjects,
+						...data.results,
+					]);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -238,11 +245,16 @@ function ProfileVolunteer() {
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">
 									{projectsMeVol.map((item) => (
-										<CardProject
-											cardProject={item}
+										<Link
 											key={item.id}
-											onCardDisliked={handleDislikedCard}
-										/>
+											className="projects__link"
+											to={`/projects/${item.id}`}
+										>
+											<CardProject
+												cardProject={item}
+												onCardDisliked={handleDislikedCard}
+											/>
+										</Link>
 									))}
 								</div>
 							) : (
