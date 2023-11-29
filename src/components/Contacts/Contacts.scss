@@ -86,9 +86,15 @@
 }
 @media screen and (max-width: 450px) {
 	.contacts {
-		opacity: 0;
-		visibility: hidden;
-		
-		
+		&__item {
+			max-width: 148px;
+		}	
+		&__info_type_footer  {
+			font-size: 14px;
+			line-height: 23px;
+		}
+		&__subtitle {
+			font-size: 14px;
+		}
 	}
 }
