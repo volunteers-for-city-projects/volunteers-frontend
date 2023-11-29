@@ -23,7 +23,8 @@ import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolu
 import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
 import Projects from '../components/Projects/Projects';
-import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectIncomes';
+import Incomes from '../components/Incomes/Incomes';
+import PageProject from '../components/PageProject/PageProject';
 import ProjectView from '../components/ProjectView/ProjectView';
 import Stub from '../components/Stub/Stub';
 
@@ -128,27 +129,35 @@ const router = createHashRouter([
 					),
 				},
 			},
+
 			{
-				path: 'projects/:projectId/incomes',
-				element: (
-					<ProtectedRouteElementForAuthorizedOrganizer>
-						<PageProjectIncomes status="application_submitted" />
-					</ProtectedRouteElementForAuthorizedOrganizer>
-				),
-			},
-			{
-				path: 'projects/:projectId/participants',
-				element: (
-					<ProtectedRouteElementForAuthorizedOrganizer>
-						<PageProjectIncomes status="accepted" />
-					</ProtectedRouteElementForAuthorizedOrganizer>
-				),
-			},
-			{
+				id: 'project',
 				path: 'projects/:idProject',
-				element: <ProjectView />,
+				element: <PageProject />,
 				loader: ({ params }) => getProjectById(params.idProject),
 				errorElement: <NotFound />,
+				children: [
+					{
+						index: true,
+						element: <ProjectView />,
+					},
+					{
+						path: 'incomes',
+						element: (
+							<ProtectedRouteElementForAuthorizedOrganizer>
+								<Incomes status="application_submitted" />
+							</ProtectedRouteElementForAuthorizedOrganizer>
+						),
+					},
+					{
+						path: 'participants',
+						element: (
+							<ProtectedRouteElementForAuthorizedOrganizer>
+								<Incomes status="accepted" />
+							</ProtectedRouteElementForAuthorizedOrganizer>
+						),
+					},
+				],
 			},
 			{
 				path: 'profile',
