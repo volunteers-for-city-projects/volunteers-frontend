@@ -84,9 +84,6 @@ function ProfileVolunteer() {
 		window.scrollTo(0, 0);
 	}, [location.pathname]);
 
-	// 	fetchData();
-	// }, [city];
-
 	useEffect(() => {
 		getUserInformation().then((user) => {
 			if (user.role === 'volunteer') {
@@ -123,7 +120,8 @@ function ProfileVolunteer() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [setProjectsNextUrl]);
 
 	useEffect(() => {
 		setProjectsOffset(6);
@@ -138,19 +136,17 @@ function ProfileVolunteer() {
 		}
 
 		if (activeTab === 'completed') {
-			filterQuery += `&active=${encodeURIComponent(true)}`;
+			filterQuery += `&completed=${encodeURIComponent(true)}`;
 		}
 
 		if (activeTab === 'canceled') {
-			filterQuery += `&canceled=${encodeURIComponent(true)}`;
+			filterQuery += `&archive=${encodeURIComponent(true)}`;
 		}
 
 		getProjectsMe(filterQuery)
 			.then((dataProjects) => {
-				// setProjectsNextUrl(dataProjects.next);
+				setProjectsNextUrl(dataProjects.next);
 				setProjectsMeVol(dataProjects.results);
-				// console.log(dataProjects);
-				console.log(dataProjects.results);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -160,14 +156,29 @@ function ProfileVolunteer() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrevProjectsMe(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
-			)
+
+			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`;
+
+			if (activeTab === 'favorites') {
+				filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'active') {
+				filterQuery += `&active=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'completed') {
+				filterQuery += `&completed=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'canceled') {
+				filterQuery += `&archive=${encodeURIComponent(true)}`;
+			}
+
+			getNextPrevProjectsMe(filterQuery)
 				.then((data) => {
-					setProjectsMeVol((prevProjects) => [
-						...prevProjects,
-						...data.results,
-					]);
+					setProjectsMeVol([...projectsMeVol, ...data.results]);
+					setProjectsNextUrl(data.next);
 				})
 				.catch((err) => {
 					console.log(`Ошибка: ${err}`);
@@ -266,7 +277,7 @@ function ProfileVolunteer() {
 								</div>
 							)}
 
-							{projectsMeVol.length >= 6 && (
+							{projectsMeVol.length >= 6 && projectsNextUrl && (
 								<div className="projects__button">
 									<Button
 										className="projects__button-item"

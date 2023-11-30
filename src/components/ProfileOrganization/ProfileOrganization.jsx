@@ -112,7 +112,6 @@ function ProfileOrganization() {
 	}, [location]);
 
 	useEffect(() => {
-		setProjectsOffset(6);
 		getProjectsMe(`?limit=${PROJECT_CARD_DISPLAY_LIMIT}`)
 			.then((data) => {
 				setProjectsNextUrl(data.next);
@@ -121,7 +120,8 @@ function ProfileOrganization() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [setProjectsNextUrl]);
 
 	useEffect(() => {
 		setProjectsOffset(6);
@@ -153,10 +153,8 @@ function ProfileOrganization() {
 
 		getProjectsMe(filterQuery)
 			.then((dataProjects) => {
-				// setProjectsNextUrl(dataProjects.next);
+				setProjectsNextUrl(dataProjects.next);
 				setProjectsMe(dataProjects.results);
-				// console.log(dataProjects);
-				console.log(dataProjects.results);
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
@@ -166,6 +164,7 @@ function ProfileOrganization() {
 	function handleClickNext() {
 		if (projectsNextUrl) {
 			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
+
 			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`;
 
 			if (activeTab === 'favorites') {
@@ -202,15 +201,6 @@ function ProfileOrganization() {
 				});
 		}
 	}
-
-	const handleClickTabs = (tabId) => {
-		setActiveTab((prevTab) => {
-			if (prevTab !== tabId) {
-				setProjectsOffset(6); // Обнуляем projectsOffset при смене вкладки
-			}
-			return tabId;
-		});
-	};
 
 	const deleteProjectCard = (projectId) => {
 		deleteCardProjectOrganization(projectId)
@@ -258,6 +248,7 @@ function ProfileOrganization() {
 		setProjectsMe((state) => state.filter((c) => c.id !== projectId));
 	};
 
+	console.log('projectsMe');
 	console.log(projectsMe);
 
 	return location.pathname === '/profile/organizer' ||
@@ -325,7 +316,7 @@ function ProfileOrganization() {
 
 							<ProfileButtonsTabs
 								activeTab={activeTab}
-								setActiveTab={handleClickTabs}
+								setActiveTab={setActiveTab}
 							/>
 
 							{projectsMe.length > 0 ? (
