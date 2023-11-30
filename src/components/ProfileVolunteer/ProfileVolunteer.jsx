@@ -246,7 +246,6 @@ function ProfileVolunteer() {
 								activeTab={activeTab}
 								setActiveTab={setActiveTab}
 							/>
-
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">
 									{projectsMeVol.map((item) => (
@@ -276,7 +275,6 @@ function ProfileVolunteer() {
 									</div>
 								</div>
 							)}
-
 							{projectsMeVol.length >= 6 && projectsNextUrl && (
 								<div className="projects__button">
 									<Button
