@@ -9,6 +9,7 @@ import {
 	postIncome,
 	getIncome,
 } from '../utils/api/income';
+import { phoneToServerFormat } from '../utils/utils';
 
 export const STATUS_SUBBMITED = 'application_submitted';
 export const STATUS_REJECTED = 'rejected';
@@ -142,7 +143,7 @@ class ProjectIncome extends AbstractEntity {
 	static createNew(incomeData, userId, projectId) {
 		const { phone, email, telegram, letter } = incomeData;
 		return postIncome({
-			phone,
+			phone: phoneToServerFormat(phone),
 			email,
 			telegram,
 			cover_letter: letter,

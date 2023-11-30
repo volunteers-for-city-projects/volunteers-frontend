@@ -8,7 +8,7 @@ import { STATUS_SUBBMITED, STATUS_ACCEPTED } from '../../classes/ProjectIncome';
 import CardIncome from '../CardIncome/CardIncome';
 import PopupWindow from '../PopupWindow/PopupWindow';
 import Button from '../Button/Button';
-import './PageProjectIncomes.scss';
+import './Incomes.scss';
 
 /**
  * @typedef {import('../../classes/ProjectIncome').default} Income
@@ -16,7 +16,7 @@ import './PageProjectIncomes.scss';
  * @param {'application_submitted'|'rejected'|'accepted'} obj.status
  * @returns
  */
-function PageProjectIncomes({ status }) {
+function Incomes({ status }) {
 	const navigate = useNavigate();
 	const [popup, setPopup] = useState({ isOpen: false });
 	const [displayCount, setDisplayCount] = useState(6);
@@ -30,7 +30,7 @@ function PageProjectIncomes({ status }) {
 	const { setModal, setIsLoading } = useOutletContext();
 
 	const params = useParams();
-	const { projectId } = params;
+	const { idProject } = params;
 
 	const openPopup = (text, type, errorArray = []) => {
 		setPopup({
@@ -49,10 +49,10 @@ function PageProjectIncomes({ status }) {
 	};
 
 	useEffect(() => {
-		Project.loadOne(projectId)
+		Project.loadOne(idProject)
 			.then((loadedProject) => setProject(loadedProject))
 			.catch((e) => openPopup('', 'error', e));
-	}, [projectId, status, setIsLoading]);
+	}, [idProject, status, setIsLoading]);
 
 	useEffect(() => {
 		if (!project) return;
@@ -99,7 +99,7 @@ function PageProjectIncomes({ status }) {
 	 */
 	const handleRemove = (income) =>
 		processPromise(
-			income.delete(),
+			income.reject(),
 			income,
 			'Участник удален из проекта, уведомление отправлено волонтёру'
 		);
@@ -114,7 +114,7 @@ function PageProjectIncomes({ status }) {
 			'Заявка отклонена, уведомление отправлено волонтёру'
 		);
 
-	const baseClass = 'page-project-incomes';
+	const baseClass = 'incomes';
 	const bem = bemClassHelper(baseClass, '#');
 
 	const parentUrl = `/projects/${project.id}`;
@@ -139,7 +139,7 @@ function PageProjectIncomes({ status }) {
 			);
 			break;
 		default:
-			throw new Error('Bad status value in PageProjectIncomes');
+			throw new Error('Bad status value in Incomes');
 	}
 
 	return (
@@ -184,9 +184,9 @@ function PageProjectIncomes({ status }) {
 	);
 }
 
-PageProjectIncomes.propTypes = {
+Incomes.propTypes = {
 	status: PropTypes.oneOf(['application_submitted', 'rejected', 'accepted'])
 		.isRequired,
 };
 
-export default PageProjectIncomes;
+export default Incomes;

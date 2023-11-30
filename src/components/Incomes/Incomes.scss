@@ -1,7 +1,6 @@
 @import '../../style/variables.scss';
 
-.page-project-incomes {
-	padding: 50px 130px;
+.incomes {
 	color: $--Text;
 	display: flex;
 	flex-direction: column;
@@ -46,7 +45,7 @@
 }
 
 @media screen and (max-width: 1919px) {
-	.page-project-incomes {
+	.incomes {
 		&__incomes {
 			grid-template-columns: repeat(2, 1fr);
 			gap: 22px;

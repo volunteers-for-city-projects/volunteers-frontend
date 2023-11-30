@@ -25,9 +25,19 @@ const resetLikeForProject = (id) => {
 		token
 	);
 };
+const editProject = (id, payload) => {
+	const token = localStorage.getItem('token');
+	return request(
+		`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`,
+		'PATCH',
+		payload,
+		token
+	);
+};
 
 export {
 	deleteCardProjectOrganization,
 	setLikeForProject,
 	resetLikeForProject,
+	editProject,
 };

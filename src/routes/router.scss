@@ -25,4 +25,15 @@
 		cursor: default;
 		opacity: 0.6;
 	}
+	&_arrow {
+		&::after {
+			content: ' ';
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			background-image: url('../images/icon-strelka.svg');
+			vertical-align: middle;
+			margin: 0 7px;
+		}
+	}
 }
