@@ -10,7 +10,7 @@ import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 import Button from '../Button/Button';
 import ProjectIncome from '../../classes/ProjectIncome';
 import PopupWindow from '../PopupWindow/PopupWindow';
-import { bemClassHelper, formatPhone } from '../../utils/utils';
+import { bemClassHelper, phoneToHumanFormat } from '../../utils/utils';
 import './FormIncome.scss';
 
 function FormIncome({ currentUser, onSubmit, projectId }) {
@@ -34,7 +34,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			phone: formatPhone(currentUser.phone),
+			phone: phoneToHumanFormat(currentUser.phone),
 			telegram: currentUser.telegram,
 			letter: '',
 		},

@@ -22,8 +22,22 @@ export const bemClassHelper =
  * @param {String} phoneString
  * @returns String
  */
-export const formatPhone = (phoneString) => {
+export const phoneToHumanFormat = (phoneString) => {
 	const expr = /(\+7|8)(\d{3})(\d{3})(\d{2})(\d{2})/g;
 	const m = expr.exec(phoneString);
 	return m ? `${m[1]} (${m[2]}) ${m[3]}-${m[4]}-${m[5]}` : '';
+};
+
+/**
+ * Преобразует телефон из пользовательского формата (+7 (ХХХ) ХХХ-ХХ-ХХ или 8(ХХХ) ХХХ-ХХ-ХХ) в серверный  (+7ХХХХХХХХХХ)
+ *
+ * @param {String} phoneString
+ * @returns String
+ */
+export const phoneToServerFormat = (phone) => {
+	let cleared = phone.replace(/\D/g, '');
+	if (cleared.startsWith('8')) {
+		cleared = `7${cleared.slice(1)}`;
+	}
+	return `+${cleared}`;
 };
