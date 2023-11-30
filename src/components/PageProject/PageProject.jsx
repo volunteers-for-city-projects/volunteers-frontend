@@ -6,6 +6,7 @@ import {
 	useParams,
 } from 'react-router-dom';
 import arrow from '../../images/icon-strelka.svg';
+import { Crumbs } from '../Crumbs/Crumbs';
 import '../Crumbs/Crumbs.scss';
 import './PageProject.scss';
 import '../../routes/router.scss';
@@ -61,6 +62,7 @@ function PageProject() {
 
 	return (
 		<section className="page-project">
+			<Crumbs />
 			<div className="page-project__container-crumbs">
 				<ul className="crumbs">
 					{crumbs.map((item) => (

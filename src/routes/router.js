@@ -119,6 +119,7 @@ const router = createHashRouter([
 				],
 			},
 			{
+				id: Projects,
 				path: 'projects',
 				element: <Projects />,
 				handle: {
@@ -136,6 +137,18 @@ const router = createHashRouter([
 				element: <PageProject />,
 				loader: ({ params }) => getProjectById(params.idProject),
 				errorElement: <NotFound />,
+				handle: {
+					crumb: (match) => (
+						<>
+							<Link to="/projects" className="router__link router__link_arrow">
+								Проекты
+							</Link>
+							<Link to={match.path} className="router__link">
+								Проект «{match?.data?.name}»
+							</Link>
+						</>
+					),
+				},
 				children: [
 					{
 						index: true,
@@ -148,6 +161,13 @@ const router = createHashRouter([
 								<Incomes status="application_submitted" />
 							</ProtectedRouteElementForAuthorizedOrganizer>
 						),
+						handle: {
+							crumb: (match) => (
+								<Link to={match.path} className="router__link">
+									Заявки
+								</Link>
+							),
+						},
 					},
 					{
 						path: 'participants',
@@ -156,9 +176,17 @@ const router = createHashRouter([
 								<Incomes status="accepted" />
 							</ProtectedRouteElementForAuthorizedOrganizer>
 						),
+						handle: {
+							crumb: (match) => (
+								<Link to={match.path} className="router__link">
+									Участники
+								</Link>
+							),
+						},
 					},
 				],
 			},
+
 			{
 				path: 'profile',
 				element: (

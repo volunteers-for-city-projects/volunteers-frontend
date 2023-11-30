@@ -146,9 +146,9 @@
 		text-overflow: ellipsis;
 	}
 
-	@media screen and (max-width: 1919px) {		
+	@media screen and (max-width: 1919px) {
 		max-width: 1180px;
-		
+
 		&__container-image-info {
 			width: 480px;
 		}
@@ -159,6 +159,6 @@
 
 		&__container-common-info {
 			width: 680px;
-		}		
+		}
 	}
 }
