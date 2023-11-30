@@ -1,17 +1,18 @@
-import { NavLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './MenuHamburger.scss';
+import { useNavigate } from 'react-router-dom';
 
-const MenuHamburger = ({ isOpen, onClose }) => {
-	const links = [
-		{ id: 0, title: 'Проекты', path: '/projects' },
-		{ id: 1, title: 'Новости', path: '/' },
-		{ id: 2, title: 'Связаться с нами', path: '/' },
-	];
+import NavigationLink from '../NavigationLink/NavigationLink';
+import { Pushbutton } from '../Pushbutton/Pushbutton';
 
-	const { pathname } = useLocation();
-	const isActive = (path) => pathname === path;
-
+function MenuHamburger({
+	isOpen,
+	onClose,
+	dataNavArray,
+	isLoggedIn,
+	handleConfirmLogout,
+}) {
+	const navigate = useNavigate();
 	return (
 		<div className={`menu-popup ${isOpen ? 'menu-popup_opened' : ''}`}>
 			<div
@@ -23,28 +24,83 @@ const MenuHamburger = ({ isOpen, onClose }) => {
 					{' '}
 				</button>
 				<ul className="menu-popup__links">
-					{links.map((link) => (
+					{dataNavArray.map((link) => (
 						<li key={link.id}>
-							<NavLink
-								to={link.path}
-								className={`menu-popup__link ${
-									isActive(link.path) ? 'menu-popup__link_active' : ''
-								}`}
+							<NavigationLink
+								label={link.label}
+								path={link.path}
+								anchor={link.anchor}
 							>
 								{link.title}
-							</NavLink>
+							</NavigationLink>
 						</li>
 					))}
+
+					<div className="">
+						{!isLoggedIn ? (
+							<>
+								<Pushbutton
+									label="Регистрация"
+									backgroundColor="#A6C94F"
+									size="medium-large"
+									border="none"
+									color="#FFF"
+									onClick={() => navigate('/registration')}
+									minWidth="150px"
+								/>
+								<Pushbutton
+									label="Вход"
+									backgroundColor="#FFF"
+									size="medium-large"
+									border="1px solid #A6C94F"
+									color="#3F3F3F"
+									onClick={() => navigate('/login')}
+									minWidth="150px"
+								/>
+							</>
+						) : (
+							<>
+								<Pushbutton
+									label="ЛК"
+									backgroundColor="#A6C94F"
+									size="medium-large"
+									border="none"
+									color="#FFF"
+									onClick={() => navigate('/profile')}
+									minWidth="150px"
+								/>
+								<Pushbutton
+									label="Выход"
+									backgroundColor="#FFF"
+									size="medium-large"
+									onClick={handleConfirmLogout}
+									border="1px solid #A6C94F"
+									color="#3F3F3F"
+									minWidth="150px"
+								/>
+							</>
+						)}
+					</div>
 				</ul>
 			</div>
 		</div>
 	);
-};
+}
 
 MenuHamburger.propTypes = {
+	dataNavArray: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			label: PropTypes.string.isRequired,
+			path: PropTypes.string.isRequired,
+			anchor: PropTypes.string.isRequired,
+		})
+	).isRequired,
 	isOpen: PropTypes.bool.isRequired,
 
 	onClose: PropTypes.func.isRequired,
+	isLoggedIn: PropTypes.bool.isRequired,
+	handleConfirmLogout: PropTypes.func.isRequired,
 };
 
 export default MenuHamburger;

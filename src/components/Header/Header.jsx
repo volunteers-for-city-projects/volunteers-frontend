@@ -24,7 +24,11 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 					icon={iconSearch}
 					// width="450px"
 				/>
-				<NavBar dataNavArray={dataNavArray} />
+				<NavBar
+					isLoggedIn={isLoggedIn}
+					handleConfirmLogout={handleConfirmLogout}
+					dataNavArray={dataNavArray}
+				/>
 				<div className="header__buttons">
 					{!isLoggedIn ? (
 						<>

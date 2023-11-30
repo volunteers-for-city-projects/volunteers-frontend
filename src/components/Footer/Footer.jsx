@@ -13,7 +13,10 @@ function Footer({ platformEmail }) {
 					label="ЛучшеВместе"
 					sublabel="Городские инициативы — шаг к переменам"
 				/>
-				<NavBar dataNavArray={dataNavArray} />
+				<div className="footer__nav">
+					<NavBar dataNavArray={dataNavArray} />
+				</div>
+
 				<Contacts type="footer" platformEmail={platformEmail} />
 			</div>
 		</footer>

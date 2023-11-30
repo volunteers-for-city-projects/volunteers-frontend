@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import './NavBar.scss';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+
 import NavigationLink from '../NavigationLink/NavigationLink';
 import iconProfile from '../../images/main-page/icon-profile.svg';
 import hamburgerMenu from '../../images/main-page/hamburger.png';
 import MenuHamburger from '../MenuHamburger/MenuHamburger';
 
-function NavBar({ dataNavArray }) {
+function NavBar({ dataNavArray, isLoggedIn, handleConfirmLogout }) {
 	const [showPopup, setShowPopup] = useState(false);
 	return (
 		<nav>
@@ -22,24 +23,32 @@ function NavBar({ dataNavArray }) {
 					</li>
 				))}
 			</ul>
-			<Link to="/profile">
-				<img
-					className="nav__image"
-					src={iconProfile}
-					alt="Переход на страницу профиля"
-				/>
-			</Link>
 
-			<div className="nav__buttons">
-				<button onClick={setShowPopup} type="button" className="nav__button">
+			<div className="nav__wrapper">
+				<Link to="/profile">
 					<img
-						src={hamburgerMenu}
-						alt="Открыть меню"
-						className="nav__button-burger"
+						className="nav__image"
+						src={iconProfile}
+						alt="Переход на страницу профиля"
 					/>
-				</button>
+				</Link>
+				<div className="nav__buttons">
+					<button onClick={setShowPopup} type="button" className="nav__button">
+						<img
+							src={hamburgerMenu}
+							alt="Открыть меню"
+							className="nav__button-burger"
+						/>
+					</button>
+				</div>
+				<MenuHamburger
+					isLoggedIn={isLoggedIn}
+					handleConfirmLogout={handleConfirmLogout}
+					dataNavArray={dataNavArray}
+					isOpen={showPopup}
+					onClose={() => setShowPopup(false)}
+				/>
 			</div>
-			<MenuHamburger isOpen={showPopup} onClose={() => setShowPopup(false)} />
 		</nav>
 	);
 }
@@ -53,6 +62,8 @@ NavBar.propTypes = {
 			anchor: PropTypes.string.isRequired,
 		})
 	).isRequired,
+	isLoggedIn: PropTypes.bool.isRequired,
+	handleConfirmLogout: PropTypes.func.isRequired,
 };
 
 export default NavBar;

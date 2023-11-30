@@ -73,14 +73,12 @@
 }
 
 @media screen and (max-width: 450px) {
-
 	.about-project {
 		gap: 50px;
 
 		&__container-about {
 			gap: 24px;
 			max-width: 358px;
-			
 		}
 		&__title {
 			font-size: 28px;
@@ -91,9 +89,7 @@
 		&__container {
 			max-width: 358px;
 			margin: 0 auto;
-		
 		}
-
 	}
 
 	.our-values {
@@ -101,6 +97,4 @@
 			font-size: 28px;
 		}
 	}
-
 }
-

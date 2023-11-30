@@ -28,4 +28,13 @@
 			line-height: 23px;
 		}
 	}
+
+	@media screen and (max-width: 450px) {
+		&__link {
+			color: $--White;
+			font-size: 28px;
+		}
+	}
+	
 }
+
