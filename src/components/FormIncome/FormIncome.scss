@@ -1,15 +1,20 @@
 @import '../../style/variables.scss';
-.form-income {
-	box-sizing: border-box;
-	width: 100%;
+.form-income {	
+	box-sizing: border-box;	
+	width: 100%;	
 	display: grid;
 	column-gap: 26px;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 2fr 48px;	
+	height: 620px;
+
 	&__tip {
 		color: $--Dark-grey;
 		font-size: 12px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 17.746px;
+		margin: 0 0 30px 0;
 	}
 	&__label {
 		color: $--Text;
@@ -21,40 +26,57 @@
 	&__submit {
 		height: 48px;
 	}
-	input {
-		width: 346px;
+	&__email{		
+		background-color: rgba($color: $--Dark-grey, $alpha: 0.2);		
 	}
-	&__email-group {
+	
+	.form-fieldset {
+		gap: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
 		input {
-			background-color: rgba($color: $--Dark-grey, $alpha: 0.2);
+			width: 345px;
+			margin-top: 12px;
+		}	
+		.error-message, .text-area_error-message {
+			font-size: 15px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 17.746px;
+			width: 100%;
+		}	
+		.text-area__container {
+			width: 100%;
+			textarea {
+				height: 100%;		
+				max-width: 100%;
+			}
 		}
 	}
-	.error-message_type-small {
-		width: 50%;
-	}
-
-	textarea {
-		height: 100%;
-		width: 100%;
-		max-width: 100%;
-	}
-	.text-area__container {
-		width: 100%;
-	}
-}
-@media screen and (max-width: 1919px) {
-	.form-income {
-		// grid-auto-flow: column;
+	
+	@media screen and (max-width: 1919px) {	
+		height: 360px;
 		grid-template-columns: 280fr 418fr;
 		grid-template-rows: auto 48px;
-		fieldset:first-child {
-			grid-row: 1/3;
+		&__tip {			
+			margin: 0;
 		}
-		input {
-			width: 100%;
+		&__submit{
+			margin-top: 5px;
 		}
-		div {
-			width: 100%;
+		.form-fieldset{			
+			&:first-child {
+				grid-row: 1/3;
+			}
+			input {
+				width: 100%;
+			}
+			div {
+				width: 100%;
+			}
 		}
+		
 	}
 }
+
