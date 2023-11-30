@@ -6,8 +6,25 @@
 	gap: 16px;
 }
 
+.nav__buttons {
+	display: none;
+}
+.nav__image {
+	display: none;
+}
+
 @media screen and (max-width: 450px) {
 	.nav {
-	display: none;
+		display: none;
+	}
+
+	.nav__buttons {
+		display: flex;
+		width: 35px;
+		height: 35px;
+	}
+
+	.nav__image {
+		display: flex;
 	}
 }
