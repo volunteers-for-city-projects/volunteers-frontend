@@ -1,11 +1,4 @@
-import {
-	Link,
-	Outlet,
-	useLoaderData,
-	useOutletContext,
-	useParams,
-} from 'react-router-dom';
-import arrow from '../../images/icon-strelka.svg';
+import { Outlet, useLoaderData, useOutletContext } from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import '../Crumbs/Crumbs.scss';
 import './PageProject.scss';
@@ -20,25 +13,6 @@ function PageProject() {
 	const context = useOutletContext();
 	const { currentUser, isLoggedIn } = context;
 	const { role, id } = currentUser;
-	const { idProject } = useParams();
-
-	const crumbs = [
-		{
-			id: 1,
-			text: 'Главная',
-			path: '/',
-		},
-		{
-			id: 2,
-			text: 'Проекты',
-			path: '/projects',
-		},
-		{
-			id: 3,
-			text: `Проект «${project.name.trim()}»`,
-			path: `/projects/${idProject}`,
-		},
-	];
 
 	const infoProject = [
 		{ id: 1, text: `г. ${project.city}` },
@@ -62,20 +36,8 @@ function PageProject() {
 
 	return (
 		<section className="page-project">
-			<Crumbs />
 			<div className="page-project__container-crumbs">
-				<ul className="crumbs">
-					{crumbs.map((item) => (
-						<li key={item.id} className="crumbs__item">
-							<Link to={item.path} className="router__link">
-								{item.text}
-							</Link>
-							{item.id !== 3 && (
-								<img className="crumbs__separator" src={arrow} alt="стрелка" />
-							)}
-						</li>
-					))}
-				</ul>
+				<Crumbs />
 				<div className="page-project__container-icons">
 					<button
 						className="page-project__btn page-project__btn_type_share"
