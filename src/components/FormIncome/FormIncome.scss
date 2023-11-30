@@ -1,11 +1,11 @@
 @import '../../style/variables.scss';
-.form-income {	
-	box-sizing: border-box;	
-	width: 100%;	
+.form-income {
+	box-sizing: border-box;
+	width: 100%;
 	display: grid;
 	column-gap: 26px;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 2fr 48px;	
+	grid-template-rows: 1fr 2fr 48px;
 	height: 620px;
 
 	&__tip {
@@ -26,10 +26,10 @@
 	&__submit {
 		height: 48px;
 	}
-	&__email{		
-		background-color: rgba($color: $--Dark-grey, $alpha: 0.2);		
+	&__email {
+		background-color: rgba($color: $--Dark-grey, $alpha: 0.2);
 	}
-	
+
 	.form-fieldset {
 		gap: 0;
 		display: flex;
@@ -38,34 +38,35 @@
 		input {
 			width: 345px;
 			margin-top: 12px;
-		}	
-		.error-message, .text-area_error-message {
+		}
+		.error-message,
+		.text-area_error-message {
 			font-size: 15px;
 			font-style: normal;
 			font-weight: 400;
 			line-height: 17.746px;
 			width: 100%;
-		}	
+		}
 		.text-area__container {
 			width: 100%;
 			textarea {
-				height: 100%;		
+				height: 100%;
 				max-width: 100%;
 			}
 		}
 	}
-	
-	@media screen and (max-width: 1919px) {	
+
+	@media screen and (max-width: 1919px) {
 		height: 360px;
 		grid-template-columns: 280fr 418fr;
 		grid-template-rows: auto 48px;
-		&__tip {			
+		&__tip {
 			margin: 0;
 		}
-		&__submit{
+		&__submit {
 			margin-top: 5px;
 		}
-		.form-fieldset{			
+		.form-fieldset {
 			&:first-child {
 				grid-row: 1/3;
 			}
@@ -76,7 +77,5 @@
 				width: 100%;
 			}
 		}
-		
 	}
 }
-
