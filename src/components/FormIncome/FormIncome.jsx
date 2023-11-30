@@ -10,7 +10,7 @@ import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 import Button from '../Button/Button';
 import ProjectIncome from '../../classes/ProjectIncome';
 import PopupWindow from '../PopupWindow/PopupWindow';
-import { bemClassHelper } from '../../utils/utils';
+import { bemClassHelper, phoneToHumanFormat } from '../../utils/utils';
 import './FormIncome.scss';
 
 function FormIncome({ currentUser, onSubmit, projectId }) {
@@ -34,8 +34,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 		validateOnMount: true,
 		validateOnChange: true,
 		initialValues: {
-			phone: currentUser.phone,
-			email: currentUser.email,
+			phone: phoneToHumanFormat(currentUser.phone),
 			telegram: currentUser.telegram,
 			letter: '',
 		},
@@ -84,13 +83,13 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 					submitCount={formik.submitCount}
 					autoсomplete="off"
 				/>
-				<div className={bem('#__email-group')}>
+				<div>
 					<label htmlFor="email" className={bem('#__label')}>
 						Почта
 						<input
 							value={currentUser.email}
 							disabled
-							className="input input_type-small"
+							className={bem('input', 'input_type-small', '#__email')}
 							name="email"
 							id="email"
 						/>
@@ -100,7 +99,6 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 					</p>
 				</div>
 			</InputGroup>
-
 			<InputGroup title="Сопроводительное письмо">
 				<InputTextArea
 					name="letter"
@@ -108,6 +106,7 @@ function FormIncome({ currentUser, onSubmit, projectId }) {
 					value={formik.values.letter}
 					handleChange={formik.handleChange}
 					error={formik.errors.letter}
+					label=""
 				/>
 			</InputGroup>
 			<Button type="submit" className={bem('#__submit')}>
@@ -126,6 +125,6 @@ FormIncome.propTypes = {
 		telegram: PropTypes.string,
 	}).isRequired,
 	onSubmit: PropTypes.func.isRequired,
-	projectId: PropTypes.number.isRequired,
+	projectId: PropTypes.string.isRequired,
 };
 export default FormIncome;

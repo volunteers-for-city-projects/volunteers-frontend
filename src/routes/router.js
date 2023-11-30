@@ -23,9 +23,12 @@ import ProfileVolunteerEdit from '../components/ProfileVolunteerEdit/ProfileVolu
 import ProfileOrganization from '../components/ProfileOrganization/ProfileOrganization';
 import ProfileOrganizationEdit from '../components/ProfileOrganizationEdit/ProfileOrganizationEdit';
 import Projects from '../components/Projects/Projects';
-import PageProjectIncomes from '../components/PageProjectIncomes/PageProjectIncomes';
+import Incomes from '../components/Incomes/Incomes';
+import PageProject from '../components/PageProject/PageProject';
 import ProjectView from '../components/ProjectView/ProjectView';
 import Stub from '../components/Stub/Stub';
+
+import { getProjectById } from '../utils/api/organizer';
 
 const router = createHashRouter([
 	{
@@ -116,6 +119,7 @@ const router = createHashRouter([
 				],
 			},
 			{
+				id: Projects,
 				path: 'projects',
 				element: <Projects />,
 				handle: {
@@ -126,26 +130,63 @@ const router = createHashRouter([
 					),
 				},
 			},
+
 			{
-				path: 'projects/:projectId/incomes',
-				element: (
-					<ProtectedRouteElementForAuthorizedOrganizer>
-						<PageProjectIncomes status="application_submitted" />
-					</ProtectedRouteElementForAuthorizedOrganizer>
-				),
-			},
-			{
-				path: 'projects/:projectId/participants',
-				element: (
-					<ProtectedRouteElementForAuthorizedOrganizer>
-						<PageProjectIncomes status="accepted" />
-					</ProtectedRouteElementForAuthorizedOrganizer>
-				),
-			},
-			{
+				id: 'project',
 				path: 'projects/:idProject',
-				element: <ProjectView />,
+				element: <PageProject />,
+				loader: ({ params }) => getProjectById(params.idProject),
+				errorElement: <NotFound />,
+				handle: {
+					crumb: (match) => (
+						<>
+							<Link to="/projects" className="router__link router__link_arrow">
+								Проекты
+							</Link>
+							<Link to={match.path} className="router__link">
+								Проект «{match?.data?.name}»
+							</Link>
+						</>
+					),
+				},
+				children: [
+					{
+						index: true,
+						element: <ProjectView />,
+					},
+					{
+						path: 'incomes',
+						element: (
+							<ProtectedRouteElementForAuthorizedOrganizer>
+								<Incomes status="application_submitted" />
+							</ProtectedRouteElementForAuthorizedOrganizer>
+						),
+						handle: {
+							crumb: (match) => (
+								<Link to={match.path} className="router__link">
+									Заявки
+								</Link>
+							),
+						},
+					},
+					{
+						path: 'participants',
+						element: (
+							<ProtectedRouteElementForAuthorizedOrganizer>
+								<Incomes status="accepted" />
+							</ProtectedRouteElementForAuthorizedOrganizer>
+						),
+						handle: {
+							crumb: (match) => (
+								<Link to={match.path} className="router__link">
+									Участники
+								</Link>
+							),
+						},
+					},
+				],
 			},
+
 			{
 				path: 'profile',
 				element: (

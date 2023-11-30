@@ -7,7 +7,7 @@ export const Crumbs = () => {
 	const matches = useMatches();
 	const crumbs = matches
 		.filter((match) => Boolean(match.handle?.crumb))
-		.map((match) => match.handle.crumb(match.data));
+		.map((match) => match.handle.crumb(match));
 
 	return (
 		<ul className="crumbs">

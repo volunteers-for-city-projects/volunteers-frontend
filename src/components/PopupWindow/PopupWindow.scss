@@ -23,6 +23,7 @@
 }
 
 .popup-window {
+	z-index: 999;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;

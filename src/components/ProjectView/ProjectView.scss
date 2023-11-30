@@ -1,109 +1,9 @@
 @import '../../style/variables.scss';
 
 .project-view {
-	&__container {
-		max-width: 1660px;
-		margin: 50px auto;
-		display: flex;
-		flex-direction: column;
-		gap: 30px;
-		@media screen and (max-width: 1366px) {
-			margin: 26.5px auto 24px;
-			gap: 20px;
-		}
-	}
+	display: flex;
+	justify-content: space-between;
 
-	&__container-crumbs {
-		display: flex;
-		justify-content: space-between;
-		overflow: hidden;
-	}
-
-	&__container-icons {
-		display: flex;
-		gap: 16px;
-	}
-
-	&__btn {
-		background-color: transparent;
-		border: none;
-		width: 40px;
-		height: 40px;
-		background-repeat: no-repeat;
-		background-size: 40px 40px;
-		background-position: center;
-		transition: opacity 0.3s;
-	}
-	&__like-btn {
-		height: 40px;
-		width: 40px;
-	}
-	&__status {
-		font-size: 23px;
-		text-transform: lowercase;
-		flex-shrink: 0;
-		justify-self: end;
-		align-self: end;
-		line-height: 1.5;
-		text-align: end;
-		&_hovered {
-			cursor: pointer;
-			&:hover + .project-view__status-push-message {
-				width: fit-content;
-				height: fit-content;
-				font-size: 28px;
-				opacity: 1;
-				transition:
-					height 0.3s,
-					width 0.3s,
-					font-size 0.3s,
-					opacity 0.5s;
-				@media screen and (max-width: 1919px) {
-					font-size: 18px;
-				}
-			}
-		}
-	}
-	&__status-push-message {
-		box-sizing: border-box;
-		text-align: center;
-		margin: 0;
-		color: $--Text;
-		font-family: $--Font-Primary;
-		font-size: 0;
-		font-weight: 500;
-		line-height: 1.17;
-		padding: 22px;
-		width: 0px;
-		height: 0;
-		opacity: 0;
-		position: absolute;
-		top: 60px;
-		right: 0;
-		border: 2px solid $--Secondary;
-		background-color: white;
-		border-radius: 5px;
-		overflow: hidden;
-		@media screen and (max-width: 1919px) {
-			padding: 16px;
-			top: 40px;
-		}
-	}
-	&__status::before {
-		box-sizing: border-box;
-		content: '';
-		width: 24px;
-		aspect-ratio: 1;
-		border: 4px solid;
-		display: inline-block;
-		border-radius: 50%;
-		vertical-align: middle;
-		margin-right: 12px;
-	}
-	&__btn:hover {
-		opacity: 0.8;
-		cursor: pointer;
-	}
 	&__photo-message {
 		font-size: 23px;
 		font-weight: 500;
@@ -115,19 +15,19 @@
 		border-radius: 5px;
 	}
 
-	&__project-edit-btn {
-		background-image: url('../../images/edit_profile_prView.svg');
-		margin-left: 40px;
-	}
-	&__btn_type_share {
-		background-image: url(../../images/share.svg);
-	}
-
-	&__btn_type_like {
-		background-image: url(../../images/like.svg);
-	}
-	&__btn_state_liked {
-		background-image: url(../../images/like_liked.svg);
+	&__btn {
+		background-color: transparent;
+		border: none;
+		width: 40px;
+		height: 40px;
+		background-repeat: no-repeat;
+		background-size: 40px 40px;
+		background-position: center;
+		transition: opacity 0.3s;
+		&:hover {
+			opacity: 0.8;
+			cursor: pointer;
+		}
 	}
 
 	&__btn_type_enlarge {
@@ -135,60 +35,6 @@
 		position: absolute;
 		bottom: 15px;
 		right: 15px;
-	}
-
-	&__container-name-place-date {
-		display: grid;
-		row-gap: 32px;
-		grid-template-columns: 1fr 920px;
-		position: relative;
-		@media screen and (max-width: 1919px) {
-			grid-template-columns: 1fr 680px;
-			row-gap: 24.5px;
-		}
-	}
-
-	&__container-name-place {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	&__title {
-		margin: 0;
-		color: $--Primary;
-		font-family: $--Font-Primary;
-		font-size: 56px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 1;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	&__list-place {
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-		display: flex;
-		gap: 16px;
-		grid-column-start: 1;
-		grid-column-end: 3;
-	}
-
-	&__place {
-		margin: 0;
-		color: $--Dark-grey;
-		font-family: $--Font-Primary;
-		font-size: 23px;
-		font-style: normal;
-		font-weight: 500;
-		line-height: 1.3;
-	}
-
-	&__container-info {
-		display: flex;
-		justify-content: space-between;
 	}
 
 	&__container-image-info {
@@ -301,9 +147,7 @@
 	}
 
 	@media screen and (max-width: 1919px) {
-		&__container {
-			max-width: 1180px;
-		}
+		max-width: 1180px;
 
 		&__container-image-info {
 			width: 480px;
@@ -315,14 +159,6 @@
 
 		&__container-common-info {
 			width: 680px;
-		}
-
-		&__title {
-			font-size: 34px;
-		}
-
-		&__place {
-			font-size: 20px;
 		}
 	}
 }
