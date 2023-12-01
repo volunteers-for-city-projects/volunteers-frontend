@@ -159,31 +159,42 @@
 	}
 
 	@media screen and (max-width: 450px) {
-		.request__container {
-			max-width: 358px;
-			margin: 50px auto 50px;
+		.request {
+			&__container {
+				max-width: 358px;
+				margin: 50px auto 50px;
+			}
+			&__title {
+				font-size: 28px;
+			}
+			&__subtitle {
+				font-size: 18px;
+			}
+
+			&__container-title {
+				gap: 32px;
+			}
 		}
 
-		.request__title {
-			font-size: 28px;
-		}
-		.request__subtitle {
-			font-size: 18px;
-		}
-
-		.request__container-title {
-			gap: 32px;
-		}
-		.form-request__textarea {
-			width: 358px;
-			height: 220px;
-			padding: 22px;
-		}
 		.form-request {
-			gap: 32px;
+			gap: 20px;
+			&__textarea {
+				width: 358px;
+				height: 220px;
+				padding: 22px;
+			}
+
+			&__inputs {
+				min-width: 358px;
+			}
+			&__container-textarea {
+				position: relative;
+			}
 		}
-		.form-request__inputs {
-			min-width: 358px;
+
+		.recaptcha {
+			position: absolute;
+			bottom: 10px;
 		}
 	}
 }

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import './NavBar.scss';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
 import NavigationLink from '../NavigationLink/NavigationLink';
 import iconProfile from '../../images/main-page/icon-profile.svg';
 import hamburgerMenu from '../../images/main-page/hamburger.png';
@@ -62,8 +61,13 @@ NavBar.propTypes = {
 			anchor: PropTypes.string.isRequired,
 		})
 	).isRequired,
-	isLoggedIn: PropTypes.bool.isRequired,
-	handleConfirmLogout: PropTypes.func.isRequired,
+	isLoggedIn: PropTypes.bool,
+	handleConfirmLogout: PropTypes.func,
+};
+
+NavBar.defaultProps = {
+	isLoggedIn: true,
+	handleConfirmLogout: () => {},
 };
 
 export default NavBar;

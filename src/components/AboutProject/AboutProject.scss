@@ -93,6 +93,10 @@
 	}
 
 	.our-values {
+		&__cards {
+			flex-wrap: nowrap;
+			overflow: hidden;
+		}
 		&__title {
 			font-size: 28px;
 		}

@@ -88,6 +88,10 @@
 	.contacts {
 		&__item {
 			max-width: 148px;
+			align-items: flex-start;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			gap: 17px;
 		}	
 		&__info_type_footer  {
 			font-size: 14px;

@@ -31,7 +31,7 @@
 	}
 
 	@media screen and (max-width: 450px) {
-		max-width: 358px;
+		min-width: 358px;
 		gap: 16px;
 		padding: 22px 16px;
 		&-title {

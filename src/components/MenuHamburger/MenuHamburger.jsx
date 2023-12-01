@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import './MenuHamburger.scss';
 import { useNavigate } from 'react-router-dom';
-
 import NavigationLink from '../NavigationLink/NavigationLink';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 
@@ -36,7 +35,7 @@ function MenuHamburger({
 						</li>
 					))}
 
-					<div className="">
+					<div className="menu-popup__buttons">
 						{!isLoggedIn ? (
 							<>
 								<Pushbutton
@@ -88,6 +87,7 @@ function MenuHamburger({
 }
 
 MenuHamburger.propTypes = {
+	isOpen: PropTypes.bool,
 	dataNavArray: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
@@ -96,11 +96,15 @@ MenuHamburger.propTypes = {
 			anchor: PropTypes.string.isRequired,
 		})
 	).isRequired,
-	isOpen: PropTypes.bool.isRequired,
-
 	onClose: PropTypes.func.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired,
-	handleConfirmLogout: PropTypes.func.isRequired,
+	isLoggedIn: PropTypes.bool,
+	handleConfirmLogout: PropTypes.func,
+};
+
+MenuHamburger.defaultProps = {
+	isOpen: false,
+	isLoggedIn: true,
+	handleConfirmLogout: () => {},
 };
 
 export default MenuHamburger;
