@@ -12,8 +12,18 @@ function MenuHamburger({
 	handleConfirmLogout,
 }) {
 	const navigate = useNavigate();
+
 	return (
 		<div className={`menu-popup ${isOpen ? 'menu-popup_opened' : ''}`}>
+			{/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+			<div
+				className={`menu-popup__overlay ${
+					isOpen ? 'menu-popup__overlay_open' : ''
+				}`}
+				onClick={onClose}
+				onKeyDown={() => {}}
+			/>
+
 			<div
 				className={`menu-popup__content ${
 					isOpen ? 'menu-popup__content_active' : ''
