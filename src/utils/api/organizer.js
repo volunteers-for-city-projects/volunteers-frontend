@@ -11,7 +11,7 @@ const getProjectCategories = () =>
 
 const createProject = (value) => {
 	const token = localStorage.getItem('token');
-	request(ENDPOINT_ORGANIZER_PROJECTS, 'POST', value, token);
+	return request(ENDPOINT_ORGANIZER_PROJECTS, 'POST', value, token);
 };
 
 const getProjectById = (id, isLoggedIn) =>
