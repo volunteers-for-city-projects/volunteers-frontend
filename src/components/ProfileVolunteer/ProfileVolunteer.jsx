@@ -1,6 +1,5 @@
 import './ProfileVolunteer.scss';
 import {
-	Link,
 	Outlet,
 	useLocation,
 	useNavigate,
@@ -25,9 +24,6 @@ import {
 import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 
 function ProfileVolunteer() {
-	const [projectsOffset, setProjectsOffset] = useState(
-		PROJECT_CARD_DISPLAY_LIMIT
-	);
 	const [projectsMeVol, setProjectsMeVol] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const [activeTab, setActiveTab] = useState('');
@@ -41,6 +37,7 @@ function ProfileVolunteer() {
 		projectCategories,
 		setModal,
 	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -84,6 +81,84 @@ function ProfileVolunteer() {
 		window.scrollTo(0, 0);
 	}, [location.pathname]);
 
+	const handleDislikedCard = (projectId) => {
+		setProjectsMeVol((prevProjects) =>
+			prevProjects.filter((project) => project.id !== projectId)
+		);
+
+		const excludedProjectQuery = `&exclude_project_id=${encodeURIComponent(
+			projectId
+		)}`;
+		let filterQuery = `?limit=${1}&offset=${
+			projectsMeVol.length - 1
+		}${excludedProjectQuery}`;
+
+		if (activeTab === 'favorites') {
+			filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'active') {
+			filterQuery += `&active=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'completed') {
+			filterQuery += `&completed=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'canceled') {
+			filterQuery += `&archive=${encodeURIComponent(true)}`;
+		}
+
+		getNextPrevProjectsMe(filterQuery)
+			.then((data) => {
+				setProjectsMeVol((prevProjects) => [...prevProjects, ...data.results]);
+				setProjectsNextUrl(data.next);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	};
+
+	const handleClickNext = () => {
+		if (projectsNextUrl) {
+			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsMeVol.length}`;
+
+			if (activeTab === 'favorites') {
+				filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'active') {
+				filterQuery += `&active=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'completed') {
+				filterQuery += `&completed=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'canceled') {
+				filterQuery += `&archive=${encodeURIComponent(true)}`;
+			}
+
+			getNextPrevProjectsMe(filterQuery)
+				.then((data) => {
+					setProjectsMeVol([...projectsMeVol, ...data.results]);
+					setProjectsNextUrl(data.next);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+
+			getProjectsMe(filterQuery)
+				.then((data) => {
+					setProjectsMeVol([...projectsMeVol, ...data.results]);
+					setProjectsNextUrl(data.next);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+		}
+	};
+
 	useEffect(() => {
 		getUserInformation().then((user) => {
 			if (user.role === 'volunteer') {
@@ -120,11 +195,10 @@ function ProfileVolunteer() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [setProjectsNextUrl]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps,no-use-before-define
+	}, [setProjectsNextUrl, setProjectsMeVol]);
 
 	useEffect(() => {
-		setProjectsOffset(6);
 		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
 
 		if (activeTab === 'favorites') {
@@ -152,43 +226,6 @@ function ProfileVolunteer() {
 				console.log(`Ошибка: ${err}`);
 			});
 	}, [activeTab, setActiveTab]);
-
-	function handleClickNext() {
-		if (projectsNextUrl) {
-			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-
-			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`;
-
-			if (activeTab === 'favorites') {
-				filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
-			}
-
-			if (activeTab === 'active') {
-				filterQuery += `&active=${encodeURIComponent(true)}`;
-			}
-
-			if (activeTab === 'completed') {
-				filterQuery += `&completed=${encodeURIComponent(true)}`;
-			}
-
-			if (activeTab === 'canceled') {
-				filterQuery += `&archive=${encodeURIComponent(true)}`;
-			}
-
-			getNextPrevProjectsMe(filterQuery)
-				.then((data) => {
-					setProjectsMeVol([...projectsMeVol, ...data.results]);
-					setProjectsNextUrl(data.next);
-				})
-				.catch((err) => {
-					console.log(`Ошибка: ${err}`);
-				});
-		}
-	}
-
-	const handleDislikedCard = (projectId) => {
-		setProjectsMeVol((state) => state.filter((c) => c.id !== projectId));
-	};
 
 	return location.pathname === '/profile/volunteer' ||
 		location.pathname === '/profile/volunteer/' ? (
@@ -249,16 +286,11 @@ function ProfileVolunteer() {
 							{projectsMeVol.length > 0 ? (
 								<div className="profile__projects-cards">
 									{projectsMeVol.map((item) => (
-										<Link
+										<CardProject
 											key={item.id}
-											className="projects__link"
-											to={`/projects/${item.id}`}
-										>
-											<CardProject
-												cardProject={item}
-												onCardDisliked={handleDislikedCard}
-											/>
-										</Link>
+											cardProject={item}
+											onCardDisliked={handleDislikedCard}
+										/>
 									))}
 								</div>
 							) : (
