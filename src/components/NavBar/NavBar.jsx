@@ -44,7 +44,7 @@ function NavBar({ dataNavArray, isLoggedIn, handleConfirmLogout }) {
 					isLoggedIn={isLoggedIn}
 					handleConfirmLogout={handleConfirmLogout}
 					dataNavArray={dataNavArray}
-					isOpen={showPopup}
+					isOpen={Boolean(showPopup)}
 					onClose={() => setShowPopup(false)}
 				/>
 			</div>

@@ -93,5 +93,8 @@
 		&__label-btn {
 			width: 358px;
 		}
+		&__cards {
+			grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
+		}
 	}
 }
