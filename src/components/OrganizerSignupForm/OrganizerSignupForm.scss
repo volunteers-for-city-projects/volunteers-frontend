@@ -7,6 +7,7 @@
 
 	&__text {
 		position: relative;
+
 		&-content {
 			display: flex;
 			flex-direction: column;
@@ -84,7 +85,18 @@
 			}
 		}
 	}
+
+	&__recaptcha {
+		visibility: hidden;
+		align-self: flex-end;
+		translate: 344px -152px;
+
+		&_active {
+			visibility: visible;
+		}
+	}
 }
+
 @media screen and (max-width: 1919px) {
 	.organizer-signup-form {
 		width: 632px;
@@ -95,6 +107,7 @@
 
 		&__text {
 			position: relative;
+
 			&-content {
 				display: flex;
 				flex-direction: column;
@@ -118,6 +131,10 @@
 
 			display: flex;
 			align-items: center;
+		}
+
+		&__recaptcha {
+			translate: 323px -171px;
 		}
 	}
 }

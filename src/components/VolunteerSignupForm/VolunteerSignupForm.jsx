@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useOutletContext } from 'react-router-dom';
 import moment from 'moment';
+import ReCAPTCHA from 'react-google-recaptcha';
+import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
-import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 import { birthdayMask } from '../../utils/inputsMasks/birthdayMask';
+import { phoneMask } from '../../utils/inputsMasks/phoneMask';
 
 import './VolunteerSignupForm.scss';
 
@@ -21,10 +23,25 @@ import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
+	const apiKey = process.env.REACT_APP_SECRET_KEY_RECAPTCHA;
+	const [isReCaptchaChecked, setIsReCaptchaChecked] = useState(false);
+	const [isReCaptchaOpen, setIsReCaptchaOpen] = useState(false);
+	const recaptchaRef = useRef(null);
+
 	const { setModal, cities, skills } = useOutletContext();
 
 	const handleCheckboxClick = () => {
 		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
+	const handleResetRecaptcha = () => {
+		if (recaptchaRef.current) {
+			recaptchaRef.current.reset();
+		}
+	};
+
+	const handleReCaptchaClick = () => {
+		setIsReCaptchaChecked(true);
 	};
 
 	const formik = useFormik({
@@ -46,50 +63,58 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 		},
 		validationSchema: VolunteerSignupFormSchema,
 		onSubmit: async (values) => {
-			// конверсия даты из инпута в формат даты на сервере
-			const formattedDateOfBirth = moment(values.birthday, 'DD.MM.YYYY').format(
-				'YYYY-MM-DD'
-			);
-			// конверсия номера телефона из инпута в формат телефона на сервере
-			const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-			let formattedPhone = getDigitsOnly(values.phone);
-			if (formattedPhone.startsWith('8')) {
-				formattedPhone = `7${formattedPhone.slice(1)}`;
-			}
-
 			try {
-				await createVolunteer({
-					user: {
-						first_name: values.firstname,
-						second_name: values.secondname,
-						last_name: values.lastname,
-						email: values.email,
-						password: values.password,
-						re_password: values.confirm_password,
-					},
-					telegram: values.telegram,
-					photo: values.photo || '',
-					date_of_birth: formattedDateOfBirth,
-					phone:
-						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
-						formattedPhone,
-					skills: values.skills.map((skill) => skill.value),
-					city: values.city[0].value,
-				});
+				if (isReCaptchaChecked) {
+					const formattedDateOfBirth = moment(
+						values.birthday,
+						'DD.MM.YYYY'
+					).format('YYYY-MM-DD');
+					const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
+					let formattedPhone = getDigitsOnly(values.phone);
+					if (formattedPhone.startsWith('8')) {
+						formattedPhone = `7${formattedPhone.slice(1)}`;
+					}
 
-				setModal({
-					isOpen: true,
-					type: 'email',
-					state: 'info',
-					title: 'Подтверждение E-mail',
-					emailprop: values.email,
-					onSubmit: (event) => {
-						event.preventDefault();
-						resendActivateUser({ email: values.email }).catch((err) =>
-							console.error(err)
-						);
-					},
-				});
+					await createVolunteer({
+						user: {
+							first_name: values.firstname,
+							second_name: values.secondname,
+							last_name: values.lastname,
+							email: values.email,
+							password: values.password,
+							re_password: values.confirm_password,
+						},
+						telegram: values.telegram,
+						photo: values.photo || '',
+						date_of_birth: formattedDateOfBirth,
+						phone:
+							(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+							formattedPhone,
+						skills: values.skills.map((skill) => skill.value),
+						city: values.city[0].value,
+					});
+
+					setModal({
+						isOpen: true,
+						type: 'email',
+						state: 'info',
+						title: 'Подтверждение E-mail',
+						emailprop: values.email,
+						onSubmit: (event) => {
+							event.preventDefault();
+							resendActivateUser({ email: values.email }).catch((err) =>
+								console.error(err)
+							);
+						},
+					});
+
+					handleResetRecaptcha();
+					setIsReCaptchaChecked(false);
+					setIsCheckboxChecked(false);
+					setIsReCaptchaOpen(false);
+				} else {
+					setIsReCaptchaOpen(true);
+				}
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({
@@ -330,7 +355,8 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 						!formik.isValid ||
 						!isCheckboxChecked ||
 						formik.values.city === null ||
-						formik.values.skills.length === 0
+						formik.values.skills.length === 0 ||
+						(isReCaptchaOpen && !isReCaptchaChecked)
 					}
 					type="submit"
 				/>
@@ -339,6 +365,14 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 					name="volunteer-signup-form"
 					htmlFor="volunteer-signup-form-checkbox"
 					checked={isCheckboxChecked}
+				/>
+				<ReCAPTCHA
+					sitekey={apiKey}
+					ref={recaptchaRef}
+					onChange={handleReCaptchaClick}
+					className={clsx('volunteer-signup-form__recaptcha', {
+						'volunteer-signup-form__recaptcha_active': isReCaptchaOpen,
+					})}
 				/>
 			</div>
 		</form>

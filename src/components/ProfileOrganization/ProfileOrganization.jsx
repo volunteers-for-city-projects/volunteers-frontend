@@ -24,12 +24,10 @@ import { PROJECT_CARD_DISPLAY_LIMIT } from '../../utils/constants';
 import { deleteCardProjectOrganization } from '../../utils/api/projects';
 
 function ProfileOrganization() {
-	const [projectsOffset, setProjectsOffset] = useState(
-		PROJECT_CARD_DISPLAY_LIMIT
-	);
 	const [projectsMe, setProjectsMe] = useState([]);
 	const [projectsNextUrl, setProjectsNextUrl] = useState(null);
 	const [activeTab, setActiveTab] = useState('');
+
 	const {
 		currentUser,
 		setCurrentUser,
@@ -39,6 +37,7 @@ function ProfileOrganization() {
 		projectCategories,
 		setModal,
 	} = useOutletContext();
+
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -83,6 +82,104 @@ function ProfileOrganization() {
 		window.scrollTo(0, 0);
 	}, [location.pathname]);
 
+	const handleDislikedCard = (projectId) => {
+		setProjectsMe((prevProjects) =>
+			prevProjects.filter((project) => project.id !== projectId)
+		);
+
+		const excludedProjectQuery = `&exclude_project_id=${encodeURIComponent(
+			projectId
+		)}`;
+
+		let filterQuery = `?limit=${1}&offset=${
+			projectsMe.length - 1
+		}${excludedProjectQuery}`;
+
+		if (activeTab === 'favorites') {
+			filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'active') {
+			filterQuery += `&active=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'draft') {
+			filterQuery += `&draft=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'moderation') {
+			filterQuery += `&moderation=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'completed') {
+			filterQuery += `&completed=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'archive') {
+			filterQuery += `&archive=${encodeURIComponent(true)}`;
+		}
+
+		getNextPrevProjectsMe(filterQuery)
+			.then((data) => {
+				const filteredResults = data.results.filter(
+					(project) => project.is_favorited
+				);
+				setProjectsMe((prevProjects) => [...prevProjects, ...filteredResults]);
+				setProjectsNextUrl(data.next);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	};
+
+	function handleClickNext() {
+		if (projectsNextUrl) {
+			let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsMe.length}`;
+
+			if (activeTab === 'favorites') {
+				filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'active') {
+				filterQuery += `&active=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'draft') {
+				filterQuery += `&draft=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'moderation') {
+				filterQuery += `&moderation=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'completed') {
+				filterQuery += `&completed=${encodeURIComponent(true)}`;
+			}
+
+			if (activeTab === 'archive') {
+				filterQuery += `&archive=${encodeURIComponent(true)}`;
+			}
+
+			getNextPrevProjectsMe(filterQuery)
+				.then((data) => {
+					setProjectsMe([...projectsMe, ...data.results]);
+					setProjectsNextUrl(data.next);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+
+			getProjectsMe(filterQuery)
+				.then((data) => {
+					setProjectsMe([...projectsMe, ...data.results]);
+					setProjectsNextUrl(data.next);
+				})
+				.catch((err) => {
+					console.log(`Ошибка: ${err}`);
+				});
+		}
+	}
+
 	useEffect(() => {
 		getUserInformation().then((user) => {
 			if (user.role === 'organizer') {
@@ -119,23 +216,45 @@ function ProfileOrganization() {
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
 			});
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [setProjectsNextUrl, setProjectsMe]);
 
-	function handleClickNext() {
-		if (projectsNextUrl) {
-			setProjectsOffset(projectsOffset + PROJECT_CARD_DISPLAY_LIMIT);
-			getNextPrevProjectsMe(
-				`?limit=${PROJECT_CARD_DISPLAY_LIMIT}&offset=${projectsOffset}`
-			)
-				.then((data) => {
-					setProjectsMe([...projectsMe, ...data.results]);
-					setProjectsNextUrl(data.next);
-				})
-				.catch((err) => {
-					console.log(`Ошибка: ${err}`);
-				});
+	useEffect(() => {
+		let filterQuery = `?limit=${PROJECT_CARD_DISPLAY_LIMIT}`;
+
+		if (activeTab === 'favorites') {
+			filterQuery += `&is_favorited=${encodeURIComponent(true)}`;
 		}
-	}
+
+		if (activeTab === 'active') {
+			filterQuery += `&active=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'draft') {
+			filterQuery += `&draft=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'moderation') {
+			filterQuery += `&moderation=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'completed') {
+			filterQuery += `&completed=${encodeURIComponent(true)}`;
+		}
+
+		if (activeTab === 'archive') {
+			filterQuery += `&archive=${encodeURIComponent(true)}`;
+		}
+
+		getProjectsMe(filterQuery)
+			.then((data) => {
+				setProjectsNextUrl(data.next);
+				setProjectsMe(data.results);
+			})
+			.catch((err) => {
+				console.log(`Ошибка: ${err}`);
+			});
+	}, [activeTab, setActiveTab, setProjectsMe, setProjectsNextUrl]);
 
 	const deleteProjectCard = (projectId) => {
 		deleteCardProjectOrganization(projectId)
@@ -177,10 +296,6 @@ function ProfileOrganization() {
 				});
 			},
 		});
-	};
-
-	const handleDislikedCard = (projectId) => {
-		setProjectsMe((state) => state.filter((c) => c.id !== projectId));
 	};
 
 	return location.pathname === '/profile/organizer' ||
@@ -246,12 +361,10 @@ function ProfileOrganization() {
 								</div>
 							</div>
 
-							{projectsMe.length > 0 && (
-								<ProfileButtonsTabs
-									activeTab={activeTab}
-									setActiveTab={setActiveTab}
-								/>
-							)}
+							<ProfileButtonsTabs
+								activeTab={activeTab}
+								setActiveTab={setActiveTab}
+							/>
 
 							{projectsMe.length > 0 ? (
 								<div className="profile-org__projects-cards">
