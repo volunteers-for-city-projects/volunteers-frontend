@@ -77,3 +77,24 @@
 		}
 	}
 }
+
+@media screen and (max-width: 450px) {
+	.projects {
+		&__container {
+			max-width: 358px;
+		}
+		&__selects {
+			gap: 5px;
+		}
+		&__label {
+			flex-direction: column;
+			gap: 20px;
+		}
+		&__label-btn {
+			width: 358px;
+		}
+		&__cards {
+			grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
+		}
+	}
+}

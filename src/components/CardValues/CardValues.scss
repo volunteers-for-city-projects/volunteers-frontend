@@ -29,4 +29,18 @@
 	@media screen and (max-width: 1919px) {
 		max-width: 570px;
 	}
+
+	@media screen and (max-width: 450px) {
+		min-width: 358px;
+		gap: 16px;
+		padding: 22px 16px;
+		&-title {
+			font-size: 20px;
+		}
+		&-subtitle {
+			font-size: 18px;
+			line-height: 30px;
+		}
+	}
 }
+

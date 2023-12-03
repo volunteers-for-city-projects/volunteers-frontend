@@ -157,4 +157,44 @@
 	.form-request__textarea {
 		width: 701px;
 	}
+
+	@media screen and (max-width: 450px) {
+		.request {
+			&__container {
+				max-width: 358px;
+				margin: 50px auto 50px;
+			}
+			&__title {
+				font-size: 28px;
+			}
+			&__subtitle {
+				font-size: 18px;
+			}
+
+			&__container-title {
+				gap: 32px;
+			}
+		}
+
+		.form-request {
+			gap: 20px;
+			&__textarea {
+				width: 358px;
+				height: 220px;
+				padding: 22px;
+			}
+
+			&__inputs {
+				min-width: 358px;
+			}
+			&__container-textarea {
+				position: relative;
+			}
+		}
+
+		.recaptcha {
+			position: absolute;
+			bottom: 10px;
+		}
+	}
 }

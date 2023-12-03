@@ -71,3 +71,34 @@
 		}
 	}
 }
+
+@media screen and (max-width: 450px) {
+	.about-project {
+		gap: 50px;
+
+		&__container-about {
+			gap: 24px;
+			max-width: 358px;
+		}
+		&__title {
+			font-size: 28px;
+		}
+		&__description {
+			font-size: 18px;
+		}
+		&__container {
+			max-width: 358px;
+			margin: 0 auto;
+		}
+	}
+
+	.our-values {
+		&__cards {
+			flex-wrap: nowrap;
+			overflow: hidden;
+		}
+		&__title {
+			font-size: 28px;
+		}
+	}
+}

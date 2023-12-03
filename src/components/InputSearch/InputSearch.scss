@@ -54,4 +54,8 @@
 			width: calc(80px + (400 - 80) * (100vw - 1366px) / (1920 - 1366));
 		}
 	}
+
+	@media screen and (max-width: 450px) {
+		display: none;
+	}
 }

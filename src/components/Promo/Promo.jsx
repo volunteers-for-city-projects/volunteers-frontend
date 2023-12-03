@@ -30,7 +30,7 @@ function Promo({ plarformPromo }) {
 						/>
 						<Pushbutton
 							label="Стать волонтёром"
-							backgroundColor="transparent"
+							backgroundColor="#FFF"
 							size="pre-large-var"
 							border="1px solid #A6C94F"
 							color="#3F3F3F"
