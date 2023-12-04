@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -547,6 +547,27 @@ export default function Project() {
 			JSON.stringify({ ...currentDraft, [name]: selectedItems })
 		);
 	};
+
+	// Валидация при загрузке проекта, если он был сохранен как черновик
+	useEffect(() => {
+		if (location.pathname !== '/profile/organizer/create-project') {
+			formik.setFieldTouched('name');
+			formik.setFieldTouched('description');
+			formik.setFieldTouched('image');
+			formik.setFieldTouched('goal');
+			formik.setFieldTouched('events');
+			formik.setFieldTouched('tasks');
+			formik.setFieldTouched('provide');
+			formik.setFieldTouched('city');
+			formik.setFieldTouched('address');
+			formik.setFieldTouched('date');
+			formik.setFieldTouched('timeRange');
+			formik.setFieldTouched('submissionDate');
+			formik.setFieldTouched('categoryProject');
+			formik.setFieldTouched('skills');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<section className="project">
