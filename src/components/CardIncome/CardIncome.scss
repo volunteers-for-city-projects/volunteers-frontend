@@ -72,6 +72,9 @@
 		> .card-income__photo {
 			grid-row: 2/5;
 		}
+		> .card-income__button_about {
+			align-self: end;
+		}
 	}
 	&_layout_modal {
 		grid-template-columns: 1fr 2fr;
