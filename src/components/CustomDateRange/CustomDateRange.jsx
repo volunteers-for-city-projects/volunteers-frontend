@@ -2,10 +2,11 @@ import './CustomDateRange.scss';
 import DatePicker, { registerLocale } from 'react-datepicker';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ru } from 'date-fns/locale';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import styled from 'styled-components';
+import moment from 'moment';
 
 export default function CustomDateRange({
 	name,
@@ -15,17 +16,21 @@ export default function CustomDateRange({
 	required,
 	helperText,
 	handleChange,
-	value,
+	dateValue,
 	...props
 }) {
 	registerLocale('ru', ru);
 	const [dateRange, setDateRange] = useState([null, null]);
 	const [startDate, endDate] = dateRange;
 
-	// useEffect(() => {
-	// 	setDateRange(value);
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, []);
+	useEffect(() => {
+		if (dateValue?.length > 0) {
+			const sDate = moment(dateValue[0], 'DD.MM.YYYY').toDate();
+			const eDate = moment(dateValue[1], 'DD.MM.YYYY').toDate();
+			setDateRange([sDate, eDate]);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className="custom-daterange-input">
@@ -43,12 +48,12 @@ export default function CustomDateRange({
 					dateFormat="dd.MM.yyyy"
 					name={name}
 					selectsRange
+					selected={startDate}
 					isClearable
 					type="text"
 					placeholderText={placeholder}
 					startDate={startDate}
 					endDate={endDate}
-					value={value}
 					required={required}
 					autoComplete="off"
 					onChange={(v) => {
@@ -92,7 +97,7 @@ CustomDateRange.propTypes = {
 	required: PropTypes.bool,
 	helperText: PropTypes.string,
 	handleChange: PropTypes.func,
-	value: PropTypes.string,
+	dateValue: PropTypes.arrayOf(PropTypes.string),
 };
 
 CustomDateRange.defaultProps = {
@@ -102,5 +107,5 @@ CustomDateRange.defaultProps = {
 	error: false,
 	helperText: '',
 	handleChange: () => {},
-	value: '',
+	dateValue: [],
 };

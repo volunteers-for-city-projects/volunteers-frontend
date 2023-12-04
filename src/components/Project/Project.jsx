@@ -712,7 +712,7 @@ export default function Project() {
 								placeholder="01.02.2023 - 12.10.2023"
 								error={formik.touched.date && Boolean(formik.errors.date)}
 								helperText={formik.touched.date && formik.errors.date}
-								value={formik.values.date}
+								dateValue={dateRangeParser(formik.values.date)}
 								handleChange={formik.handleChange}
 								onBlur={(e) => {
 									formik.handleBlur(e);
@@ -745,7 +745,7 @@ export default function Project() {
 								helperText={
 									formik.touched.submissionDate && formik.errors.submissionDate
 								}
-								value={formik.values.submissionDate}
+								dateValue={dateRangeParser(formik.values.submissionDate)}
 								handleChange={formik.handleChange}
 								onBlur={(e) => {
 									formik.handleBlur(e);
