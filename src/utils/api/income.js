@@ -3,7 +3,10 @@ import request from './request';
 const ENDPOINT = 'incomes/';
 const token = () => localStorage.getItem('token');
 
-export const getIncomes = () => request(ENDPOINT, 'GET', '', token());
+export const getIncomes = (projectId = 0) => {
+	const url = ENDPOINT + (projectId ? `?project_id=${projectId}` : '');
+	return request(url, 'GET', '', token());
+};
 export const postIncome = (data) => request(ENDPOINT, 'POST', data, token());
 export const getIncome = (id) =>
 	request(`${ENDPOINT}${id}/`, 'GET', '', token());
