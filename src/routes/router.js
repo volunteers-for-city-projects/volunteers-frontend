@@ -26,7 +26,6 @@ import Projects from '../components/Projects/Projects';
 import Incomes from '../components/Incomes/Incomes';
 import PageProject from '../components/PageProject/PageProject';
 import ProjectView from '../components/ProjectView/ProjectView';
-import Stub from '../components/Stub/Stub';
 
 import { getProjectById } from '../utils/api/organizer';
 
@@ -271,7 +270,7 @@ const router = createHashRouter([
 							},
 							{
 								path: 'edit-project/:IdProject',
-								element: <Stub text="Тут будет редактироваться проект" />,
+								element: <Project />,
 								handle: {
 									crumb: () => (
 										<Link
