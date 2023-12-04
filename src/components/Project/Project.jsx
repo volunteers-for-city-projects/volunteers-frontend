@@ -3,7 +3,12 @@ import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import {
+	useLocation,
+	useNavigate,
+	useOutletContext,
+	useParams,
+} from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
 import SelectOption from '../SelectOption/SelectOption';
@@ -14,31 +19,136 @@ import { Crumbs } from '../Crumbs/Crumbs';
 import CustomTextarea from '../CustomTextarea/CustomTextarea';
 import CustomDateRange from '../CustomDateRange/CustomDateRange';
 
-function Project() {
-	const { cities, skills, projectCategories, setModal, currentUser } =
-		useOutletContext();
-	const [image, setImage] = useState('');
+export default function Project() {
+	const {
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+		currentUser,
+		projectsMe,
+	} = useOutletContext();
+
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
+	const { IdProject } = useParams();
 	const nameRef = useRef(null);
+	const location = useLocation();
 
 	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
-	const projectValues = {
-		name: draftLocalstorage?.name || '',
-		description: draftLocalstorage?.description || '',
-		image: draftLocalstorage?.image || '',
-		goal: draftLocalstorage?.goal || '',
-		events: draftLocalstorage?.events || '',
-		tasks: draftLocalstorage?.tasks || '',
-		provide: draftLocalstorage?.provide || '',
-		city: draftLocalstorage?.city || null,
-		address: draftLocalstorage?.address || '',
-		date: draftLocalstorage?.date || '',
-		timeRange: draftLocalstorage?.timeRange || '',
-		submissionDate: draftLocalstorage?.submissionDate || '',
-		categoryProject: draftLocalstorage?.categoryProject || null,
-		skills: draftLocalstorage?.skills || null,
+
+	const currentProject = projectsMe.filter(
+		(item) => item.id === Number(IdProject)
+	)[0];
+
+	const selectOptionCity = (city) =>
+		cities
+			.filter((item) => item.label === `${city}`)
+			.map((item) => ({
+				label: item.label,
+				value: item.value,
+			}));
+
+	const selectOptionsSkills = (projectSkills) =>
+		projectSkills.map((item) => ({
+			label: item.name,
+			value: item.id,
+		}));
+
+	const selectOptionsCategory = (categories) =>
+		categories.map(
+			(item) =>
+				projectCategories.filter(
+					(category) => Number(category.value) === item
+				)[0]
+		);
+
+	const rangeDate = (startDateTime, endDateTime) => {
+		let result = null;
+		if (startDateTime !== null && endDateTime !== null) {
+			const startDate = startDateTime.split(' ')[0];
+			const endDate = endDateTime.split(' ')[0];
+			result = `${startDate} - ${endDate}`;
+		}
+		return result;
 	};
+
+	const rangeTime = (startDateTime, endDateTime) => {
+		let result = null;
+		if (startDateTime !== null && endDateTime !== null) {
+			const startTime = startDateTime.split(' ')[1];
+			const endTime = endDateTime.split(' ')[1];
+			result = `${startTime} - ${endTime}`;
+		}
+		return result;
+	};
+
+	// Преобразует указанное изображение в base64
+	// const toDataURL = (url) => fetch(url).then((response) => response.blob());
+	// .then(
+	// 	(blob) =>
+	// 		new Promise((resolve, reject) => {
+	// 			const a = Object.assign(new FileReader(), {
+	// 				onloadend: ({ target }) => resolve(target.result),
+	// 				onerror: ({ target }) => reject(target.error),
+	// 			}).readAsDataURL(blob);
+	// 			console.log(`+++++ ${a}`);
+	// 		})
+	// );
+
+	// toDataURL(currentProject?.picture)
+	// 	.then((data) => {
+	// 		console.log(data);
+	// 	})
+	// 	.catch((error) => console.error(error));
+
+	const project =
+		location.pathname === '/profile/organizer/create-project'
+			? {
+					name: draftLocalstorage?.name || '',
+					description: draftLocalstorage?.description || '',
+					image: draftLocalstorage?.image || '',
+					goal: draftLocalstorage?.goal || '',
+					events: draftLocalstorage?.events || '',
+					tasks: draftLocalstorage?.tasks || '',
+					provide: draftLocalstorage?.provide || '',
+					city: draftLocalstorage?.city || null,
+					address: draftLocalstorage?.address || '',
+					date: draftLocalstorage?.date || '',
+					timeRange: draftLocalstorage?.timeRange || '',
+					submissionDate: draftLocalstorage?.submissionDate || '',
+					categoryProject: draftLocalstorage?.categoryProject || null,
+					skills: draftLocalstorage?.skills || null,
+			  }
+			: {
+					name: currentProject?.name || '',
+					description: currentProject?.description || '',
+					image: currentProject?.picture || '',
+					goal: currentProject?.event_purpose || '',
+					events: currentProject?.project_events || '',
+					tasks: currentProject?.project_tasks || '',
+					provide: currentProject?.organizer_provides || '',
+					city: selectOptionCity(currentProject?.city) || null,
+					address: currentProject?.event_address?.address_line || '',
+					date:
+						rangeDate(
+							currentProject?.start_datetime,
+							currentProject?.end_datetime
+						) || '',
+					timeRange:
+						rangeTime(
+							currentProject?.start_datetime,
+							currentProject?.end_datetime
+						) || '',
+					submissionDate:
+						rangeDate(
+							currentProject?.start_date_application,
+							currentProject?.end_date_application
+						) || '',
+					categoryProject:
+						selectOptionsCategory(currentProject?.categories) || null,
+					skills: selectOptionsSkills(currentProject?.skills) || null,
+			  };
 
 	const validationSchema = Yup.object({
 		name: Yup.string()
@@ -246,7 +356,7 @@ function Project() {
 			await createProject({
 				name: values.name,
 				description: values.description,
-				picture: image,
+				picture: values.image,
 				start_datetime: startDatetime,
 				end_datetime: endDatetime,
 				start_date_application: startDateApplication,
@@ -299,7 +409,7 @@ function Project() {
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
-		initialValues: projectValues,
+		initialValues: project,
 		validationSchema,
 		onSubmit: handleSubmit,
 	});
@@ -325,7 +435,7 @@ function Project() {
 				await createProjectAsDraft({
 					name: values.name,
 					description: values.description || '',
-					picture: image || null,
+					picture: values.image || null,
 					start_datetime: startDatetime,
 					end_datetime: endDatetime,
 					start_date_application: startDateApplication,
@@ -389,7 +499,6 @@ function Project() {
 				reader.onload = function handleFileLoad() {
 					const base64Data = reader.result;
 					formik.setFieldValue('image', base64Data);
-					setImage(base64Data);
 				};
 				const dataUrl = reader.readAsDataURL(file);
 				console.log(dataUrl);
@@ -398,20 +507,6 @@ function Project() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (image) {
-	// 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
-	// 		localStorage.setItem(
-	// 			'draft',
-	// 			JSON.stringify({
-	// 				...currentDraft,
-	// 				image,
-	// 			})
-	// 		);
-	// 	}
-	// }, [image]);
-
-	//
 	const handleBlur = (e) => {
 		formik.handleBlur(e);
 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
@@ -484,7 +579,11 @@ function Project() {
 						<img
 							className="project__image"
 							alt="Изображение проекта"
-							src={image.length > 0 ? image : projectImage}
+							src={
+								formik.values.image.length > 0
+									? formik.values.image
+									: projectImage
+							}
 						/>
 						<span className="error-message">
 							{isFocused &&
@@ -504,7 +603,6 @@ function Project() {
 							accept="image/png, image/jpeg"
 							onChange={handleImageChange}
 							onClick={() => setIsFocused(true)}
-							required
 						/>
 					</div>
 				</div>
@@ -729,5 +827,3 @@ function Project() {
 		</section>
 	);
 }
-
-export default Project;

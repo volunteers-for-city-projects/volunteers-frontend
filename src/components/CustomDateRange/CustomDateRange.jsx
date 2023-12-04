@@ -22,6 +22,11 @@ export default function CustomDateRange({
 	const [dateRange, setDateRange] = useState([null, null]);
 	const [startDate, endDate] = dateRange;
 
+	// useEffect(() => {
+	// 	setDateRange(value);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
+
 	return (
 		<div className="custom-daterange-input">
 			{label.length > 0 && (
@@ -43,6 +48,7 @@ export default function CustomDateRange({
 					placeholderText={placeholder}
 					startDate={startDate}
 					endDate={endDate}
+					value={value}
 					required={required}
 					autoComplete="off"
 					onChange={(v) => {
