@@ -1,6 +1,12 @@
 @import '../../style/variables.scss';
 .card-income {
 	display: grid;
+	grid-template-columns: 6fr 7fr;
+	grid-template-rows: auto 48px auto auto;
+
+	&__title {
+		margin: 10px 0 0;
+	}
 	&__button {
 		height: 48px;
 		align-self: flex-end;
@@ -20,6 +26,9 @@
 		border: none;
 		justify-self: end;
 		cursor: pointer;
+	}
+	&__button_about {
+		align-self: start;
 	}
 	&__photo {
 		justify-self: center;
@@ -43,9 +52,7 @@
 		flex-wrap: wrap;
 	}
 
-	&_layout_default {
-		grid-template-columns: 6fr 7fr;
-		grid-template-rows: repeat(4, auto);
+	&_layout_default {		
 		row-gap: 10px;
 		column-gap: 20px;
 		> .card-income__title {
@@ -56,9 +63,7 @@
 			width: 100%;
 		}
 	}
-	&_layout_accepted {
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: repeat(4, auto);
+	&_layout_accepted {		
 		row-gap: 20px;
 		column-gap: 28px;
 		> .card-income__title {
@@ -86,26 +91,3 @@
 		}
 	}
 }
-/*
-@media screen and (max-width: 1919px) {
-	.card-income {
-		&_layout_default {			
-			grid-template-columns: 5fr 8fr 13fr;
-			grid-template-rows: repeat(4, auto);
-			> .card-income__title {
-				grid-column: 1/4;
-			}
-			> .card-income__button_about {
-				grid-row: 5/6;
-				grid-column: 1/3;
-			}
-			> .card-income__buttons{				
-				grid-row: 2/6;
-				grid-column: 3/4;
-				flex-direction: column;
-				justify-content: end;
-			}
-		}		
-	}
-}
-*/

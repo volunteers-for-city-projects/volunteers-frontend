@@ -179,7 +179,7 @@ const router = createHashRouter([
 						handle: {
 							crumb: (match) => (
 								<Link to={match.path} className="router__link">
-									Участники
+									Участники проекта
 								</Link>
 							),
 						},

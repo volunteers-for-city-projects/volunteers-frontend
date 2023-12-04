@@ -125,7 +125,11 @@ function Incomes({ status }) {
 		case STATUS_ACCEPTED:
 			title = 'Участников проекта';
 			button = (
-				<Button size="m" onClick={() => navigate(`${parentUrl}/incomes`)}>
+				<Button
+					size="m"
+					onClick={() => navigate(`${parentUrl}/incomes`)}
+					className={bem('#__button')}
+				>
 					Заявки участников
 				</Button>
 			);
@@ -133,7 +137,11 @@ function Incomes({ status }) {
 		case STATUS_SUBBMITED:
 			title = 'Заявок подано';
 			button = (
-				<Button size="m" onClick={() => navigate(`${parentUrl}/participants`)}>
+				<Button
+					size="m"
+					onClick={() => navigate(`${parentUrl}/participants`)}
+					className={bem('#__button')}
+				>
 					Участники проекта
 				</Button>
 			);

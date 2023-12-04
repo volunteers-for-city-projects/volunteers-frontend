@@ -136,8 +136,10 @@ class ProjectIncome extends AbstractEntity {
 	 * Load list from API
 	 * @returns {Promise<ProjectIncome[]>}
 	 */
-	static load() {
-		return getIncomes().then((data) => super.createListByData(data.results));
+	static load(projectId = 0) {
+		return getIncomes(projectId).then((data) =>
+			super.createListByData(data.results)
+		);
 	}
 
 	static createNew(incomeData, userId, projectId) {
