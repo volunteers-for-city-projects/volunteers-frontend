@@ -52,7 +52,7 @@
 		flex-wrap: wrap;
 	}
 
-	&_layout_default {		
+	&_layout_default {
 		row-gap: 10px;
 		column-gap: 20px;
 		> .card-income__title {
@@ -63,7 +63,7 @@
 			width: 100%;
 		}
 	}
-	&_layout_accepted {		
+	&_layout_accepted {
 		row-gap: 20px;
 		column-gap: 28px;
 		> .card-income__title {

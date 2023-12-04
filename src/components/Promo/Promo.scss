@@ -119,8 +119,11 @@
 			margin: 50px 8px 0;
 			gap: 0;
 			border-radius: 10px;
-            background: linear-gradient(267deg, #FFF 31.05%, rgba(255, 255, 255, 0.00) 98.09%);
-
+			background: linear-gradient(
+				267deg,
+				#fff 31.05%,
+				rgba(255, 255, 255, 0) 98.09%
+			);
 		}
 		&__item-title {
 			font-size: 36px;
