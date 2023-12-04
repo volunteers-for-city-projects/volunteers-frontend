@@ -4,7 +4,7 @@
 	margin: 50px auto;
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+	gap: 20px;
 	@media screen and (max-width: 1366px) {
 		margin: 26.5px auto 24px;
 		gap: 20px;
@@ -54,7 +54,7 @@
 
 	&__container-name-place-date {
 		display: grid;
-		row-gap: 32px;
+		row-gap: 12px;
 		grid-template-columns: 1fr 920px;
 		position: relative;
 		@media screen and (max-width: 1919px) {

@@ -1,4 +1,9 @@
-import { Outlet, useLoaderData, useOutletContext } from 'react-router-dom';
+import {
+	Outlet,
+	useLoaderData,
+	useLocation,
+	useOutletContext,
+} from 'react-router-dom';
 import { Crumbs } from '../Crumbs/Crumbs';
 import '../Crumbs/Crumbs.scss';
 import './PageProject.scss';
@@ -13,6 +18,8 @@ function PageProject() {
 	const context = useOutletContext();
 	const { currentUser, isLoggedIn } = context;
 	const { role, id } = currentUser;
+	const location = useLocation();
+	const isProjectPage = location.pathname.split('/').length === 3;
 
 	const infoProject = [
 		{ id: 1, text: `г. ${project.city}` },
@@ -39,13 +46,16 @@ function PageProject() {
 			<div className="page-project__container-crumbs">
 				<Crumbs />
 				<div className="page-project__container-icons">
-					<button
-						className="page-project__btn page-project__btn_type_share"
-						type="button"
-					>
-						{' '}
-					</button>
-					{isLoggedIn && (
+					{isProjectPage && (
+						<button
+							className="page-project__btn page-project__btn_type_share"
+							type="button"
+						>
+							{' '}
+						</button>
+					)}
+
+					{isLoggedIn && isProjectPage && (
 						<ProjectLikeButton
 							parent="page-project"
 							projectId={project.id}
@@ -59,7 +69,8 @@ function PageProject() {
 					{`«${project.name.trim()}»`}
 					{isLoggedIn &&
 						role === 'organizer' &&
-						id === project.organization && (
+						id === project.organization &&
+						isProjectPage && (
 							<ProjectEditButton parent="page-project" projectId={project.id} />
 						)}
 				</h2>
