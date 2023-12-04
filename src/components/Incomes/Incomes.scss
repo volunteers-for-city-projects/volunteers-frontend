@@ -27,6 +27,7 @@
 		font-size: 34px;
 		font-weight: 400;
 		line-height: 130%;
+		margin: 0;
 	}
 	&__incomes {
 		display: grid;
@@ -49,6 +50,7 @@
 		&__incomes {
 			grid-template-columns: repeat(2, 1fr);
 			gap: 22px;
+			max-width: 1180px;
 		}
 	}
 }
