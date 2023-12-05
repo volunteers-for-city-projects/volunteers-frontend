@@ -2,10 +2,13 @@
 .card-income {
 	display: grid;
 	grid-template-columns: 6fr 7fr;
-	grid-template-rows: auto 48px auto auto;
-
+	grid-template-rows: auto 48px auto auto;	
 	&__title {
 		margin: 10px 0 0;
+	}
+	&__letter{
+		max-width: 100%;		
+		word-break: break-all;
 	}
 	&__button {
 		height: 48px;
@@ -71,6 +74,9 @@
 		}
 		> .card-income__photo {
 			grid-row: 2/5;
+		}
+		> .card-income__button_about {
+			align-self: end;
 		}
 	}
 	&_layout_modal {
