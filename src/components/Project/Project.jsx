@@ -14,7 +14,11 @@ import CustomInput from '../CustomInput/CustomInput';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { createProject, createProjectAsDraft } from '../../utils/api/organizer';
+import {
+	createProject,
+	createProjectAsDraft,
+	editProject,
+} from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
 import CustomTextarea from '../CustomTextarea/CustomTextarea';
 import CustomDateRange from '../CustomDateRange/CustomDateRange';
@@ -25,6 +29,7 @@ export default function Project() {
 		skills,
 		projectCategories,
 		setModal,
+		setIsLoading,
 		currentUser,
 		projectsMe,
 	} = useOutletContext();
@@ -34,6 +39,8 @@ export default function Project() {
 	const { IdProject } = useParams();
 	const nameRef = useRef(null);
 	const location = useLocation();
+
+	const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
 
@@ -82,25 +89,6 @@ export default function Project() {
 		}
 		return result;
 	};
-
-	// Преобразует указанное изображение в base64
-	// const toDataURL = (url) => fetch(url).then((response) => response.blob());
-	// .then(
-	// 	(blob) =>
-	// 		new Promise((resolve, reject) => {
-	// 			const a = Object.assign(new FileReader(), {
-	// 				onloadend: ({ target }) => resolve(target.result),
-	// 				onerror: ({ target }) => reject(target.error),
-	// 			}).readAsDataURL(blob);
-	// 			console.log(`+++++ ${a}`);
-	// 		})
-	// );
-
-	// toDataURL(currentProject?.picture)
-	// 	.then((data) => {
-	// 		console.log(data);
-	// 	})
-	// 	.catch((error) => console.error(error));
 
 	const project =
 		location.pathname === '/profile/organizer/create-project'
@@ -341,6 +329,21 @@ export default function Project() {
 		};
 	};
 
+	// Преобразует указанное изображение в base64
+	const toDataURL = (url) =>
+		fetch(url)
+			.then((response) => response.blob())
+			.then(
+				(blob) =>
+					new Promise((resolve, reject) => {
+						Object.assign(new FileReader(), {
+							onloadend: ({ target }) => resolve(target.result),
+							onerror: ({ target }) => reject(target.error),
+						}).readAsDataURL(blob);
+					})
+			)
+			.then((data) => data);
+
 	const handleSubmit = async (values) => {
 		try {
 			const {
@@ -353,30 +356,66 @@ export default function Project() {
 				values.timeRange,
 				values.submissionDate
 			);
-			await createProject({
-				name: values.name,
-				description: values.description,
-				picture: values.image,
-				start_datetime: startDatetime,
-				end_datetime: endDatetime,
-				start_date_application: startDateApplication,
-				end_date_application: endDateApplication,
-				event_purpose: values.goal,
-				event_address: {
-					address_line: values.address,
-					street: 'Улица',
-					house: 'Дом',
-					block: '',
-					building: '',
-				},
-				project_tasks: values.tasks,
-				project_events: values.events,
-				organizer_provides: values.provide,
-				organization: currentUser.id,
-				city: values.city[0].value,
-				categories: values.categoryProject.map((options) => options.value),
-				skills: values.skills.map((options) => options.value),
-			});
+			console.info(typeof setIsLoading);
+			if (currentProject === undefined) {
+				await createProject({
+					name: values.name,
+					description: values.description,
+					picture: values.image,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal,
+					event_address: {
+						address_line: values.address,
+						street: 'Улица',
+						house: 'Дом',
+						block: '',
+						building: '',
+					},
+					project_tasks: values.tasks,
+					project_events: values.events,
+					organizer_provides: values.provide,
+					organization: currentUser.id,
+					city: values.city[0].value,
+					categories: values.categoryProject.map((options) => options.value),
+					skills: values.skills.map((options) => options.value),
+				});
+			} else {
+				let base64Image;
+				if (!values.image.startsWith('data:image')) {
+					base64Image = await toDataURL(`${proxyUrl}${values.image}`);
+				} else {
+					base64Image = values.image;
+				}
+
+				await editProject(currentProject.id, {
+					name: values.name,
+					description: values.description,
+					picture: base64Image,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal,
+					event_address: {
+						address_line: values.address,
+						street: 'Улица',
+						house: 'Дом',
+						block: '',
+						building: '',
+					},
+					project_tasks: values.tasks,
+					project_events: values.events,
+					organizer_provides: values.provide,
+					organization: currentUser.id,
+					city: values.city[0].value,
+					categories: values.categoryProject.map((options) => options.value),
+					skills: values.skills.map((options) => options.value),
+				});
+			}
+
 			setModal({
 				isOpen: true,
 				title: 'Проект отправлен на модерацию',
@@ -403,6 +442,8 @@ export default function Project() {
 			} else {
 				console.error(error);
 			}
+		} finally {
+			// setIsLoading(false);
 		}
 	};
 
