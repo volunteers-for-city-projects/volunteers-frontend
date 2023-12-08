@@ -55,6 +55,11 @@ const createProjectAsDraft = (value) => {
 	return request(ENDPOINT_ORGANIZER_PROJECTS_DRAFT, 'POST', value, token);
 };
 
+const editProject = (id, payload) => {
+	const token = localStorage.getItem('token');
+	return request(`${ENDPOINT_ORGANIZER_PROJECTS}${id}/`, 'PUT', payload, token);
+};
+
 export {
 	getProjectCategories,
 	createProjectAsDraft,
@@ -63,4 +68,5 @@ export {
 	getAllProjects,
 	getProjectsMe,
 	getNextPrevProjectsMe,
+	editProject,
 };
