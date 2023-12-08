@@ -14,6 +14,7 @@ import { getNews, getPlatformAbout } from '../../utils/api/main-page';
 import { getSkills, getCities } from '../../utils/api/signupApi';
 import { getProjectCategories } from '../../utils/api/organizer';
 import PopupWindow from '../PopupWindow/PopupWindow';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -61,6 +62,7 @@ function App() {
 
 	useEffect(() => {
 		if (isLoggedIn) {
+			setIsLoading(true);
 			getUserInformation()
 				.then((user) => {
 					setIsLoggedIn(true);
@@ -110,11 +112,15 @@ function App() {
 					setIsLoggedIn(false);
 					localStorage.removeItem('token');
 					console.error(err);
+				})
+				.finally(() => {
+					setIsLoading(false);
 				});
 		}
 	}, [isLoggedIn]);
 
 	useEffect(() => {
+		setIsLoading(true);
 		Promise.all([getNews(), getPlatformAbout()])
 			.then(([dataNews, dataPlatformAbout]) => {
 				setNews(dataNews.results);
@@ -129,10 +135,14 @@ function App() {
 				setPlatformEmail(email);
 				setPlatformPromo({ projectCount, volunteersCount, organizersCount });
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => console.error(err))
+			.finally(() => {
+				setIsLoading(false);
+			});
 	}, []);
 
 	useEffect(() => {
+		setIsLoading(true);
 		Promise.all([getSkills(), getCities(), getProjectCategories()])
 			.then(([skillsResponse, citiesResponse, projectCategoriesResponse]) => {
 				const skillsArray = skillsResponse.map((item) => ({
@@ -156,6 +166,9 @@ function App() {
 			})
 			.catch((err) => {
 				console.log(`Ошибка: ${err}`);
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
 	}, []);
 
@@ -258,6 +271,7 @@ function App() {
 					/>,
 					document.querySelector('.modal__container')
 				)}
+			{isLoading && <Preloader />}
 		</>
 	);
 }
