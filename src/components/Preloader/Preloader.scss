@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 @keyframes preloader-inside-white {
 	0% {
 		-webkit-transform: scale(0, 0);
@@ -66,7 +68,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		background: #2be080;
+		background: $--Tertiary;
 		border-radius: 50px;
 		&::after,
 		&::before {
@@ -84,7 +86,7 @@
 		}
 		&::before {
 			z-index: 0;
-			background: #2be080;
+			background: $--Tertiary;
 			animation: preloader-inside-red 1s ease-in-out infinite;
 		}
 	}
