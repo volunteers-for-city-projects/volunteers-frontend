@@ -11,7 +11,7 @@ import {
 } from '../../utils/constants';
 
 function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 	const { isLoggedIn, currentUser } = useOutletContext();
 
 	const {
