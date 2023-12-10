@@ -77,14 +77,20 @@ export default function VolunteerSignupForm({ onSubmit, ...restProps }) {
 
 					await createVolunteer({
 						user: {
-							first_name: values.firstname,
-							second_name: values.secondname,
-							last_name: values.lastname,
-							email: values.email,
+							first_name: `${values.firstname
+								?.charAt(0)
+								.toUpperCase()}${values.firstname?.slice(1).toLowerCase()}`,
+							second_name: `${values.secondname
+								?.charAt(0)
+								.toUpperCase()}${values.secondname?.slice(1).toLowerCase()}`,
+							last_name: `${values.lastname
+								?.charAt(0)
+								.toUpperCase()}${values.lastname?.slice(1).toLowerCase()}`,
+							email: values.email?.toLowerCase(),
 							password: values.password,
 							re_password: values.confirm_password,
 						},
-						telegram: values.telegram,
+						telegram: values.telegram.toLowerCase(),
 						photo: values.photo || '',
 						date_of_birth: formattedDateOfBirth,
 						phone:
