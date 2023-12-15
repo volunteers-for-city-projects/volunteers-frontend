@@ -1,6 +1,6 @@
 import errorFields from '../errorFields';
 
-export const BASE_URL = 'https://better-together.acceleratorpracticum.ru/api';
+export const BASE_URL = 'https://2260993-dk30711.twc1.net/api';
 
 const parseErrors = (obj) => {
 	const errorArray = [];
