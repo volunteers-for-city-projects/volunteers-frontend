@@ -2,12 +2,12 @@
 .card-income {
 	display: grid;
 	grid-template-columns: 6fr 7fr;
-	grid-template-rows: auto 48px auto auto;	
+	grid-template-rows: auto 48px auto auto;
 	&__title {
 		margin: 10px 0 0;
 	}
-	&__letter{
-		max-width: 100%;		
+	&__letter {
+		max-width: 100%;
 		word-break: break-all;
 	}
 	&__button {
@@ -55,7 +55,7 @@
 		flex-wrap: wrap;
 	}
 
-	&_layout_default {		
+	&_layout_default {
 		row-gap: 10px;
 		column-gap: 20px;
 		> .card-income__title {
@@ -66,7 +66,7 @@
 			width: 100%;
 		}
 	}
-	&_layout_accepted {		
+	&_layout_accepted {
 		row-gap: 20px;
 		column-gap: 28px;
 		> .card-income__title {
