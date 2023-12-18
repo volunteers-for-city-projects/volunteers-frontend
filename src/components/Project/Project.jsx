@@ -1,44 +1,142 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import {
+	useLocation,
+	useNavigate,
+	useOutletContext,
+	useParams,
+} from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
 import SelectOption from '../SelectOption/SelectOption';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
 import projectImage from '../../images/city.png';
-import { createProject, createProjectAsDraft } from '../../utils/api/organizer';
+import {
+	createProject,
+	createProjectAsDraft,
+	editProject,
+} from '../../utils/api/organizer';
 import { Crumbs } from '../Crumbs/Crumbs';
 import CustomTextarea from '../CustomTextarea/CustomTextarea';
 import CustomDateRange from '../CustomDateRange/CustomDateRange';
 
-function Project() {
-	const { cities, skills, projectCategories, setModal, currentUser } =
-		useOutletContext();
-	const [image, setImage] = useState('');
+export default function Project() {
+	const {
+		cities,
+		skills,
+		projectCategories,
+		setModal,
+		setIsLoading,
+		currentUser,
+		projectsMe,
+	} = useOutletContext();
+
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
+	const { IdProject } = useParams();
 	const nameRef = useRef(null);
+	const location = useLocation();
+
+	const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
-	const projectValues = {
-		name: draftLocalstorage?.name || '',
-		description: draftLocalstorage?.description || '',
-		image: draftLocalstorage?.image || '',
-		goal: draftLocalstorage?.goal || '',
-		events: draftLocalstorage?.events || '',
-		tasks: draftLocalstorage?.tasks || '',
-		provide: draftLocalstorage?.provide || '',
-		city: draftLocalstorage?.city || null,
-		address: draftLocalstorage?.address || '',
-		date: draftLocalstorage?.date || '',
-		timeRange: draftLocalstorage?.timeRange || '',
-		submissionDate: draftLocalstorage?.submissionDate || '',
-		categoryProject: draftLocalstorage?.categoryProject || null,
-		skills: draftLocalstorage?.skills || null,
+
+	const currentProject = projectsMe.filter(
+		(item) => item.id === Number(IdProject)
+	)[0];
+
+	const selectOptionCity = (city) =>
+		cities
+			.filter((item) => item.label === `${city}`)
+			.map((item) => ({
+				label: item.label,
+				value: item.value,
+			}));
+
+	const selectOptionsSkills = (projectSkills) =>
+		projectSkills.map((item) => ({
+			label: item.name,
+			value: item.id,
+		}));
+
+	const selectOptionsCategory = (categories) =>
+		categories.map(
+			(item) =>
+				projectCategories.filter(
+					(category) => Number(category.value) === item
+				)[0]
+		);
+
+	const rangeDate = (startDateTime, endDateTime) => {
+		let result = null;
+		if (startDateTime !== null && endDateTime !== null) {
+			const startDate = startDateTime.split(' ')[0];
+			const endDate = endDateTime.split(' ')[0];
+			result = `${startDate} - ${endDate}`;
+		}
+		return result;
 	};
+
+	const rangeTime = (startDateTime, endDateTime) => {
+		let result = null;
+		if (startDateTime !== null && endDateTime !== null) {
+			const startTime = startDateTime.split(' ')[1];
+			const endTime = endDateTime.split(' ')[1];
+			result = `${startTime} - ${endTime}`;
+		}
+		return result;
+	};
+
+	const project =
+		location.pathname === '/profile/organizer/create-project'
+			? {
+					name: draftLocalstorage?.name || '',
+					description: draftLocalstorage?.description || '',
+					image: draftLocalstorage?.image || '',
+					goal: draftLocalstorage?.goal || '',
+					events: draftLocalstorage?.events || '',
+					tasks: draftLocalstorage?.tasks || '',
+					provide: draftLocalstorage?.provide || '',
+					city: draftLocalstorage?.city || null,
+					address: draftLocalstorage?.address || '',
+					date: draftLocalstorage?.date || '',
+					timeRange: draftLocalstorage?.timeRange || '',
+					submissionDate: draftLocalstorage?.submissionDate || '',
+					categoryProject: draftLocalstorage?.categoryProject || null,
+					skills: draftLocalstorage?.skills || null,
+			  }
+			: {
+					name: currentProject?.name || '',
+					description: currentProject?.description || '',
+					image: currentProject?.picture || '',
+					goal: currentProject?.event_purpose || '',
+					events: currentProject?.project_events || '',
+					tasks: currentProject?.project_tasks || '',
+					provide: currentProject?.organizer_provides || '',
+					city: selectOptionCity(currentProject?.city) || null,
+					address: currentProject?.event_address?.address_line || '',
+					date:
+						rangeDate(
+							currentProject?.start_datetime,
+							currentProject?.end_datetime
+						) || '',
+					timeRange:
+						rangeTime(
+							currentProject?.start_datetime,
+							currentProject?.end_datetime
+						) || '',
+					submissionDate:
+						rangeDate(
+							currentProject?.start_date_application,
+							currentProject?.end_date_application
+						) || '',
+					categoryProject:
+						selectOptionsCategory(currentProject?.categories) || null,
+					skills: selectOptionsSkills(currentProject?.skills) || null,
+			  };
 
 	const validationSchema = Yup.object({
 		name: Yup.string()
@@ -231,6 +329,21 @@ function Project() {
 		};
 	};
 
+	// Преобразует указанное изображение в base64
+	const toDataURL = (url) =>
+		fetch(url)
+			.then((response) => response.blob())
+			.then(
+				(blob) =>
+					new Promise((resolve, reject) => {
+						Object.assign(new FileReader(), {
+							onloadend: ({ target }) => resolve(target.result),
+							onerror: ({ target }) => reject(target.error),
+						}).readAsDataURL(blob);
+					})
+			)
+			.then((data) => data);
+
 	const handleSubmit = async (values) => {
 		try {
 			const {
@@ -243,30 +356,66 @@ function Project() {
 				values.timeRange,
 				values.submissionDate
 			);
-			await createProject({
-				name: values.name,
-				description: values.description,
-				picture: image,
-				start_datetime: startDatetime,
-				end_datetime: endDatetime,
-				start_date_application: startDateApplication,
-				end_date_application: endDateApplication,
-				event_purpose: values.goal,
-				event_address: {
-					address_line: values.address,
-					street: 'Улица',
-					house: 'Дом',
-					block: '',
-					building: '',
-				},
-				project_tasks: values.tasks,
-				project_events: values.events,
-				organizer_provides: values.provide,
-				organization: currentUser.id,
-				city: values.city[0].value,
-				categories: values.categoryProject.map((options) => options.value),
-				skills: values.skills.map((options) => options.value),
-			});
+			console.info(typeof setIsLoading);
+			if (currentProject === undefined) {
+				await createProject({
+					name: values.name,
+					description: values.description,
+					picture: values.image,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal,
+					event_address: {
+						address_line: values.address,
+						street: 'Улица',
+						house: 'Дом',
+						block: '',
+						building: '',
+					},
+					project_tasks: values.tasks,
+					project_events: values.events,
+					organizer_provides: values.provide,
+					organization: currentUser.id,
+					city: values.city[0].value,
+					categories: values.categoryProject.map((options) => options.value),
+					skills: values.skills.map((options) => options.value),
+				});
+			} else {
+				let base64Image;
+				if (!values.image.startsWith('data:image')) {
+					base64Image = await toDataURL(`${proxyUrl}${values.image}`);
+				} else {
+					base64Image = values.image;
+				}
+
+				await editProject(currentProject.id, {
+					name: values.name,
+					description: values.description,
+					picture: base64Image,
+					start_datetime: startDatetime,
+					end_datetime: endDatetime,
+					start_date_application: startDateApplication,
+					end_date_application: endDateApplication,
+					event_purpose: values.goal,
+					event_address: {
+						address_line: values.address,
+						street: 'Улица',
+						house: 'Дом',
+						block: '',
+						building: '',
+					},
+					project_tasks: values.tasks,
+					project_events: values.events,
+					organizer_provides: values.provide,
+					organization: currentUser.id,
+					city: values.city[0].value,
+					categories: values.categoryProject.map((options) => options.value),
+					skills: values.skills.map((options) => options.value),
+				});
+			}
+
 			setModal({
 				isOpen: true,
 				title: 'Проект отправлен на модерацию',
@@ -293,13 +442,15 @@ function Project() {
 			} else {
 				console.error(error);
 			}
+		} finally {
+			// setIsLoading(false);
 		}
 	};
 
 	const formik = useFormik({
 		validateOnMount: true,
 		validateOnChange: true,
-		initialValues: projectValues,
+		initialValues: project,
 		validationSchema,
 		onSubmit: handleSubmit,
 	});
@@ -325,7 +476,7 @@ function Project() {
 				await createProjectAsDraft({
 					name: values.name,
 					description: values.description || '',
-					picture: image || null,
+					picture: values.image || null,
 					start_datetime: startDatetime,
 					end_datetime: endDatetime,
 					start_date_application: startDateApplication,
@@ -389,7 +540,6 @@ function Project() {
 				reader.onload = function handleFileLoad() {
 					const base64Data = reader.result;
 					formik.setFieldValue('image', base64Data);
-					setImage(base64Data);
 				};
 				const dataUrl = reader.readAsDataURL(file);
 				console.log(dataUrl);
@@ -398,20 +548,6 @@ function Project() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (image) {
-	// 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
-	// 		localStorage.setItem(
-	// 			'draft',
-	// 			JSON.stringify({
-	// 				...currentDraft,
-	// 				image,
-	// 			})
-	// 		);
-	// 	}
-	// }, [image]);
-
-	//
 	const handleBlur = (e) => {
 		formik.handleBlur(e);
 		const currentDraft = JSON.parse(localStorage.getItem('draft')) || [];
@@ -453,6 +589,27 @@ function Project() {
 		);
 	};
 
+	// Валидация при загрузке проекта, если он был сохранен как черновик
+	useEffect(() => {
+		if (location.pathname !== '/profile/organizer/create-project') {
+			formik.setFieldTouched('name');
+			formik.setFieldTouched('description');
+			formik.setFieldTouched('image');
+			formik.setFieldTouched('goal');
+			formik.setFieldTouched('events');
+			formik.setFieldTouched('tasks');
+			formik.setFieldTouched('provide');
+			formik.setFieldTouched('city');
+			formik.setFieldTouched('address');
+			formik.setFieldTouched('date');
+			formik.setFieldTouched('timeRange');
+			formik.setFieldTouched('submissionDate');
+			formik.setFieldTouched('categoryProject');
+			formik.setFieldTouched('skills');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<section className="project">
 			<div className="project__menu-container">
@@ -484,7 +641,11 @@ function Project() {
 						<img
 							className="project__image"
 							alt="Изображение проекта"
-							src={image.length > 0 ? image : projectImage}
+							src={
+								formik.values.image.length > 0
+									? formik.values.image
+									: projectImage
+							}
 						/>
 						<span className="error-message">
 							{isFocused &&
@@ -504,7 +665,6 @@ function Project() {
 							accept="image/png, image/jpeg"
 							onChange={handleImageChange}
 							onClick={() => setIsFocused(true)}
-							required
 						/>
 					</div>
 				</div>
@@ -614,7 +774,7 @@ function Project() {
 								placeholder="01.02.2023 - 12.10.2023"
 								error={formik.touched.date && Boolean(formik.errors.date)}
 								helperText={formik.touched.date && formik.errors.date}
-								value={formik.values.date}
+								dateValue={dateRangeParser(formik.values.date)}
 								handleChange={formik.handleChange}
 								onBlur={(e) => {
 									formik.handleBlur(e);
@@ -647,7 +807,7 @@ function Project() {
 								helperText={
 									formik.touched.submissionDate && formik.errors.submissionDate
 								}
-								value={formik.values.submissionDate}
+								dateValue={dateRangeParser(formik.values.submissionDate)}
 								handleChange={formik.handleChange}
 								onBlur={(e) => {
 									formik.handleBlur(e);
@@ -729,5 +889,3 @@ function Project() {
 		</section>
 	);
 }
-
-export default Project;

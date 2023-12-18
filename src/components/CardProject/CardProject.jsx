@@ -39,12 +39,17 @@ function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
 		(statusApprove === EDITING || statusApprove === REJECTED);
 
 	function handleProject(evt) {
-		if (!/edit|like|delete/.test(evt.target.className))
+		// if (!/edit|like|delete/.test(evt.target.className))
+		if (evt.target.className !== 'card__status-button-edit')
 			navigate(`/projects/${cardProject.id}`);
 	}
 
 	function handleClickDelete() {
 		onCardDelete(cardProject);
+	}
+
+	function handleEditClick() {
+		navigate(`edit-project/${cardProject.id}`);
 	}
 
 	return (
@@ -81,7 +86,13 @@ function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
 							)}
 
 							{pageProfileOrg && editFlag ? (
-								<button className="card__status-btn"> </button>
+								<button
+									className="card__status-button-edit"
+									onClick={handleEditClick}
+									type="button"
+								>
+									{' '}
+								</button>
 							) : (
 								''
 							)}
