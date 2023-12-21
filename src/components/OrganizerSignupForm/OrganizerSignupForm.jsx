@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 
 import './OrganizerSignupForm.scss';
 
 import { useOutletContext } from 'react-router-dom';
-import clsx from 'clsx';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import clsx from 'clsx';
+// import ReCAPTCHA from 'react-google-recaptcha';
 
 import { InputMask } from '@react-input/mask';
 import { phoneMask } from '../../utils/inputsMasks/phoneMask';
@@ -29,22 +29,22 @@ import CheckboxConfirm from '../CheckboxConfirm/CheckboxConfirm';
 export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
-	const apiKey = process.env.REACT_APP_SECRET_KEY_RECAPTCHA;
-	const [isReCaptchaChecked, setIsReCaptchaChecked] = useState(false);
-	const [isReCaptchaOpen, setIsReCaptchaOpen] = useState(false);
-	const recaptchaRef = useRef(null);
+	// const apiKey = process.env.REACT_APP_SECRET_KEY_RECAPTCHA;
+	// const [isReCaptchaChecked, setIsReCaptchaChecked] = useState(false);
+	// const [isReCaptchaOpen, setIsReCaptchaOpen] = useState(false);
+	// const recaptchaRef = useRef(null);
 
 	const { setModal, cities } = useOutletContext();
 
-	const handleResetRecaptcha = () => {
-		if (recaptchaRef.current) {
-			recaptchaRef.current.reset();
-		}
-	};
+	// const handleResetRecaptcha = () => {
+	// 	if (recaptchaRef.current) {
+	// 		recaptchaRef.current.reset();
+	// 	}
+	// };
 
-	const handleReCaptchaClick = () => {
-		setIsReCaptchaChecked(true);
-	};
+	// const handleReCaptchaClick = () => {
+	// 	setIsReCaptchaChecked(true);
+	// };
 
 	const formik = useFormik({
 		validateOnMount: true,
@@ -65,58 +65,58 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 		validationSchema: OrganizerSignupFormSchema,
 		onSubmit: async (values) => {
 			try {
-				if (isReCaptchaChecked) {
-					// функция для конверсии номера телефона из инпута в формат телефона на сервере
-					const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
-					let formattedPhone = getDigitsOnly(values.organize_phone);
-					if (formattedPhone.startsWith('8')) {
-						formattedPhone = `7${formattedPhone.slice(1)}`;
-					}
-
-					await createOrganization({
-						contact_person: {
-							email: values.organize_email,
-							first_name: values.organize_firstname,
-							last_name: values.organize_lastname,
-							password: values.organize_password,
-							second_name: values.organize_secondname,
-						},
-						title: values.organization
-							.replace(/^"/g, '«')
-							.replace(/ "/g, ' «')
-							.replace(/" /g, '» ')
-							.replace(/"$/, '»')
-							.replace(/"/, '«'),
-						ogrn: values.organize_ogrn.replace(/-/g, ''),
-						phone:
-							(formattedPhone.length > 1 && `+${formattedPhone}`) ||
-							formattedPhone,
-						about: values.about_organization || '' || undefined,
-						city: values.organize_city[0].value,
-						photo: values.photo || '',
-					});
-
-					setModal({
-						isOpen: true,
-						type: 'email',
-						state: 'info',
-						title: 'Подтверждение E-mail',
-						emailprop: values.organize_email,
-						onSubmit: (event) => {
-							event.preventDefault();
-							resendActivateUser({ email: values.email }).catch((err) =>
-								console.error(err)
-							);
-						},
-					});
-
-					handleResetRecaptcha();
-					setIsReCaptchaChecked(false);
-					setIsCheckboxChecked(false);
-					setIsReCaptchaOpen(false);
-				} else {
-					setIsReCaptchaOpen(true);
+				// if (isReCaptchaChecked) {
+				// функция для конверсии номера телефона из инпута в формат телефона на сервере
+				const getDigitsOnly = (phoneNumber) => phoneNumber.replace(/\D/g, '');
+				let formattedPhone = getDigitsOnly(values.organize_phone);
+				if (formattedPhone.startsWith('8')) {
+					formattedPhone = `7${formattedPhone.slice(1)}`;
 				}
+
+				await createOrganization({
+					contact_person: {
+						email: values.organize_email,
+						first_name: values.organize_firstname,
+						last_name: values.organize_lastname,
+						password: values.organize_password,
+						second_name: values.organize_secondname,
+					},
+					title: values.organization
+						.replace(/^"/g, '«')
+						.replace(/ "/g, ' «')
+						.replace(/" /g, '» ')
+						.replace(/"$/, '»')
+						.replace(/"/, '«'),
+					ogrn: values.organize_ogrn.replace(/-/g, ''),
+					phone:
+						(formattedPhone.length > 1 && `+${formattedPhone}`) ||
+						formattedPhone,
+					about: values.about_organization || '' || undefined,
+					city: values.organize_city[0].value,
+					photo: values.photo || '',
+				});
+
+				setModal({
+					isOpen: true,
+					type: 'email',
+					state: 'info',
+					title: 'Подтверждение E-mail',
+					emailprop: values.organize_email,
+					onSubmit: (event) => {
+						event.preventDefault();
+						resendActivateUser({ email: values.email }).catch((err) =>
+							console.error(err)
+						);
+					},
+				});
+
+				// handleResetRecaptcha();
+				// setIsReCaptchaChecked(false);
+				setIsCheckboxChecked(false);
+				// setIsReCaptchaOpen(false);
+				// } else {
+				// 	setIsReCaptchaOpen(true);
+				// }
 			} catch (error) {
 				if (Array.isArray(error)) {
 					setModal({
@@ -348,14 +348,14 @@ export default function OrganizerSignupForm({ onSubmit, ...restProps }) {
 					htmlFor="organizer-signup-form-checkbox"
 					checked={isCheckboxChecked}
 				/>
-				<ReCAPTCHA
+				{/* <ReCAPTCHA
 					sitekey={apiKey}
 					ref={recaptchaRef}
 					onChange={handleReCaptchaClick}
 					className={clsx('volunteer-signup-form__recaptcha', {
 						'volunteer-signup-form__recaptcha_active': isReCaptchaOpen,
 					})}
-				/>
+				/> */}
 			</div>
 		</form>
 	);
