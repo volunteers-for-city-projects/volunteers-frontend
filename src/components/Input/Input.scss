@@ -1,4 +1,5 @@
 @import '../../style/variables.scss';
+@import './ErrorMessage.scss';
 
 .label {
 	display: block;
@@ -134,69 +135,6 @@
 	}
 }
 
-.error-message {
-	display: block;
-
-	margin-top: 8px;
-	color: $--Wrong;
-	font: {
-		family: 'Fira Sans', sans-serif;
-		size: 20px;
-		weight: 400;
-		style: normal;
-	}
-	line-height: 23px; /* 115% */
-
-	word-wrap: break-word;
-
-	text-overflow: ellipsis;
-	white-space: pre-wrap;
-	// overflow: hidden;
-
-	&_type-mini {
-		width: 280px;
-		height: 14px;
-	}
-
-	&_type-small {
-		width: 400px;
-	}
-
-	&_type-medium {
-		width: 380px;
-		max-height: 16px;
-
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		// overflow: hidden;
-	}
-
-	&_type-large {
-		width: 540px;
-
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-
-	&_type-extra-large {
-		width: 760px;
-
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-
-	&_type-photo {
-		width: 280px;
-		height: 14px;
-
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-}
-
 @media screen and (max-width: 1919px) {
 	.label {
 		display: block;
@@ -329,69 +267,6 @@
 		}
 		&_empty {
 			display: none;
-		}
-	}
-
-	.error-message {
-		display: block;
-
-		margin-top: 8px;
-		color: $--Wrong;
-		font: {
-			family: 'Fira Sans', sans-serif;
-			size: 20px;
-			weight: 400;
-			style: normal;
-		}
-		line-height: 23px; /* 115% */
-
-		word-wrap: break-word;
-
-		text-overflow: ellipsis;
-		white-space: pre-wrap;
-		// overflow: hidden;
-
-		&_type-mini {
-			width: 280px;
-			height: 14px;
-		}
-
-		&_type-small {
-			width: 280px;
-		}
-
-		&_type-medium {
-			width: 380px;
-			max-height: 16px;
-
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			// overflow: hidden;
-		}
-
-		&_type-large {
-			width: 540px;
-
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
-		}
-
-		&_type-extra-large {
-			width: 760px;
-
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
-		}
-
-		&_type-photo {
-			width: 280px;
-			height: 14px;
-
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			overflow: hidden;
 		}
 	}
 }
