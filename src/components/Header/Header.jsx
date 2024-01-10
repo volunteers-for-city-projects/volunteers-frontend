@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import './Header.scss';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
-import InputSearch from '../InputSearch/InputSearch';
+// import InputSearch from '../InputSearch/InputSearch';
 import NavBar from '../NavBar/NavBar';
 import { dataNavArray } from '../../utils/data';
 import { Pushbutton } from '../Pushbutton/Pushbutton';
-import iconSearch from '../../images/header/search.svg';
+// import iconSearch from '../../images/header/search.svg';
 
 function Header({ isLoggedIn, handleConfirmLogout }) {
 	const navigate = useNavigate();
@@ -18,12 +18,12 @@ function Header({ isLoggedIn, handleConfirmLogout }) {
 					label="ЛучшеВместе"
 					sublabel="Городские инициативы — шаг к переменам"
 				/>
-				<InputSearch
+				{/* <InputSearch
 					placeholder="Поиск"
 					border="1px solid #9BC1F9"
 					icon={iconSearch}
 					// width="450px"
-				/>
+				/> */}
 				<NavBar
 					isLoggedIn={isLoggedIn}
 					handleConfirmLogout={handleConfirmLogout}
