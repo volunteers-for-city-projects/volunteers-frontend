@@ -2,9 +2,9 @@
 
 Фронтенд часть проекта "Лучше вместе"
 
-Макет: https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI
+Макет: [https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI](https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI)
 
-Сайт: https://2260993-dk30711.twc1.net
+Сайт: [https://2260993-dk30711.twc1.net](https://2260993-dk30711.twc1.net)
 
 ## Технологии
 
