@@ -20,7 +20,7 @@ function Promo({ plarformPromo }) {
 				{!isLoggedIn && (
 					<div className="promo__buttons">
 						<Pushbutton
-							label="Стать оранизатором"
+							label="Стать организатором"
 							backgroundColor="#A6C94F"
 							size="pre-large-var"
 							border="none"
