@@ -4,10 +4,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import {
+	useLoaderData,
 	useLocation,
 	useNavigate,
 	useOutletContext,
-	useParams,
 } from 'react-router-dom';
 import './Project.scss';
 import CustomInput from '../CustomInput/CustomInput';
@@ -31,22 +31,17 @@ export default function Project() {
 		setModal,
 		setIsLoading,
 		currentUser,
-		projectsMe,
 	} = useOutletContext();
 
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
-	const { idProject } = useParams();
 	const nameRef = useRef(null);
 	const location = useLocation();
+	const currentProject = useLoaderData();
 
 	const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
-
-	const currentProject = projectsMe.filter(
-		(item) => item.id === Number(idProject)
-	)[0];
 
 	const selectOptionCity = (city) =>
 		cities

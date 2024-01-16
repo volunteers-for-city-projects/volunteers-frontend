@@ -270,6 +270,7 @@ const router = createHashRouter([
 							},
 							{
 								path: 'edit-project/:idProject',
+								loader: ({ params }) => getProjectById(params.idProject),
 								element: <Project />,
 								handle: {
 									crumb: (match) => (
