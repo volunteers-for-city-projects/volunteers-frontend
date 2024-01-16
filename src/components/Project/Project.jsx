@@ -36,7 +36,7 @@ export default function Project() {
 
 	const [isFocused, setIsFocused] = useState(false);
 	const navigate = useNavigate();
-	const { IdProject } = useParams();
+	const { idProject } = useParams();
 	const nameRef = useRef(null);
 	const location = useLocation();
 
@@ -45,7 +45,7 @@ export default function Project() {
 	const draftLocalstorage = JSON.parse(localStorage.getItem('draft')) || [];
 
 	const currentProject = projectsMe.filter(
-		(item) => item.id === Number(IdProject)
+		(item) => item.id === Number(idProject)
 	)[0];
 
 	const selectOptionCity = (city) =>

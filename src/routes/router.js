@@ -269,14 +269,11 @@ const router = createHashRouter([
 								},
 							},
 							{
-								path: 'edit-project/:IdProject',
+								path: 'edit-project/:idProject',
 								element: <Project />,
 								handle: {
-									crumb: () => (
-										<Link
-											to="/profile/organizer/edit-project/:idProject"
-											className="router__link"
-										>
+									crumb: (match) => (
+										<Link to={match.path} className="router__link">
 											Редактировать проект
 										</Link>
 									),
