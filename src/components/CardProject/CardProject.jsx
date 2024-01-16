@@ -39,8 +39,7 @@ function CardProject({ cardProject, onCardDelete, onCardDisliked }) {
 		(statusApprove === EDITING || statusApprove === REJECTED);
 
 	function handleProject(evt) {
-		// if (!/edit|like|delete/.test(evt.target.className))
-		if (evt.target.className !== 'card__status-button-edit')
+		if (!/edit|like|delete/.test(evt.target.className))
 			navigate(`/projects/${cardProject.id}`);
 	}
 
