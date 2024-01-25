@@ -4,6 +4,8 @@
 
 Макет: [https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI](https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI)
 
+Презентация: [https://docs.google.com/presentation/d/1Tyokj3HibJ0xgj26lkXWfE9tMP8ALU9aznpSjV4e9fE](https://docs.google.com/presentation/d/1Tyokj3HibJ0xgj26lkXWfE9tMP8ALU9aznpSjV4e9fE)
+
 Сайт: [https://2260993-dk30711.twc1.net](https://2260993-dk30711.twc1.net)
 
 ## Технологии
