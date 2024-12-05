@@ -1,6 +1,6 @@
 # volunteers-frontend
 
-Фронтенд часть проекта "Лучше вместе".
+Фронтенд часть проекта "Лучше вместе"
 
 Макет: [https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI](https://www.figma.com/file/2cKiLq0Gzh7nGfN7MLhqdI)
 
